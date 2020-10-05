@@ -1,15 +1,13 @@
 # Lotus JSON-RPC engine
 
-[![Travis CI](https://travis-ci.org/openworklabs/lotus-jsonrpc-engine.svg?branch=primary)](https://travis-ci.org/openworklabs/lotus-rpc-engine)
-
-A convenience library for interacting with the [Lotus JSON-RPC api](https://github.com/filecoin-project/lotus/blob/master/api/api_full.go). We'll be actively updating and maintaining this library as needed for our use in the [Filecoin web wallet](https://github.com/openworklabs/filecoin-web-wallet). Several of the methods we're using are documented [here](https://documenter.getpostman.com/view/4872192/SWLh5mUd?version=latest).
+A convenience library for interacting with the [Lotus JSON-RPC api](https://github.com/filecoin-project/lotus/blob/master/api/api_full.go). We'll be actively updating and maintaining this library as needed for our use in the [Filecoin web wallet](https://github.com/glifio/wallet). Several of the methods we're using are documented [here](https://documenter.getpostman.com/view/4872192/SWLh5mUd?version=latest).
 
 ## Basic usage
 
-`npm i @openworklabs/lotus-jsonrpc-engine`<br />
+`npm i @glif/filecoin-rpc-client`<br />
 
 ```js
-const LotusRPCEngine = require('@openworklabs/lotus-jsonrpc-engine')
+const LotusRPCEngine = require('@glif/filecoin-rpc-client')
 
 const lotusJWT = 'aaaaaaaa.bbbbbbbbbbbb.i_ZZZZZZ-3xYYYYYY'
 

@@ -1,6 +1,6 @@
 const Filecoin = require('../dist').default
-const { FilecoinNumber } = require('@openworklabs/filecoin-number')
-const { Message } = require('@openworklabs/filecoin-message')
+const { FilecoinNumber } = require('@glif/filecoin-number')
+const { Message } = require('@glif/filecoin-message')
 const CID = require('cids')
 const { KNOWN_TYPE_0_ADDRESS } = require('../dist/utils/knownAddresses')
 

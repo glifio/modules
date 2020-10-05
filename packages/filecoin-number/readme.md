@@ -1,13 +1,11 @@
 # Filecoin number
 
-[![Travis CI](https://travis-ci.org/openworklabs/filecoin-number.svg?branch=primary)](https://travis-ci.org/openworklabs/filecoin-number)
-
 A wrapper class built around javascript's [bignumber](https://github.com/MikeMcl/bignumber.js). Most questions are best answered from the bignumber readme and docs.
 
 ## FilecoinNumber Usage
 
 ```js
-import { FilecoinNumber, Converter } from '@openworklabs/filecoin-number'
+import { FilecoinNumber, Converter } from '@glif/filecoin-number'
 
 // pass a valid bignumber argument, and a denomination ('fil', 'picofil', or 'attofil') to the constructor.
 const filecoinNumber = new FilecoinNumber('10000', 'attofil')

@@ -9,7 +9,7 @@ This wallet provider module is inspired as a combination between [MetaMask's key
 ```js
 import Filecoin, {
   LocalNodeProvider,
-} from '@openworklabs/filecoin-wallet-provider'
+} from '@glif/filecoin-wallet-provider'
 
 const config = {
   apiAddress: process.env.API_ADDRESS // defaults to 'http://127.0.0.1:1234/rpc/v0',
@@ -170,7 +170,7 @@ For example, `signMessage` and `getAccounts` are two methods that would require 
 This naturally lends itself to an architecture that should allow developers to "plug-and-play" their own modules that handle "private key methods", and not have to worry about re-implementing their own "non-private key methods". In other words, a developer should be able to do something like this:
 
 ```js
-const Filecoin = require('@openworklabs/filecoin-wallet-provider')
+const Filecoin = require('@glif/filecoin-wallet-provider')
 
 const filecoin = new Filecoin()
 

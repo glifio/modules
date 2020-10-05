@@ -1,4 +1,4 @@
-declare module '@openworklabs/lotus-jsonrpc-engine' {
+declare module '@glif/filecoin-rpc-client' {
   export interface Config {
     apiAddress: string
     token?: string

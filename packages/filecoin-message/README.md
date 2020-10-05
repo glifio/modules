@@ -1,15 +1,13 @@
 # filecoin-message
 
-[![Travis CI](https://travis-ci.org/openworklabs/filecoin-message.svg?branch=primary)](https://travis-ci.org/openworklabs/filecoin-message)
-
 ## Install
 
-`npm i @openworklabs/filecoin-message`
+`npm i @glif/filecoin-message`
 
 ## Usage
 
 ```js
-const Message = require('@openworklabs/filecoin-message')
+const Message = require('@glif/filecoin-message')
 const BigNumber = require('bignumber.js')
 
 const message = new Message({

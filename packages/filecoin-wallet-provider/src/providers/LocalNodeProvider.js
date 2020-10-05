@@ -1,4 +1,4 @@
-import LotusRpcEngine from '@openworklabs/lotus-jsonrpc-engine'
+import LotusRpcEngine from '@glif/filecoin-rpc-client'
 
 class LocalNodeProvider {
   constructor({ apiAddress, token }) {

@@ -1,7 +1,7 @@
-import { FilecoinNumber } from '@openworklabs/filecoin-number'
-import LotusRpcEngine, { Config } from '@openworklabs/lotus-jsonrpc-engine'
-import { checkAddressString } from '@openworklabs/filecoin-address'
-import { Message, LotusMessage } from '@openworklabs/filecoin-message'
+import { FilecoinNumber } from '@glif/filecoin-number'
+import LotusRpcEngine, { Config } from '@glif/filecoin-rpc-client'
+import { checkAddressString } from '@glif/filecoin-address'
+import { Message, LotusMessage } from '@glif/filecoin-message'
 import {
   KNOWN_TYPE_1_ADDRESS,
   KNOWN_TYPE_3_ADDRESS,
