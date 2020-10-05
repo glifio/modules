@@ -43,6 +43,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/glifio/modules/packages/filecoin-address"
-  }
+    "url": "https://github.com/glifio/modules/tree/primary/packages/filecoin-address"
+  },
+  "gitHead": "c37a6fa643dd87974d1d57f9e103a27ba740ea44"
 }
