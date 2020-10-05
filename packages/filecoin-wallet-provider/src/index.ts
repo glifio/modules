@@ -13,14 +13,14 @@ export { validatePath }
 
 type Network = 'f' | 't'
 
-interface SignFunc {
-  // path looks like m/44'/461'/1'/0/0/0 -
-  (message: LotusMessage, path: string): Promise<string>
-}
+// path looks like m/44'/461'/1'/0/0/0 -
+type SignFunc = (message: LotusMessage, path: string) => Promise<string>
 
-interface GetAccountsFunc {
-  (network: Network, startIdx: number, endIdx: number): string[]
-}
+type GetAccountsFunc = (
+  network: Network,
+  startIdx: number,
+  endIdx: number,
+) => string[]
 
 export interface WalletSubProvider {
   sign: SignFunc

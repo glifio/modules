@@ -4,8 +4,10 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
+    "lint": "lerna run lint",
     "prepublishOnly": "npm run build",
-    "publish": "lerna publish"
+    "publish": "lerna publish",
+    "test": "lerna run test"
   },
   "devDependencies": {
     "lerna": "^3.22.1"
