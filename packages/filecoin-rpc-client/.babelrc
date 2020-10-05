@@ -1,0 +1,55 @@
+{
+  "env": {
+    "development": {
+      "presets": [
+        [
+          "@babel/env",
+          {
+            "targets": {
+              "node": "6.10"
+            }
+          }
+        ]
+      ],
+      "plugins": [
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-proposal-class-properties"
+      ]
+    },
+    "browser": {
+      "presets": [
+        [
+          "@babel/env",
+          {
+            "targets": {
+              "browsers": "last 2 versions, ie 10-11"
+            },
+            "modules": false
+          }
+        ]
+      ],
+      "plugins": [
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-proposal-class-properties"
+      ]
+    },
+    "module": {
+      "presets": [
+        [
+          "@babel/env",
+          {
+            "targets": {
+              "node": "6.10"
+            },
+            "modules": false
+          }
+        ]
+      ],
+      "plugins": [
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-proposal-class-properties"
+      ]
+    }
+  },
+  "sourceMaps": true
+}
