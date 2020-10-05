@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-address",
-  "version": "1.0.0",
+  "version": "1.0.0-lerna.1",
   "description": "The Filecoin address type",
   "main": "./dist/index.js",
   "browser": "./lib/index.js",
@@ -14,7 +14,7 @@
     "test": "npm run build && jest",
     "test:watch": "npm run build && jest --watch"
   },
-  "author": "Open Work Labs",
+  "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
     "blakejs": "1.1.0",

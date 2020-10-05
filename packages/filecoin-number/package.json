@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-number",
-  "version": "1.0.0",
+  "version": "1.0.0-lerna.1",
   "description": "a javascript package to handle Filecoin numbers like Fil and AttoFil",
   "main": "./dist/index.js",
   "browser": "./lib/index.js",
@@ -14,7 +14,7 @@
     "test": "npm run build && jest",
     "test:watch": "npm run build && jest --watch"
   },
-  "author": "openworklabs",
+  "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
     "@babel/polyfill": "7.7.0",

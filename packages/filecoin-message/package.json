@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-message",
-  "version": "1.0.0",
+  "version": "1.0.0-lerna.1",
   "description": "The Filecoin message type, used to transfer tokens and make state changes.",
   "main": "./dist/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "test": "npm run build && jest",
     "test:watch": "npm run build && jest --watch"
   },
-  "author": "Open Work Labs",
+  "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
     "@openworklabs/filecoin-address": "0.0.11",
