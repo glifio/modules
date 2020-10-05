@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-message",
-  "version": "1.0.0-lerna.2",
+  "version": "1.0.0-lerna.4",
   "description": "The Filecoin message type, used to transfer tokens and make state changes.",
   "main": "./dist/index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "@glif/filecoin-address": "^1.0.0-lerna.2",
+    "@glif/filecoin-address": "^1.0.0-lerna.4",
     "bignumber.js": "^9.0.0"
   },
   "devDependencies": {
