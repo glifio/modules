@@ -1,6 +1,12 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "prepublishOnly": "npm run build",
+    "publish": "lerna publish"
+  },
   "devDependencies": {
     "lerna": "^3.22.1"
   }
