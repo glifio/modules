@@ -1,4 +1,5 @@
 import { FilecoinNumber } from '@glif/filecoin-number'
+import BigNumber from 'bignumber.js'
 import LotusRpcEngine, { Config } from '@glif/filecoin-rpc-client'
 import { checkAddressString } from '@glif/filecoin-address'
 import { Message, LotusMessage } from '@glif/filecoin-message'
@@ -204,8 +205,23 @@ class Filecoin {
   /** Placeholders until https://github.com/filecoin-project/lotus/issues/3326 lands  */
   gasEstimateMaxFee = async (
     message: LotusMessage,
+    useMsgGas: boolean = false,
   ): Promise<FilecoinNumber> => {
-    return new FilecoinNumber('12435085', 'attofil')
+    let feeCap
+    let limit
+    // here we use BigNumber straight up, because multiplication has to happen in non decimal amounts
+    if (useMsgGas) {
+      feeCap = new BigNumber(message.GasFeeCap)
+      limit = new BigNumber(message.GasLimit)
+    } else {
+      const msgWithGas = (
+        await this.gasEstimateMessageGas(message)
+      ).toLotusType()
+      feeCap = new BigNumber(msgWithGas.GasFeeCap)
+      limit = new BigNumber(msgWithGas.GasLimit)
+    }
+
+    return new FilecoinNumber(feeCap.times(limit), 'attofil')
   }
 
   gasLookupTxFee = async (message: LotusMessage): Promise<FilecoinNumber> => {
