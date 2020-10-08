@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-wallet-provider",
-  "version": "1.0.0-lerna.6",
+  "version": "1.0.0-lerna.7",
   "description": "a javascript package to send filecoin to addresses",
   "main": "./dist/index.js",
   "scripts": {
