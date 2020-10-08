@@ -355,4 +355,24 @@ describe('provider', () => {
       expect(msg.From).toBe(unknownFromAddr)
     })
   })
+
+  describe('gasCalcTxFee', () => {
+    test('it returns a FilecoinNumber representing the transaction fee paid by the sender', async () => {
+      const baseFee = '957893300'
+      const gasLimit = 541585
+      const gasFeeCap = '10076485367'
+      const gasPremium = '136364'
+      const gasUsed = 435268
+
+      const fee = await filecoin.gasCalcTxFee(
+        gasFeeCap,
+        gasPremium,
+        gasLimit,
+        baseFee,
+        gasUsed,
+      )
+
+      expect(fee.toAttoFil()).toBe('417014153601340')
+    })
+  })
 })

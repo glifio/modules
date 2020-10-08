@@ -225,8 +225,33 @@ class Filecoin {
     }
   }
 
-  gasLookupTxFee = async (message: LotusMessage): Promise<FilecoinNumber> => {
-    return new FilecoinNumber('12435085', 'attofil')
+  /**
+   *
+   * Assuming you didn't overestimate gas by more than 10% then you will pay:
+   * GasUsed*BaseFee+GasLimit*max(0, min(FeeCap-BaseFee, GasPremium))
+   */
+  gasCalcTxFee = async (
+    gasFeeCap: string,
+    gasPremium: string,
+    gasLimit: number,
+    baseFee: string,
+    gasUsed: string,
+  ): Promise<FilecoinNumber> => {
+    const gasFeeCapBN = new BigNumber(gasFeeCap)
+    const gasPremiumBN = new BigNumber(gasPremium)
+    const gasLimitBN = new BigNumber(gasLimit)
+    const baseFeeBN = new BigNumber(baseFee)
+    const gasUsedBN = new BigNumber(gasUsed)
+
+    const rightSideMinimum = BigNumber.minimum(
+      gasFeeCapBN.minus(baseFeeBN),
+      gasPremiumBN,
+    )
+    const multiplier = BigNumber.maximum(0, rightSideMinimum)
+    const rightSide = gasLimitBN.times(multiplier)
+    const leftSide = gasUsedBN.times(baseFeeBN)
+    const fee = new FilecoinNumber(leftSide.plus(rightSide), 'attofil')
+    return fee
   }
 }
 
