@@ -202,26 +202,27 @@ class Filecoin {
     })
   }
 
-  /** Placeholders until https://github.com/filecoin-project/lotus/issues/3326 lands  */
   gasEstimateMaxFee = async (
     message: LotusMessage,
     useMsgGas: boolean = false,
-  ): Promise<FilecoinNumber> => {
-    let feeCap
-    let limit
+  ): Promise<{ maxFee: FilecoinNumber; message: LotusMessage }> => {
     // here we use BigNumber straight up, because multiplication has to happen in non decimal amounts
     if (useMsgGas) {
-      feeCap = new BigNumber(message.GasFeeCap)
-      limit = new BigNumber(message.GasLimit)
-    } else {
-      const msgWithGas = (
-        await this.gasEstimateMessageGas(message)
-      ).toLotusType()
-      feeCap = new BigNumber(msgWithGas.GasFeeCap)
-      limit = new BigNumber(msgWithGas.GasLimit)
+      const feeCap = new BigNumber(message.GasFeeCap)
+      const limit = new BigNumber(message.GasLimit)
+      return {
+        maxFee: new FilecoinNumber(feeCap.times(limit), 'attofil'),
+        message,
+      }
     }
 
-    return new FilecoinNumber(feeCap.times(limit), 'attofil')
+    const msgWithGas = (await this.gasEstimateMessageGas(message)).toLotusType()
+    const feeCap = new BigNumber(msgWithGas.GasFeeCap)
+    const limit = new BigNumber(msgWithGas.GasLimit)
+    return {
+      maxFee: new FilecoinNumber(feeCap.times(limit), 'attofil'),
+      message: msgWithGas,
+    }
   }
 
   gasLookupTxFee = async (message: LotusMessage): Promise<FilecoinNumber> => {
