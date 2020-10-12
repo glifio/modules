@@ -1,6 +1,6 @@
 {
-  "name": "root",
-  "private": true,
+  "name": "@glif/modules",
+  "private": false,
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
@@ -11,5 +11,6 @@
   },
   "devDependencies": {
     "lerna": "^3.22.1"
-  }
+  },
+  "license": "(Apache-2.0 OR MIT)"
 }
