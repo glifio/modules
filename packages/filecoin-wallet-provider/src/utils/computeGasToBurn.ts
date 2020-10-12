@@ -4,8 +4,10 @@ const gasOveruseNum = 11
 const gasOveruseDenom = 10
 
 export default (gasUsed: BigNumber, gasLimit: BigNumber): BigNumber => {
-  if (gasUsed.isZero()) {
-    return gasLimit
+  const gasUsedBN = new BigNumber(gasUsed)
+  const gasLimitBN = new BigNumber(gasLimit)
+  if (gasUsedBN.isZero()) {
+    return gasLimitBN
   }
 
   // over = gasLimit/gasUsed - 1 - 0.1
@@ -15,20 +17,22 @@ export default (gasUsed: BigNumber, gasLimit: BigNumber): BigNumber => {
   // so to factor out division from `over`
   // over*gasUsed = min(gasLimit - (11*gasUsed)/10, gasUsed)
   // gasToBurn = ((gasLimit - gasUsed)*over*gasUsed) / gasUsed
-  const overuse = gasUsed.times(gasOveruseNum).dividedBy(gasOveruseDenom)
+  const overuse = gasUsedBN
+    .times(gasOveruseNum)
+    .dividedToIntegerBy(gasOveruseDenom)
   let over = gasLimit.minus(overuse)
 
   if (over.isLessThan(0)) {
     return new BigNumber(0)
   }
 
-  if (over.isGreaterThan(gasUsed)) {
-    over = gasUsed
+  if (over.isGreaterThan(gasUsedBN)) {
+    over = gasUsedBN
   }
 
-  let gasToBurn = gasLimit.minus(gasUsed)
+  let gasToBurn = gasLimit.minus(gasUsedBN)
   gasToBurn = gasToBurn.times(over)
-  gasToBurn = gasToBurn.dividedBy(gasUsed)
+  gasToBurn = gasToBurn.dividedToIntegerBy(gasUsedBN)
 
   return new BigNumber(gasToBurn.toFixed(0, 4))
 }
