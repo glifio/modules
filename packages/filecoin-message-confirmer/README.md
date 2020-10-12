@@ -9,8 +9,10 @@
 ```js
 const confirmMessage = require('@glif/filecoin-message-confirmer')
 
-const messageCid = {}
-const confirmed = await confirmMessage()
+const messageCid =
+  'bafy2bzacebnyjf5oxzvts5f4ifqgee2yrqb7epdepnw3y2yk25ju5su2episg'
+const optionalConfig = {}
+const confirmed = await confirmMessage(messageCid, optionalConfig)
 // > true if message is confirmed
 // > false if message happened far in the past (just use a block explorer) or if the message isn't yet confirmed after ~7-8 minutes after sending
 ```
