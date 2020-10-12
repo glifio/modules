@@ -1,8 +1,10 @@
 import { FilecoinNumber } from '@glif/filecoin-number'
+import BigNumber from 'bignumber.js'
 import LotusRpcEngine, { Config } from '@glif/filecoin-rpc-client'
 import { checkAddressString } from '@glif/filecoin-address'
 import { Message, LotusMessage } from '@glif/filecoin-message'
 import {
+  computeGasToBurn,
   KNOWN_TYPE_1_ADDRESS,
   KNOWN_TYPE_3_ADDRESS,
   KNOWN_TYPE_0_ADDRESS,
@@ -201,15 +203,56 @@ class Filecoin {
     })
   }
 
-  /** Placeholders until https://github.com/filecoin-project/lotus/issues/3326 lands  */
   gasEstimateMaxFee = async (
     message: LotusMessage,
-  ): Promise<FilecoinNumber> => {
-    return new FilecoinNumber('12435085', 'attofil')
+  ): Promise<{ maxFee: FilecoinNumber; message: LotusMessage }> => {
+    const msgWithGas = (await this.gasEstimateMessageGas(message)).toLotusType()
+    const feeCap = new BigNumber(msgWithGas.GasFeeCap)
+    const limit = new BigNumber(msgWithGas.GasLimit)
+    return {
+      maxFee: new FilecoinNumber(feeCap.times(limit), 'attofil'),
+      message: msgWithGas,
+    }
   }
 
-  gasLookupTxFee = async (message: LotusMessage): Promise<FilecoinNumber> => {
-    return new FilecoinNumber('12435085', 'attofil')
+  /**
+   * formula (some of these variable names might not be the best...):
+   * (GasUsed+GasToBurn)*min(BaseFee, FeeCap)+GasLimit*max(0, min(FeeCap-BaseFee, GasPremium)))
+   *
+   * minBaseFeeFeeCap = min(BaseFee, FeeCap)
+   * totalGas = GasUsed+GasToBurn
+   * leftSide = totalGas*minBaseFeeFeeCap
+   *
+   * minTip = min(FeeCap-BaseFee, GasPremium)
+   * rightSide = gasLimit*max(0, minTip)
+   *
+   * paidByMessageSender =
+   * leftSide + rightSide
+   */
+  gasCalcTxFee = async (
+    gasFeeCap: string,
+    gasPremium: string,
+    gasLimit: number,
+    baseFee: string,
+    gasUsed: string,
+  ): Promise<FilecoinNumber> => {
+    const gasFeeCapBN = new BigNumber(gasFeeCap)
+    const gasPremiumBN = new BigNumber(gasPremium)
+    const gasLimitBN = new BigNumber(gasLimit)
+    const baseFeeBN = new BigNumber(baseFee)
+    const gasUsedBN = new BigNumber(gasUsed)
+
+    /* compute left side */
+    const gasToBurn = computeGasToBurn(gasUsedBN, gasLimitBN)
+    const totalGas = gasUsedBN.plus(gasToBurn)
+    const minBaseFeeFeeCap = BigNumber.minimum(baseFeeBN, gasFeeCapBN)
+    const leftSide = totalGas.times(minBaseFeeFeeCap)
+
+    /* compute right side */
+    const minTip = BigNumber.minimum(gasFeeCapBN.minus(baseFeeBN), gasPremiumBN)
+    const rightSide = gasLimitBN.times(BigNumber.maximum(0, minTip))
+
+    return new FilecoinNumber(leftSide.plus(rightSide), 'attofil')
   }
 }
 
