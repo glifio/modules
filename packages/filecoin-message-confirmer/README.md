@@ -2,25 +2,33 @@
 
 ## Install
 
-`npm i @glif/filecoin-message`
+`npm i @glif/filecoin-message-confirmer`
 
 ## Usage
 
 ```js
-const Message = require('@glif/filecoin-message')
-const BigNumber = require('bignumber.js')
+const confirmMessage = require('@glif/filecoin-message-confirmer')
 
-const message = new Message({
-  to: 't03832874859695014541',
-  from: 't1pyfq7dg6sq65acyomqvzvbgwni4zllglqffw5dy',
-  nonce: 1,
-  value: new BigNumber('1000000000'),
-  method: 0
-})
-
-const messageForSerialization = await message.toSerializeableType()
-const messageForLotus = message.toLotusType()
+const messageCid = {}
+const confirmed = await confirmMessage()
+// > true if message is confirmed
+// > false if message happened far in the past (just use a block explorer) or if the message isn't yet confirmed after ~7-8 minutes after sending
 ```
+
+The confirmer takes an optional config:
+
+```ts
+interface ConfirmerConfig {
+  apiAddress: string
+  token?: string
+  // the amount of time to timeout the request
+  timeoutAfter?: number
+  // the number of times this function calls itself, recursively
+  totalRetries?: number
+}
+```
+
+It's recommended to stick with the default values for `timeoutAfter` (90000 ms) and `totalRetries` (5 times)
 
 ## Test
 
