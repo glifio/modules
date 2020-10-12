@@ -12,4 +12,7 @@ export const KNOWN_TYPE_3_ADDRESS = {
     't3wigf2pezolpxu6z6724afsek5kbntsnjgn7zo745qn5volj2wgutbldgqxbblhshegzid2d25ev6tqabilsq',
 }
 
-export const KNOWN_TYPE_0_ADDRESS = { [TESTNET]: 't080', [MAINNET]: 'f080' }
+export const KNOWN_TYPE_0_ADDRESS = {
+  [TESTNET]: 't023667',
+  [MAINNET]: 'f023667',
+}

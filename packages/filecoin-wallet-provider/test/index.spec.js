@@ -2,7 +2,10 @@ const Filecoin = require('../dist').default
 const { FilecoinNumber } = require('@glif/filecoin-number')
 const { Message } = require('@glif/filecoin-message')
 const CID = require('cids')
-const { KNOWN_TYPE_0_ADDRESS } = require('../dist/utils/knownAddresses')
+const {
+  KNOWN_TYPE_0_ADDRESS,
+  KNOWN_TYPE_1_ADDRESS,
+} = require('../dist/utils/knownAddresses')
 
 const testSubProviderInstance = {
   getAccounts: jest.fn().mockImplementation(() => {}),
@@ -13,7 +16,7 @@ describe('provider', () => {
   let filecoin
   beforeAll(async () => {
     filecoin = new Filecoin(testSubProviderInstance, {
-      apiAddress: 'https://node.glif.io/space04/lotus/rpc/v0',
+      apiAddress: 'https://api.node.glif.io',
     })
   })
 
@@ -80,7 +83,7 @@ describe('provider', () => {
       ).rejects.toThrow()
     })
 
-    test('should return the tx CID', async () => {
+    test.skip('should return the tx CID', async () => {
       const nonce = await filecoin.getNonce(KNOWN_TYPE_0_ADDRESS['t'])
       const message = new Message({
         to: KNOWN_TYPE_0_ADDRESS['t'],
@@ -302,10 +305,7 @@ describe('provider', () => {
   })
 
   describe('cloneMsgWOnChainFromAddr', () => {
-    let unknownFromAddr = ''
-    beforeAll(async () => {
-      unknownFromAddr = await filecoin.jsonRpcEngine.request('WalletNew', 1)
-    })
+    const unknownFromAddr = 'f1p2bkuq7inahavovyaxkcpuk6kucfmjtixutd3jq'
     test('it attaches a known actor address when the From address does not exist on chain', async () => {
       const message = new Message({
         to: KNOWN_TYPE_0_ADDRESS['t'],
@@ -373,6 +373,25 @@ describe('provider', () => {
       )
 
       expect(fee.toAttoFil()).toBe('417014153601340')
+    })
+  })
+
+  describe('gasEstimateMaxFee', () => {
+    test('it returns a max fee and the message with gas params', async () => {
+      const message = new Message({
+        to: KNOWN_TYPE_1_ADDRESS['t'],
+        from: KNOWN_TYPE_1_ADDRESS['t'],
+        value: new FilecoinNumber('1', 'attofil').toAttoFil(),
+        method: 0,
+        nonce: 0,
+      })
+
+      const res = await filecoin.gasEstimateMaxFee(message.toLotusType())
+      expect(!!res.message.GasFeeCap).toBeTruthy()
+      expect(!!res.message.GasPremium).toBeTruthy()
+      expect(!!res.message.GasLimit).toBeTruthy()
+
+      expect(res.maxFee instanceof FilecoinNumber).toBeTruthy()
     })
   })
 })
