@@ -373,7 +373,7 @@ describe('provider', () => {
         gasUsed,
       )
 
-      expect(fee.toAttoFil()).toBe('416940300904400')
+      expect(fee.toAttoFil()).toBe('4317053631434400')
     })
   })
 
@@ -382,7 +382,10 @@ describe('provider', () => {
       const gasLimit = 541585
       const gasUsed = 435268
       expect(
-        computeGasToBurn(new BigNumber(gasUsed), new BigNumber(gasLimit)),
+        computeGasToBurn(
+          new BigNumber(gasUsed),
+          new BigNumber(gasLimit),
+        ).toString(),
       ).toBe('15337')
     })
   })

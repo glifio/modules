@@ -1,7 +1,5 @@
 import BigNumber from 'bignumber.js'
 
-BigNumber.ROUND_HALF_UP
-
 const gasOveruseNum = 11
 const gasOveruseDenom = 10
 
@@ -32,5 +30,5 @@ export default (gasUsed: BigNumber, gasLimit: BigNumber): BigNumber => {
   gasToBurn = gasToBurn.times(over)
   gasToBurn = gasToBurn.dividedBy(gasUsed)
 
-  return new BigNumber(gasToBurn.toFixed(0, 1))
+  return new BigNumber(gasToBurn.toFixed(0, 4))
 }
