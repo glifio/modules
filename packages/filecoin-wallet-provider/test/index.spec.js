@@ -1,11 +1,12 @@
 const Filecoin = require('../dist').default
-const { FilecoinNumber } = require('@glif/filecoin-number')
+const { FilecoinNumber, BigNumber } = require('@glif/filecoin-number')
 const { Message } = require('@glif/filecoin-message')
 const CID = require('cids')
 const {
+  computeGasToBurn,
   KNOWN_TYPE_0_ADDRESS,
   KNOWN_TYPE_1_ADDRESS,
-} = require('../dist/utils/knownAddresses')
+} = require('../dist/utils')
 
 const testSubProviderInstance = {
   getAccounts: jest.fn().mockImplementation(() => {}),
@@ -372,7 +373,17 @@ describe('provider', () => {
         gasUsed,
       )
 
-      expect(fee.toAttoFil()).toBe('417014153601340')
+      expect(fee.toAttoFil()).toBe('416940300904400')
+    })
+  })
+
+  describe('computeGasToBurn', () => {
+    test('it computes the overestimation burn', () => {
+      const gasLimit = 541585
+      const gasUsed = 435268
+      expect(
+        computeGasToBurn(new BigNumber(gasUsed), new BigNumber(gasLimit)),
+      ).toBe('15337')
     })
   })
 

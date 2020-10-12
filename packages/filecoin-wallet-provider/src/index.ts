@@ -4,6 +4,7 @@ import LotusRpcEngine, { Config } from '@glif/filecoin-rpc-client'
 import { checkAddressString } from '@glif/filecoin-address'
 import { Message, LotusMessage } from '@glif/filecoin-message'
 import {
+  computeGasToBurn,
   KNOWN_TYPE_1_ADDRESS,
   KNOWN_TYPE_3_ADDRESS,
   KNOWN_TYPE_0_ADDRESS,
@@ -215,9 +216,18 @@ class Filecoin {
   }
 
   /**
+   * formula (some of these variable names might not be the best...):
+   * (GasUsed+GasToBurn)*min(BaseFee, FeeCap)+GasLimit*max(0, min(FeeCap-BaseFee, GasPremium)))
    *
-   * Assuming you didn't overestimate gas by more than 10% then you will pay:
-   * GasUsed*BaseFee+GasLimit*max(0, min(FeeCap-BaseFee, GasPremium))
+   * minBaseFeeFeeCap = min(BaseFee, FeeCap)
+   * totalGas = GasUsed+GasToBurn
+   * leftSide = totalGas*minBaseFeeFeeCap
+   *
+   * minTip = min(FeeCap-BaseFee, GasPremium)
+   * rightSide = gasLimit*max(0, minTip)
+   *
+   * paidByMessageSender =
+   * leftSide + rightSide
    */
   gasCalcTxFee = async (
     gasFeeCap: string,
@@ -232,15 +242,17 @@ class Filecoin {
     const baseFeeBN = new BigNumber(baseFee)
     const gasUsedBN = new BigNumber(gasUsed)
 
-    const rightSideMinimum = BigNumber.minimum(
-      gasFeeCapBN.minus(baseFeeBN),
-      gasPremiumBN,
-    )
-    const multiplier = BigNumber.maximum(0, rightSideMinimum)
-    const rightSide = gasLimitBN.times(multiplier)
-    const leftSide = gasUsedBN.times(baseFeeBN)
-    const fee = new FilecoinNumber(leftSide.plus(rightSide), 'attofil')
-    return fee
+    /* compute left side */
+    const gasToBurn = computeGasToBurn(gasUsedBN, gasLimitBN)
+    const totalGas = gasUsedBN.plus(gasToBurn)
+    const minBaseFeeFeeCap = BigNumber.minimum(baseFeeBN, gasFeeCapBN)
+    const leftSide = totalGas.times(minBaseFeeFeeCap)
+
+    /* compute right side */
+    const minTip = BigNumber.minimum(gasFeeCapBN.minus(baseFeeBN), gasPremiumBN)
+    const rightSide = gasLimitBN.times(BigNumber.maximum(0, minTip))
+
+    return new FilecoinNumber(leftSide.plus(rightSide), 'attofil')
   }
 }
 
