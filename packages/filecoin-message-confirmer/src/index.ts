@@ -12,8 +12,8 @@ interface ConfirmerConfig {
   totalRetries?: number
 }
 
-// with this config, we wait up to 10 minutes for transaction confirmation
-const defaultTimeout = 60000
+// 75 seconds is the default timeout, so we always capture 2 blocks regardless of when it happened (credit to Riba from PL)
+const defaultTimeout = 90000
 const defaultTotalRetries = 5
 
 const defaultConfig: ConfirmerConfig = {
