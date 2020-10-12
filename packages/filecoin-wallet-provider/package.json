@@ -15,9 +15,9 @@
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
     "@babel/polyfill": "7.8.7",
-    "@glif/filecoin-address": "^1.0.0-lerna.4",
-    "@glif/filecoin-message": "^1.0.0-lerna.4",
-    "@glif/filecoin-number": "^1.0.0-lerna.4",
+    "@glif/filecoin-address": "^1.0.0-beta.0",
+    "@glif/filecoin-message": "^1.0.0-beta.0",
+    "@glif/filecoin-number": "^1.0.0-beta.0",
     "@glif/filecoin-rpc-client": "^1.0.0-beta.0",
     "bignumber.js": "^9.0.1",
     "bluebird": "3.7.2",
@@ -43,5 +43,5 @@
     "type": "git",
     "url": "https://github.com/glifio/modules/tree/primary/packages/filecoin-wallet-provider"
   },
-  "gitHead": "c37a6fa643dd87974d1d57f9e103a27ba740ea44"
+  "gitHead": "27ff58865a447fe70913209a04756cf5ca67d3df"
 }
