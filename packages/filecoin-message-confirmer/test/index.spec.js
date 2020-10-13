@@ -2,6 +2,9 @@ jest.mock('@glif/filecoin-rpc-client')
 const axios = require('axios')
 const confirm = require('../src').default
 const RpcClient = require('@glif/filecoin-rpc-client').default
+
+const flushPromises = () => new Promise(resolve => setImmediate(resolve))
+
 describe('message confirmer', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -60,7 +63,10 @@ describe('message confirmer', () => {
       }
     })
     const confirmed = await confirm(
-      'bafy2bzacebnyjf5oxzvts5f4ifqgee2yrqb7epdepnw3y2yk25ju5su2episg'
+      'bafy2bzacebnyjf5oxzvts5f4ifqgee2yrqb7epdepnw3y2yk25ju5su2episg',
+      {
+        totalRetries: 5
+      }
     )
     jest.runAllTimers()
     expect(confirmed).toBeFalsy()
@@ -81,7 +87,33 @@ describe('message confirmer', () => {
     const confirmed = await confirm(
       'bafy2bzacebnyjf5oxzvts5f4ifqgee2yrqb7epdepnw3y2yk25ju5su2episg'
     )
-    jest.runAllTimers()
     expect(confirmed).toBeFalsy()
+  })
+
+  test('it confirms message after block not found error appears', async () => {
+    RpcClient.mockImplementationOnce(() => {
+      return {
+        request: () => {
+          throw new Error('block not found')
+        }
+      }
+    }).mockImplementationOnce(() => {
+      return {
+        request: () => {
+          return {
+            Receipt: {
+              ExitCode: 0
+            }
+          }
+        }
+      }
+    })
+
+    confirm('bafy2bzacebnyjf5oxzvts5f4ifqgee2yrqb7epdepnw3y2yk25ju5su2episg', {
+      timeoutAfter: 1
+    })
+    jest.runAllTimers()
+    await flushPromises()
+    expect(RpcClient).toHaveBeenCalledTimes(2)
   })
 })
