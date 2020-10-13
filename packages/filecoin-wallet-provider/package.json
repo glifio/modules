@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-wallet-provider",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.4",
   "description": "a javascript package to send filecoin to addresses",
   "main": "./dist/index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   "dependencies": {
     "@babel/polyfill": "7.8.7",
     "@glif/filecoin-address": "^1.0.0-beta.1",
-    "@glif/filecoin-message": "^1.0.0-beta.1",
+    "@glif/filecoin-message": "^1.0.0-beta.4",
     "@glif/filecoin-number": "^1.0.0-beta.1",
     "@glif/filecoin-rpc-client": "^1.0.0-beta.1",
     "bignumber.js": "^9.0.1",
