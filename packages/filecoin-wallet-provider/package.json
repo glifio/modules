@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf dist/ && tsc --project tsconfig.json",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
     "test:build": "npm run build && jest",
@@ -25,6 +25,7 @@
     "ts-jest": "^26.3.0"
   },
   "devDependencies": {
+    "rimraf": "^3.0.2",
     "cids": "^1.0.0",
     "cross-env": "7.0.2",
     "eslint": "6.1.0",

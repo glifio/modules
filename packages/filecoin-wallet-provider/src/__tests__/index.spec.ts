@@ -1,12 +1,13 @@
-const Filecoin = require('../dist').default
-const { FilecoinNumber, BigNumber } = require('@glif/filecoin-number')
-const { Message } = require('@glif/filecoin-message')
-const CID = require('cids')
-const {
+import { Filecoin } from '../filecoin'
+import { FilecoinNumber, BigNumber } from '@glif/filecoin-number'
+import { Message } from '@glif/filecoin-message'
+import CID from 'cids'
+import {
   computeGasToBurn,
   KNOWN_TYPE_0_ADDRESS,
   KNOWN_TYPE_1_ADDRESS,
-} = require('../dist/utils')
+} from '../utils'
+import { Network } from '../wallet-sub-provider'
 
 const testSubProviderInstance = {
   getAccounts: jest.fn().mockImplementation(() => {}),
@@ -14,7 +15,7 @@ const testSubProviderInstance = {
 }
 
 describe('provider', () => {
-  let filecoin
+  let filecoin: Filecoin
   beforeAll(async () => {
     filecoin = new Filecoin(testSubProviderInstance, {
       apiAddress: 'https://api.node.glif.io',
@@ -34,7 +35,8 @@ describe('provider', () => {
 
     test('should throw when not passed a provider', async () => {
       expect(() => {
-        new Filecoin()
+        // @ts-ignore
+        return new Filecoin()
       }).toThrow()
     })
   })
@@ -43,12 +45,16 @@ describe('provider', () => {
     beforeEach(jest.clearAllMocks)
 
     test('should call WalletBalance with address', async () => {
-      const balance = await filecoin.getBalance(KNOWN_TYPE_0_ADDRESS['t'])
+      const balance = await filecoin.getBalance(
+        KNOWN_TYPE_0_ADDRESS[Network.TEST],
+      )
       expect(balance.isGreaterThanOrEqualTo(0)).toBeTruthy()
     })
 
     test('should return an instance of filecoin number', async () => {
-      const balance = await filecoin.getBalance(KNOWN_TYPE_0_ADDRESS['t'])
+      const balance = await filecoin.getBalance(
+        KNOWN_TYPE_0_ADDRESS[Network.TEST],
+      )
       expect(balance instanceof FilecoinNumber).toBeTruthy()
     })
 
@@ -57,11 +63,13 @@ describe('provider', () => {
     })
 
     test('should throw when an object is passed as an address', async () => {
-      expect(filecoin.getBalance({ key: 'val' })).rejects.toThrow()
+      // @ts-ignore
+      await expect(filecoin.getBalance({ key: 'val' })).rejects.toThrow()
     })
 
     test('should throw when null is passed as an address', async () => {
-      expect(filecoin.getBalance(null)).rejects.toThrow()
+      // @ts-ignore
+      await expect(filecoin.getBalance(null)).rejects.toThrow()
     })
   })
 
@@ -69,26 +77,27 @@ describe('provider', () => {
     beforeEach(jest.clearAllMocks)
 
     test('should throw with the wrong number of params', async () => {
+      // @ts-ignore
       await expect(filecoin.sendMessage()).rejects.toThrow()
 
       const message = new Message({
-        to: KNOWN_TYPE_0_ADDRESS['t'],
-        from: KNOWN_TYPE_0_ADDRESS['t'],
+        to: KNOWN_TYPE_0_ADDRESS[Network.TEST],
+        from: KNOWN_TYPE_0_ADDRESS[Network.TEST],
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
         nonce: 0,
       })
 
-      await expect(
-        filecoin.sendMessage(message.toLotusType()),
-      ).rejects.toThrow()
+      // @ts-ignore
+      const sendMessage = filecoin.sendMessage(message.toLotusType())
+      await expect(sendMessage).rejects.toThrow()
     })
 
     test.skip('should return the tx CID', async () => {
-      const nonce = await filecoin.getNonce(KNOWN_TYPE_0_ADDRESS['t'])
+      const nonce = await filecoin.getNonce(KNOWN_TYPE_0_ADDRESS[Network.TEST])
       const message = new Message({
-        to: KNOWN_TYPE_0_ADDRESS['t'],
-        from: KNOWN_TYPE_0_ADDRESS['t'],
+        to: KNOWN_TYPE_0_ADDRESS[Network.TEST],
+        from: KNOWN_TYPE_0_ADDRESS[Network.TEST],
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
         nonce,
@@ -100,10 +109,11 @@ describe('provider', () => {
 
       const { Signature } = await filecoin.jsonRpcEngine.request(
         'WalletSignMessage',
-        KNOWN_TYPE_0_ADDRESS['t'],
+        KNOWN_TYPE_0_ADDRESS[Network.TEST],
         msgWithGas,
       )
 
+      // @ts-ignore
       const tx = await filecoin.sendMessage(msgWithGas, Signature.Data)
       const cid = new CID(tx['/'])
       expect(CID.isCID(cid)).toBe(true)
@@ -115,6 +125,7 @@ describe('provider', () => {
 
     test('should throw if an invalid address is provided', async () => {
       await expect(filecoin.getNonce('e01')).rejects.toThrow()
+      // @ts-ignore
       await expect(filecoin.getNonce()).rejects.toThrow()
     })
 
@@ -132,6 +143,7 @@ describe('provider', () => {
   describe('gas API', () => {
     describe('gasEstimateFeeCap', () => {
       test('it should return a filecoin number object, greater than 0', async () => {
+        // @ts-ignore
         const res = await filecoin.gasEstimateFeeCap({
           To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
           From:
@@ -148,6 +160,7 @@ describe('provider', () => {
       })
 
       test('it should return a filecoin number object, greater than 0 when no gas limit is passed', async () => {
+        // @ts-ignore
         const res = await filecoin.gasEstimateFeeCap({
           To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
           From:
@@ -163,19 +176,21 @@ describe('provider', () => {
       })
 
       test('it should fail if no or an invalid Lotus message is passed', async () => {
-        await expect(
-          filecoin.gasEstimateFeeCap({
-            To:
-              't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
-          }),
-        ).rejects.toThrow()
+        // @ts-ignore
+        const gasEstimateFeeCap = filecoin.gasEstimateFeeCap({
+          To:
+            't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+        })
+        await expect(gasEstimateFeeCap).rejects.toThrow()
 
+        // @ts-ignore
         await expect(filecoin.gasEstimateFeeCap()).rejects.toThrow()
       })
     })
 
     describe('gasEstimateGasLimit', () => {
       test('it should return a gas limit, instance of filecoin number', async () => {
+        // @ts-ignore
         const res = await filecoin.gasEstimateGasLimit({
           To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
           From:
@@ -191,19 +206,21 @@ describe('provider', () => {
       })
 
       test('it should throw when no or an invalid message is passed', async () => {
-        await expect(
-          filecoin.gasEstimateGasLimit({
-            To:
-              't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
-          }),
-        ).rejects.toThrow()
+        // @ts-ignore
+        const gasEstimateGasLimit = filecoin.gasEstimateGasLimit({
+          To:
+            't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+        })
+        await expect(gasEstimateGasLimit).rejects.toThrow()
 
+        // @ts-ignore
         await expect(filecoin.gasEstimateGasLimit()).rejects.toThrow()
       })
     })
 
     describe('gasEstimateGasPremium', () => {
       test('it returns a gas premium filecoin number instance', async () => {
+        // @ts-ignore
         const res = await filecoin.gasEstimateGasPremium({
           To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
           From:
@@ -220,6 +237,7 @@ describe('provider', () => {
       })
 
       test('it returns a gas premium filecoin number instance when no gas limit is passed', async () => {
+        // @ts-ignore
         const res = await filecoin.gasEstimateGasPremium({
           To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
           From:
@@ -235,12 +253,14 @@ describe('provider', () => {
       })
 
       test('it throws when no message is passed', async () => {
+        // @ts-ignore
         await expect(filecoin.gasEstimateGasPremium()).rejects.toThrow()
       })
     })
 
     describe('gasEstimateMessageGas', () => {
       test('it returns a filecoin message instance, with all gas fields filled in', async () => {
+        // @ts-ignore
         const message = await filecoin.gasEstimateMessageGas({
           To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
           From:
@@ -259,6 +279,7 @@ describe('provider', () => {
       })
 
       test('it returns the message with the same from address', async () => {
+        // @ts-ignore
         const message = await filecoin.gasEstimateMessageGas({
           To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
           From:
@@ -276,16 +297,18 @@ describe('provider', () => {
       })
 
       test('it throws when no or an invalid message is passed', async () => {
-        await expect(
-          filecoin.gasEstimateMessageGas({
-            To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
-          }),
-        ).rejects.toThrow()
+        // @ts-ignore
+        const gasEstimateMessageGas = filecoin.gasEstimateMessageGas({
+          To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
+        })
+        await expect(gasEstimateMessageGas).rejects.toThrow()
 
+        // @ts-ignore
         await expect(filecoin.gasEstimateMessageGas()).rejects.toThrow()
       })
 
       test('it attaches the right network prefix to the from and to address', async () => {
+        // @ts-ignore
         const message = await filecoin.gasEstimateMessageGas({
           To: 'f1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
           From:
@@ -309,7 +332,7 @@ describe('provider', () => {
     const unknownFromAddr = 'f1p2bkuq7inahavovyaxkcpuk6kucfmjtixutd3jq'
     test('it attaches a known actor address when the From address does not exist on chain', async () => {
       const message = new Message({
-        to: KNOWN_TYPE_0_ADDRESS['t'],
+        to: KNOWN_TYPE_0_ADDRESS[Network.TEST],
         from: unknownFromAddr,
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
@@ -326,8 +349,8 @@ describe('provider', () => {
 
     test('it does not change from address when it already exists on chain', async () => {
       const message = new Message({
-        to: KNOWN_TYPE_0_ADDRESS['t'],
-        from: KNOWN_TYPE_0_ADDRESS['t'],
+        to: KNOWN_TYPE_0_ADDRESS[Network.TEST],
+        from: KNOWN_TYPE_0_ADDRESS[Network.TEST],
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
         nonce: 0,
@@ -338,12 +361,12 @@ describe('provider', () => {
       )
 
       expect(clonedMsg.From).toBeTruthy()
-      expect(clonedMsg.From).toBe(KNOWN_TYPE_0_ADDRESS['t'])
+      expect(clonedMsg.From).toBe(KNOWN_TYPE_0_ADDRESS[Network.TEST])
     })
 
     test('it does not mutate the original object', async () => {
       const message = new Message({
-        to: KNOWN_TYPE_0_ADDRESS['t'],
+        to: KNOWN_TYPE_0_ADDRESS[Network.TEST],
         from: unknownFromAddr,
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
@@ -359,7 +382,7 @@ describe('provider', () => {
 
   describe('gasCalcTxFee', () => {
     test('it returns a FilecoinNumber representing the transaction fee paid by the sender', async () => {
-      const gasUsed = 435268
+      const gasUsed = '435268'
       const gasLimit = 541585
       const baseFee = '957893300'
       const gasFeeCap = '10076485367'
@@ -377,7 +400,7 @@ describe('provider', () => {
     })
 
     test('it returns a FilecoinNumber representing the transaction fee paid by the sender (2)', async () => {
-      const gasUsed = 8092030
+      const gasUsed = '8092030'
       const gasLimit = 10115037
       const baseFee = '100'
       const gasFeeCap = '150825'
@@ -395,7 +418,7 @@ describe('provider', () => {
     })
 
     test('it returns a FilecoinNumber representing the transaction fee paid by the sender (3)', async () => {
-      const gasUsed = 44955257
+      const gasUsed = '44955257'
       const gasLimit = 55745321
       const baseFee = '1089215916'
       const gasFeeCap = '896936264'
@@ -451,8 +474,8 @@ describe('provider', () => {
   describe('gasEstimateMaxFee', () => {
     test('it returns a max fee and the message with gas params', async () => {
       const message = new Message({
-        to: KNOWN_TYPE_1_ADDRESS['t'],
-        from: KNOWN_TYPE_1_ADDRESS['t'],
+        to: KNOWN_TYPE_1_ADDRESS[Network.TEST],
+        from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
         nonce: 0,

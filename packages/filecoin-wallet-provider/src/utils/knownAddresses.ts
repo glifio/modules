@@ -1,18 +1,17 @@
-const MAINNET = 'f'
-const TESTNET = 't'
+import { Network } from '../wallet-sub-provider'
 
 export const KNOWN_TYPE_1_ADDRESS = {
-  [MAINNET]: 'f1ojyfm5btrqq63zquewexr4hecynvq6yjyk5xv6q',
-  [TESTNET]: 't1ojyfm5btrqq63zquewexr4hecynvq6yjyk5xv6q',
+  [Network.MAIN]: 'f1ojyfm5btrqq63zquewexr4hecynvq6yjyk5xv6q',
+  [Network.TEST]: 't1ojyfm5btrqq63zquewexr4hecynvq6yjyk5xv6q',
 }
 export const KNOWN_TYPE_3_ADDRESS = {
-  [MAINNET]:
+  [Network.MAIN]:
     'f3wigf2pezolpxu6z6724afsek5kbntsnjgn7zo745qn5volj2wgutbldgqxbblhshegzid2d25ev6tqabilsq',
-  [TESTNET]:
+  [Network.TEST]:
     't3wigf2pezolpxu6z6724afsek5kbntsnjgn7zo745qn5volj2wgutbldgqxbblhshegzid2d25ev6tqabilsq',
 }
 
 export const KNOWN_TYPE_0_ADDRESS = {
-  [TESTNET]: 't023667',
-  [MAINNET]: 'f023667',
+  [Network.TEST]: 't023667',
+  [Network.MAIN]: 'f023667',
 }
