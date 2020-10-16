@@ -28,6 +28,14 @@ export interface LotusMessage {
   Params?: string | string[] | null
 }
 
+export interface SignedLotusMessage {
+  Message: LotusMessage
+  Signature: {
+    Type: number
+    Data: string
+  }
+}
+
 export interface MessageObj {
   to: string
   from: string

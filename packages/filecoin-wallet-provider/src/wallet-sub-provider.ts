@@ -1,8 +1,7 @@
-import { LotusMessage } from '@glif/filecoin-message'
-import { SignedMessage } from "./utils/signed-message";
+import { LotusMessage, SignedLotusMessage } from '@glif/filecoin-message'
 
 export interface WalletSubProvider {
   newAccount?(): Promise<string>
   getAccounts(): Promise<string[]>
-  sign(from: string, message: LotusMessage): Promise<SignedMessage>
+  sign(from: string, message: LotusMessage): Promise<SignedLotusMessage>
 }

@@ -1,7 +1,6 @@
 import LotusRpcEngine from '@glif/filecoin-rpc-client'
-import { LotusMessage } from '@glif/filecoin-message'
+import { LotusMessage, SignedLotusMessage } from '@glif/filecoin-message'
 import { WalletSubProvider } from '../wallet-sub-provider'
-import { SignedMessage } from '../utils/signed-message'
 
 export type LocalNodeProviderOptions = {
   apiAddress: string
@@ -30,8 +29,8 @@ export class LocalNodeProvider implements WalletSubProvider {
     return this.jsonRpcEngine.request<string[]>('WalletList')
   }
 
-  sign(from: string, message: LotusMessage): Promise<SignedMessage> {
-    return this.jsonRpcEngine.request<SignedMessage>(
+  sign(from: string, message: LotusMessage): Promise<SignedLotusMessage> {
+    return this.jsonRpcEngine.request<SignedLotusMessage>(
       'WalletSignMessage',
       from,
       message,
