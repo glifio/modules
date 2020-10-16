@@ -10,7 +10,7 @@ import {
 import BigNumber from 'bignumber.js'
 import { WalletSubProvider } from './index'
 import { LotusMessage, Message } from '@glif/filecoin-message'
-import { Network } from './wallet-sub-provider'
+import { Network } from './utils/network'
 
 export class Filecoin {
   public wallet: WalletSubProvider
@@ -27,7 +27,10 @@ export class Filecoin {
 
   getBalance = async (address: string): Promise<FilecoinNumber> => {
     checkAddressString(address)
-    const balance = await this.jsonRpcEngine.request('WalletBalance', address)
+    const balance = await this.jsonRpcEngine.request<string>(
+      'WalletBalance',
+      address,
+    )
     return new FilecoinNumber(balance, 'attofil')
   }
 
@@ -46,11 +49,10 @@ export class Filecoin {
       },
     }
 
-    const tx: Promise<{ '/': string }> = await this.jsonRpcEngine.request(
+    return this.jsonRpcEngine.request<{ '/': string }>(
       'MpoolPush',
       signedMessage,
     )
-    return tx
   }
 
   getNonce = async (address: string): Promise<number> => {
@@ -106,7 +108,7 @@ export class Filecoin {
   ): Promise<FilecoinNumber> => {
     if (!message) throw new Error('No message provided.')
     const clonedMsg = await this.cloneMsgWOnChainFromAddr(message)
-    const feeCap = await this.jsonRpcEngine.request(
+    const feeCap = await this.jsonRpcEngine.request<string>(
       'GasEstimateFeeCap',
       clonedMsg,
       0,
@@ -122,7 +124,7 @@ export class Filecoin {
     if (!message) throw new Error('No message provided.')
     const clonedMsg = await this.cloneMsgWOnChainFromAddr(message)
 
-    const gasLimit = await this.jsonRpcEngine.request(
+    const gasLimit = await this.jsonRpcEngine.request<string>(
       'GasEstimateGasLimit',
       clonedMsg,
       null,
@@ -138,7 +140,7 @@ export class Filecoin {
     if (!message) throw new Error('No message provided.')
     const clonedMsg = await this.cloneMsgWOnChainFromAddr(message)
 
-    const gasPremium = await this.jsonRpcEngine.request(
+    const gasPremium = await this.jsonRpcEngine.request<string>(
       'GasEstimateGasPremium',
       numBlocksIncluded,
       clonedMsg.From,

@@ -7,7 +7,7 @@ import {
   KNOWN_TYPE_0_ADDRESS,
   KNOWN_TYPE_1_ADDRESS,
 } from '../utils'
-import { Network } from '../wallet-sub-provider'
+import { Network } from '../utils/network'
 
 const testSubProviderInstance = {
   getAccounts: jest.fn().mockImplementation(() => {}),

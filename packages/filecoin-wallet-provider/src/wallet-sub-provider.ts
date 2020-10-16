@@ -1,20 +1,8 @@
 import { LotusMessage } from '@glif/filecoin-message'
-
-export enum Network {
-  MAIN = 'f',
-  TEST = 't',
-}
-
-// path looks like m/44'/461'/1'/0/0/0 -
-export type SignFunc = (message: LotusMessage, path: string) => Promise<string>
-
-export type GetAccountsFunc = (
-  network: Network,
-  startIdx: number,
-  endIdx: number,
-) => string[]
+import { SignedMessage } from "./utils/signed-message";
 
 export interface WalletSubProvider {
-  sign: SignFunc
-  getAccounts: GetAccountsFunc
+  newAccount?(): Promise<string>
+  getAccounts(): Promise<string[]>
+  sign(from: string, message: LotusMessage): Promise<SignedMessage>
 }
