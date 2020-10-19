@@ -25,7 +25,7 @@ export interface LotusMessage {
   GasLimit: number
   GasFeeCap: string
   Method: number
-  Params?: string | string[] | null
+  Params?: string | string[]
 }
 
 export interface SignedLotusMessage {
