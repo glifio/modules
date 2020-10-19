@@ -4,7 +4,8 @@
   "description": "The Filecoin message type, used to transfer tokens and make state changes.",
   "main": "./dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "clean": "../../node_modules/.bin/rimraf dist/",
+    "build": "npm run clean && tsc",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
     "test": "npm run build && jest",
