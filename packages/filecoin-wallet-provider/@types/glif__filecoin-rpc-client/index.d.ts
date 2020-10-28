@@ -4,15 +4,13 @@ declare module '@glif/filecoin-rpc-client' {
     token?: string
   }
 
-  export interface Request {
-    (methodName: string, ...params: any[]): Promise<any>
-  }
+  export type Request<A> = (methodName: string, ...params: any[]) => Promise<A>
 
   export default class LotusRpcEngine {
     constructor(config: Config)
-    request: Request
     apiAddress: string
     token: string
+    request<A>(methodName: string, ...params: any[]): Promise<A>
   }
   export function request(address: string): boolean
 }

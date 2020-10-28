@@ -49,7 +49,7 @@ class LotusRpcEngine {
       {
         jsonrpc: '2.0',
         method: `Filecoin.${method}`,
-        params: [...params],
+        params: params,
         id: 1,
       },
       {

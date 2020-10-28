@@ -10,7 +10,8 @@
     "test": "lerna run test"
   },
   "devDependencies": {
-    "lerna": "^3.22.1"
+    "lerna": "^3.22.1",
+    "rimraf": "^3.0.2"
   },
   "license": "(Apache-2.0 OR MIT)"
 }
