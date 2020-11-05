@@ -13,7 +13,7 @@ const filecoinNumber = new FilecoinNumber('10000', 'attofil')
 // filecoinNumber is an instance of BigNumber, so you can use it as such
 filecoinNumber.multiply(7)
 
-// it comes with 2 additional instance methods for showing the filecoin number in attofil or fil
+// it comes with 2 additional instance methods for showing the filecoin number as a string in attofil or fil
 const inPicoFil = filecoinNumber.toPicoFil()
 const inAttoFil = filecoinNumber.toAttoFil()
 const inFil = filecoinNumber.toFil()
