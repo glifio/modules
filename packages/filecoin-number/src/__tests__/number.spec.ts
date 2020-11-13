@@ -1,4 +1,5 @@
-const { FilecoinNumber, BigNumber } = require('../')
+import { BigNumber } from 'bignumber.js'
+import { FilecoinNumber } from '../FilecoinNumber'
 
 describe('FilecoinNumber', () => {
   test('should return instances of BigNumber', () => {
@@ -24,6 +25,7 @@ describe('FilecoinNumber', () => {
   })
 
   test('throws error if no denom is specified in constructor', () => {
+    // @ts-ignore
     expect(() => new FilecoinNumber('0.005')).toThrow()
   })
 

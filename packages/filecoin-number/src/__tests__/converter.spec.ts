@@ -1,12 +1,13 @@
-const BigNumber = require('bignumber.js')
-const { Converter, FilecoinNumber } = require('../')
+import { BigNumber } from 'bignumber.js'
+import { Converter } from '../Converter'
+import { FilecoinNumber } from '../FilecoinNumber'
 
 describe('Converter', () => {
   describe('Setup', () => {
-    let converter
+    let converter: Converter
     beforeAll(() => {
       converter = new Converter('USD', {
-        apiURL: 'https://cmc-proxy.openworklabs.com',
+        apiURL: 'https://cmc-proxy.openworklabs.com'
       })
     })
 
@@ -26,22 +27,26 @@ describe('Converter', () => {
       await converter.cacheConversionRate()
       const cachedConversionRate = converter.getCachedConversionRate()
       expect(cachedConversionRate instanceof BigNumber).toBe(true)
+      // @ts-ignore
       expect(typeof cachedConversionRate.toNumber()).toBe('number')
     })
   })
 
   describe('toFIL', () => {
-    let converter
+    let converter: Converter
     beforeAll(async () => {
       converter = new Converter('USD', {
-        apiURL: 'https://cmc-proxy.openworklabs.com',
+        apiURL: 'https://cmc-proxy.openworklabs.com'
       })
       await converter.cacheConversionRate()
     })
 
     test('throws an error if a type other than BN, Number, or String is passed', () => {
+      // @ts-ignore
       expect(() => converter.toFIL({ hello: 'there' })).toThrow()
+      // @ts-ignore
       expect(() => converter.toFIL([1])).toThrow()
+      // @ts-ignore
       expect(() => converter.toFIL(new Set([1]))).toThrow()
     })
 
@@ -60,24 +65,27 @@ describe('Converter', () => {
     test('Calculates the conversion by dividing the Filecoin amount by the rate', () => {
       const fil = new BigNumber(100)
       const rate = converter.getCachedConversionRate()
-      const manuallyCalculatedFilAmount = fil.dividedBy(rate)
+      const manuallyCalculatedFilAmount = fil.dividedBy(rate!)
       const filAmount = converter.toFIL(100)
       expect(filAmount.toString()).toBe(manuallyCalculatedFilAmount.toString())
     })
   })
 
   describe('fromFIL', () => {
-    let converter
+    let converter: Converter
     beforeAll(async () => {
       converter = new Converter('USD', {
-        apiURL: 'https://cmc-proxy.openworklabs.com',
+        apiURL: 'https://cmc-proxy.openworklabs.com'
       })
       await converter.cacheConversionRate()
     })
 
     test('throws an error if a type other than BN, Number, or String is passed', () => {
+      // @ts-ignore
       expect(() => converter.fromFIL({ hello: 'there' })).toThrow()
+      // @ts-ignore
       expect(() => converter.fromFIL([1])).toThrow()
+      // @ts-ignore
       expect(() => converter.fromFIL(new Set([1]))).toThrow()
     })
 
@@ -96,7 +104,7 @@ describe('Converter', () => {
     test('Calculates the conversion by multiplying the Filecoin amount by the rate', () => {
       const fil = new BigNumber(100)
       const rate = converter.getCachedConversionRate()
-      const manuallyCalculatedFilAmount = fil.multipliedBy(rate)
+      const manuallyCalculatedFilAmount = fil.multipliedBy(rate!)
       const filAmount = converter.fromFIL(100)
       expect(filAmount.toString()).toBe(manuallyCalculatedFilAmount.toString())
     })

@@ -43,7 +43,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/glifio/modules/tree/primary/packages/filecoin-wallet-provider"
+    "url": "https://github.com/glifio/modules/tree/primary/packages/local-managed-provider"
   },
   "gitHead": "27ff58865a447fe70913209a04756cf5ca67d3df"
 }

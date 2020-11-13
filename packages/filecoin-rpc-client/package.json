@@ -36,6 +36,6 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/glifio/modules/tree/primary/packages/filecoin-address"
+    "url": "https://github.com/glifio/modules/tree/primary/packages/filecoin-rpc-client"
   }
 }
