@@ -1,10 +1,5 @@
-/**
- * @jest-environment node
- */
-const nock = require('nock')
-const LotusRpcEngine = require('..').default
-const { removeEmptyHeaders, throwIfErrors } = require('..')
-const expectThrowsAsync = require('./expectThrowsAsync')
+import nock from 'nock'
+import LotusRpcEngine, { removeEmptyHeaders, throwIfErrors } from '../index'
 
 const successfulResponse = {
   jsonrpc: '2.0',
@@ -61,27 +56,35 @@ describe('LotusRpcEngine', () => {
       apiAddress: 'https://proxy.openworklabs.com/rpc/v0',
     })
 
-    test('it passes the first argument as the jsonrpc method', done => {
+    test('it passes the first argument as the jsonrpc method', (done) => {
       const method = 'ChainHead'
       nock('https://proxy.openworklabs.com')
         .post('/rpc/v0')
         .reply(201, (uri, body) => {
-          expect(body.method).toBe(`Filecoin.${method}`)
+          if (typeof body !== 'string') {
+            expect(body.method).toBe(`Filecoin.${method}`)
+          } else {
+            throw new Error(`Body should be Record`)
+          }
           done()
         })
 
       lotus.request(method)
     })
 
-    test('passes the subsequent arguments as the jsonrpc params', done => {
+    test('passes the subsequent arguments as the jsonrpc params', (done) => {
       const method = 'FakeJsonRpcMethodWithMultipleParams'
       const param1 = 't1mbk7q6gm4rjlndfqw6f2vkfgqotres3fgicb2uq'
       const param2 = 'RIP Kobe.'
       nock('https://proxy.openworklabs.com')
         .post('/rpc/v0')
         .reply(201, (uri, body) => {
-          expect(body.params[0]).toBe(param1)
-          expect(body.params[1]).toBe(param2)
+          if (typeof body !== 'string') {
+            expect(body.params[0]).toBe(param1)
+            expect(body.params[1]).toBe(param2)
+          } else {
+            throw new Error(`Body should be Record`)
+          }
           done()
         })
 
@@ -106,8 +109,7 @@ describe('LotusRpcEngine', () => {
         .post('/rpc/v0')
         .reply(201, () => errorResponse)
 
-      await expectThrowsAsync(
-        () => lotus.request(method),
+      await expect(lotus.request(method)).rejects.toThrow(
         errorResponse.error.message,
       )
     })
