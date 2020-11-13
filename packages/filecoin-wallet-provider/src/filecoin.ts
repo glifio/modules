@@ -10,7 +10,7 @@ import {
 import BigNumber from 'bignumber.js'
 import { WalletSubProvider } from './index'
 import { LotusMessage, Message } from '@glif/filecoin-message'
-import { Network } from './utils/network'
+import { Network } from '@glif/filecoin-address'
 
 export class Filecoin {
   public wallet: WalletSubProvider
