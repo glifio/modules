@@ -22,7 +22,8 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
     "cross-env": "^7.0.2",
-    "@types/jest": "^26.0.15"
+    "@types/jest": "^26.0.15",
+    "eslint-plugin-jsx-a11y": "^6.4.1"
   },
   "license": "(Apache-2.0 OR MIT)"
 }

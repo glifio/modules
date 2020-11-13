@@ -1,15 +1,11 @@
-const { newFromString, encode, validateAddressString } = require('../')
-const {
-  IDAddresses,
-  secp256k1Addresses,
+import * as uint8arrays from 'uint8arrays'
+import {
+  actorAddresses,
   BLSAddresses,
-  actorAddresses
-} = require('./constants')
-
-function typedArraysAreEqual(a, b) {
-  if (a.byteLength !== b.byteLength) return false
-  return a.every((val, i) => val === b[i])
-}
+  IDAddresses,
+  secp256k1Addresses
+} from './constants'
+import { encode, newFromString, validateAddressString } from '../index'
 
 describe('address', () => {
   describe('newFromString', () => {
@@ -17,7 +13,7 @@ describe('address', () => {
       IDAddresses.forEach(item => {
         const address = newFromString(item.string)
         expect(
-          typedArraysAreEqual(
+          uint8arrays.equals(
             Uint8Array.from(address.str),
             item.decodedByteArray
           )
@@ -29,7 +25,7 @@ describe('address', () => {
       secp256k1Addresses.forEach(item => {
         const address = newFromString(item.string)
         expect(
-          typedArraysAreEqual(
+          uint8arrays.equals(
             Uint8Array.from(address.str),
             item.decodedByteArray
           )
@@ -41,7 +37,7 @@ describe('address', () => {
       BLSAddresses.forEach(item => {
         const address = newFromString(item.string)
         expect(
-          typedArraysAreEqual(
+          uint8arrays.equals(
             Uint8Array.from(address.str),
             item.decodedByteArray
           )
@@ -53,7 +49,7 @@ describe('address', () => {
       actorAddresses.forEach(item => {
         const address = newFromString(item.string)
         expect(
-          typedArraysAreEqual(
+          uint8arrays.equals(
             Uint8Array.from(address.str),
             item.decodedByteArray
           )

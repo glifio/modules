@@ -1,4 +1,4 @@
-const IDAddresses = [
+export const IDAddresses = [
   {
     string: 't00',
     decodedByteArray: Uint8Array.of(0, 0)
@@ -45,7 +45,7 @@ const IDAddresses = [
   }
 ]
 
-const secp256k1Addresses = [
+export const secp256k1Addresses = [
   {
     string: 't15ihq5ibzwki2b4ep2f46avlkrqzhpqgtga7pdrq',
     decodedByteArray: Uint8Array.of(
@@ -178,7 +178,7 @@ const secp256k1Addresses = [
   }
 ]
 
-const actorAddresses = [
+export const actorAddresses = [
   {
     string: 't24vg6ut43yw2h2jqydgbg2xq7x6f4kub3bg6as6i',
     decodedByteArray: Uint8Array.of(
@@ -311,7 +311,7 @@ const actorAddresses = [
   }
 ]
 
-const BLSAddresses = [
+export const BLSAddresses = [
   {
     string:
       't3vvmn62lofvhjd2ugzca6sof2j2ubwok6cj4xxbfzz4yuxfkgobpihhd2thlanmsh3w2ptld2gqkn2jvlss4a',
@@ -588,10 +588,3 @@ const BLSAddresses = [
     )
   }
 ]
-
-module.exports = {
-  IDAddresses,
-  secp256k1Addresses,
-  actorAddresses,
-  BLSAddresses
-}

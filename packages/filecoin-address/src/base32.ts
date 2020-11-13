@@ -1,7 +1,9 @@
+import * as uint8arrays from 'uint8arrays'
+
 /* eslint-disable */
 // From js-multibase (https://github.com/multiformats/js-multibase)
 
-function decode(input, alphabet) {
+function decode(input: string, alphabet: string): Uint8Array {
   input = input.replace(new RegExp('=', 'g'), '')
   const { length } = input
 
@@ -21,10 +23,13 @@ function decode(input, alphabet) {
     }
   }
 
-  return output.buffer
+  return output
 }
 
-function encode(buffer, alphabet) {
+function encode(
+  buffer: Uint8Array | ArrayBufferLike,
+  alphabet: string
+): string {
   const length = buffer.byteLength
   const view = new Uint8Array(buffer)
   const padding = alphabet.indexOf('=') === alphabet.length - 1
@@ -60,16 +65,16 @@ function encode(buffer, alphabet) {
   return output
 }
 
-module.exports = function base32(alphabet) {
+export function base32(alphabet: string) {
   return {
-    encode(input) {
+    encode(input: Uint8Array | string): string {
       if (typeof input === 'string') {
-        return encode(Buffer.from(input), alphabet)
+        return encode(uint8arrays.fromString(input), alphabet)
       }
 
       return encode(input, alphabet)
     },
-    decode(input) {
+    decode(input: string): Uint8Array {
       for (const char of input) {
         if (alphabet.indexOf(char) < 0) {
           throw new Error('invalid base32 character')
