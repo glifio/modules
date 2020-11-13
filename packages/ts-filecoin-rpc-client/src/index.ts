@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios'
 
-type Headers = Record<string, string>
+type Headers = Record<string, string | null | undefined>
 
 export function removeEmptyHeaders(headers: Headers): Headers {
   const newHeaders: Headers = {}
@@ -37,17 +37,17 @@ export function deleteHeaders(opts: AxiosRequestConfig): AxiosRequestConfig {
 
 export type LotusRpcEngineConfig = {
   apiAddress?: string
-  token: string
+  token?: string
   axiosOpts?: AxiosRequestConfig
 }
 
 export default class LotusRpcEngine {
   readonly apiAddress: string
-  readonly token: string
+  readonly token?: string
   readonly axiosOpts: AxiosRequestConfig
   readonly headers: Headers
 
-  constructor(config: LotusRpcEngineConfig) {
+  constructor(config?: LotusRpcEngineConfig) {
     if (!config)
       throw new Error(
         'Must pass a config object to the LotusRpcEngine constructor.'
