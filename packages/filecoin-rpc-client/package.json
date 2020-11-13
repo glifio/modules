@@ -5,6 +5,7 @@
   "main": "./dist/index.js",
   "browser": "./lib/index.js",
   "module": "./module/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "../../node_modules/.bin/rimraf dist/ lib/ module/",
     "build-browser": "../../node_modules/.bin/cross-env BABEL_ENV=browser babel ./src --out-dir ./lib --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",

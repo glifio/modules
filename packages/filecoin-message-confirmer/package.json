@@ -3,6 +3,7 @@
   "version": "1.0.0-beta.5",
   "description": "A service for confirming a Filecoin message.",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "../../node_modules/.bin/rimraf dist/",
     "build": "npm run clean && tsc",

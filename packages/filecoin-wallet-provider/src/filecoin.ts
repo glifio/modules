@@ -1,4 +1,4 @@
-import LotusRpcEngine, { Config } from '@glif/filecoin-rpc-client'
+import LotusRpcEngine, { LotusRpcEngineConfig } from '@glif/filecoin-rpc-client'
 import { FilecoinNumber } from '@glif/filecoin-number'
 import { checkAddressString } from '@glif/filecoin-address'
 import {
@@ -18,7 +18,7 @@ export class Filecoin {
 
   constructor(
     provider: WalletSubProvider,
-    config: Config = { apiAddress: 'http://127.0.0.1:1234/rpc/v0' },
+    config: LotusRpcEngineConfig = { apiAddress: 'http://127.0.0.1:1234/rpc/v0' },
   ) {
     if (!provider) throw new Error('No provider provided.')
     this.wallet = provider
