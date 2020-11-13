@@ -1,0 +1,41 @@
+{
+  "name": "@glif/ts-filecoin-address",
+  "version": "1.0.0-beta.5",
+  "description": "The Filecoin address type",
+  "main": "./dist/index.js",
+  "browser": "./lib/index.js",
+  "module": "./module/index.js",
+  "scripts": {
+    "clean": "../../node_modules/.bin/rimraf dist/ lib/ module/",
+    "build-browser": "../../node_modules/.bin/cross-env BABEL_ENV=browser babel ./src --out-dir ./lib --extensions \".ts,.tsx\" --source-maps",
+    "build-module": "cross-env BABEL_ENV=module babel ./src --out-dir ./module --extensions \".ts,.tsx\" --source-maps",
+    "build": "npm run clean && npm run build-types && npm run build-node && npm run build-browser && npm run build-module",
+    "prepublishOnly": "npm run build",
+    "test": "npm run build && jest",
+    "test:watch": "npm run build && jest --watch",
+    "type-check": "../../node_modules/.bin/tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build-types": "../../node_modules/.bin/tsc --emitDeclarationOnly",
+    "build-node": "babel ./src/ --out-dir ./dist/ --extensions \".ts,.tsx\" --source-maps"
+  },
+  "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
+  "license": "(Apache-2.0 OR MIT)",
+  "dependencies": {
+    "blakejs": "1.1.0",
+    "borc": "2.1.1",
+    "leb128": "0.0.5",
+    "uint8arrays": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.15"
+  },
+  "files": [
+    "dist",
+    "lib",
+    "module"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/glifio/modules/tree/primary/packages/filecoin-address"
+  }
+}
