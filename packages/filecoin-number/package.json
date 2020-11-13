@@ -24,7 +24,7 @@
   "dependencies": {
     "@babel/polyfill": "7.7.0",
     "bent": "7.1.0",
-    "bignumber.js": "9.0.0"
+    "bignumber.js": "^9.0.1"
   },
   "devDependencies": {
     "@types/bent": "^7.3.2"

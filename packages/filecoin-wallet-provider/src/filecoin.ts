@@ -7,7 +7,7 @@ import {
   KNOWN_TYPE_1_ADDRESS,
   KNOWN_TYPE_3_ADDRESS,
 } from './utils'
-import BigNumber from 'bignumber.js'
+import { BigNumber } from 'bignumber.js'
 import { WalletSubProvider } from './index'
 import { LotusMessage, Message } from '@glif/filecoin-message'
 import { Network } from '@glif/filecoin-address'
