@@ -8,7 +8,7 @@
     "sourceMap": true,
     "outDir": "dist/",
     "sourceRoot": "src/",
-    // "isolatedModules": true,
+    "isolatedModules": true,
     "strict": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -23,5 +23,5 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["**/*.test.ts", "**/*.spec.ts"]
+  "exclude": ["**/*.test.ts", "**/*.spec.ts", "**/__tests__"]
 }
