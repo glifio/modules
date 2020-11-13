@@ -17,6 +17,7 @@
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
     "@glif/filecoin-message": "^1.0.0-beta.5",
+    "@glif/filecoin-address": "^1.0.0-beta.5",
     "@glif/filecoin-wallet-provider": "^1.0.0-beta.5",
     "@zondax/filecoin-signing-tools": "^0.12.0",
     "bignumber.js": "^9.0.1",

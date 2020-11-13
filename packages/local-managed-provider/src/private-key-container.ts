@@ -1,4 +1,4 @@
-import { Network } from '@glif/filecoin-wallet-provider'
+import { Network } from '@glif/filecoin-address'
 import uint8arrays from 'uint8arrays'
 import { ExtendedKey, MessageParams } from '@zondax/filecoin-signing-tools'
 import { SignedLotusMessage } from '@glif/filecoin-message'

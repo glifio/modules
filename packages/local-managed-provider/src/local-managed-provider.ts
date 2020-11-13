@@ -1,5 +1,6 @@
-import { Network, WalletSubProvider } from '@glif/filecoin-wallet-provider'
+import { WalletSubProvider } from '@glif/filecoin-wallet-provider'
 import { SignedLotusMessage } from '@glif/filecoin-message'
+import { Network } from '@glif/filecoin-address'
 import { MessageParams } from '@zondax/filecoin-signing-tools'
 import {
   privateKeyContainer,
