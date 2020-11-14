@@ -1,6 +1,6 @@
 import React from 'react'
 
-import InlineBox from './inlineBox'
+import InlineBox from './InlineBox'
 
 export default {
   title: 'Box/InlineBox',
