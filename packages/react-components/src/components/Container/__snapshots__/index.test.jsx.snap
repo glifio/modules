@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Container renders the container 1`] = `
+.c0 {
+  min-width: 0;
+  box-sizing: border-box;
+  position: flex;
+  border: 1;
+  padding: 4px;
+  background-color: blue;
+  width: auto;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+@media screen and (min-width:40em) {
+  .c0 {
+    padding: 16px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c0 {
+    padding: 32px;
+  }
+}
+
+<div
+  class="c0"
+  width="auto"
+>
+  <div>
+    Hello world
+  </div>
+</div>
+`;
