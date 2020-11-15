@@ -1,4 +1,6 @@
 import React from 'react'
+import theme from '../theme'
+import ThemeProvider from '../ThemeProvider'
 
 import Box from './index'
 
@@ -8,7 +10,9 @@ export default {
   decorators: [
     (Story) => (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Story />
+        <ThemeProvider theme={theme}>
+          <Story />
+        </ThemeProvider>
       </div>
     )
   ],
