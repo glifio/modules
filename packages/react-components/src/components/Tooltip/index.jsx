@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react'
 import styled from 'styled-components'
-import { color, border } from 'styled-system'
+import { color as styledColor, border } from 'styled-system'
 import { string } from 'prop-types'
 import { Text } from '../Typography'
 import Box from '../Box'
@@ -21,7 +21,7 @@ const TooltipContent = styled(Box)`
   box-shadow: ${props => props.theme.shadows[2]};
   z-index: ${props => props.theme.zIndices[1]};
   transition: 0.24s ease-in-out;
-  ${color}
+  ${styledColor}
 `
 
 const TooltipContainer = styled.a`
@@ -36,11 +36,11 @@ const TooltipContainer = styled.a`
   justify-content: center;
   cursor: pointer;
   transition: 0.24s ease-in-out;
-  ${color}
+  ${styledColor}
   ${border}
 
  &:hover ~ ${TooltipContent} {
-      display: block;
+    display: block;
   }
 
   /* Paired with the ontouchstart declaration inside the TooltipContent markup, this is intended to enable touch devices to trigger the tooltip, too. While we don't support touch devices at launch, we may do so in the future. Ref: https://stackoverflow.com/a/37150472/2839730 */
