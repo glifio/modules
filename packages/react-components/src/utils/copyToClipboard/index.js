@@ -10,10 +10,19 @@ const fallbackCopyTextToClipboard = text => {
 }
 
 export default text =>
-  new Promise((resolve, reject) => {
+  new Promise((resolve, _) => {
     if (!navigator.clipboard) {
-      fallbackCopyTextToClipboard(text)
+      try {
+        fallbackCopyTextToClipboard(text)
+      } catch (e) {
+        /* swallow */
+      }
       return resolve()
     }
-    navigator.clipboard.writeText(text).then(resolve, reject)
+    navigator.clipboard
+      .writeText(text)
+      .then(resolve)
+      .catch(e => {
+        /* swallow */
+      })
   })
