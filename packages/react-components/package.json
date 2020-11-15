@@ -25,7 +25,6 @@
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "@glif/filecoin-address": "^1.0.0-beta.5",
     "@storybook/addon-actions": "^6.1.0-beta.2",
     "@storybook/addon-essentials": "^6.1.0-beta.2",
     "@storybook/addon-links": "^6.1.0-beta.2",
@@ -34,6 +33,7 @@
     "@testing-library/react": "^11.0.4",
     "babel-eslint": "^10.0.3",
     "babel-jest": "25.1.0",
+    "bignumber.js": "^9.0.1",
     "eslint": "^7.13.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.10.0",
@@ -54,9 +54,12 @@
     "rimraf": "^3.0.2"
   },
   "dependencies": {
+    "bip39": "^3.0.3",
     "prop-types": "^15.7.2",
     "styled-components": "^5.2.1",
-    "styled-system": "^5.1.5"
+    "styled-system": "^5.1.5",
+    "@glif/filecoin-address": "^1.0.0-beta.5",
+    "@glif/filecoin-number": "^1.0.0-beta.5"
   },
   "peerDependencies": {
     "react": "^16.0.0 || ^17.0.0",
