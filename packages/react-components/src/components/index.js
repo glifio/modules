@@ -33,7 +33,7 @@ export { default as InlineBox } from './Box/InlineBox'
 // export * from './Menu'
 export * from './Icons'
 export * from './IconButtons'
-// export * from './MnemonicWord'
+export * from './MnemonicWord'
 
 export * from './Layout'
 
