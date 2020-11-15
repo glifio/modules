@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeaderGlyph renders the story 1`] = `
+.c0 {
+  display: inline-block;
+  height: 48px;
+  width: 48px;
+  background-color: #5E26FF;
+}
+
+.c1 {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  background-color: rgb(26,0,102);
+  -webkit-animation-name: bvGDKI;
+  animation-name: bvGDKI;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+<span
+  class="c0"
+>
+  <span
+    class="c1"
+  />
+</span>
+`;
