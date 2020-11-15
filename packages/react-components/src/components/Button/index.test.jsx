@@ -60,7 +60,7 @@ describe('Button', () => {
       <ThemeProvider theme={theme}>
         <Button
           title='Next'
-          disabled={true}
+          disabled
           onClick={() => {}}
           variant='primary'
           ml={2}
