@@ -9,9 +9,7 @@ export default {
   decorators: [
     (Story) => (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <ThemeProvider theme={theme}>
-          <Story />
-        </ThemeProvider>
+        <ThemeProvider theme={theme}>{Story()}</ThemeProvider>
       </div>
     )
   ],
