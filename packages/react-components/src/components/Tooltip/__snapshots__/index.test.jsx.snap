@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StyledATag storybook example renders 1`] = `
+.c2 {
+  color: #000;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.4;
+  font-family: RT-Alias-Grotesk;
+  margin: 0;
+}
+
+.c6 {
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.4;
+  font-family: RT-Alias-Grotesk;
+  text-align: left;
+  display: block;
+  margin: 0;
+}
+
+.c0 {
+  min-width: 0;
+  box-sizing: border-box;
+  position: relative;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.c4 {
+  min-width: 0;
+  box-sizing: border-box;
+  border-radius: 16px;
+  padding: 8px;
+}
+
+.c5 {
+  position: absolute;
+  display: none;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  max-width: 200px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  bottom: -48px;
+  padding: 8px;
+  color: #262626;
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: rgba(0,0,0,0.10) 0px 0.7px 2.2px -8px,rgba(0,0,0,0.04) 0px 1.7px 2.4px,rgba(0,0,0,0.106) 0px 3.1px 8.1px,rgba(0,0,0,0.04) 0px 5.6px 12.1px,rgba(0,0,0,0.045) 0px 4.4px 4.8px,rgba(0,0,0,0.05) 0px 15px 41px;
+  z-index: 9;
+  -webkit-transition: 0.24s ease-in-out;
+  transition: 0.24s ease-in-out;
+}
+
+.c1 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: transparent;
+  border-radius: 100px;
+  border: 1px solid;
+  width: 24px;
+  height: 24px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-transition: 0.24s ease-in-out;
+  transition: 0.24s ease-in-out;
+  color: #000;
+}
+
+.c1:hover ~ .c3 {
+  display: block;
+}
+
+<div
+  class="c0"
+>
+  <a
+    aria-label="Tooltip"
+    class="c1"
+    color="core.black"
+  >
+    <p
+      class="c2"
+      color="core.black"
+      font-family="RT-Alias-Grotesk"
+      font-size="2"
+      font-weight="400"
+    >
+      ?
+    </p>
+  </a>
+  <div
+    class="c3 c4 c5"
+  >
+    <p
+      class="c6"
+      display="block"
+      font-family="RT-Alias-Grotesk"
+      font-size="2"
+      font-weight="400"
+    >
+      tooltip content
+    </p>
+  </div>
+</div>
+`;
