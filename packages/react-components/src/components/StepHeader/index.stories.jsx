@@ -2,11 +2,12 @@ import React from 'react'
 import theme from '../theme'
 import ThemeProvider from '../ThemeProvider'
 
-import LoaderGlyph from './index'
+import StepHeader from './index'
+import { IconSend } from '../Icons'
 
 export default {
-  title: 'LoaderGlyph/LoaderGlyph',
-  component: LoaderGlyph,
+  title: 'StepHeader/StepHeader',
+  component: StepHeader,
   decorators: [
     Story => (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -17,7 +18,16 @@ export default {
   parameters: { actions: { argTypesRegex: '^on.*' } }
 }
 
-const Template = args => <LoaderGlyph {...args} />
+const Template = args => <StepHeader {...args} />
 
 export const Base = Template.bind({})
-Base.args = {}
+Base.args = {
+  loading: false,
+  currentStep: 1,
+  totalSteps: 5,
+  error: false,
+  showStepper: true,
+  title: 'A Title',
+  glyphAcronym: 'LoL',
+  icon: IconSend
+}

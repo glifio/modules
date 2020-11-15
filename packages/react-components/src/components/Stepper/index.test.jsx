@@ -4,7 +4,7 @@ import theme from '../theme'
 import ThemeProvider from '../ThemeProvider'
 import { Base } from './index.stories'
 
-describe('LoaderGlyph', () => {
+describe('Stepper', () => {
   afterEach(cleanup)
 
   test('renders the story', () => {
