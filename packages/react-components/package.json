@@ -15,7 +15,8 @@
     "start": "npm run watch",
     "storybook": "start-storybook -s ./src/public -p 6006",
     "prepare": "npm run build",
-    "jest-dev": "jest --watch"
+    "jest-dev": "jest --watch",
+    "update-snapshots": "npm run test:jest -- -u"
   },
   "contributors": [
     "Bret Comnes <bcomnes@gmail.com> (https://bret.io/)"
