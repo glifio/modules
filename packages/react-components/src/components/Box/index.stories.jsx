@@ -8,7 +8,7 @@ export default {
   title: 'Box/Box',
   component: Box,
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <ThemeProvider theme={theme}>{Story()}</ThemeProvider>
       </div>
@@ -17,7 +17,7 @@ export default {
   parameters: { actions: { argTypesRegex: '^on.*' } }
 }
 
-const Template = (args) => <Box {...args} />
+const Template = args => <Box {...args} />
 
 export const Base = Template.bind({})
 Base.args = {

@@ -7,7 +7,7 @@ export default {
   title: 'Card/Card',
   component: Card,
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <ThemeProvider theme={theme}>{Story()}</ThemeProvider>
       </div>
@@ -16,7 +16,7 @@ export default {
   parameters: { actions: { argTypesRegex: '^on.*' } }
 }
 
-const Template = (args) => <Card {...args} />
+const Template = args => <Card {...args} />
 
 export const Base = Template.bind({})
 Base.args = {

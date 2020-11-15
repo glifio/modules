@@ -11,7 +11,7 @@ describe('Box', () => {
   test('renders the story', () => {
     const { container } = render(
       <ThemeProvider theme={theme}>
-        <Base {...Base.args}/>
+        <Base {...Base.args} />
       </ThemeProvider>
     )
     expect(container.firstChild).toMatchSnapshot()

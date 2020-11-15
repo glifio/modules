@@ -8,7 +8,7 @@ export default {
   title: 'IconButtons/ButtonClose',
   component: ButtonClose,
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <ThemeProvider theme={theme}>{Story()}</ThemeProvider>
       </div>
@@ -18,7 +18,7 @@ export default {
   argTypes: { onClick: { action: 'clicked' } }
 }
 
-const Template = (args) => <ButtonClose {...args} />
+const Template = args => <ButtonClose {...args} />
 
 export const ButtonCloseStory = Template.bind({})
 ButtonCloseStory.args = {

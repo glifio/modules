@@ -8,7 +8,7 @@ export default {
   title: 'IconButtons/ButtonCopyAccountAddress',
   component: ButtonCopyAccountAddress,
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <ThemeProvider theme={theme}>{Story()}</ThemeProvider>
       </div>
@@ -18,7 +18,7 @@ export default {
   argTypes: { onClick: { action: 'clicked' } }
 }
 
-const Template = (args) => <ButtonCopyAccountAddress {...args} />
+const Template = args => <ButtonCopyAccountAddress {...args} />
 
 export const ButtonCopyAccountAddressStory = Template.bind({})
 ButtonCopyAccountAddressStory.args = {

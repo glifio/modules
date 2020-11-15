@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { layout, margin, color } from 'styled-system'
 
-export default styled.div.attrs((props) => ({
+export default styled.div.attrs(props => ({
   maxWidth: props.maxWidth || 13,
   minWidth: props.minWidth || 11,
   ...props

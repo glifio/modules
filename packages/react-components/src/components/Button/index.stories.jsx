@@ -7,7 +7,7 @@ export default {
   title: 'Button/Button',
   component: Button,
   decorators: [
-    (Story) => (
+    Story => (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <ThemeProvider theme={theme}>{Story()}</ThemeProvider>
       </div>
@@ -16,7 +16,7 @@ export default {
   parameters: { actions: { argTypesRegex: '^on.*' } }
 }
 
-const Template = (args) => <Button {...args} />
+const Template = args => <Button {...args} />
 
 export const Base = Template.bind({})
 Base.args = {
