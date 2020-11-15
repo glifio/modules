@@ -35,6 +35,6 @@ export * from './Icons'
 export * from './IconButtons'
 // export * from './MnemonicWord'
 
-// export * from './Layout'
+export * from './Layout'
 
 export * from './Typography'
