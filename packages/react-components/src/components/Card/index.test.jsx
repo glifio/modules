@@ -10,7 +10,7 @@ describe('Card', () => {
     expect(container.firstChild).toMatchSnapshot()
   })
 
-  test('storybook example redners', () => {
+  test('storybook example renders', () => {
     render(<Base {...Base.args} />)
   })
 
