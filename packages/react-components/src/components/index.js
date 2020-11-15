@@ -37,4 +37,4 @@ export * from './IconButtons'
 
 // export * from './Layout'
 
-// export * from './Typography'
+export * from './Typography'

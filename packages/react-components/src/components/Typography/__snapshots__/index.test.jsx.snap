@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonClose BigTitle story renders 1`] = `
+.c0 {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  font-family: RT-Alias-Medium;
+  margin: 0;
+}
+
+<h1
+  class="c0"
+  font-family="RT-Alias-Medium"
+  font-size="6"
+  font-weight="700"
+>
+  Hello world
+</h1>
+`;
+
+exports[`ButtonClose Header story renders 1`] = `
+.c0 {
+  font-size: calc(48px + (48 - 32) * (100vw - 360px) / (1440 - 360));
+  font-weight: 400;
+  line-height: 1.2;
+  font-family: RT-Alias-Grotesk;
+  margin: 0;
+}
+
+<h1
+  class="c0"
+  font-family="RT-Alias-Grotesk"
+  font-size="calc(48px + (48 - 32) * (100vw - 360px) / (1440 - 360))"
+  font-weight="400"
+>
+  Hello world
+</h1>
+`;
+
+exports[`ButtonClose Highlight story renders 1`] = `
+.c0 {
+  border-radius: 100px;
+  padding: 0rem 1rem;
+  margin-right: 0.5rem;
+  background-color: #ffc0cb;
+  font-size: 16px;
+}
+
+<span
+  class="c0"
+  font-size="16"
+>
+  Hello world
+</span>
+`;
+
+exports[`ButtonClose Label story renders 1`] = `
+.c0 {
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1;
+  font-family: RT-Alias-Grotesk;
+  margin: 0;
+}
+
+<h4
+  class="c0"
+  font-family="RT-Alias-Grotesk"
+  font-size="2"
+  font-weight="400"
+>
+  Hello world
+</h4>
+`;
+
+exports[`ButtonClose Num story renders 1`] = `
+<h2
+  class=""
+>
+  Hello world
+</h2>
+`;
+
+exports[`ButtonClose Text story renders 1`] = `
+.c0 {
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.4;
+  font-family: RT-Alias-Grotesk;
+}
+
+<p
+  class="c0"
+  font-family="RT-Alias-Grotesk"
+  font-size="2"
+  font-weight="400"
+>
+  Hello world
+</p>
+`;
+
+exports[`ButtonClose Title story renders 1`] = `
+.c0 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.2;
+  font-family: RT-Alias-Grotesk;
+  margin: 0;
+}
+
+<h2
+  class="c0"
+  font-family="RT-Alias-Grotesk"
+  font-size="4"
+  font-weight="400"
+>
+  Hello world
+</h2>
+`;
