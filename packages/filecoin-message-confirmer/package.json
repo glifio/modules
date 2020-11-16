@@ -8,7 +8,7 @@
     "clean": "../../node_modules/.bin/rimraf dist/",
     "build": "npm run clean && tsc",
     "lint": "tslint -p tsconfig.json",
-    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
     "test": "npm run build && jest --detectOpenHandles",
     "test:watch": "npm run build && jest --watch"
   },
