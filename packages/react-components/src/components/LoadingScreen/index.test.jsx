@@ -2,10 +2,9 @@ import React from 'react'
 import { cleanup, render } from '@testing-library/react'
 import theme from '../theme'
 import ThemeProvider from '../ThemeProvider'
-
 import { Base } from './index.stories'
 
-describe('HeaderGlyph', () => {
+describe('LoadingScreen', () => {
   afterEach(cleanup)
 
   test('renders the story', () => {

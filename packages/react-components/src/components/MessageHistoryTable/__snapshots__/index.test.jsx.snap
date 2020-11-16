@@ -1,0 +1,1888 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageHistoryTable renders the MessageHistoryTable 1`] = `
+.c0 {
+  min-width: 0;
+  box-sizing: border-box;
+  border: none;
+  width: 100%;
+}
+
+.c1 {
+  min-width: 0;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c2 {
+  min-width: 0;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.c5 {
+  min-width: 0;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid;
+  padding: 8px;
+  padding-left: 24px;
+  padding-right: 24px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c3 {
+  color: #5E26FF;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.4;
+  font-family: RT-Alias-Grotesk;
+}
+
+.c15 {
+  color: #262626;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.4;
+  font-family: RT-Alias-Grotesk;
+  margin: 0;
+}
+
+.c17 {
+  color: #666666;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.4;
+  font-family: RT-Alias-Grotesk;
+  margin: 0;
+}
+
+.c21 {
+  color: #262626;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.4;
+  font-family: RT-Alias-Grotesk;
+  margin: 0;
+}
+
+.c14 {
+  color: #262626;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1;
+  font-family: RT-Alias-Grotesk;
+  margin: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.c4 {
+  cursor: pointer;
+  border: 1px solid #262626;
+  background-color: transparent;
+  border-color: #262626;
+  color: #262626;
+  font-size: 1.125rem;
+  -webkit-transition: 0.18s ease-in-out;
+  transition: 0.18s ease-in-out;
+  border-radius: 4px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+  height: 48px;
+  border-width: 1px;
+  border-radius: 4px;
+}
+
+.c4:hover {
+  opacity: 0.8;
+}
+
+.c6 {
+  border-color: #e8ecf7;
+  background-color: #e8ecf7;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-transition: 0.18s ease-in-out;
+  transition: 0.18s ease-in-out;
+}
+
+.c6:hover {
+  cursor: pointer;
+  background-color: #EFF3FD;
+}
+
+.c7 {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.c9 {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c12 {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-left: 8px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c18 {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-box-flex: 999;
+  -webkit-flex-grow: 999;
+  -ms-flex-positive: 999;
+  flex-grow: 999;
+}
+
+.c19 {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-left: 16px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+}
+
+.c22 {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-left: 16px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c10 {
+  position: relative;
+}
+
+.c13 {
+  overflow: hidden;
+  width: 160px;
+}
+
+.c16 {
+  margin-left: 24px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 160px;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c20 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c11 {
+  width: 34;
+  height: 34;
+}
+
+@media screen and (min-width:40em) {
+  .c12 {
+    margin-left: 24px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c12 {
+    margin-left: 32px;
+  }
+}
+
+<div
+  class="c0"
+  width="100%"
+>
+  <div
+    class="c1"
+    display="flex"
+  >
+    <div
+      class="c2"
+      display="flex"
+    >
+      <p
+        class="c3"
+        color="core.primary"
+        font-family="RT-Alias-Grotesk"
+        font-size="2"
+        font-weight="400"
+      >
+        Transaction History
+      </p>
+    </div>
+    <button
+      class="c4"
+      font-size="3"
+      height="6"
+      type="button"
+    >
+      Refresh
+    </button>
+  </div>
+  <div
+    class="c5 c6"
+  >
+    <ul
+      class="c7"
+    >
+      <li
+        class="c8"
+        display="flex"
+      >
+        <ul
+          class="c9"
+          display="flex"
+        >
+          <li
+            class="c10"
+          >
+            <svg
+              class="c11"
+              fill="none"
+              height="34"
+              viewBox="0 0 34 34"
+              width="34"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="#5E26FF"
+                height="32"
+                rx="16"
+                width="32"
+                x="1"
+                y="1"
+              />
+              <path
+                d="M16.4343 23.5657C16.7467 23.8781 17.2533 23.8781 17.5657 23.5657L22.6569 18.4745C22.9693 18.1621 22.9693 17.6556 22.6569 17.3431C22.3444 17.0307 21.8379 17.0307 21.5255 17.3431L17 21.8686L12.4745 17.3431C12.1621 17.0307 11.6556 17.0307 11.3431 17.3431C11.0307 17.6556 11.0307 18.1621 11.3431 18.4745L16.4343 23.5657ZM16.2 11L16.2 23L17.8 23L17.8 11L16.2 11Z"
+                fill="#E8ECF7"
+              />
+              <rect
+                height="32"
+                rx="16"
+                stroke="#5E26FF"
+                stroke-width="1.4"
+                width="32"
+                x="1"
+                y="1"
+              />
+            </svg>
+          </li>
+        </ul>
+        <ul
+          class="c12"
+          display="flex"
+        >
+          <li
+            class="c13"
+            overflow="hidden"
+            width="9"
+          >
+            <h4
+              class="c14"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              From
+            </h4>
+            <p
+              class="c15"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="3"
+              font-weight="400"
+            >
+              t1kh7x ... nf45jq
+            </p>
+          </li>
+          <li
+            class="c16"
+            display="flex"
+            width="9"
+          >
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              2:30:30
+            </p>
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              Jan 12, 2020
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul
+      class="c18"
+      display="flex"
+    >
+      <li
+        class=""
+      >
+        <ul
+          class="c19"
+          display="flex"
+        >
+          <li
+            class="c20"
+            display="flex"
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              0
+            </p>
+          </li>
+        </ul>
+      </li>
+      <li
+        class=""
+      >
+        <ul
+          class="c22"
+          display="flex"
+        >
+          <li
+            class=""
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              FIL
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c5 c6"
+  >
+    <ul
+      class="c7"
+    >
+      <li
+        class="c8"
+        display="flex"
+      >
+        <ul
+          class="c9"
+          display="flex"
+        >
+          <li
+            class="c10"
+          >
+            <svg
+              class="c11"
+              fill="none"
+              height="34"
+              viewBox="0 0 34 34"
+              width="34"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="#5E26FF"
+                height="32"
+                rx="16"
+                width="32"
+                x="1"
+                y="1"
+              />
+              <path
+                d="M16.4343 23.5657C16.7467 23.8781 17.2533 23.8781 17.5657 23.5657L22.6569 18.4745C22.9693 18.1621 22.9693 17.6556 22.6569 17.3431C22.3444 17.0307 21.8379 17.0307 21.5255 17.3431L17 21.8686L12.4745 17.3431C12.1621 17.0307 11.6556 17.0307 11.3431 17.3431C11.0307 17.6556 11.0307 18.1621 11.3431 18.4745L16.4343 23.5657ZM16.2 11L16.2 23L17.8 23L17.8 11L16.2 11Z"
+                fill="#E8ECF7"
+              />
+              <rect
+                height="32"
+                rx="16"
+                stroke="#5E26FF"
+                stroke-width="1.4"
+                width="32"
+                x="1"
+                y="1"
+              />
+            </svg>
+          </li>
+        </ul>
+        <ul
+          class="c12"
+          display="flex"
+        >
+          <li
+            class="c13"
+            overflow="hidden"
+            width="9"
+          >
+            <h4
+              class="c14"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              From
+            </h4>
+            <p
+              class="c15"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="3"
+              font-weight="400"
+            >
+              t1kh7x ... nf45jq
+            </p>
+          </li>
+          <li
+            class="c16"
+            display="flex"
+            width="9"
+          >
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              2:30:30
+            </p>
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              Jan 12, 2020
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul
+      class="c18"
+      display="flex"
+    >
+      <li
+        class=""
+      >
+        <ul
+          class="c19"
+          display="flex"
+        >
+          <li
+            class="c20"
+            display="flex"
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              0.2
+            </p>
+          </li>
+        </ul>
+      </li>
+      <li
+        class=""
+      >
+        <ul
+          class="c22"
+          display="flex"
+        >
+          <li
+            class=""
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              FIL
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c5 c6"
+  >
+    <ul
+      class="c7"
+    >
+      <li
+        class="c8"
+        display="flex"
+      >
+        <ul
+          class="c9"
+          display="flex"
+        >
+          <li
+            class="c10"
+          >
+            <svg
+              class="c11"
+              fill="none"
+              height="34"
+              viewBox="0 0 34 34"
+              width="34"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="#5E26FF"
+                height="32"
+                rx="16"
+                width="32"
+                x="1"
+                y="1"
+              />
+              <path
+                d="M16.4343 23.5657C16.7467 23.8781 17.2533 23.8781 17.5657 23.5657L22.6569 18.4745C22.9693 18.1621 22.9693 17.6556 22.6569 17.3431C22.3444 17.0307 21.8379 17.0307 21.5255 17.3431L17 21.8686L12.4745 17.3431C12.1621 17.0307 11.6556 17.0307 11.3431 17.3431C11.0307 17.6556 11.0307 18.1621 11.3431 18.4745L16.4343 23.5657ZM16.2 11L16.2 23L17.8 23L17.8 11L16.2 11Z"
+                fill="#E8ECF7"
+              />
+              <rect
+                height="32"
+                rx="16"
+                stroke="#5E26FF"
+                stroke-width="1.4"
+                width="32"
+                x="1"
+                y="1"
+              />
+            </svg>
+          </li>
+        </ul>
+        <ul
+          class="c12"
+          display="flex"
+        >
+          <li
+            class="c13"
+            overflow="hidden"
+            width="9"
+          >
+            <h4
+              class="c14"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              From
+            </h4>
+            <p
+              class="c15"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="3"
+              font-weight="400"
+            >
+              t1kh7x ... nf45jq
+            </p>
+          </li>
+          <li
+            class="c16"
+            display="flex"
+            width="9"
+          >
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              2:30:30
+            </p>
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              Jan 12, 2020
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul
+      class="c18"
+      display="flex"
+    >
+      <li
+        class=""
+      >
+        <ul
+          class="c19"
+          display="flex"
+        >
+          <li
+            class="c20"
+            display="flex"
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              0.000001
+            </p>
+          </li>
+        </ul>
+      </li>
+      <li
+        class=""
+      >
+        <ul
+          class="c22"
+          display="flex"
+        >
+          <li
+            class=""
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              FIL
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c5 c6"
+  >
+    <ul
+      class="c7"
+    >
+      <li
+        class="c8"
+        display="flex"
+      >
+        <ul
+          class="c9"
+          display="flex"
+        >
+          <li
+            class="c10"
+          >
+            <svg
+              class="c11"
+              fill="none"
+              height="34"
+              viewBox="0 0 34 34"
+              width="34"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="#5E26FF"
+                height="32"
+                rx="16"
+                width="32"
+                x="1"
+                y="1"
+              />
+              <path
+                d="M16.4343 23.5657C16.7467 23.8781 17.2533 23.8781 17.5657 23.5657L22.6569 18.4745C22.9693 18.1621 22.9693 17.6556 22.6569 17.3431C22.3444 17.0307 21.8379 17.0307 21.5255 17.3431L17 21.8686L12.4745 17.3431C12.1621 17.0307 11.6556 17.0307 11.3431 17.3431C11.0307 17.6556 11.0307 18.1621 11.3431 18.4745L16.4343 23.5657ZM16.2 11L16.2 23L17.8 23L17.8 11L16.2 11Z"
+                fill="#E8ECF7"
+              />
+              <rect
+                height="32"
+                rx="16"
+                stroke="#5E26FF"
+                stroke-width="1.4"
+                width="32"
+                x="1"
+                y="1"
+              />
+            </svg>
+          </li>
+        </ul>
+        <ul
+          class="c12"
+          display="flex"
+        >
+          <li
+            class="c13"
+            overflow="hidden"
+            width="9"
+          >
+            <h4
+              class="c14"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              From
+            </h4>
+            <p
+              class="c15"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="3"
+              font-weight="400"
+            >
+              t1kh7x ... nf45jq
+            </p>
+          </li>
+          <li
+            class="c16"
+            display="flex"
+            width="9"
+          >
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              2:30:30
+            </p>
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              Jan 12, 2020
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul
+      class="c18"
+      display="flex"
+    >
+      <li
+        class=""
+      >
+        <ul
+          class="c19"
+          display="flex"
+        >
+          <li
+            class="c20"
+            display="flex"
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              0.0000001
+            </p>
+          </li>
+        </ul>
+      </li>
+      <li
+        class=""
+      >
+        <ul
+          class="c22"
+          display="flex"
+        >
+          <li
+            class=""
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              FIL
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c5 c6"
+  >
+    <ul
+      class="c7"
+    >
+      <li
+        class="c8"
+        display="flex"
+      >
+        <ul
+          class="c9"
+          display="flex"
+        >
+          <li
+            class="c10"
+          >
+            <svg
+              class="c11"
+              fill="none"
+              height="34"
+              viewBox="0 0 34 34"
+              width="34"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="#5E26FF"
+                height="32"
+                rx="16"
+                width="32"
+                x="1"
+                y="1"
+              />
+              <path
+                d="M16.4343 23.5657C16.7467 23.8781 17.2533 23.8781 17.5657 23.5657L22.6569 18.4745C22.9693 18.1621 22.9693 17.6556 22.6569 17.3431C22.3444 17.0307 21.8379 17.0307 21.5255 17.3431L17 21.8686L12.4745 17.3431C12.1621 17.0307 11.6556 17.0307 11.3431 17.3431C11.0307 17.6556 11.0307 18.1621 11.3431 18.4745L16.4343 23.5657ZM16.2 11L16.2 23L17.8 23L17.8 11L16.2 11Z"
+                fill="#E8ECF7"
+              />
+              <rect
+                height="32"
+                rx="16"
+                stroke="#5E26FF"
+                stroke-width="1.4"
+                width="32"
+                x="1"
+                y="1"
+              />
+            </svg>
+          </li>
+        </ul>
+        <ul
+          class="c12"
+          display="flex"
+        >
+          <li
+            class="c13"
+            overflow="hidden"
+            width="9"
+          >
+            <h4
+              class="c14"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              From
+            </h4>
+            <p
+              class="c15"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="3"
+              font-weight="400"
+            >
+              t1kh7x ... nf45jq
+            </p>
+          </li>
+          <li
+            class="c16"
+            display="flex"
+            width="9"
+          >
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              2:30:30
+            </p>
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              Jan 12, 2020
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul
+      class="c18"
+      display="flex"
+    >
+      <li
+        class=""
+      >
+        <ul
+          class="c19"
+          display="flex"
+        >
+          <li
+            class="c20"
+            display="flex"
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              0.00001
+            </p>
+          </li>
+        </ul>
+      </li>
+      <li
+        class=""
+      >
+        <ul
+          class="c22"
+          display="flex"
+        >
+          <li
+            class=""
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              FIL
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c5 c6"
+  >
+    <ul
+      class="c7"
+    >
+      <li
+        class="c8"
+        display="flex"
+      >
+        <ul
+          class="c9"
+          display="flex"
+        >
+          <li
+            class="c10"
+          >
+            <svg
+              class="c11"
+              fill="none"
+              height="34"
+              viewBox="0 0 34 34"
+              width="34"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="#5E26FF"
+                height="32"
+                rx="16"
+                width="32"
+                x="1"
+                y="1"
+              />
+              <path
+                d="M16.4343 23.5657C16.7467 23.8781 17.2533 23.8781 17.5657 23.5657L22.6569 18.4745C22.9693 18.1621 22.9693 17.6556 22.6569 17.3431C22.3444 17.0307 21.8379 17.0307 21.5255 17.3431L17 21.8686L12.4745 17.3431C12.1621 17.0307 11.6556 17.0307 11.3431 17.3431C11.0307 17.6556 11.0307 18.1621 11.3431 18.4745L16.4343 23.5657ZM16.2 11L16.2 23L17.8 23L17.8 11L16.2 11Z"
+                fill="#E8ECF7"
+              />
+              <rect
+                height="32"
+                rx="16"
+                stroke="#5E26FF"
+                stroke-width="1.4"
+                width="32"
+                x="1"
+                y="1"
+              />
+            </svg>
+          </li>
+        </ul>
+        <ul
+          class="c12"
+          display="flex"
+        >
+          <li
+            class="c13"
+            overflow="hidden"
+            width="9"
+          >
+            <h4
+              class="c14"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              From
+            </h4>
+            <p
+              class="c15"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="3"
+              font-weight="400"
+            >
+              t1kh7x ... nf45jq
+            </p>
+          </li>
+          <li
+            class="c16"
+            display="flex"
+            width="9"
+          >
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              2:30:30
+            </p>
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              Jan 12, 2020
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul
+      class="c18"
+      display="flex"
+    >
+      <li
+        class=""
+      >
+        <ul
+          class="c19"
+          display="flex"
+        >
+          <li
+            class="c20"
+            display="flex"
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              0.0001
+            </p>
+          </li>
+        </ul>
+      </li>
+      <li
+        class=""
+      >
+        <ul
+          class="c22"
+          display="flex"
+        >
+          <li
+            class=""
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              FIL
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c5 c6"
+  >
+    <ul
+      class="c7"
+    >
+      <li
+        class="c8"
+        display="flex"
+      >
+        <ul
+          class="c9"
+          display="flex"
+        >
+          <li
+            class="c10"
+          >
+            <svg
+              class="c11"
+              fill="none"
+              height="34"
+              viewBox="0 0 34 34"
+              width="34"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="#5E26FF"
+                height="32"
+                rx="16"
+                width="32"
+                x="1"
+                y="1"
+              />
+              <path
+                d="M16.4343 23.5657C16.7467 23.8781 17.2533 23.8781 17.5657 23.5657L22.6569 18.4745C22.9693 18.1621 22.9693 17.6556 22.6569 17.3431C22.3444 17.0307 21.8379 17.0307 21.5255 17.3431L17 21.8686L12.4745 17.3431C12.1621 17.0307 11.6556 17.0307 11.3431 17.3431C11.0307 17.6556 11.0307 18.1621 11.3431 18.4745L16.4343 23.5657ZM16.2 11L16.2 23L17.8 23L17.8 11L16.2 11Z"
+                fill="#E8ECF7"
+              />
+              <rect
+                height="32"
+                rx="16"
+                stroke="#5E26FF"
+                stroke-width="1.4"
+                width="32"
+                x="1"
+                y="1"
+              />
+            </svg>
+          </li>
+        </ul>
+        <ul
+          class="c12"
+          display="flex"
+        >
+          <li
+            class="c13"
+            overflow="hidden"
+            width="9"
+          >
+            <h4
+              class="c14"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              From
+            </h4>
+            <p
+              class="c15"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="3"
+              font-weight="400"
+            >
+              t1kh7x ... nf45jq
+            </p>
+          </li>
+          <li
+            class="c16"
+            display="flex"
+            width="9"
+          >
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              2:30:30
+            </p>
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              Jan 12, 2020
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul
+      class="c18"
+      display="flex"
+    >
+      <li
+        class=""
+      >
+        <ul
+          class="c19"
+          display="flex"
+        >
+          <li
+            class="c20"
+            display="flex"
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              0
+            </p>
+          </li>
+        </ul>
+      </li>
+      <li
+        class=""
+      >
+        <ul
+          class="c22"
+          display="flex"
+        >
+          <li
+            class=""
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              FIL
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c5 c6"
+  >
+    <ul
+      class="c7"
+    >
+      <li
+        class="c8"
+        display="flex"
+      >
+        <ul
+          class="c9"
+          display="flex"
+        >
+          <li
+            class="c10"
+          >
+            <svg
+              class="c11"
+              fill="none"
+              height="34"
+              viewBox="0 0 34 34"
+              width="34"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="#5E26FF"
+                height="32"
+                rx="16"
+                width="32"
+                x="1"
+                y="1"
+              />
+              <path
+                d="M16.4343 23.5657C16.7467 23.8781 17.2533 23.8781 17.5657 23.5657L22.6569 18.4745C22.9693 18.1621 22.9693 17.6556 22.6569 17.3431C22.3444 17.0307 21.8379 17.0307 21.5255 17.3431L17 21.8686L12.4745 17.3431C12.1621 17.0307 11.6556 17.0307 11.3431 17.3431C11.0307 17.6556 11.0307 18.1621 11.3431 18.4745L16.4343 23.5657ZM16.2 11L16.2 23L17.8 23L17.8 11L16.2 11Z"
+                fill="#E8ECF7"
+              />
+              <rect
+                height="32"
+                rx="16"
+                stroke="#5E26FF"
+                stroke-width="1.4"
+                width="32"
+                x="1"
+                y="1"
+              />
+            </svg>
+          </li>
+        </ul>
+        <ul
+          class="c12"
+          display="flex"
+        >
+          <li
+            class="c13"
+            overflow="hidden"
+            width="9"
+          >
+            <h4
+              class="c14"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              From
+            </h4>
+            <p
+              class="c15"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="3"
+              font-weight="400"
+            >
+              t1kh7x ... nf45jq
+            </p>
+          </li>
+          <li
+            class="c16"
+            display="flex"
+            width="9"
+          >
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              2:30:30
+            </p>
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              Jan 12, 2020
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul
+      class="c18"
+      display="flex"
+    >
+      <li
+        class=""
+      >
+        <ul
+          class="c19"
+          display="flex"
+        >
+          <li
+            class="c20"
+            display="flex"
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              0.5
+            </p>
+          </li>
+        </ul>
+      </li>
+      <li
+        class=""
+      >
+        <ul
+          class="c22"
+          display="flex"
+        >
+          <li
+            class=""
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              FIL
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c5 c6"
+  >
+    <ul
+      class="c7"
+    >
+      <li
+        class="c8"
+        display="flex"
+      >
+        <ul
+          class="c9"
+          display="flex"
+        >
+          <li
+            class="c10"
+          >
+            <svg
+              class="c11"
+              fill="none"
+              height="34"
+              viewBox="0 0 34 34"
+              width="34"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="#5E26FF"
+                height="32"
+                rx="16"
+                width="32"
+                x="1"
+                y="1"
+              />
+              <path
+                d="M16.4343 23.5657C16.7467 23.8781 17.2533 23.8781 17.5657 23.5657L22.6569 18.4745C22.9693 18.1621 22.9693 17.6556 22.6569 17.3431C22.3444 17.0307 21.8379 17.0307 21.5255 17.3431L17 21.8686L12.4745 17.3431C12.1621 17.0307 11.6556 17.0307 11.3431 17.3431C11.0307 17.6556 11.0307 18.1621 11.3431 18.4745L16.4343 23.5657ZM16.2 11L16.2 23L17.8 23L17.8 11L16.2 11Z"
+                fill="#E8ECF7"
+              />
+              <rect
+                height="32"
+                rx="16"
+                stroke="#5E26FF"
+                stroke-width="1.4"
+                width="32"
+                x="1"
+                y="1"
+              />
+            </svg>
+          </li>
+        </ul>
+        <ul
+          class="c12"
+          display="flex"
+        >
+          <li
+            class="c13"
+            overflow="hidden"
+            width="9"
+          >
+            <h4
+              class="c14"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              From
+            </h4>
+            <p
+              class="c15"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="3"
+              font-weight="400"
+            >
+              t1kh7x ... nf45jq
+            </p>
+          </li>
+          <li
+            class="c16"
+            display="flex"
+            width="9"
+          >
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              2:30:30
+            </p>
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              Jan 12, 2020
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul
+      class="c18"
+      display="flex"
+    >
+      <li
+        class=""
+      >
+        <ul
+          class="c19"
+          display="flex"
+        >
+          <li
+            class="c20"
+            display="flex"
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              0.00001
+            </p>
+          </li>
+        </ul>
+      </li>
+      <li
+        class=""
+      >
+        <ul
+          class="c22"
+          display="flex"
+        >
+          <li
+            class=""
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              FIL
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c5 c6"
+  >
+    <ul
+      class="c7"
+    >
+      <li
+        class="c8"
+        display="flex"
+      >
+        <ul
+          class="c9"
+          display="flex"
+        >
+          <li
+            class="c10"
+          >
+            <svg
+              class="c11"
+              fill="none"
+              height="34"
+              viewBox="0 0 34 34"
+              width="34"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="#5E26FF"
+                height="32"
+                rx="16"
+                width="32"
+                x="1"
+                y="1"
+              />
+              <path
+                d="M16.4343 23.5657C16.7467 23.8781 17.2533 23.8781 17.5657 23.5657L22.6569 18.4745C22.9693 18.1621 22.9693 17.6556 22.6569 17.3431C22.3444 17.0307 21.8379 17.0307 21.5255 17.3431L17 21.8686L12.4745 17.3431C12.1621 17.0307 11.6556 17.0307 11.3431 17.3431C11.0307 17.6556 11.0307 18.1621 11.3431 18.4745L16.4343 23.5657ZM16.2 11L16.2 23L17.8 23L17.8 11L16.2 11Z"
+                fill="#E8ECF7"
+              />
+              <rect
+                height="32"
+                rx="16"
+                stroke="#5E26FF"
+                stroke-width="1.4"
+                width="32"
+                x="1"
+                y="1"
+              />
+            </svg>
+          </li>
+        </ul>
+        <ul
+          class="c12"
+          display="flex"
+        >
+          <li
+            class="c13"
+            overflow="hidden"
+            width="9"
+          >
+            <h4
+              class="c14"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              From
+            </h4>
+            <p
+              class="c15"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="3"
+              font-weight="400"
+            >
+              t1kh7x ... nf45jq
+            </p>
+          </li>
+          <li
+            class="c16"
+            display="flex"
+            width="9"
+          >
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              2:30:30
+            </p>
+            <p
+              class="c17"
+              color="core.darkgray"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              Jan 12, 2020
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul
+      class="c18"
+      display="flex"
+    >
+      <li
+        class=""
+      >
+        <ul
+          class="c19"
+          display="flex"
+        >
+          <li
+            class="c20"
+            display="flex"
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              0.0001
+            </p>
+          </li>
+        </ul>
+      </li>
+      <li
+        class=""
+      >
+        <ul
+          class="c22"
+          display="flex"
+        >
+          <li
+            class=""
+          >
+            <p
+              class="c21"
+              color="core.nearblack"
+              font-family="RT-Alias-Grotesk"
+              font-size="2"
+              font-weight="400"
+            >
+              FIL
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+`;

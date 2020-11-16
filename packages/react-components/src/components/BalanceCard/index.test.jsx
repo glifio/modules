@@ -11,9 +11,10 @@ describe('BalanceCard', () => {
   afterEach(cleanup)
 
   test('renders the story', () => {
+    const mockOnSend = jest.fn()
     const { container } = render(
       <ThemeProvider theme={theme}>
-        <Base {...Base.args} />
+        <Base {...Base.args} onSend={mockOnSend} />
       </ThemeProvider>
     )
     expect(container.firstChild).toMatchSnapshot()
