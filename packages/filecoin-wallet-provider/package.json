@@ -6,8 +6,11 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "../../node_modules/.bin/rimraf dist/",
-    "build": "npm run clean && ../../node_modules/.bin/tsc --project tsconfig.json",
-    "lint": "tslint -p tsconfig.json",
+    "build-browser": "../../node_modules/.bin/cross-env BABEL_ENV=browser ../../node_modules/.bin/babel ./src --out-dir ./lib --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
+    "build-module": "../../node_modules/.bin/cross-env BABEL_ENV=module ../../node_modules/.bin/babel ./src --out-dir ./module --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
+    "build-node": "../../node_modules/.bin/babel ./src/ --out-dir ./dist/ --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
+    "build-types": "../../node_modules/.bin/tsc --emitDeclarationOnly",
+    "build": "npm run clean && npm run build-types && npm run build-node && npm run build-browser && npm run build-module",    "lint": "tslint -p tsconfig.json",
     "prepublishOnly": "npm run build",
     "test:build": "npm run build && jest",
     "test": "npm run build && jest",
@@ -33,7 +36,9 @@
     "tslint-config-prettier": "^1.18.0"
   },
   "files": [
-    "dist"
+    "dist",
+    "lib",
+    "module"
   ],
   "repository": {
     "type": "git",
