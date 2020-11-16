@@ -22,8 +22,8 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "axios": "^0.21.0",
-    "@babel/runtime": "^7.12.5"
+    "axios": "0.21.0",
+    "@babel/runtime": "7.12.5"
   },
   "devDependencies": {
     "nock": "^13.0.5",

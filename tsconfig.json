@@ -18,5 +18,5 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["**/*.test.ts", "**/*.spec.ts", "**/__tests__"]
+  "exclude": ["**/*.test.ts", "**/*.spec.ts", "**/__tests__", "build"]
 }

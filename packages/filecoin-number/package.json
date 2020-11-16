@@ -23,8 +23,8 @@
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
     "@babel/polyfill": "7.7.0",
-    "bent": "7.1.0",
-    "bignumber.js": "^9.0.1"
+    "bent": "7.3.12",
+    "bignumber.js": "9.0.1"
   },
   "devDependencies": {
     "@types/bent": "^7.3.2"

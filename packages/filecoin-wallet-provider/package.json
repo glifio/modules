@@ -21,7 +21,7 @@
     "@glif/filecoin-message": "^1.0.0-beta.5",
     "@glif/filecoin-number": "^1.0.0-beta.5",
     "@glif/filecoin-rpc-client": "^1.0.0-beta.5",
-    "bignumber.js": "^9.0.1"
+    "bignumber.js": "9.0.1"
   },
   "devDependencies": {
     "cids": "^1.0.0",
