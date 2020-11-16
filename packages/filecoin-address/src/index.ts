@@ -5,8 +5,8 @@ import * as uint8arrays from 'uint8arrays'
 import { Protocol } from './protocol'
 import { Network } from './network'
 
-export * from './network'
-export * from './protocol'
+export * as Network from './network'
+export * as Protocol from './protocol'
 
 const base32 = base32Function('abcdefghijklmnopqrstuvwxyz234567')
 
@@ -146,4 +146,19 @@ export function checkAddressString(address: string) {
       throw new Error('Invalid address protocol.')
     }
   }
+}
+
+export default {
+  Address,
+  bigintToArray,
+  getChecksum,
+  validateChecksum,
+  newAddress,
+  decode,
+  encode,
+  newFromString,
+  validateAddressString,
+  checkAddressString,
+  Network,
+  Protocol
 }
