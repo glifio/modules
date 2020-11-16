@@ -3,18 +3,19 @@
   "version": "1.0.0-beta.5",
   "description": "The Filecoin message type, used to transfer tokens and make state changes.",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "../../node_modules/.bin/rimraf dist/",
     "build": "npm run clean && tsc",
     "lint": "tslint -p tsconfig.json",
-    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
     "test": "npm run build && jest",
     "test:watch": "npm run build && jest --watch"
   },
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "@glif/filecoin-address": "^1.0.0-lerna.4",
+    "@glif/filecoin-address": "^1.0.0-beta.5",
     "bignumber.js": "^9.0.0"
   },
   "devDependencies": {

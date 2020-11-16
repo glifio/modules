@@ -1,21 +1,11 @@
 {
+  "presets": ["@babel/preset-env", "@babel/preset-typescript"],
+  "plugins": [
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-runtime"
+  ],
   "env": {
-    "development": {
-      "presets": [
-        [
-          "@babel/env",
-          {
-            "targets": {
-              "node": "6.10"
-            }
-          }
-        ]
-      ],
-      "plugins": [
-        "@babel/plugin-proposal-object-rest-spread",
-        "@babel/plugin-proposal-class-properties"
-      ]
-    },
     "browser": {
       "presets": [
         [
@@ -27,10 +17,6 @@
             "modules": false
           }
         ]
-      ],
-      "plugins": [
-        "@babel/plugin-proposal-object-rest-spread",
-        "@babel/plugin-proposal-class-properties"
       ]
     },
     "module": {
@@ -44,12 +30,7 @@
             "modules": false
           }
         ]
-      ],
-      "plugins": [
-        "@babel/plugin-proposal-object-rest-spread",
-        "@babel/plugin-proposal-class-properties"
       ]
     }
-  },
-  "sourceMaps": true
+  }
 }

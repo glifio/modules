@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bls #sign 1`] = `
+Object {
+  "Message": Object {
+    "From": "t3vbrwhphivdxyvs3pxpp54w73664bgxmb7ed4du4ohhu3dc6f5y264cs72yluw7mjbwnlrtzq543ys57plzka",
+    "GasFeeCap": "1",
+    "GasLimit": 1000,
+    "GasPremium": "1",
+    "Method": 0,
+    "Nonce": 0,
+    "Params": "",
+    "To": "t3vbrwhphivdxyvs3pxpp54w73664bgxmb7ed4du4ohhu3dc6f5y264cs72yluw7mjbwnlrtzq543ys57plzka",
+    "Value": "0",
+  },
+  "Signature": Object {
+    "Data": "tJDPMgr6QBdpyEYelpd5u9RlfUD3DOtiN7+bdiqjwJfUDhrUqVM5tS4GQjETx++wGP8XDC9it3+i01iq7AEMpIJwyfyGXxSQav9IYH84oRL+7RsvjBKaD/jMcVnA5suF",
+    "Type": 2,
+  },
+}
+`;
+
+exports[`secp256k1 #sign 1`] = `
+Object {
+  "Message": Object {
+    "From": "t17lxg2i2otnl7mmpw2ocd6o4e3b4un3272vny6ka",
+    "GasFeeCap": "1",
+    "GasLimit": 1000,
+    "GasPremium": "1",
+    "Method": 0,
+    "Nonce": 0,
+    "Params": "",
+    "To": "t17lxg2i2otnl7mmpw2ocd6o4e3b4un3272vny6ka",
+    "Value": "0",
+  },
+  "Signature": Object {
+    "Data": "l3WF6gkTMr1ZD8YUT186/0I7Z+ftoUWs7/2J/vt86qMD5u582Oh+gEcBUq+OaZCNfYdsvq/MTJn8aU07PquT/wE=",
+    "Type": 1,
+  },
+}
+`;

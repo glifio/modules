@@ -1,4 +1,4 @@
-import { Network } from './network'
+import { Network } from '@glif/filecoin-address'
 
 export const KNOWN_TYPE_1_ADDRESS = {
   [Network.MAIN]: 'f1ojyfm5btrqq63zquewexr4hecynvq6yjyk5xv6q',

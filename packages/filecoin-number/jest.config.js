@@ -1,7 +1,10 @@
 module.exports = {
-  collectCoverageFrom: ['**/*.{js}', '!**/node_modules/**'],
-  testPathIgnorePatterns: ['/node_modules/', '/module/', '/lib/', '/dist/'],
+  preset: 'ts-jest',
+  testRegex: '.(spec|test).ts$',
+  testEnvironment: 'node',
+  collectCoverageFrom: ['**/*.{ts,js}', '!**/node_modules/**'],
+  testPathIgnorePatterns: ['/node_modules/'],
   moduleNameMapper: {
-    '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
-  },
+    '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy'
+  }
 }
