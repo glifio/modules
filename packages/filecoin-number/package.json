@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "../../node_modules/.bin/rimraf dist/ lib/ module/",
     "build-browser": "../../node_modules/.bin/cross-env BABEL_ENV=browser ../../node_modules/.bin/babel ./src --out-dir ./lib --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
-    "build-module": "cross-env BABEL_ENV=module ../../node_modules/.bin/babel ./src --out-dir ./module --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
+    "build-module": "../../node_modules/.bin/cross-env BABEL_ENV=module ../../node_modules/.bin/babel ./src --out-dir ./module --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
     "build-node": "../../node_modules/.bin/babel ./src/ --out-dir ./dist/ --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
     "build-types": "../../node_modules/.bin/tsc --emitDeclarationOnly",
     "build": "npm run clean && npm run build-types && npm run build-node && npm run build-browser && npm run build-module",
@@ -38,5 +38,5 @@
     "type": "git",
     "url": "https://github.com/glifio/modules/tree/primary/packages/filecoin-number"
   },
-  "gitHead": "8bdcacbc1e8f0a7ee04eccb88cc47f781e7281d8"
+  "gitHead": "5a9a3101b1a0ffe799aa96179c9aff8d161cdc1d"
 }
