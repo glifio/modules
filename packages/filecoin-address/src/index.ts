@@ -47,12 +47,12 @@ export function validateChecksum(
   expect: Uint8Array
 ) {
   const digest = getChecksum(ingest)
-  return Buffer.compare(Buffer.from(digest), expect)
+  return uint8arrays.compare(digest, expect)
 }
 
 export function newAddress(protocol: Protocol, payload: Uint8Array): Address {
   const protocolByte = new Uint8Array([protocol])
-  return new Address(Buffer.concat([protocolByte, payload]))
+  return new Address(uint8arrays.concat([protocolByte, payload]))
 }
 
 export function decode(address: string): Address {
@@ -64,7 +64,7 @@ export function decode(address: string): Address {
   const protocolByte = new Uint8Array([protocol])
 
   if (protocol === Protocol.ID) {
-    return newAddress(protocol, Buffer.from(leb.unsigned.encode(raw)))
+    return newAddress(protocol, leb.unsigned.encode(raw))
   }
 
   const payloadChecksum = base32.decode(raw)
@@ -96,8 +96,8 @@ export function encode(network: string, address: Address): string {
     }
     default: {
       const protocolByte = new Uint8Array([address.protocol()])
-      const checksum = getChecksum(Buffer.concat([protocolByte, payload]))
-      const bytes = Buffer.concat([payload, Buffer.from(checksum)])
+      const checksum = getChecksum(uint8arrays.concat([protocolByte, payload]))
+      const bytes = uint8arrays.concat([payload, checksum])
       return String(network) + String(address.protocol()) + base32.encode(bytes)
     }
   }
