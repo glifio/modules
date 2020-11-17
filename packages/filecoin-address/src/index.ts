@@ -147,3 +147,18 @@ export function checkAddressString(address: string) {
     }
   }
 }
+
+export default {
+  Address,
+  newAddress,
+  newFromString,
+  bigintToArray,
+  decode,
+  encode,
+  getChecksum,
+  validateChecksum,
+  validateAddressString,
+  checkAddressString,
+  Network,
+  Protocol
+}
