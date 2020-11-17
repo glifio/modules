@@ -95,7 +95,7 @@ export function encode(network: string, address: Address): string {
       )
     }
     default: {
-      const protocolByte = new Uint8Array([address.protocol()])
+      const protocolByte = Buffer.from(new Uint8Array([address.protocol()]))
       const checksum = getChecksum(Buffer.concat([protocolByte, payload]))
       const bytes = Buffer.concat([payload, Buffer.from(checksum)])
       return String(network) + String(address.protocol()) + base32.encode(bytes)
