@@ -158,5 +158,7 @@ export default {
   getChecksum,
   validateChecksum,
   validateAddressString,
-  checkAddressString
+  checkAddressString,
+  Network,
+  Protocol
 }
