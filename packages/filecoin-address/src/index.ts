@@ -52,7 +52,7 @@ export function validateChecksum(
 
 export function newAddress(protocol: Protocol, payload: Uint8Array): Address {
   const protocolByte = new Uint8Array([protocol])
-  return new Address(Buffer.concat([protocolByte, payload]))
+  return new Address(uint8arrays.concat([protocolByte, payload]))
 }
 
 export function decode(address: string): Address {
@@ -96,8 +96,8 @@ export function encode(network: string, address: Address): string {
     }
     default: {
       const protocolByte = new Uint8Array([address.protocol()])
-      const checksum = getChecksum(Buffer.concat([protocolByte, payload]))
-      const bytes = Buffer.concat([payload, Buffer.from(checksum)])
+      const checksum = getChecksum(uint8arrays.concat([protocolByte, payload]))
+      const bytes = uint8arrays.concat([payload, checksum])
       return String(network) + String(address.protocol()) + base32.encode(bytes)
     }
   }
