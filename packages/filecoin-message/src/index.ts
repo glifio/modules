@@ -127,3 +127,7 @@ const typeCheck = (msg: MessageObj): void => {
   if (!(msg.method <= Number.MAX_SAFE_INTEGER))
     throw new Error('Method must be smaller than Number.MAX_SAFE_INTEGER')
 }
+
+export default {
+  Message
+}
