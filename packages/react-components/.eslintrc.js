@@ -31,7 +31,8 @@ module.exports = {
   plugins: ['prettier', 'react', 'jsx-a11y', 'react-hooks'],
   rules: {
     'prettier/prettier': 'error',
-    'react/react-in-jsx-scope': 1,
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
     'react/display-name': 0,
     'no-confusing-arrow': 0,
     'arrow-parens': 0,

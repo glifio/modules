@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { color, typography, layout, space, grid, position } from 'styled-system'
 import Link from 'next/link'

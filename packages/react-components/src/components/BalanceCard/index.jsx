@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react'
+import { forwardRef, useState } from 'react'
 import { func, bool } from 'prop-types'
 import Box from '../Box'
 import Button from '../Button'

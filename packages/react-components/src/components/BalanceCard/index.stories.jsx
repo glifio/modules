@@ -1,4 +1,3 @@
-import React from 'react'
 import { FilecoinNumber } from '@glif/filecoin-number'
 import theme from '../theme'
 import ThemeProvider from '../ThemeProvider'

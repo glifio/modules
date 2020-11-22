@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import styled from 'styled-components'
 import { func, object } from 'prop-types'
 import { layout, space, border, flexbox, position } from 'styled-system'

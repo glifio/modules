@@ -1,4 +1,3 @@
-import React from 'react'
 import { cleanup, render } from '@testing-library/react'
 import theme from '../theme'
 import ThemeProvider from '../ThemeProvider'

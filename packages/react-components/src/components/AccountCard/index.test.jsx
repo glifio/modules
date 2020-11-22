@@ -1,6 +1,5 @@
 /* eslint-disable import/first */
 /* eslint-disable import/newline-after-import */
-import React from 'react'
 import { cleanup, render, screen, act, fireEvent } from '@testing-library/react'
 import theme from '../theme'
 import ThemeProvider from '../ThemeProvider'

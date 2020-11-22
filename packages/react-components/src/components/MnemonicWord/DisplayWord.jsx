@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { string, number, bool } from 'prop-types'
 import Box from '../Box'

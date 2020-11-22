@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react'
+import { forwardRef, useState } from 'react'
 import styled from 'styled-components'
 import { space, color, layout, border, flexbox } from 'styled-system'
 import { ADDRESS_PROPTYPE } from '../../customPropTypes'

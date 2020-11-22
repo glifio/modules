@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from 'react'
+import { forwardRef, useRef, useState } from 'react'
 import { func, string, bool, oneOfType } from 'prop-types'
 import { FilecoinNumber, BigNumber } from '@glif/filecoin-number'
 

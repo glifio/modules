@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import Glyph from '.'
 
 const ErrorGlyph = forwardRef(({ ...props }, ref) => (

@@ -1,4 +1,3 @@
-import React from 'react'
 import { cleanup, render, act, fireEvent } from '@testing-library/react'
 import Address from '.'
 import noop from '../../utils/noop'

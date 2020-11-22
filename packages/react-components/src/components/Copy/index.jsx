@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react'
+import { forwardRef, useState } from 'react'
 import styled from 'styled-components'
 import { string } from 'prop-types'
 import Box from '../Box'

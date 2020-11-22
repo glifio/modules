@@ -1,4 +1,3 @@
-import React from 'react'
 import { Text } from '../Typography'
 
 export default () => {

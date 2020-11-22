@@ -1,4 +1,3 @@
-import React from 'react'
 import Box from '../Box'
 import Loading from '../LoaderGlyph'
 import { Label } from '../Typography'

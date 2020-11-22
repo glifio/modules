@@ -1,4 +1,3 @@
-import React from 'react'
 import { FilecoinNumber } from '@glif/filecoin-number'
 import { fireEvent, cleanup, render, act } from '@testing-library/react'
 import BalanceCard from '.'

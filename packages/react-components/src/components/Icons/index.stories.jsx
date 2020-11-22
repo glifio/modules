@@ -1,5 +1,3 @@
-import React from 'react'
-
 import {
   IconGlif as IconGlifComp,
   IconSuccess as IconSuccessComp,

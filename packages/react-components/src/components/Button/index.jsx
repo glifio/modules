@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import { func, bool, string, oneOf } from 'prop-types'
 import BaseButton from './BaseButton'
 import theme from '../theme'

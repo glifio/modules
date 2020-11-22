@@ -1,4 +1,3 @@
-import React from 'react'
 import { cleanup, render, screen, act, fireEvent } from '@testing-library/react'
 import { BigNumber } from '@glif/filecoin-number'
 import MessageHistoryTable from './index'

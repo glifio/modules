@@ -1,4 +1,3 @@
-import React from 'react'
 import { func } from 'prop-types'
 import { MESSAGE_PROPS, ADDRESS_PROPTYPE } from '../../../customPropTypes'
 import MessageHistoryRowContainer from './MessageHistoryRowContainer'

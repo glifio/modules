@@ -1,4 +1,3 @@
-import React from 'react'
 import { cleanup, render, screen, act, fireEvent } from '@testing-library/react'
 import { FilecoinNumber } from '@glif/filecoin-number'
 import theme from '../theme'

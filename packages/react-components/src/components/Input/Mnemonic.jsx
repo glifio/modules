@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from 'react'
+import { forwardRef, useRef, useState } from 'react'
 import { validateMnemonic } from 'bip39'
 import { func, string, bool } from 'prop-types'
 import TextInput from './Text'

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import { color, typography, layout, space, border } from 'styled-system'
 import styled from 'styled-components'
 import { node, oneOf, number } from 'prop-types'

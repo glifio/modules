@@ -1,4 +1,3 @@
-import React from 'react'
 import dayjs from 'dayjs'
 import { FilecoinNumber } from '@glif/filecoin-number'
 import { string, oneOf, oneOfType, number, object } from 'prop-types'

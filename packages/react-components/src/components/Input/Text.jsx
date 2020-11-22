@@ -1,4 +1,3 @@
-import React from 'react'
 import { func, string, bool } from 'prop-types'
 import BaseInput from './BaseInput'
 import Box from '../Box'

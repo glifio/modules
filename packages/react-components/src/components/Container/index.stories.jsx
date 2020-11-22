@@ -1,4 +1,3 @@
-import React from 'react'
 import Container from './index'
 import theme from '../theme'
 import ThemeProvider from '../ThemeProvider'

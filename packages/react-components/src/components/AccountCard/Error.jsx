@@ -1,4 +1,3 @@
-import React from 'react'
 import { string, func } from 'prop-types'
 import Box from '../Box'
 import Glyph from '../Glyph'

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import { string, number } from 'prop-types'
 import { Text } from '../Typography'
 import Box from '../Box'

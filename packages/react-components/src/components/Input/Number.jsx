@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import { func, string, bool } from 'prop-types'
 import styled from 'styled-components'
 import BaseInput from './BaseInput'
