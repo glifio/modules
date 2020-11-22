@@ -2,7 +2,7 @@
   "name": "@glif/react-components",
   "version": "0.0.0",
   "description": "Shared react components for @glif projects",
-  "main": "dist/index.js",
+  "main": "dist/components/index.js",
   "scripts": {
     "test": "run-s test:*",
     "test:lint": "eslint --ext .jsx,.js ./src",
@@ -32,6 +32,7 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "25.1.0",
     "bignumber.js": "^9.0.1",
+    "core-js": "^3.7.0",
     "eslint": "^7.13.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.10.0",
