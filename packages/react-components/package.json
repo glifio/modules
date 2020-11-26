@@ -1,6 +1,6 @@
 {
   "name": "@glif/react-components",
-  "version": "0.0.0",
+  "version": "1.1.0-beta.5",
   "description": "Shared react components for @glif projects",
   "main": "dist/components/index.js",
   "repository": {
@@ -67,9 +67,9 @@
     "styled-system": "^5.1.5"
   },
   "peerDependencies": {
+    "next": "^9.0.0 || ^10.0.0",
     "react": "^16.0.0 || ^17.0.0",
     "react-dom": "^16.0.0 || ^17.0.0",
-    "next": "^9.0.0 || ^10.0.0",
     "styled-components": "^5.2.1"
   }
 }
