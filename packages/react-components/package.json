@@ -1,0 +1,75 @@
+{
+  "name": "@glif/react-components",
+  "version": "0.0.0",
+  "description": "Shared react components for @glif projects",
+  "main": "dist/components/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/glifio/modules.git"
+  },
+  "scripts": {
+    "test": "run-s test:*",
+    "test:lint": "eslint --ext .jsx,.js ./src",
+    "test:jest": "jest --coverage",
+    "clean": "../../node_modules/.bin/rimraf dist/* && mkdirp dist",
+    "build": "run-s clean build:*",
+    "build:babel": "../../node_modules/.bin/babel src --out-dir dist --source-maps --ignore 'src/**/*.stories.jsx','src/**/*.test.jsx','src/test-utils/**/*'",
+    "watch": "npm run clean && run-p watch:*",
+    "watch:babel": "npm run build:babel -- --watch",
+    "start": "npm run watch",
+    "storybook": "start-storybook -s ./src/public -p 6006",
+    "prepare": "npm run build",
+    "jest-dev": "jest --watch",
+    "update-snapshots": "npm run test:jest -- -u"
+  },
+  "contributors": [
+    "Bret Comnes <bcomnes@gmail.com> (https://bret.io/)"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.1.0-beta.2",
+    "@storybook/addon-essentials": "^6.1.0-beta.2",
+    "@storybook/addon-links": "^6.1.0-beta.2",
+    "@storybook/react": "^6.1.0-beta.2",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.0.4",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "25.1.0",
+    "bignumber.js": "^9.0.1",
+    "core-js": "^3.7.0",
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "jest": "^26.5.3",
+    "jest-styled-components": "7.0.2",
+    "mkdirp": "^1.0.4",
+    "next": "^10.0.0",
+    "normalize.css": "^8.0.1",
+    "npm-run-all2": "^5.0.1",
+    "prettier": "^2.1.2",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "styled-components": "^5.2.1"
+  },
+  "dependencies": {
+    "@glif/filecoin-address": "^1.0.0-beta.5",
+    "@glif/filecoin-number": "^1.0.0-beta.5",
+    "@glif/filecoin-rpc-client": "^1.1.0-beta.1",
+    "axios": "^0.21.0",
+    "bip39": "^3.0.3",
+    "dayjs": "^1.9.6",
+    "prop-types": "^15.7.2",
+    "styled-system": "^5.1.5"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0 || ^17.0.0",
+    "react-dom": "^16.0.0 || ^17.0.0",
+    "next": "^9.0.0 || ^10.0.0",
+    "styled-components": "^5.2.1"
+  }
+}
