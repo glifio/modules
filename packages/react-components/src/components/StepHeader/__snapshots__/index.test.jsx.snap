@@ -1,0 +1,263 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StepperHeader renders the story 1`] = `
+.c0 {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  border-color: silver;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c2 {
+  margin-right: 16px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c5 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.2;
+  font-family: RT-Alias-Grotesk;
+  margin: 0;
+}
+
+.c7 {
+  color: #262626;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.4;
+  font-family: RT-Alias-Grotesk;
+  margin-right: 8px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.c1 {
+  min-width: 0;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c3 {
+  min-width: 0;
+  box-sizing: border-box;
+  border-width: 0.1875rem;
+  border-radius: 8px;
+  border-style: solid;
+  color: #000;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 48px;
+  height: 48px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c6 {
+  min-width: 0;
+  box-sizing: border-box;
+  margin-left: 24px;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c8 {
+  min-width: 0;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c9 {
+  min-width: 0;
+  box-sizing: border-box;
+  border-radius: 100px;
+  margin-left: 4px;
+  margin-right: 4px;
+  background-color: #1AD08F;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+}
+
+.c10 {
+  min-width: 0;
+  box-sizing: border-box;
+  border-radius: 100px;
+  margin-left: 4px;
+  margin-right: 4px;
+  background-color: #C4C4C4;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+}
+
+.c4 {
+  font-family: "RT-Alias-Medium","system-ui","Segoe UI","Roboto",Helvetica;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+<ul
+  class="c0"
+  display="flex"
+  width="100%"
+>
+  <div
+    class="c1"
+    display="flex"
+  >
+    <li
+      class="c2"
+      display="flex"
+    >
+      <div
+        class="c3"
+        color="#000"
+        display="flex"
+        size="6"
+      >
+        <h3
+          class="c4"
+        >
+          LoL
+        </h3>
+      </div>
+    </li>
+    <li
+      class=""
+    >
+      <h2
+        class="c5"
+        font-family="RT-Alias-Grotesk"
+        font-size="4"
+        font-weight="400"
+      >
+        A Title
+      </h2>
+    </li>
+  </div>
+  <li
+    class=""
+  >
+    <div
+      class="c6"
+      display="flex"
+    >
+      <p
+        class="c7"
+        color="core.nearblack"
+        font-family="RT-Alias-Grotesk"
+        font-size="2"
+        font-weight="400"
+      >
+        Step 
+        1
+      </p>
+      <div
+        class="c8"
+        display="flex"
+      >
+        <div
+          class="c9"
+          display="inline-block"
+          height="2"
+          width="2"
+        />
+      </div>
+      <div
+        class="c8"
+        display="flex"
+      >
+        <div
+          class="c10"
+          display="inline-block"
+          height="2"
+          width="2"
+        />
+      </div>
+      <div
+        class="c8"
+        display="flex"
+      >
+        <div
+          class="c10"
+          display="inline-block"
+          height="2"
+          width="2"
+        />
+      </div>
+      <div
+        class="c8"
+        display="flex"
+      >
+        <div
+          class="c10"
+          display="inline-block"
+          height="2"
+          width="2"
+        />
+      </div>
+      <div
+        class="c8"
+        display="flex"
+      >
+        <div
+          class="c10"
+          display="inline-block"
+          height="2"
+          width="2"
+        />
+      </div>
+    </div>
+  </li>
+</ul>
+`;

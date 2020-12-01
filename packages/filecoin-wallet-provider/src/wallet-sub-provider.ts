@@ -1,5 +1,5 @@
 import { LotusMessage, SignedLotusMessage } from '@glif/filecoin-message'
-import { Network } from './utils/network'
+import { Network } from '@glif/filecoin-address'
 
 export interface WalletSubProvider {
   newAccount?(): Promise<string>

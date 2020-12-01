@@ -1,0 +1,49 @@
+{
+  "name": "@glif/local-managed-provider",
+  "version": "1.1.0-beta.4",
+  "description": "a javascript package to send filecoin to addresses",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean": "../../node_modules/.bin/rimraf dist/",
+    "build": "npm run clean && tsc --project tsconfig.json",
+    "lint": "tslint -p tsconfig.json",
+    "prepublishOnly": "npm run build",
+    "test:build": "npm run build && jest --forceExit",
+    "test": "npm run build && jest --forceExit",
+    "test:watch": "npm run build && jest --watch"
+  },
+  "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
+  "license": "(Apache-2.0 OR MIT)",
+  "dependencies": {
+    "@glif/filecoin-address": "^1.1.0-beta.4",
+    "@glif/filecoin-message": "^1.1.0-beta.4",
+    "@glif/filecoin-wallet-provider": "^1.1.0-beta.4",
+    "@zondax/filecoin-signing-tools": "^0.12.0",
+    "bignumber.js": "^9.0.1",
+    "uint8arrays": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.15",
+    "cids": "^1.0.0",
+    "cross-env": "7.0.2",
+    "eslint": "6.1.0",
+    "eslint-config-airbnb": "18.1.0",
+    "eslint-config-prettier": "6.7.0",
+    "eslint-plugin-import": "2.20.2",
+    "jest": "26.6.2",
+    "prettier": "^1.19.1",
+    "ts-jest": "^26.4.3",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.0.2"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/glifio/modules/tree/primary/packages/local-managed-provider"
+  },
+  "gitHead": "140b071a501026e96cd4a75a01b8cd15bca8853b"
+}

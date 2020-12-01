@@ -1,41 +1,33 @@
 {
   "name": "@glif/filecoin-number",
-  "version": "1.0.0-beta.5",
+  "version": "1.1.0-beta.2",
   "description": "a javascript package to handle Filecoin numbers like Fil and AttoFil",
   "main": "./dist/index.js",
   "browser": "./lib/index.js",
   "module": "./module/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "build-browser": "cross-env BABEL_ENV=browser babel ./src --out-dir ./lib --source-maps --copy-files",
-    "build-module": "cross-env BABEL_ENV=module babel ./src --out-dir ./module --source-maps --copy-files",
-    "build-node": "babel ./src --out-dir ./dist --source-maps --copy-files",
     "clean": "../../node_modules/.bin/rimraf dist/ lib/ module/",
-    "build": "npm run clean && npm run build-node && npm run build-browser && npm run build-module",
+    "build-browser": "../../node_modules/.bin/cross-env BABEL_ENV=browser ../../node_modules/.bin/babel ./src --out-dir ./lib --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
+    "build-module": "../../node_modules/.bin/cross-env BABEL_ENV=module ../../node_modules/.bin/babel ./src --out-dir ./module --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
+    "build-node": "../../node_modules/.bin/babel ./src/ --out-dir ./dist/ --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
+    "build-types": "../../node_modules/.bin/tsc --emitDeclarationOnly",
+    "build": "npm run clean && npm run build-types && npm run build-node && npm run build-browser && npm run build-module",
     "prepublishOnly": "npm run build",
     "test": "npm run build && jest",
-    "test:watch": "npm run build && jest --watch"
+    "test:watch": "npm run build && jest --watch",
+    "type-check": "../../node_modules/.bin/tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch"
   },
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
     "@babel/polyfill": "7.7.0",
-    "bent": "7.1.0",
-    "bignumber.js": "9.0.0"
+    "bent": "7.3.12",
+    "bignumber.js": "9.0.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.10.4",
-    "@babel/core": "7.10.4",
-    "@babel/plugin-proposal-class-properties": "7.10.4",
-    "@babel/plugin-proposal-object-rest-spread": "7.10.4",
-    "@babel/preset-env": "7.10.4",
-    "babel-eslint": "10.0.3",
-    "cross-env": "6.0.3",
-    "eslint": "6.1.0",
-    "eslint-config-airbnb": "18.0.1",
-    "eslint-config-prettier": "6.7.0",
-    "eslint-plugin-import": "2.19.1",
-    "jest": "26.1.0",
-    "prettier": "1.19.1"
+    "@types/bent": "^7.3.2"
   },
   "files": [
     "dist",
@@ -46,5 +38,5 @@
     "type": "git",
     "url": "https://github.com/glifio/modules/tree/primary/packages/filecoin-number"
   },
-  "gitHead": "c37a6fa643dd87974d1d57f9e103a27ba740ea44"
+  "gitHead": "140b071a501026e96cd4a75a01b8cd15bca8853b"
 }

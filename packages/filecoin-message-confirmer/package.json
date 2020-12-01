@@ -1,39 +1,43 @@
 {
   "name": "@glif/filecoin-message-confirmer",
-  "version": "1.0.0-beta.5",
+  "version": "1.1.0-beta.1",
   "description": "A service for confirming a Filecoin message.",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "../../node_modules/.bin/rimraf dist/",
-    "build": "npm run clean && tsc",
+    "build-browser": "../../node_modules/.bin/cross-env BABEL_ENV=browser ../../node_modules/.bin/babel ./src --out-dir ./lib --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
+    "build-module": "../../node_modules/.bin/cross-env BABEL_ENV=module ../../node_modules/.bin/babel ./src --out-dir ./module --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
+    "build-node": "../../node_modules/.bin/babel ./src/ --out-dir ./dist/ --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
+    "build-types": "../../node_modules/.bin/tsc --emitDeclarationOnly",
+    "build": "npm run clean && npm run build-types && npm run build-node && npm run build-browser && npm run build-module",
     "lint": "tslint -p tsconfig.json",
-    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
     "test": "npm run build && jest --detectOpenHandles",
     "test:watch": "npm run build && jest --watch"
   },
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "@glif/filecoin-rpc-client": "^1.0.0-beta.5",
+    "@glif/filecoin-rpc-client": "^1.1.0-beta.1",
     "axios": "^0.20.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",
     "babel-eslint": "10.0.3",
-    "cross-env": "6.0.3",
-    "jest": "^26.0.1",
     "prettier": "1.19.1",
     "ts-jest": "^26.2.0",
     "tslint": "^6.1.3",
-    "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.0.2"
+    "tslint-config-prettier": "^1.18.0"
   },
   "files": [
-    "dist"
+    "dist",
+    "lib",
+    "module"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/glifio/modules/tree/primary/packages/filecoin-message"
+    "url": "https://github.com/glifio/modules/tree/primary/packages/filecoin-message-confirmer"
   },
-  "gitHead": "27ff58865a447fe70913209a04756cf5ca67d3df"
+  "gitHead": "140b071a501026e96cd4a75a01b8cd15bca8853b"
 }
