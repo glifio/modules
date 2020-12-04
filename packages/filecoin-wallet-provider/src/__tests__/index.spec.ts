@@ -3,11 +3,13 @@ import { FilecoinNumber, BigNumber } from '@glif/filecoin-number'
 import { Message } from '@glif/filecoin-message'
 import CID from 'cids'
 import {
+  allCallsExitWithCode0,
   computeGasToBurn,
   KNOWN_TYPE_0_ADDRESS,
   KNOWN_TYPE_1_ADDRESS,
 } from '../utils'
 import { Network } from '@glif/filecoin-address'
+import { InvocResult } from '../types'
 
 const testSubProviderInstance = {
   getAccounts: jest.fn().mockImplementation(() => {}),
@@ -117,6 +119,263 @@ describe('provider', () => {
       const tx = await filecoin.sendMessage(msgWithGas, Signature.Data)
       const cid = new CID(tx['/'])
       expect(CID.isCID(cid)).toBe(true)
+    })
+  })
+
+  describe('simulateMessage', () => {
+    test('it should return true for a valid message', async () => {
+      const message = new Message({
+        to: 'f1nq5k2mps5umtebdovlyo7y6a3ywc7u4tobtuo3a',
+        from: 'f1nq5k2mps5umtebdovlyo7y6a3ywc7u4tobtuo3a',
+        value: new FilecoinNumber('1', 'attofil').toAttoFil(),
+        method: 0,
+        nonce: 0,
+      })
+      const valid = await filecoin.simulateMessage(message.toLotusType())
+
+      expect(valid).toBeTruthy()
+    })
+
+    test('it should return false for an invalid message', async () => {
+      const message = new Message({
+        to: 'f034066',
+        from: 'f1nq5k2mps5umtebdovlyo7y6a3ywc7u4tobtuo3a',
+        value: '0',
+        method: 2,
+        nonce: 0,
+        params: 'hEQAkooCQAVYGIJVAWw6rTHy7RkyBG6q8O/jwN4sL9OT9A==',
+      })
+      const valid = await filecoin.simulateMessage(message.toLotusType())
+
+      expect(valid).toBeFalsy()
+    })
+
+    test('allCallsExitWithCode0 finds nonzero execution calls and returns false', () => {
+      const invalidCall: InvocResult = {
+        MsgCid: {
+          '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
+        },
+        Msg: {
+          Version: 0,
+          To: 't2pmws5gnnjoyju6cfonngkpzlrv3ydlzar6oqdrq',
+          From: 't1nq5k2mps5umtebdovlyo7y6a3ywc7u4tobtuo3a',
+          Nonce: 26,
+          Value: '0',
+          GasLimit: 10000000000,
+          GasFeeCap: '0',
+          GasPremium: '0',
+          Method: 2,
+          Params:
+            'hFUCey0uma1LsJp4RXNaZT8rjXeBryBABVgYglUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
+          CID: {
+            '/':
+              'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
+          },
+        },
+        MsgRct: {
+          ExitCode: 0,
+          Return: 'hAH1EkA=',
+          GasUsed: 0,
+        },
+        GasCost: {
+          Message: null,
+          GasUsed: '0',
+          BaseFeeBurn: '0',
+          OverEstimationBurn: '0',
+          MinerPenalty: '0',
+          MinerTip: '0',
+          Refund: '0',
+          TotalCost: '0',
+        },
+        ExecutionTrace: {
+          Msg: {
+            Version: 0,
+            To: 't2pmws5gnnjoyju6cfonngkpzlrv3ydlzar6oqdrq',
+            From: 't1nq5k2mps5umtebdovlyo7y6a3ywc7u4tobtuo3a',
+            Nonce: 26,
+            Value: '0',
+            GasLimit: 10000000000,
+            GasFeeCap: '0',
+            GasPremium: '0',
+            Method: 2,
+            Params:
+              'hFUCey0uma1LsJp4RXNaZT8rjXeBryBABVgYglUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
+            CID: {
+              '/':
+                'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
+            },
+          },
+          MsgRct: {
+            ExitCode: 0,
+            Return: 'hAH1EkA=',
+            GasUsed: 3413871,
+          },
+          Error: '',
+          Duration: 394016,
+          GasCharges: null,
+          Subcalls: [
+            {
+              Msg: {
+                Version: 0,
+                To: 't2pmws5gnnjoyju6cfonngkpzlrv3ydlzar6oqdrq',
+                From: 't05376',
+                Nonce: 0,
+                Value: '0',
+                GasLimit: 10000000000,
+                GasFeeCap: '0',
+                GasPremium: '0',
+                Method: 5,
+                Params: 'glUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
+                CID: {
+                  '/':
+                    'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4',
+                },
+              },
+              MsgRct: {
+                ExitCode: 18,
+                Return: null,
+                GasUsed: 2386357,
+              },
+              Error: 't02357 is already a signer (RetCode=18)',
+              Duration: 85358,
+              GasCharges: null,
+              Subcalls: null,
+            },
+          ],
+        },
+        Error: '',
+        Duration: 394177,
+      }
+
+      expect(allCallsExitWithCode0(invalidCall)).toBe(false)
+    })
+
+    test('allCallsExitWithCode0 finds nonzero execution calls and returns false', () => {
+      const invalidCall: InvocResult = {
+        MsgCid: {
+          '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
+        },
+        Msg: {
+          Version: 0,
+          To: 't2pmws5gnnjoyju6cfonngkpzlrv3ydlzar6oqdrq',
+          From: 't1nq5k2mps5umtebdovlyo7y6a3ywc7u4tobtuo3a',
+          Nonce: 26,
+          Value: '0',
+          GasLimit: 10000000000,
+          GasFeeCap: '0',
+          GasPremium: '0',
+          Method: 2,
+          Params:
+            'hFUCey0uma1LsJp4RXNaZT8rjXeBryBABVgYglUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
+          CID: {
+            '/':
+              'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
+          },
+        },
+        MsgRct: {
+          ExitCode: 0,
+          Return: 'hAH1EkA=',
+          GasUsed: 0,
+        },
+        GasCost: {
+          Message: null,
+          GasUsed: '0',
+          BaseFeeBurn: '0',
+          OverEstimationBurn: '0',
+          MinerPenalty: '0',
+          MinerTip: '0',
+          Refund: '0',
+          TotalCost: '0',
+        },
+        ExecutionTrace: {
+          Msg: {
+            Version: 0,
+            To: 't2pmws5gnnjoyju6cfonngkpzlrv3ydlzar6oqdrq',
+            From: 't1nq5k2mps5umtebdovlyo7y6a3ywc7u4tobtuo3a',
+            Nonce: 26,
+            Value: '0',
+            GasLimit: 10000000000,
+            GasFeeCap: '0',
+            GasPremium: '0',
+            Method: 2,
+            Params:
+              'hFUCey0uma1LsJp4RXNaZT8rjXeBryBABVgYglUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
+            CID: {
+              '/':
+                'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
+            },
+          },
+          MsgRct: {
+            ExitCode: 0,
+            Return: 'hAH1EkA=',
+            GasUsed: 3413871,
+          },
+          Error: '',
+          Duration: 394016,
+          GasCharges: null,
+          Subcalls: [
+            {
+              Msg: {
+                Version: 0,
+                To: 't2pmws5gnnjoyju6cfonngkpzlrv3ydlzar6oqdrq',
+                From: 't05376',
+                Nonce: 0,
+                Value: '0',
+                GasLimit: 10000000000,
+                GasFeeCap: '0',
+                GasPremium: '0',
+                Method: 5,
+                Params: 'glUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
+                CID: {
+                  '/':
+                    'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4',
+                },
+              },
+              MsgRct: {
+                ExitCode: 0,
+                Return: null,
+                GasUsed: 2386357,
+              },
+              Error: 't02357 is already a signer (RetCode=18)',
+              Duration: 85358,
+              GasCharges: null,
+              Subcalls: [
+                {
+                  Msg: {
+                    Version: 0,
+                    To: 't2pmws5gnnjoyju6cfonngkpzlrv3ydlzar6oqdrq',
+                    From: 't05376',
+                    Nonce: 0,
+                    Value: '0',
+                    GasLimit: 10000000000,
+                    GasFeeCap: '0',
+                    GasPremium: '0',
+                    Method: 5,
+                    Params: 'glUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
+                    CID: {
+                      '/':
+                        'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4',
+                    },
+                  },
+                  MsgRct: {
+                    ExitCode: 18,
+                    Return: null,
+                    GasUsed: 2386357,
+                  },
+                  Error: 't02357 is already a signer (RetCode=18)',
+                  Duration: 85358,
+                  GasCharges: null,
+                  Subcalls: null,
+                },
+              ],
+            },
+          ],
+        },
+        Error: '',
+        Duration: 394177,
+      }
+
+      expect(allCallsExitWithCode0(invalidCall)).toBe(false)
     })
   })
 

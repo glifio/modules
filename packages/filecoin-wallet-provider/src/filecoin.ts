@@ -6,11 +6,13 @@ import {
   KNOWN_TYPE_0_ADDRESS,
   KNOWN_TYPE_1_ADDRESS,
   KNOWN_TYPE_3_ADDRESS,
+  allCallsExitWithCode0,
 } from './utils'
 import { BigNumber } from 'bignumber.js'
-import { WalletSubProvider } from './index'
+import { WalletSubProvider } from './wallet-sub-provider'
 import { LotusMessage, Message } from '@glif/filecoin-message'
 import { Network } from '@glif/filecoin-address'
+import { InvocResult, CID } from './types'
 
 export class Filecoin {
   public wallet: WalletSubProvider
@@ -18,7 +20,9 @@ export class Filecoin {
 
   constructor(
     provider: WalletSubProvider,
-    config: LotusRpcEngineConfig = { apiAddress: 'http://127.0.0.1:1234/rpc/v0' },
+    config: LotusRpcEngineConfig = {
+      apiAddress: 'http://127.0.0.1:1234/rpc/v0',
+    },
   ) {
     if (!provider) throw new Error('No provider provided.')
     this.wallet = provider
@@ -34,10 +38,19 @@ export class Filecoin {
     return new FilecoinNumber(balance, 'attofil')
   }
 
+  simulateMessage = async (message: LotusMessage): Promise<boolean> => {
+    const res = await this.jsonRpcEngine.request<InvocResult>(
+      'StateCall',
+      message,
+      null,
+    )
+    return allCallsExitWithCode0(res)
+  }
+
   sendMessage = async (
     message: LotusMessage,
     signature: string,
-  ): Promise<{ '/': string }> => {
+  ): Promise<CID> => {
     if (!message) throw new Error('No message provided.')
     if (!signature) throw new Error('No signature provided.')
     const signedMessage = {
