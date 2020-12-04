@@ -1,7 +1,6 @@
 import { WalletSubProvider } from '@glif/filecoin-wallet-provider'
-import { SignedLotusMessage } from '@glif/filecoin-message'
+import { LotusMessage, SignedLotusMessage } from '@glif/filecoin-message'
 import { Network } from '@glif/filecoin-address'
-import { MessageParams } from '@zondax/filecoin-signing-tools'
 import {
   privateKeyContainer,
   PrivateKeyContainer,
@@ -18,10 +17,7 @@ export class LocalManagedProvider implements WalletSubProvider {
     return [this.privateKey.address]
   }
 
-  async sign(
-    from: string,
-    message: MessageParams,
-  ): Promise<SignedLotusMessage> {
+  async sign(from: string, message: LotusMessage): Promise<SignedLotusMessage> {
     if (from === this.privateKey.address) {
       return this.privateKey.sign(message)
     } else {

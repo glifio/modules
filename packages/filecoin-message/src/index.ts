@@ -45,6 +45,7 @@ export interface MessageObj {
   gasPremium?: string | number
   gasFeeCap?: string | number
   gasLimit?: number
+  gasPrice?: string | number
   params?: string | string[]
 }
 
