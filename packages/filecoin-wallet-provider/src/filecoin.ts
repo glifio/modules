@@ -1,6 +1,7 @@
 import LotusRpcEngine, { LotusRpcEngineConfig } from '@glif/filecoin-rpc-client'
 import { FilecoinNumber } from '@glif/filecoin-number'
-import { checkAddressString } from '@glif/filecoin-address'
+import { checkAddressString, Network } from '@glif/filecoin-address'
+import { LotusMessage, Message } from '@glif/filecoin-message'
 import {
   computeGasToBurn,
   KNOWN_TYPE_0_ADDRESS,
@@ -10,8 +11,6 @@ import {
 } from './utils'
 import { BigNumber } from 'bignumber.js'
 import { WalletSubProvider } from './wallet-sub-provider'
-import { LotusMessage, Message } from '@glif/filecoin-message'
-import { Network } from '@glif/filecoin-address'
 import { InvocResult, CID } from './types'
 
 export class Filecoin {
@@ -166,7 +165,7 @@ export class Filecoin {
 
   gasEstimateMessageGas = async (
     message: LotusMessage,
-    maxFee: string = '0',
+    maxFee: string = new FilecoinNumber('0.1', 'fil').toAttoFil(),
   ): Promise<Message> => {
     if (!message) throw new Error('No message provided.')
     const clonedMsg = await this.cloneMsgWOnChainFromAddr(message)
