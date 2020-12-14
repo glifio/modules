@@ -2,8 +2,6 @@ import bent from 'bent'
 import { BigNumber } from 'bignumber.js'
 import { FilecoinNumber } from './FilecoinNumber'
 
-import 'regenerator-runtime/runtime.js'
-
 export type ConverterOptions = {
   apiKey?: string
   apiURL?: string
