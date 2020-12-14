@@ -2,6 +2,8 @@ import bent from 'bent'
 import { BigNumber } from 'bignumber.js'
 import { FilecoinNumber } from './FilecoinNumber'
 
+import 'regenerator-runtime/runtime.js'
+
 export type ConverterOptions = {
   apiKey?: string
   apiURL?: string
@@ -29,7 +31,7 @@ export class Converter {
     if (!amount) return this.toFIL('0')
     if (!this.rate) {
       throw new Error(
-        'Call cacheConversionRate() to get the conversion rate before calling .toFIL.'
+        'Call cacheConversionRate() to get the conversion rate before calling .toFIL.',
       )
     }
     if (
@@ -42,7 +44,7 @@ export class Converter {
     }
 
     throw new Error(
-      'Amount passed must be a Number, String, or an instanceof BigNumber'
+      'Amount passed must be a Number, String, or an instanceof BigNumber',
     )
   }
 
@@ -50,7 +52,7 @@ export class Converter {
     if (!amount) return this.fromFIL('0')
     if (!this.rate)
       throw new Error(
-        'Call cacheConversionRate() to get the conversion rate before calling .fromFIL.'
+        'Call cacheConversionRate() to get the conversion rate before calling .fromFIL.',
       )
 
     if (
@@ -62,17 +64,17 @@ export class Converter {
     }
 
     throw new Error(
-      'Amount passed must be a Number, String, or an instanceof BigNumber.'
+      'Amount passed must be a Number, String, or an instanceof BigNumber.',
     )
   }
 
   async convert(amount: number, from: string, to: string): Promise<string> {
     const get = bent('GET', 'json', {
-      'X-CMC_PRO_API_KEY': this.apiKey
+      'X-CMC_PRO_API_KEY': this.apiKey,
     })
 
     const res = await get(
-      `${this.apiURL}/v1/tools/price-conversion?symbol=${from}&amount=${amount}&convert=${to}`
+      `${this.apiURL}/v1/tools/price-conversion?symbol=${from}&amount=${amount}&convert=${to}`,
     )
 
     if (!res.data || !res.data.quote || !res.data.quote[to])

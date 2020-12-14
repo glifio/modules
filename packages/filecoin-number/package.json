@@ -22,9 +22,9 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "@babel/polyfill": "7.7.0",
     "bent": "7.3.12",
-    "bignumber.js": "9.0.1"
+    "bignumber.js": "9.0.1",
+    "regenerator-runtime": "0.13.7"
   },
   "devDependencies": {
     "@types/bent": "^7.3.2"

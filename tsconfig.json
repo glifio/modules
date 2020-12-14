@@ -22,8 +22,8 @@
     "**/*.test.ts",
     "**/*.spec.ts",
     "**/__tests__",
-    "dist",
-    "lib",
-    "module"
+    "**/dist",
+    "**/lib",
+    "**/module"
   ]
 }
