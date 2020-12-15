@@ -1,12 +1,13 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Menu, MenuItem } from '../Menu'
 import Stepper from '../Stepper'
 import Loading from '../LoaderGlyph'
 import Glyph from '../Glyph'
-import Box from '../Box'
 import ErrorGlyph from '../Glyph/ErrorGlyph'
 import { Title } from '../Typography'
+import Box from '../Box'
 
 const StepHeader = ({
   currentStep,
@@ -16,7 +17,8 @@ const StepHeader = ({
   totalSteps,
   showStepper,
   title,
-  error
+  error,
+  ...props
 }) => {
   return (
     <Menu
@@ -25,22 +27,16 @@ const StepHeader = ({
       justifyContent='space-between'
       borderColor='silver'
       width='100%'
+      {...props}
     >
       <Box display='flex' flexDirection='row' alignItems='center'>
-        <MenuItem
-          mr={title ? 3 : 0}
-          display='flex'
-          justifyContent='space-between'
-        >
+        <MenuItem display='flex' justifyContent='space-between'>
           {error && <ErrorGlyph />}
           {loading && !error && <Loading />}
           {!loading && !error && <Glyph Icon={Icon} acronym={glyphAcronym} />}
         </MenuItem>
-        {title && (
-          <MenuItem>
-            <Title>{title}</Title>
-          </MenuItem>
-        )}
+        <Box width={2} />
+        {title && <Title>{title}</Title>}
       </Box>
       {showStepper && (
         <MenuItem>
@@ -63,10 +59,10 @@ const StepHeader = ({
 
 StepHeader.propTypes = {
   loading: PropTypes.bool,
-  currentStep: PropTypes.number.isRequired,
+  currentStep: PropTypes.number,
   glyphAcronym: PropTypes.string,
   Icon: PropTypes.object,
-  totalSteps: PropTypes.number.isRequired,
+  totalSteps: PropTypes.number,
   error: PropTypes.bool,
   showStepper: PropTypes.bool,
   title: PropTypes.string
@@ -77,6 +73,8 @@ StepHeader.defaultProps = {
   error: false,
   glyphAcronym: '',
   showStepper: true,
+  currentStep: 0,
+  totalSteps: 0,
   title: ''
 }
 

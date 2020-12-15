@@ -91,6 +91,13 @@ Num.propTypes = {
   size: oneOf(Object.keys(theme.textStyles.num))
 }
 
+export const InputLabelBase = styled.label`
+  ${color}
+  ${typography}
+  ${layout}
+  ${space}
+`
+
 export const Highlight = styled.span`
   border-radius: ${props => props.theme.radii[6]};
   padding: 0rem 1rem;
