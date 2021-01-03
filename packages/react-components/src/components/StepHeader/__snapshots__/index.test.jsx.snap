@@ -22,7 +22,6 @@ exports[`StepperHeader renders the story 1`] = `
 }
 
 .c2 {
-  margin-right: 16px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -33,7 +32,7 @@ exports[`StepperHeader renders the story 1`] = `
   justify-content: space-between;
 }
 
-.c5 {
+.c6 {
   font-size: 1.5rem;
   font-weight: 400;
   line-height: 1.2;
@@ -41,7 +40,7 @@ exports[`StepperHeader renders the story 1`] = `
   margin: 0;
 }
 
-.c7 {
+.c8 {
   color: #262626;
   font-size: 1.125rem;
   font-weight: 400;
@@ -91,7 +90,13 @@ exports[`StepperHeader renders the story 1`] = `
   justify-content: center;
 }
 
-.c6 {
+.c5 {
+  min-width: 0;
+  box-sizing: border-box;
+  width: 8px;
+}
+
+.c7 {
   min-width: 0;
   box-sizing: border-box;
   margin-left: 24px;
@@ -103,7 +108,7 @@ exports[`StepperHeader renders the story 1`] = `
   display: flex;
 }
 
-.c8 {
+.c9 {
   min-width: 0;
   box-sizing: border-box;
   display: -webkit-box;
@@ -116,7 +121,7 @@ exports[`StepperHeader renders the story 1`] = `
   align-items: center;
 }
 
-.c9 {
+.c10 {
   min-width: 0;
   box-sizing: border-box;
   border-radius: 100px;
@@ -128,7 +133,7 @@ exports[`StepperHeader renders the story 1`] = `
   height: 8px;
 }
 
-.c10 {
+.c11 {
   min-width: 0;
   box-sizing: border-box;
   border-radius: 100px;
@@ -172,28 +177,28 @@ exports[`StepperHeader renders the story 1`] = `
         </h3>
       </div>
     </li>
-    <li
-      class=""
+    <div
+      class="c5"
+      width="2"
+    />
+    <h2
+      class="c6"
+      font-family="RT-Alias-Grotesk"
+      font-size="4"
+      font-weight="400"
     >
-      <h2
-        class="c5"
-        font-family="RT-Alias-Grotesk"
-        font-size="4"
-        font-weight="400"
-      >
-        A Title
-      </h2>
-    </li>
+      A Title
+    </h2>
   </div>
   <li
     class=""
   >
     <div
-      class="c6"
+      class="c7"
       display="flex"
     >
       <p
-        class="c7"
+        class="c8"
         color="core.nearblack"
         font-family="RT-Alias-Grotesk"
         font-size="2"
@@ -203,18 +208,7 @@ exports[`StepperHeader renders the story 1`] = `
         1
       </p>
       <div
-        class="c8"
-        display="flex"
-      >
-        <div
-          class="c9"
-          display="inline-block"
-          height="2"
-          width="2"
-        />
-      </div>
-      <div
-        class="c8"
+        class="c9"
         display="flex"
       >
         <div
@@ -225,33 +219,44 @@ exports[`StepperHeader renders the story 1`] = `
         />
       </div>
       <div
-        class="c8"
+        class="c9"
         display="flex"
       >
         <div
-          class="c10"
+          class="c11"
           display="inline-block"
           height="2"
           width="2"
         />
       </div>
       <div
-        class="c8"
+        class="c9"
         display="flex"
       >
         <div
-          class="c10"
+          class="c11"
           display="inline-block"
           height="2"
           width="2"
         />
       </div>
       <div
-        class="c8"
+        class="c9"
         display="flex"
       >
         <div
-          class="c10"
+          class="c11"
+          display="inline-block"
+          height="2"
+          width="2"
+        />
+      </div>
+      <div
+        class="c9"
+        display="flex"
+      >
+        <div
+          class="c11"
           display="inline-block"
           height="2"
           width="2"

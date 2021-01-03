@@ -2,7 +2,7 @@
   "name": "@glif/modules",
   "private": false,
   "scripts": {
-    "bootstrap": "lerna bootstrap",
+    "bootstrap": "lerna bootstrap --no-ci",
     "build": "lerna run build",
     "lint": "lerna run lint",
     "prepublishOnly": "npm run build",
