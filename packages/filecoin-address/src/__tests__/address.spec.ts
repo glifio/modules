@@ -5,9 +5,23 @@ import {
   IDAddresses,
   secp256k1Addresses
 } from './constants'
-import { encode, newFromString, validateAddressString } from '../index'
+import { encode, newFromString, validateAddressString, newIDAddress } from '../index'
 
 describe('address', () => {
+  describe('newIDAddress', () => {
+    test('it should create new ID addresses', async () => {
+      IDAddresses.forEach(item => {
+        const address = newIDAddress(item.string.slice(2))
+        console.log(encode('f', address))
+        expect(
+          uint8arrays.equals(
+            Uint8Array.from(address.str),
+            item.decodedByteArray
+          )
+        ).toBe(true)
+      })
+    })
+  })
   describe('newFromString', () => {
     test('it should create new ID addresses', async () => {
       IDAddresses.forEach(item => {
