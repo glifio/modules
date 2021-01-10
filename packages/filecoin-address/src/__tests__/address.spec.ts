@@ -12,7 +12,6 @@ describe('address', () => {
     test('it should create new ID addresses', async () => {
       IDAddresses.forEach(item => {
         const address = newIDAddress(item.string.slice(2))
-        console.log(encode('f', address))
         expect(
           uint8arrays.equals(
             Uint8Array.from(address.str),
