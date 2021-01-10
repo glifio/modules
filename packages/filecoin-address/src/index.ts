@@ -155,6 +155,7 @@ export function checkAddressString(address: string) {
 export default {
   Address,
   newAddress,
+  newIDAddress,
   newFromString,
   bigintToArray,
   decode,
