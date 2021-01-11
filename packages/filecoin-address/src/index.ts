@@ -10,6 +10,8 @@ export * from './protocol'
 
 const base32 = base32Function('abcdefghijklmnopqrstuvwxyz234567')
 
+let currentNetwork = Network.MAIN
+
 export class Address {
   readonly str: Uint8Array
   readonly _protocol: Protocol
@@ -29,6 +31,10 @@ export class Address {
 
   payload(): Uint8Array {
     return this.str.slice(1, this.str.length)
+  }
+
+  toString(): string {
+    return encode(currentNetwork, this)
   }
 }
 
@@ -152,6 +158,10 @@ export function checkAddressString(address: string) {
   }
 }
 
+export function setCurrentNetwork (network: Network) {
+  currentNetwork = network
+}
+
 export default {
   Address,
   newAddress,
@@ -164,6 +174,7 @@ export default {
   validateChecksum,
   validateAddressString,
   checkAddressString,
+  setCurrentNetwork,
   Network,
   Protocol
 }

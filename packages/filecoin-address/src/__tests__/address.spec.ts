@@ -5,7 +5,7 @@ import {
   IDAddresses,
   secp256k1Addresses
 } from './constants'
-import { encode, newFromString, validateAddressString, newIDAddress } from '../index'
+import { encode, newFromString, validateAddressString, newIDAddress, setCurrentNetwork, Network } from '../index'
 
 describe('address', () => {
   describe('newIDAddress', () => {
@@ -94,6 +94,48 @@ describe('address', () => {
     test('it should encode an Actor address', async () => {
       const address = newFromString(actorAddresses[0].string)
       expect(encode('t', address)).toBe(actorAddresses[0].string)
+    })
+  })
+
+  describe('toString', () => {
+    test('it should stringify ID addresses', async () => {
+      IDAddresses.forEach(item => {
+        const address = newFromString(item.string)
+        setCurrentNetwork(Network.TEST)
+        expect(`${address}`).toBe(`${Network.TEST}${item.string.slice(1)}`)
+        setCurrentNetwork(Network.MAIN)
+        expect(`${address}`).toBe(`${Network.MAIN}${item.string.slice(1)}`)
+      })
+    })
+
+    test('it should stringify secp256k1 addresses', async () => {
+      secp256k1Addresses.forEach(item => {
+        const address = newFromString(item.string)
+        setCurrentNetwork(Network.TEST)
+        expect(`${address}`).toBe(`${Network.TEST}${item.string.slice(1)}`)
+        setCurrentNetwork(Network.MAIN)
+        expect(`${address}`).toBe(`${Network.MAIN}${item.string.slice(1)}`)
+      })
+    })
+
+    test('it should stringify BLS addresses', async () => {
+      BLSAddresses.forEach(item => {
+        const address = newFromString(item.string)
+        setCurrentNetwork(Network.TEST)
+        expect(`${address}`).toBe(`${Network.TEST}${item.string.slice(1)}`)
+        setCurrentNetwork(Network.MAIN)
+        expect(`${address}`).toBe(`${Network.MAIN}${item.string.slice(1)}`)
+      })
+    })
+
+    test('it should stringify Actor addresses', async () => {
+      actorAddresses.forEach(item => {
+        const address = newFromString(item.string)
+        setCurrentNetwork(Network.TEST)
+        expect(`${address}`).toBe(`${Network.TEST}${item.string.slice(1)}`)
+        setCurrentNetwork(Network.MAIN)
+        expect(`${address}`).toBe(`${Network.MAIN}${item.string.slice(1)}`)
+      })
     })
   })
 
