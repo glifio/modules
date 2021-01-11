@@ -33,6 +33,16 @@ export class Address {
     return this.str.slice(1, this.str.length)
   }
 
+  /**
+   * toString returns a string representation of this address. Prefixed with the
+   * locally defined "currentNetwork" variable. By default this is the mainnet
+   * prefix "f". The "currentNetwork" can be changed by calling the exported 
+   * "setCurrentNetwork" function.
+   * 
+   * Warning: any code with access to this module can call "setCurrentNetwork"
+   * so prefer the exported "encode" function for any string representation of
+   * this address that is mission critical.
+   */
   toString(): string {
     return encode(currentNetwork, this)
   }
