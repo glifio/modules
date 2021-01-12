@@ -10,7 +10,7 @@ on:
 
 env:
   node_version: 14
-  git_email: jonathan@infinitescroll.org
+  git_email: jpschwartz2@uwalumni.com
 
 
 jobs:
