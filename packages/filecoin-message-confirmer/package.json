@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-message-confirmer",
-  "version": "1.1.0-beta.14",
+  "version": "1.1.0-beta.16",
   "description": "A service for confirming a Filecoin message.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
