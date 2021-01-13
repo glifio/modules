@@ -5,7 +5,7 @@ import {
   IDAddresses,
   secp256k1Addresses
 } from './constants'
-import { encode, newFromString, validateAddressString, newIDAddress } from '../index'
+import { encode, decode, newFromString, validateAddressString, newIDAddress, Network, Address } from '../index'
 
 describe('address', () => {
   describe('newIDAddress', () => {
@@ -94,6 +94,60 @@ describe('address', () => {
     test('it should encode an Actor address', async () => {
       const address = newFromString(actorAddresses[0].string)
       expect(encode('t', address)).toBe(actorAddresses[0].string)
+    })
+  })
+
+  describe('decode', () => {
+    test('it should preserve testnet network', () => {
+      const addressStr = `${Network.TEST}${IDAddresses[0].string.slice(1)}`
+      const address = decode(addressStr)
+      expect(address.network()).toBe(Network.TEST)
+      expect(address.toString()).toBe(addressStr)
+    })
+
+    test('it should preserve mainnet network', () => {
+      const addressStr = `${Network.MAIN}${IDAddresses[0].string.slice(1)}`
+      const address = decode(addressStr)
+      expect(address.network()).toBe(Network.MAIN)
+      expect(address.toString()).toBe(addressStr)
+    })
+  })
+
+  describe('toString', () => {
+    test('it should stringify ID addresses', () => {
+      IDAddresses.forEach(item => {
+        const tAddr = new Address(item.decodedByteArray, Network.TEST)
+        expect(`${tAddr}`).toBe(`${Network.TEST}${item.string.slice(1)}`)
+        const fAddr = new Address(item.decodedByteArray, Network.MAIN)
+        expect(`${fAddr}`).toBe(`${Network.MAIN}${item.string.slice(1)}`)
+      })
+    })
+
+    test('it should stringify secp256k1 addresses', () => {
+      secp256k1Addresses.forEach(item => {
+        const tAddr = new Address(item.decodedByteArray, Network.TEST)
+        expect(`${tAddr}`).toBe(`${Network.TEST}${item.string.slice(1)}`)
+        const fAddr = new Address(item.decodedByteArray, Network.MAIN)
+        expect(`${fAddr}`).toBe(`${Network.MAIN}${item.string.slice(1)}`)
+      })
+    })
+
+    test('it should stringify BLS addresses', () => {
+      BLSAddresses.forEach(item => {
+        const tAddr = new Address(item.decodedByteArray, Network.TEST)
+        expect(`${tAddr}`).toBe(`${Network.TEST}${item.string.slice(1)}`)
+        const fAddr = new Address(item.decodedByteArray, Network.MAIN)
+        expect(`${fAddr}`).toBe(`${Network.MAIN}${item.string.slice(1)}`)
+      })
+    })
+
+    test('it should stringify Actor addresses', () => {
+      actorAddresses.forEach(item => {
+        const tAddr = new Address(item.decodedByteArray, Network.TEST)
+        expect(`${tAddr}`).toBe(`${Network.TEST}${item.string.slice(1)}`)
+        const fAddr = new Address(item.decodedByteArray, Network.MAIN)
+        expect(`${fAddr}`).toBe(`${Network.MAIN}${item.string.slice(1)}`)
+      })
     })
   })
 

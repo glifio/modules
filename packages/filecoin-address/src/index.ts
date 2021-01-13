@@ -8,19 +8,26 @@ import { Network } from './network'
 export * from './network'
 export * from './protocol'
 
+const defaultNetwork = Network.MAIN
 const base32 = base32Function('abcdefghijklmnopqrstuvwxyz234567')
 
 export class Address {
   readonly str: Uint8Array
   readonly _protocol: Protocol
+  readonly _network: Network
 
-  constructor(str: Uint8Array) {
+  constructor(str: Uint8Array, network: Network = defaultNetwork) {
     if (!str || str.length < 1) throw new Error('Missing str in address')
     this.str = str
     this._protocol = this.str[0] as Protocol
     if (!Protocol[this._protocol]) {
       throw new Error(`Invalid protocol ${this._protocol}`)
     }
+    this._network = network
+  }
+
+  network(): Network {
+    return this._network
   }
 
   protocol(): Protocol {
@@ -29,6 +36,15 @@ export class Address {
 
   payload(): Uint8Array {
     return this.str.slice(1, this.str.length)
+  }
+
+  /**
+   * toString returns a string representation of this address. If no "network"
+   * parameter was passed to the constructor the address will be prefixed with
+   * the default network prefix "f" (mainnet).
+   */
+  toString (): string {
+    return encode(this._network, this)
   }
 }
 
@@ -50,13 +66,13 @@ export function validateChecksum(
   return uint8arrays.compare(digest, expect)
 }
 
-export function newAddress(protocol: Protocol, payload: Uint8Array): Address {
+export function newAddress(protocol: Protocol, payload: Uint8Array, network?: Network): Address {
   const protocolByte = new Uint8Array([protocol])
-  return new Address(uint8arrays.concat([protocolByte, payload]))
+  return new Address(uint8arrays.concat([protocolByte, payload]), network)
 }
 
-export function newIDAddress(id: number|string): Address {
-  return newAddress(Protocol.ID, leb.unsigned.encode(id))
+export function newIDAddress(id: number|string, network?: Network): Address {
+  return newAddress(Protocol.ID, leb.unsigned.encode(id), network)
 }
 
 export function decode(address: string): Address {
@@ -68,7 +84,7 @@ export function decode(address: string): Address {
   const protocolByte = new Uint8Array([protocol])
 
   if (protocol === Protocol.ID) {
-    return newAddress(protocol, leb.unsigned.encode(raw))
+    return newIDAddress(raw, network)
   }
 
   const payloadChecksum = base32.decode(raw)
@@ -79,7 +95,7 @@ export function decode(address: string): Address {
     throw Error("Checksums don't match")
   }
 
-  const addressObj = newAddress(protocol, payload)
+  const addressObj = newAddress(protocol, payload, network)
   if (encode(network, addressObj) !== address)
     throw Error(`Did not encode this address properly: ${address}`)
 
