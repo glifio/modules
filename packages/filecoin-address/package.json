@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-address",
-  "version": "1.1.0-beta.10",
+  "version": "1.1.0-beta.15",
   "description": "The Filecoin address type",
   "main": "./dist/index.js",
   "browser": "./lib/index.js",
@@ -14,8 +14,8 @@
     "build-types": "../../node_modules/.bin/tsc --emitDeclarationOnly",
     "build": "npm run clean && npm run build-types && npm run build-node && npm run build-browser && npm run build-module",
     "prepublishOnly": "npm run build",
-    "test": "npm run build && jest",
-    "test:watch": "npm run build && jest --watch",
+    "test": "npm run build && ../../node_modules/.bin/jest",
+    "test:watch": "npm run build && ../../node_modules/.bin/jest --watch",
     "type-check": "../../node_modules/.bin/tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch"
   },

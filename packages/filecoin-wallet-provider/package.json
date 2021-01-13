@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-wallet-provider",
-  "version": "1.1.0-beta.11",
+  "version": "1.1.0-beta.15",
   "description": "a javascript package to send filecoin to addresses",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,10 +20,10 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "@glif/filecoin-address": "^1.1.0-beta.10",
-    "@glif/filecoin-message": "^1.1.0-beta.10",
-    "@glif/filecoin-number": "^1.1.0-beta.11",
-    "@glif/filecoin-rpc-client": "^1.1.0-beta.11",
+    "@glif/filecoin-address": "^1.1.0-beta.15",
+    "@glif/filecoin-message": "^1.1.0-beta.15",
+    "@glif/filecoin-number": "^1.1.0-beta.14",
+    "@glif/filecoin-rpc-client": "^1.1.0-beta.14",
     "bignumber.js": "9.0.1"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
     "eslint": "6.1.0",
     "eslint-config-airbnb": "18.1.0",
     "eslint-config-prettier": "6.7.0",
-    "eslint-plugin-import": "2.20.2",
+    "eslint-plugin-import": "2.22.1",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0"
   },

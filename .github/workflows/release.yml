@@ -1,0 +1,43 @@
+
+name: lerna publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      newversion:
+        description: 'lerna publish {major,minor,patch}'
+        required: true
+
+env:
+  node_version: 14
+  git_email: jpschwartz2@uwalumni.com
+
+
+jobs:
+  version_and_release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.3.4
+      with:
+        # fetch full history so things like auto-changelog work properly
+        fetch-depth: 0
+    - name: Use Node.js ${{ env.node_version }}
+      uses: actions/setup-node@v2.1.4
+      with:
+        node-version: ${{ env.node_version }}
+
+    - run: npm i
+    - run: npm run bootstrap
+
+    # Run tests and cleanup
+    - run: npm test # block publishing on
+    - run: git reset --hard && git clean -fd
+
+    # configure git
+    - run: git config --global user.email "${{ env.git_email }}"
+    - run: git config --global user.name "${{ github.actor }}"
+
+    # publish to github and npm
+    - run: npm i lerna -g
+    - run: echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} > .npmrc
+    - run: lerna publish ${{ github.event.inputs.newversion }} -y

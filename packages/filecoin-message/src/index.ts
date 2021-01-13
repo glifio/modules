@@ -24,6 +24,7 @@ export interface LotusMessage {
   GasPremium: string
   GasLimit: number
   GasFeeCap: string
+  GasPrice?: string
   Method: number
   Params?: string | string[]
 }

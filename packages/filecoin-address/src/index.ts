@@ -55,6 +55,10 @@ export function newAddress(protocol: Protocol, payload: Uint8Array): Address {
   return new Address(uint8arrays.concat([protocolByte, payload]))
 }
 
+export function newIDAddress(id: number|string): Address {
+  return newAddress(Protocol.ID, leb.unsigned.encode(id))
+}
+
 export function decode(address: string): Address {
   checkAddressString(address)
 
@@ -151,6 +155,7 @@ export function checkAddressString(address: string) {
 export default {
   Address,
   newAddress,
+  newIDAddress,
   newFromString,
   bigintToArray,
   decode,
