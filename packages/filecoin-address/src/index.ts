@@ -66,12 +66,12 @@ export function validateChecksum(
   return uint8arrays.compare(digest, expect)
 }
 
-export function newAddress(protocol: Protocol, payload: Uint8Array, network?: Network): Address {
+export function newAddress(protocol: Protocol, payload: Uint8Array, network: Network = defaultNetwork): Address {
   const protocolByte = new Uint8Array([protocol])
   return new Address(uint8arrays.concat([protocolByte, payload]), network)
 }
 
-export function newIDAddress(id: number|string, network?: Network): Address {
+export function newIDAddress(id: number|string, network: Network = defaultNetwork): Address {
   return newAddress(Protocol.ID, leb.unsigned.encode(id), network)
 }
 
