@@ -151,6 +151,28 @@ describe('address', () => {
     })
   })
 
+  describe('equals', () => {
+    test('it should be equal if it is the same instance', () => {
+      const address = new Address(IDAddresses[0].decodedByteArray)
+      expect(address === address).toBe(true)
+      expect(address.equals(address)).toBe(true)
+    })
+
+    test('it should be equal if they have the same value', () => {
+      const address0 = new Address(IDAddresses[0].decodedByteArray)
+      const address1 = new Address(IDAddresses[0].decodedByteArray)
+      expect(address0 === address1).toBe(false)
+      expect(address0.equals(address1)).toBe(true)
+    })
+
+    test('it should not be equal if they do not have the same value', () => {
+      const address0 = new Address(IDAddresses[0].decodedByteArray)
+      const address1 = new Address(IDAddresses[1].decodedByteArray)
+      expect(address0 === address1).toBe(false)
+      expect(address0.equals(address1)).toBe(false)
+    })
+  })
+
   describe('validateAddressString', () => {
     test("it should invalidate address that's too short", async () => {
       expect(validateAddressString('t0')).toBe(false)

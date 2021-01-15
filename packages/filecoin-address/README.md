@@ -14,7 +14,7 @@ const { newFromString, encode } = require('@glif/filecoin-address')
 const address = newFromString('t1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei')
 const addressProtocol = address.protocol()
 const addressPayload = address.payload()
-const addressString = address.str
+const addressString = address.str // Uint8Array
 
 const networkPrefix = 't'
 const encoded = encode(networkPrefix, address)
@@ -23,9 +23,11 @@ const encoded = encode(networkPrefix, address)
 #### Exported methods
 
 - newAddress
+- newIDAddress
 - newFromString
 - decode
 - encode
+- equals
 - bigintToArray
 - getChecksum
 - validateChecksum

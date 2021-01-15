@@ -46,6 +46,18 @@ export class Address {
   toString (): string {
     return encode(this._network, this)
   }
+
+  /**
+   * equals determines if this address is the "same" address as the passed
+   * address. Two addresses are considered equal if they are the same instance
+   * OR if their "str" property matches byte for byte.
+   */
+  equals (addr: Address): boolean {
+    if (this === addr) {
+      return true
+    }
+    return uint8arrays.equals(this.str, addr.str)
+  }
 }
 
 export function bigintToArray(v: string | BigInt | number): Uint8Array {
