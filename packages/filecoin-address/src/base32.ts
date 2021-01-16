@@ -1,6 +1,6 @@
 import * as uint8arrays from 'uint8arrays'
 
-/* eslint-disable */
+/* tslint:disable:no-bitwise */
 // From js-multibase (https://github.com/multiformats/js-multibase)
 
 function decode(input: string, alphabet: string): Uint8Array {

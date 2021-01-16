@@ -79,6 +79,7 @@ export function decode(address: string): Address {
   checkAddressString(address)
 
   const network = address.slice(0, 1) as Network
+  /* tslint:disable-next-line:radix */
   const protocol = parseInt(address.slice(1, 2)) as Protocol
   const raw = address.substring(2, address.length)
   const protocolByte = new Uint8Array([protocol])
@@ -127,9 +128,9 @@ export function newFromString(address: string): Address {
   return decode(address)
 }
 
-export function validateAddressString(string: string): boolean {
+export function validateAddressString(addressString: string): boolean {
   try {
-    checkAddressString(string)
+    checkAddressString(addressString)
     return true
   } catch (error) {
     return false
@@ -143,6 +144,7 @@ export function checkAddressString(address: string) {
     throw Error('Unknown address network.')
   }
 
+  /* tslint:disable-next-line:radix */
   const protocol = parseInt(address[1]) as Protocol
   switch (protocol) {
     case Protocol.ID: {
