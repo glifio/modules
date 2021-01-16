@@ -10,7 +10,7 @@
     "lint": "tslint -p tsconfig.json",
     "prepublishOnly": "npm run build",
     "test:build": "npm run build && jest --forceExit",
-    "test": "npm run build && jest --forceExit",
+    "test": "npm run build && npm run lint && jest --forceExit",
     "test:watch": "npm run build && jest --watch"
   },
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",

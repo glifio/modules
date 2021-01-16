@@ -14,7 +14,7 @@
     "lint": "tslint -p tsconfig.json",
     "prepublishOnly": "npm run build",
     "test:build": "npm run build && jest",
-    "test": "npm run build && ../../node_modules/.bin/jest",
+    "test": "npm run build && npm run lint && ../../node_modules/.bin/jest",
     "test:watch": "npm run build && ../../node_modules/.bin/jest --watch"
   },
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
