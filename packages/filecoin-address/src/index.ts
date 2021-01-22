@@ -11,6 +11,14 @@ export * from './protocol'
 const defaultNetwork = Network.MAIN
 const base32 = base32Function('abcdefghijklmnopqrstuvwxyz234567')
 
+// PayloadHashLength defines the hash length taken over addresses using the
+// Actor and SECP256K1 protocols.
+const payloadHashLength = 20
+
+function addressHash (ingest: Uint8Array): Uint8Array {
+  return blake2b(ingest, null, payloadHashLength)
+}
+
 export class Address {
   readonly str: Uint8Array
   readonly _protocol: Protocol
@@ -85,6 +93,27 @@ export function newAddress(protocol: Protocol, payload: Uint8Array, network: Net
 
 export function newIDAddress(id: number|string, network: Network = defaultNetwork): Address {
   return newAddress(Protocol.ID, leb.unsigned.encode(id), network)
+}
+
+/**
+ * newActorAddress returns an address using the Actor protocol.
+ */
+export function newActorAddress (data: Uint8Array): Address {
+  return newAddress(Protocol.ACTOR, addressHash(data))
+}
+
+/**
+ * newSecp256k1Address returns an address using the SECP256K1 protocol.
+ */
+export function newSecp256k1Address (pubkey: Uint8Array): Address {
+  return newAddress(Protocol.SECP256K1, addressHash(pubkey))
+}
+
+/**
+ * newBLSAddress returns an address using the BLS protocol.
+ */
+export function newBLSAddress (pubkey: Uint8Array): Address {
+  return newAddress(Protocol.BLS, pubkey)
 }
 
 export function decode(address: string): Address {
@@ -182,10 +211,26 @@ export function checkAddressString(address: string) {
   }
 }
 
+/**
+ * idFromAddress extracts the ID from an ID address.
+ */
+export function idFromAddress (address: Address): number {
+  if (address.protocol() !== Protocol.ID)
+    throw new Error('Cannot get ID from non ID address')
+  // An unsigned varint should be less than 2^63 which is < Number.MAX_VALUE.
+  // So this number SHOULD be representable in JS and safe to parseInt.
+  // https://github.com/multiformats/unsigned-varint
+  // TODO: does leb128 enforce the max value?
+  return parseInt(leb.unsigned.decode(address.payload()))
+}
+
 export default {
   Address,
   newAddress,
   newIDAddress,
+  newActorAddress,
+  newSecp256k1Address,
+  newBLSAddress,
   newFromString,
   bigintToArray,
   decode,
@@ -194,6 +239,7 @@ export default {
   validateChecksum,
   validateAddressString,
   checkAddressString,
+  idFromAddress,
   Network,
   Protocol
 }
