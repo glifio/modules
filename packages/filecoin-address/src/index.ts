@@ -221,7 +221,7 @@ export function idFromAddress (address: Address): number {
   // So this number SHOULD be representable in JS and safe to parseInt.
   // https://github.com/multiformats/unsigned-varint
   // TODO: does leb128 enforce the max value?
-  return parseInt(leb.unsigned.decode(address.payload()))
+  return parseInt(leb.unsigned.decode(address.payload()), 10)
 }
 
 export default {

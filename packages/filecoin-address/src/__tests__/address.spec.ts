@@ -1,11 +1,12 @@
 import * as uint8arrays from 'uint8arrays'
+import { blake2b } from 'blakejs'
 import {
   actorAddresses,
   BLSAddresses,
   IDAddresses,
   secp256k1Addresses
 } from './constants'
-import { encode, decode, newFromString, validateAddressString, newIDAddress, Network, Address } from '../index'
+import { encode, decode, newFromString, validateAddressString, newIDAddress, Network, Address, newActorAddress, newSecp256k1Address, newBLSAddress } from '../index'
 
 describe('address', () => {
   describe('newIDAddress', () => {
@@ -19,6 +20,42 @@ describe('address', () => {
           )
         ).toBe(true)
       })
+    })
+  })
+  describe('newActorAddress', () => {
+    test('it should create new Actor address', async () => {
+      const data = uint8arrays.fromString('actor')
+      const address = newActorAddress(data)
+      expect(
+        uint8arrays.equals(
+          address.payload(),
+          blake2b(data, null, 20)
+        )
+      ).toBe(true)
+    })
+  })
+  describe('newSecp256k1Address', () => {
+    test('it should create new Secp256k1 address', async () => {
+      const data = uint8arrays.fromString('Secp256k1 pubkey')
+      const address = newSecp256k1Address(data)
+      expect(
+        uint8arrays.equals(
+          address.payload(),
+          blake2b(data, null, 20)
+        )
+      ).toBe(true)
+    })
+  })
+  describe('newBLSAddress', () => {
+    test('it should create new BLS address', async () => {
+      const data = uint8arrays.fromString('BLS pubkey')
+      const address = newBLSAddress(data)
+      expect(
+        uint8arrays.equals(
+          address.payload(),
+          data
+        )
+      ).toBe(true)
     })
   })
   describe('newFromString', () => {
