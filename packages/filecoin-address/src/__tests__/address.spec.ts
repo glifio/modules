@@ -1,11 +1,12 @@
 import * as uint8arrays from 'uint8arrays'
+import { blake2b } from 'blakejs'
 import {
   actorAddresses,
   BLSAddresses,
   IDAddresses,
   secp256k1Addresses
 } from './constants'
-import { encode, decode, newFromString, validateAddressString, newIDAddress, Network, Address } from '../index'
+import { encode, decode, newFromString, validateAddressString, newIDAddress, Network, Address, newActorAddress, newSecp256k1Address, newBLSAddress, idFromAddress } from '../index'
 
 describe('address', () => {
   describe('newIDAddress', () => {
@@ -19,6 +20,42 @@ describe('address', () => {
           )
         ).toBe(true)
       })
+    })
+  })
+  describe('newActorAddress', () => {
+    test('it should create new Actor address', () => {
+      const data = uint8arrays.fromString('actor')
+      const address = newActorAddress(data)
+      expect(
+        uint8arrays.equals(
+          address.payload(),
+          blake2b(data, null, 20)
+        )
+      ).toBe(true)
+    })
+  })
+  describe('newSecp256k1Address', () => {
+    test('it should create new Secp256k1 address', () => {
+      const data = uint8arrays.fromString('Secp256k1 pubkey')
+      const address = newSecp256k1Address(data)
+      expect(
+        uint8arrays.equals(
+          address.payload(),
+          blake2b(data, null, 20)
+        )
+      ).toBe(true)
+    })
+  })
+  describe('newBLSAddress', () => {
+    test('it should create new BLS address', () => {
+      const data = uint8arrays.fromString('BLS pubkey')
+      const address = newBLSAddress(data)
+      expect(
+        uint8arrays.equals(
+          address.payload(),
+          data
+        )
+      ).toBe(true)
     })
   })
   describe('newFromString', () => {
@@ -72,6 +109,25 @@ describe('address', () => {
 
     test('it should throw when given a bad ID addresses', async () => {
       expect(() => newFromString('t0')).toThrow()
+    })
+  })
+
+  describe('idFromAddress', () => {
+    test('it should extract the ID from an ID address', () => {
+      const id = 1138
+      const address = newIDAddress(id)
+      expect(idFromAddress(address)).toBe(id)
+    })
+
+    test('it should extract ID from address with the max ID value', () => {
+      const id = Math.pow(2, 63)
+      const address = newIDAddress(`${id}`)
+      expect(idFromAddress(address)).toBe(id)
+    })
+
+    test('it should throw when given a non-ID address', () => {
+      const address = new Address(secp256k1Addresses[0].decodedByteArray)
+      expect(() => idFromAddress(address)).toThrow('Cannot get ID from non ID address')
     })
   })
 
