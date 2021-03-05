@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-wallet-provider",
-  "version": "1.1.0-beta.15",
+  "version": "1.1.0-beta.18",
   "description": "a javascript package to send filecoin to addresses",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -14,22 +14,22 @@
     "lint": "tslint -p tsconfig.json",
     "prepublishOnly": "npm run build",
     "test:build": "npm run build && jest",
-    "test": "npm run build && ../../node_modules/.bin/jest",
+    "test": "npm run build && npm run lint && ../../node_modules/.bin/jest",
     "test:watch": "npm run build && ../../node_modules/.bin/jest --watch"
   },
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "@glif/filecoin-address": "^1.1.0-beta.15",
-    "@glif/filecoin-message": "^1.1.0-beta.15",
-    "@glif/filecoin-number": "^1.1.0-beta.14",
-    "@glif/filecoin-rpc-client": "^1.1.0-beta.14",
+    "@glif/filecoin-address": "^1.1.0-beta.18",
+    "@glif/filecoin-message": "^1.1.0-beta.18",
+    "@glif/filecoin-number": "^1.1.0-beta.17",
+    "@glif/filecoin-rpc-client": "^1.1.0-beta.17",
     "bignumber.js": "9.0.1"
   },
   "devDependencies": {
     "cids": "^1.0.0",
     "eslint": "6.1.0",
-    "eslint-config-airbnb": "18.1.0",
+    "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "6.7.0",
     "eslint-plugin-import": "2.22.1",
     "tslint": "^6.1.3",

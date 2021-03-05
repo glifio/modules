@@ -1,6 +1,6 @@
 {
   "name": "@glif/local-managed-provider",
-  "version": "1.1.0-beta.15",
+  "version": "1.1.0-beta.18",
   "description": "a javascript package to send filecoin to addresses",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,15 +10,15 @@
     "lint": "tslint -p tsconfig.json",
     "prepublishOnly": "npm run build",
     "test:build": "npm run build && jest --forceExit",
-    "test": "npm run build && jest --forceExit",
+    "test": "npm run build && npm run lint && jest --forceExit",
     "test:watch": "npm run build && jest --watch"
   },
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "@glif/filecoin-address": "^1.1.0-beta.15",
-    "@glif/filecoin-message": "^1.1.0-beta.15",
-    "@glif/filecoin-wallet-provider": "^1.1.0-beta.15",
+    "@glif/filecoin-address": "^1.1.0-beta.18",
+    "@glif/filecoin-message": "^1.1.0-beta.18",
+    "@glif/filecoin-wallet-provider": "^1.1.0-beta.18",
     "@zondax/filecoin-signing-tools": "^0.12.0",
     "bignumber.js": "^9.0.1",
     "uint8arrays": "^1.1.0"
@@ -28,7 +28,7 @@
     "cids": "^1.0.0",
     "cross-env": "7.0.3",
     "eslint": "6.1.0",
-    "eslint-config-airbnb": "18.1.0",
+    "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "6.7.0",
     "eslint-plugin-import": "2.22.1",
     "jest": "26.6.2",
