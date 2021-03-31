@@ -57,9 +57,9 @@
     "styled-components": "^5.2.1"
   },
   "dependencies": {
-    "@glif/filecoin-address": "^1.0.0-beta.5",
-    "@glif/filecoin-number": "^1.0.0-beta.5",
-    "@glif/filecoin-rpc-client": "^1.1.0-beta.17",
+    "@glif/filecoin-address": "latest",
+    "@glif/filecoin-number": "latest",
+    "@glif/filecoin-rpc-client": "latest",
     "axios": "^0.21.0",
     "bip39": "^3.0.3",
     "dayjs": "^1.9.6",
