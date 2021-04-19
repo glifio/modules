@@ -2,12 +2,7 @@ import { Network } from '@glif/filecoin-address'
 import uint8arrays from 'uint8arrays'
 import { ExtendedKey, MessageParams } from '@zondax/filecoin-signing-tools'
 import { SignedLotusMessage } from '@glif/filecoin-message'
-
-const moduleToImport = process.env.JEST_WORKER_ID
-  ? '@zondax/filecoin-signing-tools/nodejs'
-  : '@zondax/filecoin-signing-tools'
-// tslint:disable-next-line:no-var-requires
-const signingTools = require(moduleToImport)
+import * as signingTools from '@zondax/filecoin-signing-tools'
 
 export interface PrivateKeyContainer {
   address: string
