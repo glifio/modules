@@ -251,4 +251,27 @@ export class Filecoin {
 
     return new FilecoinNumber(leftSide.plus(rightSide), 'attofil')
   }
+
+  /*
+   * Used for calculating gas params of sped up messages
+   *
+   */
+  getMinSpedUpGasParams = async (
+    message: LotusMessage,
+  ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
+    let newFeeCap = message.GasFeeCap
+    const newPremium = new FilecoinNumber(message.GasPremium, 'fil')
+      .multipliedBy(125)
+      .dividedBy(100)
+
+    if (newPremium.isGreaterThan(message.GasFeeCap)) {
+      newFeeCap = newPremium.toString()
+    }
+
+    return {
+      gasFeeCap: newFeeCap,
+      gasPremium: newPremium.toString(),
+      gasLimit: message.GasLimit,
+    }
+  }
 }

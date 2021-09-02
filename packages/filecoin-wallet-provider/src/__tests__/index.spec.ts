@@ -748,4 +748,58 @@ describe('provider', () => {
       expect(res.maxFee instanceof FilecoinNumber).toBeTruthy()
     })
   })
+
+  describe('getMinSpedUpGasParams', () => {
+    test('it returns a message with the gasPremium bumped by 25%', async () => {
+      const FEE_CAP = '1000'
+      const LIMIT = 1000
+      const PREMIUM = '100'
+      const message = new Message({
+        to: KNOWN_TYPE_1_ADDRESS[Network.TEST],
+        from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
+        value: new FilecoinNumber('1', 'attofil').toAttoFil(),
+        method: 0,
+        nonce: 0,
+        gasFeeCap: FEE_CAP,
+        gasLimit: LIMIT,
+        gasPremium: PREMIUM,
+      })
+
+      const {
+        gasPremium,
+        gasFeeCap,
+        gasLimit,
+      } = await filecoin.getMinSpedUpGasParams(message.toLotusType())
+
+      expect(gasPremium).toBe((Number(PREMIUM) * 1.25).toString())
+      expect(gasLimit).toBe(LIMIT)
+      expect(gasFeeCap).toBe(FEE_CAP)
+    })
+
+    test('it returns a message with the gasFeeCap equal to the gasPremium when the premium * 1.25 is greater than the fee cap', async () => {
+      const FEE_CAP = '1000'
+      const LIMIT = 1000
+      const PREMIUM = '1000'
+      const message = new Message({
+        to: KNOWN_TYPE_1_ADDRESS[Network.TEST],
+        from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
+        value: new FilecoinNumber('1', 'attofil').toAttoFil(),
+        method: 0,
+        nonce: 0,
+        gasFeeCap: FEE_CAP,
+        gasLimit: LIMIT,
+        gasPremium: PREMIUM,
+      })
+
+      const {
+        gasPremium,
+        gasFeeCap,
+        gasLimit,
+      } = await filecoin.getMinSpedUpGasParams(message.toLotusType())
+
+      expect(gasPremium).toBe((Number(PREMIUM) * 1.25).toString())
+      expect(gasLimit).toBe(LIMIT)
+      expect(gasFeeCap).toBe((Number(PREMIUM) * 1.25).toString())
+    })
+  })
 })
