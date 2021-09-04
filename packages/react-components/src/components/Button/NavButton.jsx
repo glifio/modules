@@ -42,8 +42,7 @@ NavButton.propTypes = {
 }
 
 NavButton.defaultProps = {
-  type: 'button',
-  isActive: true
+  type: 'button'
 }
 
 export default NavButton
