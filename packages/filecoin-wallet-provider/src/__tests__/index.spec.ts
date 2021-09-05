@@ -20,7 +20,7 @@ describe('provider', () => {
   let filecoin: Filecoin
   beforeAll(async () => {
     filecoin = new Filecoin(testSubProviderInstance, {
-      apiAddress: 'https://api.node.glif.io',
+      apiAddress: 'https://node.glif.io/space07/lotus/rpc/v0',
     })
   })
 
@@ -389,7 +389,7 @@ describe('provider', () => {
     })
 
     test('should return a number', async () => {
-      const nonce = await filecoin.getNonce('t080')
+      const nonce = await filecoin.getNonce(KNOWN_TYPE_0_ADDRESS[Network.TEST])
       expect(typeof nonce === 'number').toBe(true)
     })
 
