@@ -848,7 +848,9 @@ describe('provider', () => {
         } = await filecoin.getReplaceMessageGasParams(message.toLotusType())
         // here the min gasPremium is bumped by 1.25x, so we just make sure the recommended amount is bigger than that
         expect(
-          new BigNumber(gasPremium).isGreaterThan(Number(PREMIUM) * 1.25),
+          new BigNumber(gasPremium).isGreaterThan(
+            new BigNumber(PREMIUM).times(1.25),
+          ),
         ).toBe(true)
         expect(new BigNumber(gasLimit).isGreaterThan(LIMIT)).toBe(true)
         expect(new BigNumber(gasFeeCap).isGreaterThan(FEE_CAP)).toBe(true)
