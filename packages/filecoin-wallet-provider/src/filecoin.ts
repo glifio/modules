@@ -315,17 +315,17 @@ export class Filecoin {
     message: LotusMessage,
   ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
     let newFeeCap = message.GasFeeCap
-    const newPremium = new FilecoinNumber(message.GasPremium, 'fil')
+    const newPremium = new BigNumber(message.GasPremium)
       .multipliedBy(125)
       .dividedBy(100)
 
     if (newPremium.isGreaterThan(message.GasFeeCap)) {
-      newFeeCap = newPremium.toString()
+      newFeeCap = newPremium.toFixed(0, BigNumber.ROUND_CEIL)
     }
 
     return {
       gasFeeCap: newFeeCap,
-      gasPremium: newPremium.toString(),
+      gasPremium: newPremium.toFixed(0, BigNumber.ROUND_CEIL),
       gasLimit: message.GasLimit,
     }
   }

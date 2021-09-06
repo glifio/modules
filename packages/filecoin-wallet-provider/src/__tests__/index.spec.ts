@@ -802,6 +802,28 @@ describe('provider', () => {
         expect(gasLimit).toBe(LIMIT)
         expect(gasFeeCap).toBe((Number(PREMIUM) * 1.25).toString())
       })
+
+      test('it rounds up', async () => {
+        const FEE_CAP = '101417'
+        const LIMIT = 611585
+        const PREMIUM = '100363'
+        const message = new Message({
+          to: KNOWN_TYPE_1_ADDRESS[Network.TEST],
+          from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
+          value: new FilecoinNumber('1', 'attofil').toAttoFil(),
+          method: 0,
+          nonce: 0,
+          gasFeeCap: FEE_CAP,
+          gasLimit: LIMIT,
+          gasPremium: PREMIUM,
+        })
+
+        const { gasPremium } = await filecoin.getReplaceMessageMinGasParams(
+          message.toLotusType(),
+        )
+
+        expect(gasPremium).toBe('125454')
+      })
     })
 
     describe('getReplaceMessageGasParams', () => {
