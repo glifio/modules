@@ -17,16 +17,14 @@ const StyledNavLink = styled(StyledATag).attrs(props => ({
   color: ${props => props.theme.colors.buttons.secondary.borderColor};
   transition: 0.18s ease-in-out;
   &:hover {
-    opacity: .9;
+    opacity: 0.9;
     /* ensure this gets overwritten */
-    border-bottom: ${props => props.isActive ? '2px' : '1px'} solid;
+    border-bottom: ${props => (props.isActive ? '2px' : '1px')} solid;
   }
 `
 
 const ButtonLink = ({ ...props }) => {
-  return <StyledNavLink {...props}>
-    {props.name}
-  </StyledNavLink>
+  return <StyledNavLink {...props}>{props.name}</StyledNavLink>
 }
 
 ButtonLink.propTypes = {
