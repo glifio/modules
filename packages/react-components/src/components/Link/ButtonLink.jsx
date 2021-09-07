@@ -7,18 +7,19 @@ const StyledNavLink = styled(StyledATag).attrs(props => ({
   py: 2,
   mx: 1,
   fontSize: 2,
-  height: 6,
   cursor: props.disabled ? 'not-allowed' : 'pointer',
   color: props.theme.colors.buttons.secondary.borderColor
 }))`
   /* We couldn't set the border above. So add it here instead. */
   border: 1px solid;
-  border-radius: ${props => props.theme.sizes[6]}px;
+  border-radius: 1em;
   border-color: ${props => props.theme.colors.buttons.secondary.borderColor};
   color: ${props => props.theme.colors.buttons.secondary.borderColor};
   transition: 0.18s ease-in-out;
   &:hover {
     opacity: .9;
+    /* ensure this gets overwritten */
+    border-bottom: ${props => props.isActive ? '2px' : '1px'} solid;
   }
 `
 

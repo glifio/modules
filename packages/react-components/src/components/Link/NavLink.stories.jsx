@@ -1,10 +1,10 @@
-import NavButton from './NavButton'
+import NavLink from './NavLink'
 import theme from '../theme'
 import ThemeProvider from '../ThemeProvider'
 
 export default {
-  title: 'Button/NavButton',
-  component: NavButton,
+  title: 'Link/NavLink',
+  component: NavLink,
   decorators: [
     Story => (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -15,9 +15,18 @@ export default {
   parameters: { actions: { argTypesRegex: '^on.*' } }
 }
 
-const Template = args => <NavButton {...args} />
+const Template = args => {
+  return (
+    <>
+      <NavLink {...args} href={'#1'} name={'Item 1'} />
+      <NavLink {...args} href={'#2'} name={'Active Item'} isActive={true} />
+      <NavLink {...args} href={'#3'} name={'Item 3'} />
+    </>
+  )
+}
 
 export const Base = Template.bind({})
 Base.args = {
-  title: 'Next'
+  name: 'Next',
+  href: '#'
 }
