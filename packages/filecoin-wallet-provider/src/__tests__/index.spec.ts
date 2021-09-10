@@ -772,7 +772,11 @@ describe('provider', () => {
           gasLimit,
         } = await filecoin.getReplaceMessageMinGasParams(message.toLotusType())
 
-        expect(gasPremium).toBe((Number(PREMIUM) * 1.25).toString())
+        expect(
+          new BigNumber(gasPremium).isEqualTo(
+            new BigNumber(PREMIUM).times(1.25).toFixed(0, BigNumber.ROUND_CEIL),
+          ),
+        ).toBe(true)
         expect(gasLimit).toBe(LIMIT)
         expect(gasFeeCap).toBe(FEE_CAP)
       })
@@ -798,9 +802,17 @@ describe('provider', () => {
           gasLimit,
         } = await filecoin.getReplaceMessageMinGasParams(message.toLotusType())
 
-        expect(gasPremium).toBe((Number(PREMIUM) * 1.25).toString())
+        expect(
+          new BigNumber(gasPremium).isEqualTo(
+            new BigNumber(PREMIUM).times(1.25).toFixed(0, BigNumber.ROUND_CEIL),
+          ),
+        ).toBe(true)
         expect(gasLimit).toBe(LIMIT)
-        expect(gasFeeCap).toBe((Number(PREMIUM) * 1.25).toString())
+        expect(
+          new BigNumber(gasFeeCap).isEqualTo(
+            new BigNumber(PREMIUM).times(1.25).toFixed(0, BigNumber.ROUND_CEIL),
+          ),
+        ).toBe(true)
       })
 
       test('it rounds up', async () => {
@@ -849,7 +861,7 @@ describe('provider', () => {
         // here the min gasPremium is bumped by 1.25x, so we just make sure the recommended amount is bigger than that
         expect(
           new BigNumber(gasPremium).isGreaterThan(
-            new BigNumber(PREMIUM).times(1.25),
+            new BigNumber(PREMIUM).times(1.25).toFixed(0, BigNumber.ROUND_CEIL),
           ),
         ).toBe(true)
         expect(new BigNumber(gasLimit).isGreaterThan(LIMIT)).toBe(true)
@@ -887,8 +899,13 @@ describe('provider', () => {
         } = await filecoin.getReplaceMessageGasParams(
           messageToReplace.toLotusType(),
         )
-
-        expect(gasPremium).toBe((Number(GasPremium) * 1.25).toString())
+        expect(
+          new BigNumber(gasPremium).isEqualTo(
+            new BigNumber(GasPremium)
+              .times(1.25)
+              .toFixed(0, BigNumber.ROUND_CEIL),
+          ),
+        ).toBe(true)
         expect(new BigNumber(gasFeeCap).isGreaterThanOrEqualTo(GasFeeCap)).toBe(
           true,
         )
