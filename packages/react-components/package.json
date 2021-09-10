@@ -11,6 +11,7 @@
     "test": "run-s test:*",
     "test:lint": "eslint --ext .jsx,.js ./src",
     "test:jest": "jest --coverage",
+    "test-watch": "jest --watch",
     "clean": "../../node_modules/.bin/rimraf dist/* && mkdirp dist",
     "build": "run-s clean build:*",
     "build:babel": "../../node_modules/.bin/babel src --out-dir dist --source-maps --ignore 'src/**/*.stories.jsx','src/**/*.test.jsx','src/test-utils/**/*'",
