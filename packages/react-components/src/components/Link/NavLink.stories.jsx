@@ -18,15 +18,25 @@ export default {
 const Template = args => {
   return (
     <>
-      <NavLink {...args} href='#1' name='Item 1' />
-      <NavLink {...args} href='#2' name='Active Item' isActive />
-      <NavLink {...args} href='#3' name='Item 3' />
+      <NavLink {...args} />
     </>
   )
 }
 
-export const Base = Template.bind({})
-Base.args = {
-  name: 'Next',
-  href: '#'
+export const Active = Template.bind({})
+Active.args = {
+  rel: 'noopener',
+  target: '_blank',
+  isActive: true,
+  href: 'https://google.com',
+  name: 'Active Item'
+}
+
+export const Inactive = Template.bind({})
+Inactive.args = {
+  rel: 'noopener',
+  target: '_blank',
+  isActive: false,
+  href: 'https://google.com',
+  name: 'Inactive Item'
 }
