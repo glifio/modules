@@ -18,7 +18,7 @@ export default {
 const Template = args => {
   return (
     <>
-      <NavLink {...args} />
+      <NavLink {...args}>{args.name}</NavLink>
     </>
   )
 }
