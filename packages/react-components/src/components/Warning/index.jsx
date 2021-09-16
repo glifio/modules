@@ -42,19 +42,19 @@ const WarningCard = ({
       width='100%'
       alignItems='center'
       justifyContent='flex-start'
-      p={4}
+      py={4}
     >
       <Box
         display='flex'
         flexDirection='column'
         justifyContent='center'
         alignContent='center'
+        width='100%'
       >
         <OnboardCard
           display='flex'
           flexDirection='column'
           justifyContent='flex-start'
-          ml={2}
           minHeight={11}
           p={0}
         >
