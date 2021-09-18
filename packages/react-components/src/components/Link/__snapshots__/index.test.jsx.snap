@@ -13,6 +13,10 @@ exports[`NavLink it renders an active state 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   cursor: pointer;
   border-color: #5E26FF;
   background-color: transparent;
@@ -26,6 +30,7 @@ exports[`NavLink it renders an active state 1`] = `
   padding-left: 16px;
   padding-right: 16px;
   height: 48px;
+  width: 160px;
 }
 
 .c0:hover {
@@ -39,6 +44,7 @@ exports[`NavLink it renders an active state 1`] = `
   href="https://openworklabs.com"
   rel="noopener"
   target="_blank"
+  width="9"
 >
   Assets
 </a>
@@ -57,6 +63,10 @@ exports[`NavLink it renders an inactive state 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   cursor: pointer;
   border-color: #262626;
   background-color: transparent;
@@ -70,6 +80,7 @@ exports[`NavLink it renders an inactive state 1`] = `
   padding-left: 16px;
   padding-right: 16px;
   height: 48px;
+  width: 160px;
 }
 
 .c0:hover {
@@ -83,6 +94,7 @@ exports[`NavLink it renders an inactive state 1`] = `
   href="https://openworklabs.com"
   rel="noopener"
   target="_blank"
+  width="9"
 >
   Assets
 </a>

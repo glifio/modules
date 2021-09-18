@@ -17,12 +17,14 @@ const StyledNavLink = styled.a.attrs(props => ({
   py: 2,
   px: 3,
   fontSize: 3,
+  width: 9,
   ...props
 }))`
   text-decoration: none;
   border: ${props => (props.isActive ? '2' : '1')}px solid;
   display: flex;
   align-items: center;
+  justify-content: center;
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   border-color: ${props =>
     props.isActive

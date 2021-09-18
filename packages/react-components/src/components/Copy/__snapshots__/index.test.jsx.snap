@@ -15,6 +15,28 @@ exports[`CopyAddress renders the story 1`] = `
   align-items: center;
 }
 
+.c1 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.2;
+  font-family: RT-Alias-Grotesk;
+  overflow: hidden;
+  margin: 0;
+}
+
+.c8 {
+  color: #E0D7FE;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1;
+  font-family: RT-Alias-Grotesk;
+  text-align: left;
+  min-width: 64px;
+  margin: 0;
+  margin-top: 0;
+  margin-left: 4px;
+}
+
 .c3 {
   cursor: pointer;
   border: 1px solid #1AD08F;
@@ -50,28 +72,6 @@ exports[`CopyAddress renders the story 1`] = `
 .c5 {
   width: 24;
   height: 24;
-}
-
-.c1 {
-  font-size: 1.25rem;
-  font-weight: 400;
-  line-height: 1.2;
-  font-family: RT-Alias-Grotesk;
-  overflow: hidden;
-  margin: 0;
-}
-
-.c8 {
-  color: #E0D7FE;
-  font-size: 1.125rem;
-  font-weight: 400;
-  line-height: 1;
-  font-family: RT-Alias-Grotesk;
-  text-align: left;
-  min-width: 64px;
-  margin: 0;
-  margin-top: 0;
-  margin-left: 4px;
 }
 
 .c4 {
@@ -118,44 +118,52 @@ exports[`CopyAddress renders the story 1`] = `
   >
     f17uoq ... twpryy
   </h2>
-  <button
-    class="c2 c3 c4"
+  <div
+    class="c0"
+    color="core.secondary"
     display="flex"
-    font-size="3"
-    height="6"
   >
-    <svg
-      class="c5 c6 c7"
-      fill="none"
-      height="24"
-      viewBox="0 0 24 24"
-      width="24"
-      xmlns="http://www.w3.org/2000/svg"
+    <button
+      class="c2 c3 c4"
+      display="flex"
+      font-size="3"
+      height="6"
+      role="button"
+      type="button"
     >
-      <rect
-        fill="#1A0066"
-        height="12"
-        width="12"
-        x="8"
-        y="4"
-      />
-      <rect
-        fill="#E0D7FE"
-        height="12"
-        width="12"
-        x="4"
-        y="8"
-      />
-    </svg>
-    <h4
-      class="c8 c9 c10"
-      color="core.secondary"
-      font-family="RT-Alias-Grotesk"
-      font-size="2"
-      font-weight="400"
-    >
-      Copy
-    </h4>
-  </button>
+      <svg
+        class="c5 c6 c7"
+        fill="none"
+        height="24"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="#1A0066"
+          height="12"
+          width="12"
+          x="8"
+          y="4"
+        />
+        <rect
+          fill="#E0D7FE"
+          height="12"
+          width="12"
+          x="4"
+          y="8"
+        />
+      </svg>
+      <h4
+        class="c8 c9 c10"
+        color="core.secondary"
+        font-family="RT-Alias-Grotesk"
+        font-size="2"
+        font-weight="400"
+      >
+        Copy
+      </h4>
+    </button>
+  </div>
 </div>
 `;
