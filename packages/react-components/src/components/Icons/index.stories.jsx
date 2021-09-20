@@ -11,7 +11,8 @@ import {
   IconCopyAccountAddress as IconCopyAccountAddressComp,
   IconMessageStatus as IconMessageStatusComp,
   IconLedger as IconLedgerComp,
-  IconViewAddress as IconViewAddressComp
+  IconViewAddress as IconViewAddressComp,
+  IconEdit as IconEditComp
 } from './index'
 
 export default {
@@ -80,3 +81,9 @@ IconLedger.args = {}
 
 export const IconViewAddress = args => <IconViewAddressComp {...args} />
 IconViewAddress.args = {}
+
+export const IconEdit = args => <IconEditComp {...args} />
+IconEdit.args = {
+  fill: 'yellow',
+  stroke: 'blue'
+}
