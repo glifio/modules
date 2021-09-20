@@ -34,7 +34,7 @@ const IconButton = forwardRef(({ onClick, Icon, ...props }, ref) => (
 
 const IconButtonProps = {
   onClick: func.isRequired,
-  Icon: node.isRequired,
+  Icon: node,
   stroke: string,
   fill: string
 }
