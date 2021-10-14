@@ -316,7 +316,7 @@ exports[`AccountCard renders the card 1`] = `
         font-weight="1"
         overflow="hidden"
       >
-        t01234 ... 456789
+        t0123456789
       </h2>
       <div
         class="c7"
@@ -680,7 +680,7 @@ exports[`AccountCard renders the card CREATE_MNEMONIC 1`] = `
         font-weight="1"
         overflow="hidden"
       >
-        t01234 ... 456789
+        t0123456789
       </h2>
       <div
         class="c7"
@@ -1063,7 +1063,7 @@ exports[`AccountCard renders the story 1`] = `
         font-weight="1"
         overflow="hidden"
       >
-        t01234 ... 456789
+        t0123456789
       </h2>
       <div
         class="c7"
