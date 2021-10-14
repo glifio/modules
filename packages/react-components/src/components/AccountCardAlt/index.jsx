@@ -76,11 +76,12 @@ const AccountCardAlt = forwardRef(
               fontSize={4}
               color={selected ? 'card.account.color' : 'core.primary'}
             >
-              {truncate(address)}
+              {truncate(address, 5, 6)}
             </StyledATag>
             <CopyText
               text={address}
               color={selected ? 'card.account.color' : 'core.primary'}
+              hideCopyText
             />
           </Box>
           <Box
