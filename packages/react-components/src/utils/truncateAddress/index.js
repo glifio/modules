@@ -1,5 +1,5 @@
 export default address => {
-  if (address.length <= 9) return address
+  if (address.length <= 11) return address
 
-  return `${address.slice(0, 6)} ... ${address.slice(-6)}`
+  return `${address.slice(0, 6)} ... ${address.slice(-5)}`
 }
