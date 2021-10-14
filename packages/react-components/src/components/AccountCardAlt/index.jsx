@@ -88,6 +88,7 @@ const AccountCardAlt = forwardRef(
             display='flex'
             flexDirection='row'
             justifyContent='space-between'
+            alignItems='flex-end'
           >
             <Box display='flex' flexDirection='column'>
               {balanceFetchingError ? (
