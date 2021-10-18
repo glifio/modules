@@ -68,7 +68,8 @@
     "bip39": "^3.0.3",
     "dayjs": "^1.9.6",
     "prop-types": "^15.7.2",
-    "styled-system": "^5.1.5"
+    "styled-system": "^5.1.5",
+    "swr": "^1.0.1"
   },
   "peerDependencies": {
     "next": ">= 9.0.0",
