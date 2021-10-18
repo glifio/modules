@@ -19,7 +19,7 @@
     "@glif/filecoin-address": "^1.1.0",
     "@glif/filecoin-message": "^1.1.0",
     "@glif/filecoin-wallet-provider": "^1.1.1",
-    "@zondax/filecoin-signing-tools": "^0.14.0",
+    "@zondax/filecoin-signing-tools": "^0.17.1",
     "bignumber.js": "^9.0.1",
     "uint8arrays": "^1.1.0"
   },
