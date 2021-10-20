@@ -14,9 +14,10 @@ import { MAINNET_JSON_RPC_ENDPOINT } from '../../constants'
 import Button from '../Button'
 import { StyledATag } from '../Link'
 import { CopyText } from '../Copy'
+import AccountTitle from './AccountTitle'
 
 const calcGlyphAcronym = index => {
-  if (index < 4) return index.toString()
+  if (index < 5) return index.toString()
   return 'Cr'
 }
 
@@ -71,30 +72,7 @@ const AccountCardAlt = forwardRef(
               color={selected ? 'card.account.color' : 'colors.core.black'}
               acronym={calcGlyphAcronym(index)}
             />
-            <Box display='flex' flexDirection='column'>
-              {index === 0 && (
-                <Title fontSize={4} my={0}>
-                  Default
-                </Title>
-              )}
-              {index > 0 && index <= 4 && (
-                <Title fontSize={4} my={0}>
-                  Account {index}
-                </Title>
-              )}
-              {index > 4 && (
-                <Title fontSize={4} my={0}>
-                  Created Account
-                </Title>
-              )}
-              {legacy && (
-                <i>
-                  <Text p={0} m={0} color='core.darkgray'>
-                    Legacy
-                  </Text>
-                </i>
-              )}
-            </Box>
+            <AccountTitle index={index} legacy={legacy} />
           </Box>
           <Box display='flex' flexDirection='row' justifyContent='center'>
             <StyledATag
