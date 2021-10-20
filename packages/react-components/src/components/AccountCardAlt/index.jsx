@@ -14,12 +14,27 @@ import { MAINNET_JSON_RPC_ENDPOINT } from '../../constants'
 import Button from '../Button'
 import { StyledATag } from '../Link'
 import { CopyText } from '../Copy'
+import AccountTitle from './AccountTitle'
+
+const calcGlyphAcronym = index => {
+  if (index < 5) return index.toString()
+  return 'Cr'
+}
 
 // allows you to optionally pass a balance for future wallet upgrades
 // if you dont pass a balance, it will poll for you
 const AccountCardAlt = forwardRef(
   (
-    { address, balance, index, selected, onClick, jsonRpcEndpoint, ...props },
+    {
+      address,
+      balance,
+      index,
+      selected,
+      onClick,
+      legacy,
+      jsonRpcEndpoint,
+      ...props
+    },
     ref
   ) => {
     const { data, error: balanceFetchingError } = useSWR(
@@ -55,19 +70,9 @@ const AccountCardAlt = forwardRef(
             <Glyph
               mr={3}
               color={selected ? 'card.account.color' : 'colors.core.black'}
-              acronym={index.toString()}
+              acronym={calcGlyphAcronym(index)}
             />
-            <Box display='flex' flexDirection='column'>
-              {index === 0 ? (
-                <Title fontSize={4} my={0}>
-                  Default
-                </Title>
-              ) : (
-                <Title fontSize={4} my={0}>
-                  Account {index}
-                </Title>
-              )}
-            </Box>
+            <AccountTitle index={index} legacy={legacy} />
           </Box>
           <Box display='flex' flexDirection='row' justifyContent='center'>
             <StyledATag
@@ -122,11 +127,13 @@ AccountCardAlt.propTypes = {
   balance: string,
   onClick: func.isRequired,
   selected: bool,
-  jsonRpcEndpoint: string
+  jsonRpcEndpoint: string,
+  legacy: bool
 }
 
 AccountCardAlt.defaultProps = {
-  selected: false
+  selected: false,
+  legacy: false
 }
 
 export default AccountCardAlt
