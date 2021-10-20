@@ -15,11 +15,25 @@ import Button from '../Button'
 import { StyledATag } from '../Link'
 import { CopyText } from '../Copy'
 
+const calcGlyphAcronym = index => {
+  if (index < 4) return index.toString()
+  return 'Cr'
+}
+
 // allows you to optionally pass a balance for future wallet upgrades
 // if you dont pass a balance, it will poll for you
 const AccountCardAlt = forwardRef(
   (
-    { address, balance, index, selected, onClick, jsonRpcEndpoint, ...props },
+    {
+      address,
+      balance,
+      index,
+      selected,
+      onClick,
+      legacy,
+      jsonRpcEndpoint,
+      ...props
+    },
     ref
   ) => {
     const { data, error: balanceFetchingError } = useSWR(
@@ -55,17 +69,30 @@ const AccountCardAlt = forwardRef(
             <Glyph
               mr={3}
               color={selected ? 'card.account.color' : 'colors.core.black'}
-              acronym={index.toString()}
+              acronym={calcGlyphAcronym(index)}
             />
             <Box display='flex' flexDirection='column'>
-              {index === 0 ? (
+              {index === 0 && (
                 <Title fontSize={4} my={0}>
                   Default
                 </Title>
-              ) : (
+              )}
+              {index > 0 && index <= 4 && (
                 <Title fontSize={4} my={0}>
                   Account {index}
                 </Title>
+              )}
+              {index > 4 && (
+                <Title fontSize={4} my={0}>
+                  Created Account
+                </Title>
+              )}
+              {legacy && (
+                <i>
+                  <Text p={0} m={0} color='core.darkgray'>
+                    Legacy
+                  </Text>
+                </i>
               )}
             </Box>
           </Box>
@@ -122,11 +149,13 @@ AccountCardAlt.propTypes = {
   balance: string,
   onClick: func.isRequired,
   selected: bool,
-  jsonRpcEndpoint: string
+  jsonRpcEndpoint: string,
+  legacy: bool
 }
 
 AccountCardAlt.defaultProps = {
-  selected: false
+  selected: false,
+  legacy: false
 }
 
 export default AccountCardAlt

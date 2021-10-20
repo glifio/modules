@@ -38,6 +38,22 @@ describe('AccountCardAlt', () => {
     expect(container.firstChild).toMatchSnapshot()
   })
 
+  test('renders legacy address', () => {
+    const { container } = render(
+      <ThemeProvider theme={theme}>
+        <AccountCardAlt
+          index={1}
+          address='t0123456789'
+          balance='100'
+          onClick={() => {}}
+          legacy
+        />
+      </ThemeProvider>
+    )
+    expect(screen.getByText('Legacy')).toBeInTheDocument()
+    expect(container.firstChild).toMatchSnapshot()
+  })
+
   test('renders address preview and balance', () => {
     render(
       <ThemeProvider theme={theme}>
