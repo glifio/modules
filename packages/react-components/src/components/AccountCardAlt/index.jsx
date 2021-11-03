@@ -111,7 +111,9 @@ const AccountCardAlt = forwardRef(
                 </>
               )}
             </Box>
-            {!selected && (
+            {selected ? (
+              <Button variant='tertiary' title='Select' onClick={onClick} />
+            ) : (
               <Button variant='secondary' title='Select' onClick={onClick} />
             )}
           </Box>
