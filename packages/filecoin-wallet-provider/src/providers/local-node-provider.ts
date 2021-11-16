@@ -11,6 +11,7 @@ export class LocalNodeProvider implements WalletSubProvider {
   readonly apiAddress: string
   readonly token?: string
   readonly jsonRpcEngine: LotusRpcEngine
+  readonly type = 'MOCK'
 
   constructor(options: LocalNodeProviderOptions) {
     this.apiAddress = options.apiAddress

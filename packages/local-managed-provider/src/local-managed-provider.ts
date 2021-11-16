@@ -8,7 +8,7 @@ import {
 
 export class LocalManagedProvider implements WalletSubProvider {
   private readonly privateKey: PrivateKeyContainer
-
+  readonly type = 'SINGLE_KEY'
   constructor(privateKey: string, network: Network) {
     this.privateKey = privateKeyContainer(privateKey, network)
   }

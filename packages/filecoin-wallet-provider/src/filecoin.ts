@@ -1,7 +1,11 @@
 import LotusRpcEngine, { LotusRpcEngineConfig } from '@glif/filecoin-rpc-client'
 import { FilecoinNumber } from '@glif/filecoin-number'
 import { checkAddressString, Network } from '@glif/filecoin-address'
-import { LotusMessage, Message } from '@glif/filecoin-message'
+import {
+  LotusMessage,
+  Message,
+  SignedLotusMessage,
+} from '@glif/filecoin-message'
 import {
   computeGasToBurn,
   KNOWN_TYPE_0_ADDRESS,
@@ -48,23 +52,14 @@ export class Filecoin {
   }
 
   sendMessage = async (
-    message: LotusMessage,
-    signature: string,
+    signedLotusMessage: SignedLotusMessage,
   ): Promise<CID> => {
-    if (!message) throw new Error('No message provided.')
-    if (!signature) throw new Error('No signature provided.')
-    const signedMessage = {
-      Message: message,
-      Signature: {
-        // wallet only supports secp256k1 keys for now
-        Type: 1,
-        Data: signature,
-      },
-    }
+    if (!signedLotusMessage.Message) throw new Error('No message provided.')
+    if (!signedLotusMessage.Signature) throw new Error('No signature provided.')
 
     return this.jsonRpcEngine.request<{ '/': string }>(
       'MpoolPush',
-      signedMessage,
+      signedLotusMessage,
     )
   }
 
