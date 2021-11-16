@@ -1,11 +1,9 @@
 import React from 'react'
-import { number, bool } from 'prop-types'
+import { number, bool, string } from 'prop-types'
 import Box from '../Box'
 import { Text, Title } from '../Typography'
-import createPath from '../../utils/createPath'
-import { MAINNET_PATH_CODE, TESTNET_PATH_CODE } from '../../constants'
 
-const AccountTitle = ({ index, legacy }) => {
+const AccountTitle = ({ index, legacy, path }) => {
   return (
     <Box display='flex' flexDirection='column'>
       {index === 0 && (
@@ -33,10 +31,7 @@ const AccountTitle = ({ index, legacy }) => {
             </i>
             <i>
               <Text p={0} m={0}>
-                {createPath(
-                  legacy ? TESTNET_PATH_CODE : MAINNET_PATH_CODE,
-                  index
-                )}
+                {path}
               </Text>
             </i>
           </>
@@ -44,10 +39,7 @@ const AccountTitle = ({ index, legacy }) => {
         {!legacy && index > 4 && (
           <i>
             <Text p={0} m={0}>
-              {createPath(
-                legacy ? TESTNET_PATH_CODE : MAINNET_PATH_CODE,
-                index
-              )}
+              {path}
             </Text>
           </i>
         )}
@@ -58,6 +50,7 @@ const AccountTitle = ({ index, legacy }) => {
 
 AccountTitle.propTypes = {
   index: number.isRequired,
+  path: string.isRequired,
   legacy: bool
 }
 

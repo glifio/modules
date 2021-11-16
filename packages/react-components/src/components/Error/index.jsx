@@ -6,9 +6,12 @@ import OnboardCard from '../Card/OnboardCard'
 import { StyledATag } from '../Link'
 import { Text, Title } from '../Typography'
 
-const ErrorView = ({ description, linkhref, linkDisplay, title }) => {
-  const sendHome = () => {
-    window.location.href = `${window.location.origin}?network=f`
+const ErrorView = ({ description, linkhref, linkDisplay, title, sendHome }) => {
+  let sendHomeCB = sendHome
+  if (!sendHome) {
+    sendHomeCB = () => {
+      window.location.href = window.location.origin
+    }
   }
   return (
     <Box
@@ -53,7 +56,7 @@ const ErrorView = ({ description, linkhref, linkDisplay, title }) => {
         </OnboardCard>
       </Box>
       <Box>
-        <Button mt={5} variant='secondary' title='Back' onClick={sendHome} />
+        <Button mt={5} variant='secondary' title='Back' onClick={sendHomeCB} />
       </Box>
     </Box>
   )
@@ -63,7 +66,8 @@ ErrorView.propTypes = {
   description: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   linkhref: PropTypes.string.isRequired,
-  linkDisplay: PropTypes.string.isRequired
+  linkDisplay: PropTypes.string.isRequired,
+  sendHome: PropTypes.func
 }
 
 export default ErrorView

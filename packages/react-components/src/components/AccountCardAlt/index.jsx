@@ -33,6 +33,7 @@ const AccountCardAlt = forwardRef(
       onClick,
       legacy,
       jsonRpcEndpoint,
+      path,
       ...props
     },
     ref
@@ -72,7 +73,7 @@ const AccountCardAlt = forwardRef(
               color={selected ? 'card.account.color' : 'colors.core.black'}
               acronym={calcGlyphAcronym(index)}
             />
-            <AccountTitle index={index} legacy={legacy} />
+            <AccountTitle index={index} legacy={legacy} path={path} />
           </Box>
           <Box display='flex' flexDirection='row' justifyContent='center'>
             <StyledATag
@@ -126,6 +127,7 @@ const AccountCardAlt = forwardRef(
 AccountCardAlt.propTypes = {
   address: ADDRESS_PROPTYPE,
   index: number.isRequired,
+  path: string.isRequired,
   balance: string,
   onClick: func.isRequired,
   selected: bool,
