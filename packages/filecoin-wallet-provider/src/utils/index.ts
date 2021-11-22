@@ -1,5 +1,6 @@
-export { default as validatePath } from './validatePath'
+export { default as validatePath } from './createPath/validatePath'
 export * from './knownAddresses'
 export { default as computeGasToBurn } from './computeGasToBurn'
 export { default as allCallsExitWithCode0 } from './allCallsExitWithCode0'
 export * from './num1GreaterThanNum2'
+export * from './errors'

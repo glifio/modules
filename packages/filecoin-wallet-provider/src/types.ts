@@ -50,3 +50,11 @@ export interface InvocResult {
   ExecutionTrace: ExecutionTrace
   GasCharges?: any
 }
+
+export type WalletType = 'SINGLE_KEY' | 'HD_WALLET' | 'LEDGER'
+
+export type SemanticVersion = {
+  major: number
+  minor: number
+  patch: number
+}
