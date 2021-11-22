@@ -1,9 +1,9 @@
-export interface WalletProviderErrorInterface extends Partial<Error> {
+interface WalletProviderErrorInterface extends Partial<Error> {
   message: string
   code?: number
 }
 
-export class WalletProviderError extends Error {
+class WalletProviderError extends Error {
   public code?: number
   constructor(args: WalletProviderErrorInterface) {
     super(args.message)
@@ -18,7 +18,7 @@ export class WalletProviderError extends Error {
   }
 }
 
-export class LedgerLostConnectionError extends WalletProviderError {
+class LedgerLostConnectionError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'connection lost',
@@ -28,7 +28,7 @@ export class LedgerLostConnectionError extends WalletProviderError {
   }
 }
 
-export class TransportNotSupportedError extends WalletProviderError {
+class TransportNotSupportedError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'transport not supported by device',
@@ -38,7 +38,7 @@ export class TransportNotSupportedError extends WalletProviderError {
   }
 }
 
-export class LedgerReplugError extends WalletProviderError {
+class LedgerReplugError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'unknown',
@@ -48,7 +48,7 @@ export class LedgerReplugError extends WalletProviderError {
   }
 }
 
-export class LedgerDisconnectedError extends WalletProviderError {
+class LedgerDisconnectedError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'ledger device disconnected',
@@ -58,7 +58,7 @@ export class LedgerDisconnectedError extends WalletProviderError {
   }
 }
 
-export class LedgerInUseByAnotherApp extends WalletProviderError {
+class LedgerInUseByAnotherApp extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'ledger device in use by another app',
@@ -68,7 +68,7 @@ export class LedgerInUseByAnotherApp extends WalletProviderError {
   }
 }
 
-export class LedgerNotFoundError extends WalletProviderError {
+class LedgerNotFoundError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'ledger device not found',
@@ -78,7 +78,7 @@ export class LedgerNotFoundError extends WalletProviderError {
   }
 }
 
-export class LedgerDeviceLockedError extends WalletProviderError {
+class LedgerDeviceLockedError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'ledger device locked',
@@ -88,7 +88,7 @@ export class LedgerDeviceLockedError extends WalletProviderError {
   }
 }
 
-export class LedgerFilecoinAppBadVersionError extends WalletProviderError {
+class LedgerFilecoinAppBadVersionError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'bad filecoin app version on ledger device',
@@ -96,4 +96,37 @@ export class LedgerFilecoinAppBadVersionError extends WalletProviderError {
     })
     Object.setPrototypeOf(this, LedgerFilecoinAppBadVersionError.prototype)
   }
+}
+
+class LedgerFilecoinAppNotOpenError extends WalletProviderError {
+  constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
+    super({
+      message: args.message || 'filecoin app not open on device',
+      ...args,
+    })
+    Object.setPrototypeOf(this, LedgerFilecoinAppNotOpenError.prototype)
+  }
+}
+
+class LedgerDeviceBusy extends WalletProviderError {
+  constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
+    super({
+      message: args.message || 'ledger device locked or busy',
+      ...args,
+    })
+    Object.setPrototypeOf(this, LedgerDeviceBusy.prototype)
+  }
+}
+
+export default {
+  LedgerLostConnectionError,
+  LedgerReplugError,
+  LedgerDisconnectedError,
+  LedgerInUseByAnotherApp,
+  LedgerNotFoundError,
+  LedgerDeviceLockedError,
+  LedgerFilecoinAppBadVersionError,
+  LedgerFilecoinAppNotOpenError,
+  TransportNotSupportedError,
+  LedgerDeviceBusy,
 }

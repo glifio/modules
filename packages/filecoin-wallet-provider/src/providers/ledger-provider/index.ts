@@ -11,13 +11,15 @@ import signingTools from '@zondax/filecoin-signing-tools/js'
 import createPath, { coinTypeCode } from '../../utils/createPath'
 import { SemanticVersion, WalletType } from '../../types'
 import { WalletSubProvider } from '../../wallet-sub-provider'
-import {
-  handleCommonLedgerErrors,
+import { handleCommonLedgerErrors, errors } from '../../errors'
+
+const {
   LedgerLostConnectionError,
   LedgerDeviceLockedError,
   LedgerFilecoinAppBadVersionError,
   LedgerReplugError,
-} from '../../utils'
+} = errors
+
 import { badVersion } from './badVersion'
 
 type LedgerResponse = {
@@ -91,9 +93,9 @@ export class LedgerProvider implements LedgerSubProvider {
         'Must provide transport when instantiating LedgerSubProvider',
       )
     if (
-      !minLedgerVersion.major ||
-      !minLedgerVersion.minor ||
-      !minLedgerVersion.patch
+      typeof minLedgerVersion.major !== 'number' ||
+      typeof minLedgerVersion.minor !== 'number' ||
+      typeof minLedgerVersion.patch !== 'number'
     )
       throw new Error('Must provide valid minLedgerVersions')
 

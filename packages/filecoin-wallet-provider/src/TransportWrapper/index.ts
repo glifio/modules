@@ -1,12 +1,13 @@
 import Transport from '@ledgerhq/hw-transport'
 import TransportWebHID from '@ledgerhq/hw-transport-webhid'
 
-import {
+import { errors, handleCommonLedgerErrors } from '../errors'
+
+const {
   TransportNotSupportedError,
   LedgerReplugError,
   LedgerDisconnectedError,
-  handleCommonLedgerErrors,
-} from '../utils/errors'
+} = errors
 
 type TransportType = 'WEB_HID' | 'WEB_USB'
 
