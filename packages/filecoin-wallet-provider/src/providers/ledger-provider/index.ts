@@ -8,7 +8,7 @@ import {
   SignedLotusMessage,
 } from '@glif/filecoin-message'
 import signingTools from '@zondax/filecoin-signing-tools/js'
-import createPath, { coinTypeCode } from '../../utils/createPath'
+import { createPath, coinTypeCode } from '../../utils'
 import { SemanticVersion, WalletType } from '../../types'
 import { WalletSubProvider } from '../../wallet-sub-provider'
 import { handleCommonLedgerErrors, errors } from '../../errors'

@@ -160,7 +160,7 @@ export class Message {
       gasfeecap: this.gasFeeCap.toFixed(0, 1),
       gaslimit: this.gasLimit,
       method: this.method,
-      params: this.params
+      params: this.params || ''
     }
   }
 }

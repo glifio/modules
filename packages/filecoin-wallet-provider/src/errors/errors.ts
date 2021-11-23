@@ -1,3 +1,4 @@
+/* tslint:disable max-classes-per-file */
 interface WalletProviderErrorInterface extends Partial<Error> {
   message: string
   code?: number
@@ -118,7 +119,18 @@ class LedgerDeviceBusy extends WalletProviderError {
   }
 }
 
+class InvalidParamsError extends WalletProviderError {
+  constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
+    super({
+      message: args.message || 'invalid params',
+      ...args,
+    })
+    Object.setPrototypeOf(this, InvalidParamsError.prototype)
+  }
+}
+
 export default {
+  InvalidParamsError,
   LedgerLostConnectionError,
   LedgerReplugError,
   LedgerDisconnectedError,
@@ -127,6 +139,7 @@ export default {
   LedgerDeviceLockedError,
   LedgerFilecoinAppBadVersionError,
   LedgerFilecoinAppNotOpenError,
-  TransportNotSupportedError,
   LedgerDeviceBusy,
+  TransportNotSupportedError,
+  WalletProviderError,
 }

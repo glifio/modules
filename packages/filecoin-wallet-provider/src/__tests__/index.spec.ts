@@ -10,8 +10,10 @@ import {
 } from '../utils'
 import { Network } from '@glif/filecoin-address'
 import { InvocResult } from '../types'
+import { WalletSubProvider } from '../wallet-sub-provider'
 
-const testSubProviderInstance = {
+const testSubProviderInstance: WalletSubProvider = {
+  type: 'SINGLE_KEY',
   getAccounts: jest.fn().mockImplementation(() => {}),
   sign: jest.fn().mockImplementation(() => {}),
 }
