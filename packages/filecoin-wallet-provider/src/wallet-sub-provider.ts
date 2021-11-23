@@ -1,13 +1,13 @@
 import { LotusMessage, SignedLotusMessage } from '@glif/filecoin-message'
 import { CoinType } from '@glif/filecoin-address'
+import { WalletType } from './types'
 
 export interface WalletSubProvider {
-  newAccount?(): Promise<string>
   getAccounts(
     nStart: number,
     nEnd: number,
-    network: CoinType,
+    coinType: CoinType,
   ): Promise<string[]>
   sign(from: string, message: LotusMessage): Promise<SignedLotusMessage>
-  type: string
+  type: WalletType
 }
