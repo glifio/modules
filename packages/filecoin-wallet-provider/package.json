@@ -12,7 +12,6 @@
     "build-types": "../../node_modules/.bin/tsc --emitDeclarationOnly",
     "build": "npm run clean && npm run build-types && npm run build-node && npm run build-browser && npm run build-module",
     "lint": "tslint -p tsconfig.json",
-    "postinstall": "cd node_modules/@zondax/filecoin-signing-tools/js && npm i",
     "prepublishOnly": "npm run build",
     "test:build": "npm run build && jest",
     "test": "npm run build && npm run lint && ../../node_modules/.bin/jest",
