@@ -51,7 +51,11 @@ export interface InvocResult {
   GasCharges?: any
 }
 
-export type WalletType = 'SINGLE_KEY' | 'HD_WALLET' | 'LEDGER'
+export type WalletType =
+  | 'SINGLE_KEY_SECP256K1'
+  | 'SINGLE_KEY_BLS'
+  | 'HD_WALLET'
+  | 'LEDGER'
 
 export type SemanticVersion = {
   major: number
