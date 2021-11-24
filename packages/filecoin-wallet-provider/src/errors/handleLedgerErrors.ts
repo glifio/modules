@@ -8,7 +8,7 @@ const {
 } = errors
 
 export const handleCommonLedgerErrors = (error: Error) => {
-  // console.log('error', error)
+  console.log('error', error)
   if (
     error.message.toLowerCase().includes('unable to claim interface.') ||
     error.message.toLowerCase().includes('failed to open the device')
@@ -27,6 +27,9 @@ export const handleCommonLedgerErrors = (error: Error) => {
   } else if (
     error.message.toLowerCase().includes('28161') ||
     error.message.toLowerCase().includes('app does not seem to be open')
-  )
+  ) {
     throw new LedgerFilecoinAppNotOpenError()
+  } else {
+    throw error
+  }
 }

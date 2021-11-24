@@ -109,13 +109,13 @@ class LedgerFilecoinAppNotOpenError extends WalletProviderError {
   }
 }
 
-class LedgerDeviceBusy extends WalletProviderError {
+class LedgerDeviceBusyError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'ledger device locked or busy',
       ...args,
     })
-    Object.setPrototypeOf(this, LedgerDeviceBusy.prototype)
+    Object.setPrototypeOf(this, LedgerDeviceBusyError.prototype)
   }
 }
 
@@ -149,7 +149,7 @@ export default {
   LedgerDeviceLockedError,
   LedgerFilecoinAppBadVersionError,
   LedgerFilecoinAppNotOpenError,
-  LedgerDeviceBusy,
+  LedgerDeviceBusyError,
   TransportNotSupportedError,
   UnsupportedKeyTypeError,
   WalletProviderError,

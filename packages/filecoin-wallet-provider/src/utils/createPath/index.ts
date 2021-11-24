@@ -2,7 +2,7 @@
 import { CoinType } from '@glif/filecoin-address'
 export { default as validatePath } from './validatePath'
 
-type CoinTypeCode = 461 | 1
+export type CoinTypeCode = 461 | 1
 
 const MAINNET_PATH_CODE: CoinTypeCode = 461
 const TESTNET_PATH_CODE: CoinTypeCode = 1

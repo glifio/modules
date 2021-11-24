@@ -8,7 +8,7 @@ import {
   SignedLotusMessage,
 } from '@glif/filecoin-message'
 import signingTools from '@zondax/filecoin-signing-tools/js'
-import { createPath, coinTypeCode } from '../../utils'
+import { createPath, coinTypeCode, validIndexes } from '../../utils'
 import { SemanticVersion, WalletType } from '../../types'
 import { WalletSubProvider } from '../../wallet-sub-provider'
 import { handleCommonLedgerErrors, errors } from '../../errors'
@@ -18,6 +18,8 @@ const {
   LedgerDeviceLockedError,
   LedgerFilecoinAppBadVersionError,
   LedgerReplugError,
+  LedgerDeviceBusyError,
+  WalletProviderError,
 } = errors
 
 import { badVersion } from './badVersion'
@@ -50,6 +52,10 @@ export type LedgerSubProvider = WalletSubProvider & {
 }
 
 function handleErrors(response: LedgerResponse): LedgerResponse {
+  if (response.device_locked) {
+    throw new LedgerDeviceLockedError()
+  }
+
   if (
     response.error_message &&
     response.error_message.toLowerCase().includes('no errors')
@@ -64,14 +70,12 @@ function handleErrors(response: LedgerResponse): LedgerResponse {
   ) {
     throw new LedgerLostConnectionError()
   }
-  throw new Error(response.error_message)
+
+  throw new WalletProviderError({ message: response.error_message })
 }
 
 const throwIfBusy = (busy: boolean): void => {
-  if (busy)
-    throw new Error(
-      'Ledger is busy, please check device, or quit Filecoin app and unplug/replug your device.',
-    )
+  if (busy) throw new LedgerDeviceBusyError()
 }
 
 export class LedgerProvider implements LedgerSubProvider {
@@ -89,15 +93,18 @@ export class LedgerProvider implements LedgerSubProvider {
     minLedgerVersion: SemanticVersion
   }) {
     if (!transport)
-      throw new Error(
-        'Must provide transport when instantiating LedgerSubProvider',
-      )
+      throw new errors.InvalidParamsError({
+        message: 'Must provide transport when instantiating LedgerSubProvider',
+      })
     if (
+      !minLedgerVersion ||
       typeof minLedgerVersion.major !== 'number' ||
       typeof minLedgerVersion.minor !== 'number' ||
       typeof minLedgerVersion.patch !== 'number'
     )
-      throw new Error('Must provide valid minLedgerVersions')
+      throw new errors.InvalidParamsError({
+        message: 'Must provide valid minLedgerVersions',
+      })
 
     this.transport = transport
     this.minLedgerVersion = minLedgerVersion
@@ -116,18 +123,26 @@ export class LedgerProvider implements LedgerSubProvider {
         if (!finished) {
           finished = true
           this.ledgerBusy = false
-          return reject(new Error('Ledger device locked or busy'))
+          return reject(new LedgerDeviceBusyError())
         }
       }, 3000)
 
       setTimeout(async () => {
         try {
-          const response = handleErrors(
+          const vs = handleErrors(
             (await new FilecoinApp(
               this.transport,
             ).getVersion()) as LedgerVersion,
           ) as LedgerVersion
-          return resolve(response)
+
+          if (badVersion(this.minLedgerVersion, vs))
+            throw new LedgerFilecoinAppBadVersionError({
+              message: `
+              Filecoin App on Ledger device should be version
+              ${this.minLedgerVersion.major}.${this.minLedgerVersion.minor}.${this.minLedgerVersion.patch}
+            `,
+            })
+          return resolve(vs)
         } catch (err) {
           return reject(err)
         } finally {
@@ -142,15 +157,7 @@ export class LedgerProvider implements LedgerSubProvider {
 
   ready = async (): Promise<boolean> => {
     try {
-      const v = await this.getVersion()
-      if (v.device_locked) throw new LedgerDeviceLockedError()
-      if (badVersion(this.minLedgerVersion, v))
-        throw new LedgerFilecoinAppBadVersionError({
-          message: `
-              Filecoin App on Ledger device should be version
-              ${this.minLedgerVersion.major}.${this.minLedgerVersion.minor}.${this.minLedgerVersion.patch}
-            `,
-        })
+      handleErrors(await this.getVersion()) as LedgerVersion
     } catch (err) {
       if (err instanceof Error) {
         handleCommonLedgerErrors(err)
@@ -166,10 +173,28 @@ export class LedgerProvider implements LedgerSubProvider {
     message: LotusMessage,
   ): Promise<SignedLotusMessage> => {
     throwIfBusy(this.ledgerBusy)
-    if (from !== message.From) throw new Error('From address mismatch')
+    if (from !== message.From)
+      throw new errors.InvalidParamsError({ message: 'from address mismatch' })
     this.ledgerBusy = true
     const path = this.accountToPath[from]
-    const msg = Message.fromLotusType(message)
+    if (!path) {
+      throw new errors.WalletProviderError({
+        message:
+          'Must call getAccounts with to derive this from address before signing with it',
+      })
+    }
+    let msg: Message
+    try {
+      msg = Message.fromLotusType(message)
+    } catch (err) {
+      throw new errors.InvalidParamsError(
+        err instanceof Error
+          ? {
+              message: `Invalid message params passed to sign call: ${err.message}`,
+            }
+          : undefined,
+      )
+    }
     const serializedMessage = signingTools.transactionSerialize(
       msg.toZondaxType(),
     )
@@ -192,6 +217,18 @@ export class LedgerProvider implements LedgerSubProvider {
 
   getAccounts = async (nStart = 0, nEnd = 5, coinType = CoinType.MAIN) => {
     throwIfBusy(this.ledgerBusy)
+    if (!validIndexes(nStart, nEnd)) {
+      throw new errors.InvalidParamsError({
+        message: 'invalid account indexes passed to getAccounts',
+      })
+    }
+
+    if (coinType !== CoinType.MAIN && coinType !== CoinType.TEST) {
+      throw new errors.InvalidParamsError({
+        message: 'invalid coinType passed to getAccounts',
+      })
+    }
+
     this.ledgerBusy = true
     const paths: string[] = []
     for (let i = nStart; i < nEnd; i += 1) {
