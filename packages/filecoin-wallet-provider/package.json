@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-wallet-provider",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.3",
   "description": "a javascript package to send filecoin to addresses",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,8 +20,8 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "@glif/filecoin-address": "^2.0.0-alpha.4",
-    "@glif/filecoin-message": "^2.0.0-alpha.4",
+    "@glif/filecoin-address": "^2.0.0-alpha.3",
+    "@glif/filecoin-message": "^2.0.0-alpha.3",
     "@glif/filecoin-number": "^1.1.0",
     "@glif/filecoin-rpc-client": "^1.1.0",
     "@ledgerhq/hw-transport": "^6.11.2",

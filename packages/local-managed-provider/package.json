@@ -1,6 +1,6 @@
 {
   "name": "@glif/local-managed-provider",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.3",
   "description": "a javascript package to send filecoin to addresses",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -16,9 +16,9 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "@glif/filecoin-address": "^2.0.0-alpha.4",
-    "@glif/filecoin-message": "^2.0.0-alpha.4",
-    "@glif/filecoin-wallet-provider": "^2.0.0-alpha.4",
+    "@glif/filecoin-address": "^2.0.0-alpha.3",
+    "@glif/filecoin-message": "^2.0.0-alpha.3",
+    "@glif/filecoin-wallet-provider": "^2.0.0-alpha.3",
     "@zondax/filecoin-signing-tools": "^0.18.1",
     "bignumber.js": "^9.0.1",
     "uint8arrays": "^1.1.0"
