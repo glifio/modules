@@ -12,7 +12,7 @@ const sleep = (time: number) =>
 const LedgerAppSpy = jest.spyOn(require('@zondax/ledger-filecoin'), 'default')
 const handleErrSpy = jest.spyOn(
   require('../errors/handleLedgerErrors'),
-  'handleCommonLedgerErrors',
+  'CommonLedgerError',
 )
 
 describe('ledger wallet subprovider', () => {

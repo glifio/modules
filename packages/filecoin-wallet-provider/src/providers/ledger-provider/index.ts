@@ -11,7 +11,7 @@ import signingTools from '@zondax/filecoin-signing-tools/js'
 import { createPath, coinTypeCode, validIndexes } from '../../utils'
 import { SemanticVersion, WalletType } from '../../types'
 import { WalletSubProvider } from '../../wallet-sub-provider'
-import { handleCommonLedgerErrors, errors } from '../../errors'
+import { CommonLedgerError, errors } from '../../errors'
 
 const {
   LedgerLostConnectionError,
@@ -51,7 +51,7 @@ export type LedgerSubProvider = WalletSubProvider & {
   ready: () => Promise<boolean>
 }
 
-function handleErrors(response: LedgerResponse): LedgerResponse {
+function handleLedgerResponseErrors(response: LedgerResponse): LedgerResponse {
   if (response.device_locked) {
     throw new LedgerDeviceLockedError()
   }
@@ -129,7 +129,7 @@ export class LedgerProvider implements LedgerSubProvider {
 
       setTimeout(async () => {
         try {
-          const vs = handleErrors(
+          const vs = handleLedgerResponseErrors(
             (await new FilecoinApp(
               this.transport,
             ).getVersion()) as LedgerVersion,
@@ -157,10 +157,10 @@ export class LedgerProvider implements LedgerSubProvider {
 
   ready = async (): Promise<boolean> => {
     try {
-      handleErrors(await this.getVersion()) as LedgerVersion
+      handleLedgerResponseErrors(await this.getVersion()) as LedgerVersion
     } catch (err) {
       if (err instanceof Error) {
-        handleCommonLedgerErrors(err)
+        throw CommonLedgerError(err)
       } else {
         throw new LedgerReplugError()
       }
@@ -198,21 +198,29 @@ export class LedgerProvider implements LedgerSubProvider {
     const serializedMessage = signingTools.transactionSerialize(
       msg.toZondaxType(),
     )
-    const res = handleErrors(
-      await new FilecoinApp(this.transport).sign(
-        path,
-        Buffer.from(serializedMessage, 'hex'),
-      ),
-    ) as LedgerSignature
-    this.ledgerBusy = false
-    const signedMessage: SignedLotusMessage = {
-      Message: message,
-      Signature: {
-        Data: res.signature_compact.toString('base64'),
-        Type: 1,
-      },
+    try {
+      const res = handleLedgerResponseErrors(
+        await new FilecoinApp(this.transport).sign(
+          path,
+          Buffer.from(serializedMessage, 'hex'),
+        ),
+      ) as LedgerSignature
+      this.ledgerBusy = false
+      const signedMessage: SignedLotusMessage = {
+        Message: message,
+        Signature: {
+          Data: res.signature_compact.toString('base64'),
+          Type: 1,
+        },
+      }
+      return signedMessage
+    } catch (err) {
+      if (err instanceof Error) {
+        throw CommonLedgerError(err)
+      } else {
+        throw new LedgerReplugError()
+      }
     }
-    return signedMessage
   }
 
   getAccounts = async (nStart = 0, nEnd = 5, coinType = CoinType.MAIN) => {
@@ -235,11 +243,19 @@ export class LedgerProvider implements LedgerSubProvider {
       paths.push(createPath(coinTypeCode(coinType), i))
     }
     const addresses = await mapSeries(paths, async (path: string) => {
-      const { addrString } = handleErrors(
-        await new FilecoinApp(this.transport).getAddressAndPubKey(path),
-      ) as LedgerShowAddrAndPubKey
-      this.accountToPath[addrString] = path
-      return addrString
+      try {
+        const { addrString } = handleLedgerResponseErrors(
+          await new FilecoinApp(this.transport).getAddressAndPubKey(path),
+        ) as LedgerShowAddrAndPubKey
+        this.accountToPath[addrString] = path
+        return addrString
+      } catch (err) {
+        if (err instanceof Error) {
+          throw CommonLedgerError(err)
+        } else {
+          throw new LedgerReplugError()
+        }
+      }
     })
     this.ledgerBusy = false
     return addresses
@@ -250,11 +266,20 @@ export class LedgerProvider implements LedgerSubProvider {
   ): Promise<LedgerShowAddrAndPubKey> => {
     throwIfBusy(this.ledgerBusy)
     this.ledgerBusy = true
-    const res = handleErrors(
-      await new FilecoinApp(this.transport).showAddressAndPubKey(path),
-    ) as LedgerShowAddrAndPubKey
-    this.ledgerBusy = false
-    return res
+    try {
+      const res = handleLedgerResponseErrors(
+        await new FilecoinApp(this.transport).showAddressAndPubKey(path),
+      ) as LedgerShowAddrAndPubKey
+      return res
+    } catch (err) {
+      if (err instanceof Error) {
+        throw CommonLedgerError(err)
+      } else {
+        throw new LedgerReplugError()
+      }
+    } finally {
+      this.ledgerBusy = false
+    }
   }
 
   resetTransport = async (_transport: Transport): Promise<void> => {

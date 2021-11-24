@@ -1,7 +1,7 @@
 import Transport from '@ledgerhq/hw-transport'
 import TransportWebHID from '@ledgerhq/hw-transport-webhid'
 
-import { errors, handleCommonLedgerErrors } from '../errors'
+import { errors, CommonLedgerError } from '../errors'
 
 const {
   TransportNotSupportedError,
@@ -47,7 +47,7 @@ export default class WebHIDTransportWrapper {
       this._transport = await TransportWebHID.create()
     } catch (err) {
       if (err instanceof Error) {
-        handleCommonLedgerErrors(err)
+        throw CommonLedgerError(err)
       } else {
         throw new LedgerReplugError()
       }
