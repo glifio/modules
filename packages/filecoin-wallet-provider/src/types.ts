@@ -56,6 +56,7 @@ export type WalletType =
   | 'SINGLE_KEY_BLS'
   | 'HD_WALLET'
   | 'LEDGER'
+  | 'MOCK'
 
 export type SemanticVersion = {
   major: number
