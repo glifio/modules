@@ -35,9 +35,6 @@ export class Address {
   }
 
   network(): CoinType {
-    console.warn(
-      'Warning - coinType has been renamed to coinType and will be deprecated in the future.'
-    )
     return this._coinType
   }
 

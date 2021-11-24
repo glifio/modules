@@ -8,7 +8,7 @@ const {
 } = errors
 
 export const handleCommonLedgerErrors = (error: Error) => {
-  console.log('error', error)
+  // console.log('error', error)
   if (
     error.message.toLowerCase().includes('unable to claim interface.') ||
     error.message.toLowerCase().includes('failed to open the device')
