@@ -4,9 +4,17 @@ import { ExtendedKey, MessageParams } from '@zondax/filecoin-signing-tools'
 import { SignedLotusMessage } from '@glif/filecoin-message'
 import * as signingTools from '@zondax/filecoin-signing-tools'
 
+export enum KeyType {
+  'bls' = 'SINGLE_KEY_BLS',
+  'secp256k1' = 'SINGLE_KEY_SECP256K1',
+}
+
+export type SignFunc = (message: MessageParams) => Promise<SignedLotusMessage>
+
 export interface PrivateKeyContainer {
   address: string
-  sign(message: MessageParams): Promise<SignedLotusMessage>
+  sign: SignFunc
+  keyType: KeyType
 }
 
 export function privateKeyContainer(
@@ -15,7 +23,7 @@ export function privateKeyContainer(
 ): PrivateKeyContainer {
   const bytes = uint8arrays.fromString(privateKey, 'base16')
   const json = JSON.parse(uint8arrays.toString(bytes))
-  const keyType = json.Type
+  const keyType = json.Type as 'bls' | 'secp256k1'
   const testnet = coinType === CoinType.TEST
   let extendedKey: ExtendedKey
   if (keyType === 'bls') {
@@ -35,5 +43,6 @@ export function privateKeyContainer(
       )
       return JSON.parse((asString as unknown) as string)
     },
+    keyType: KeyType[keyType],
   }
 }
