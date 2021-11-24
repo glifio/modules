@@ -28,7 +28,6 @@ exports[`ButtonClose renders the ButtonClose 1`] = `
 >
   <svg
     class="c1"
-    fill="none"
     height="24"
     viewBox="0 0 24 24"
     width="24"
@@ -73,7 +72,6 @@ exports[`ButtonClose story renders 1`] = `
 >
   <svg
     class="c1"
-    fill="none"
     height="24"
     viewBox="0 0 24 24"
     width="24"
@@ -117,7 +115,6 @@ exports[`ButtonCopyAccountAddress renders the ButtonCopyAccountAddress 1`] = `
 >
   <svg
     class="c1"
-    fill="none"
     height="24"
     viewBox="0 0 24 24"
     width="24"
@@ -169,7 +166,6 @@ exports[`ButtonCopyAccountAddress story renders 1`] = `
 >
   <svg
     class="c1"
-    fill="none"
     height="24"
     viewBox="0 0 24 24"
     width="24"

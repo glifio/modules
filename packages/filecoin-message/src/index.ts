@@ -4,7 +4,7 @@ import { validateAddressString } from '@glif/filecoin-address'
 BigNumber.set({ ROUNDING_MODE: BigNumber.ROUND_HALF_DOWN })
 BigNumber.config({ EXPONENTIAL_AT: 1e9 })
 
-export interface SerializableMessage {
+export interface ZondaxMessage {
   readonly to: string
   readonly from: string
   readonly nonce: number
@@ -16,6 +16,8 @@ export interface SerializableMessage {
   readonly params: string | string[] | undefined
 }
 
+type SerializableMessage = ZondaxMessage
+
 export interface LotusMessage {
   To: string
   From: string
@@ -24,7 +26,6 @@ export interface LotusMessage {
   GasPremium: string
   GasLimit: number
   GasFeeCap: string
-  GasPrice?: string
   Method: number
   Params?: string | string[]
 }
@@ -46,7 +47,6 @@ export interface MessageObj {
   gasPremium?: string | number
   gasFeeCap?: string | number
   gasLimit?: number
-  gasPrice?: string | number
   params?: string | string[]
 }
 
@@ -74,6 +74,54 @@ export class Message {
     this.params = msg.params
   }
 
+  static fromZondaxType = ({
+    to,
+    from,
+    nonce,
+    value,
+    gaspremium,
+    gaslimit,
+    gasfeecap,
+    method,
+    params
+  }: ZondaxMessage): Message => {
+    return new Message({
+      to,
+      from,
+      nonce,
+      value,
+      gasPremium: gaspremium,
+      gasLimit: gaslimit,
+      gasFeeCap: gasfeecap,
+      method,
+      params
+    })
+  }
+
+  static fromLotusType = ({
+    To,
+    From,
+    Nonce,
+    Value,
+    GasPremium,
+    GasLimit,
+    GasFeeCap,
+    Method,
+    Params
+  }: LotusMessage): Message => {
+    return new Message({
+      to: To,
+      from: From,
+      nonce: Nonce,
+      value: Value,
+      gasPremium: GasPremium,
+      gasLimit: GasLimit,
+      gasFeeCap: GasFeeCap,
+      method: Method,
+      params: Params
+    })
+  }
+
   public toLotusType = (): LotusMessage => {
     return {
       To: this.to,
@@ -99,6 +147,20 @@ export class Message {
       gaslimit: this.gasLimit,
       method: this.method,
       params: this.params
+    }
+  }
+
+  public toZondaxType = (): ZondaxMessage => {
+    return {
+      to: this.to,
+      from: this.from,
+      nonce: this.nonce,
+      value: this.value.toFixed(0, 1),
+      gaspremium: this.gasPremium.toFixed(0, 1),
+      gasfeecap: this.gasFeeCap.toFixed(0, 1),
+      gaslimit: this.gasLimit,
+      method: this.method,
+      params: this.params || ''
     }
   }
 }

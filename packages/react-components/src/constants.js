@@ -13,3 +13,8 @@ export const TESTNET = 't'
 export const SEND = 'SEND'
 export const PROPOSE = 'PROPOSE'
 export const EXEC = 'EXEC'
+
+export const MAINNET_JSON_RPC_ENDPOINT = 'https://api.node.glif.io'
+
+export const MAINNET_PATH_CODE = 461
+export const TESTNET_PATH_CODE = 1

@@ -1,7 +1,11 @@
 import LotusRpcEngine, { LotusRpcEngineConfig } from '@glif/filecoin-rpc-client'
 import { FilecoinNumber } from '@glif/filecoin-number'
-import { checkAddressString, Network } from '@glif/filecoin-address'
-import { LotusMessage, Message } from '@glif/filecoin-message'
+import { checkAddressString, CoinType } from '@glif/filecoin-address'
+import {
+  LotusMessage,
+  Message,
+  SignedLotusMessage,
+} from '@glif/filecoin-message'
 import {
   computeGasToBurn,
   KNOWN_TYPE_0_ADDRESS,
@@ -12,6 +16,7 @@ import {
 import { BigNumber } from 'bignumber.js'
 import { WalletSubProvider } from './wallet-sub-provider'
 import { InvocResult, CID } from './types'
+import { num1GreaterThanNum2 } from './utils'
 
 export class Filecoin {
   public wallet: WalletSubProvider
@@ -47,23 +52,14 @@ export class Filecoin {
   }
 
   sendMessage = async (
-    message: LotusMessage,
-    signature: string,
+    signedLotusMessage: SignedLotusMessage,
   ): Promise<CID> => {
-    if (!message) throw new Error('No message provided.')
-    if (!signature) throw new Error('No signature provided.')
-    const signedMessage = {
-      Message: message,
-      Signature: {
-        // wallet only supports secp256k1 keys for now
-        Type: 1,
-        Data: signature,
-      },
-    }
+    if (!signedLotusMessage.Message) throw new Error('No message provided.')
+    if (!signedLotusMessage.Signature) throw new Error('No signature provided.')
 
     return this.jsonRpcEngine.request<{ '/': string }>(
       'MpoolPush',
-      signedMessage,
+      signedLotusMessage,
     )
   }
 
@@ -76,13 +72,14 @@ export class Filecoin {
       )
       return nonce
     } catch (err) {
-      if (
-        err &&
-        err.message &&
-        err.message.toLowerCase().includes('actor not found')
-      )
-        return 0
-      throw new Error(err)
+      if (err instanceof Error) {
+        if (err?.message.toLowerCase().includes('actor not found')) {
+          return 0
+        }
+
+        throw new Error(err.message)
+      }
+      throw new Error('An unknown error occured when fetching the nonce.')
     }
   }
 
@@ -95,20 +92,22 @@ export class Filecoin {
       await this.jsonRpcEngine.request('StateLookupID', clonedMsg.From, null)
     } catch (err) {
       // if from actor doesnt exist, use a hardcoded known actor address
-      if (err.message.toLowerCase().includes('actor not found')) {
-        const networkPrefix = clonedMsg.From[0] as Network
+      if (
+        err instanceof Error &&
+        err.message.toLowerCase().includes('actor not found')
+      ) {
+        const coinType = clonedMsg.From[0] as CoinType
 
-        if (!clonedMsg.From)
-          clonedMsg.From = KNOWN_TYPE_0_ADDRESS[networkPrefix]
+        if (!clonedMsg.From) clonedMsg.From = KNOWN_TYPE_0_ADDRESS[coinType]
         if (clonedMsg.From[1] === '0')
-          clonedMsg.From = KNOWN_TYPE_0_ADDRESS[networkPrefix]
+          clonedMsg.From = KNOWN_TYPE_0_ADDRESS[coinType]
         else if (clonedMsg.From[1] === '1')
-          clonedMsg.From = KNOWN_TYPE_1_ADDRESS[networkPrefix]
+          clonedMsg.From = KNOWN_TYPE_1_ADDRESS[coinType]
         else if (clonedMsg.From[1] === '3')
-          clonedMsg.From = KNOWN_TYPE_3_ADDRESS[networkPrefix]
+          clonedMsg.From = KNOWN_TYPE_3_ADDRESS[coinType]
         else {
           // this should never happen, only t1 and t3 addresses can be used as a from?
-          clonedMsg.From = KNOWN_TYPE_0_ADDRESS[networkPrefix]
+          clonedMsg.From = KNOWN_TYPE_0_ADDRESS[coinType]
         }
       }
     }
@@ -250,5 +249,82 @@ export class Filecoin {
     const rightSide = gasLimitBN.times(BigNumber.maximum(0, minTip))
 
     return new FilecoinNumber(leftSide.plus(rightSide), 'attofil')
+  }
+
+  /*
+   * Used for calculating gas params of replaced messages
+   * To get the params - we compare the minimum bump in gas (gas premium * 1.25)
+   * against the recommended gas params (taken from gasEstimateMessageGas, maxFee = .1)
+   *
+   * If any of the 3 gas params in the recommended gas amounts are LESS
+   * than the params calculated in the minimum bump in gas, take the minimum bump in gas
+   *
+   */
+
+  getReplaceMessageGasParams = async (
+    message: LotusMessage,
+    maxFee: string = new FilecoinNumber('0.1', 'fil').toAttoFil(),
+  ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
+    const {
+      gasFeeCap: minGasFeeCap,
+      gasLimit: minGasLimit,
+      gasPremium: minGasPremium,
+    } = await this.getReplaceMessageMinGasParams(message)
+
+    const copiedMessage = { ...message }
+    copiedMessage.GasFeeCap = '0'
+    copiedMessage.GasPremium = '0'
+    copiedMessage.GasLimit = 0
+    const {
+      GasFeeCap: recommendedGasFeeCap,
+      GasLimit: recommendedGasLimit,
+      GasPremium: recommendedGasPremium,
+    } = (await this.gasEstimateMessageGas(copiedMessage, maxFee)).toLotusType()
+
+    // assume we take the recommended prices
+    let takeMin = false
+
+    // if any of the minimum amounts are greater than the recommended,
+    // take the minimum amounts
+    if (num1GreaterThanNum2(minGasFeeCap, recommendedGasFeeCap)) takeMin = true
+    if (num1GreaterThanNum2(minGasLimit, recommendedGasLimit)) takeMin = true
+    if (num1GreaterThanNum2(minGasPremium, recommendedGasPremium))
+      takeMin = true
+
+    if (takeMin) {
+      return {
+        gasFeeCap: minGasFeeCap,
+        gasLimit: minGasLimit,
+        gasPremium: minGasPremium,
+      }
+    }
+    return {
+      gasFeeCap: recommendedGasFeeCap,
+      gasLimit: recommendedGasLimit,
+      gasPremium: recommendedGasPremium,
+    }
+  }
+
+  /**
+   * Used for calculating the minimum boost in gas params to replace a message
+   *  (1.25x prev gasPremium, bump fee cap as needed)
+   */
+  getReplaceMessageMinGasParams = async (
+    message: LotusMessage,
+  ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
+    let newFeeCap = message.GasFeeCap
+    const newPremium = new BigNumber(message.GasPremium)
+      .multipliedBy(125)
+      .dividedBy(100)
+
+    if (newPremium.isGreaterThan(message.GasFeeCap)) {
+      newFeeCap = newPremium.toFixed(0, BigNumber.ROUND_CEIL)
+    }
+
+    return {
+      gasFeeCap: newFeeCap,
+      gasPremium: newPremium.toFixed(0, BigNumber.ROUND_CEIL),
+      gasLimit: message.GasLimit,
+    }
   }
 }

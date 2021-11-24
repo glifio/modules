@@ -3,6 +3,7 @@ import { StyledATag } from '.'
 import theme from '../theme'
 import ThemeProvider from '../ThemeProvider'
 import { Base } from './index.stories'
+import NavLink from './NavLink'
 
 describe('StyledATag', () => {
   afterEach(cleanup)
@@ -66,5 +67,48 @@ describe('StyledATag', () => {
     )
 
     expect(getByText('Send')).toBeTruthy()
+  })
+})
+
+describe('NavLink', () => {
+  test('it renders an active state', () => {
+    const { getByText, container } = render(
+      <ThemeProvider theme={theme}>
+        <NavLink
+          rel='noopener'
+          target='_blank'
+          href='https://openworklabs.com'
+          isActive
+        >
+          Assets
+        </NavLink>
+      </ThemeProvider>
+    )
+
+    expect(getByText('Assets')).toBeTruthy()
+
+    const a = container.querySelector('a')
+    expect(a.target).toBe('_blank')
+    expect(a.href).toBe('https://openworklabs.com/')
+    expect(a).toHaveStyle('border: 2px solid;')
+    expect(container.firstChild).toMatchSnapshot()
+  })
+
+  test('it renders an inactive state', () => {
+    const { getByText, container } = render(
+      <ThemeProvider theme={theme}>
+        <NavLink rel='noopener' target='_blank' href='https://openworklabs.com'>
+          Assets
+        </NavLink>
+      </ThemeProvider>
+    )
+
+    expect(getByText('Assets')).toBeTruthy()
+
+    const a = container.querySelector('a')
+    expect(a.target).toBe('_blank')
+    expect(a.href).toBe('https://openworklabs.com/')
+    expect(a).toHaveStyle('border: 1px solid;')
+    expect(container.firstChild).toMatchSnapshot()
   })
 })

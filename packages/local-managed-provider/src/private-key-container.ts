@@ -1,4 +1,4 @@
-import { Network } from '@glif/filecoin-address'
+import { CoinType } from '@glif/filecoin-address'
 import uint8arrays from 'uint8arrays'
 import { ExtendedKey, MessageParams } from '@zondax/filecoin-signing-tools'
 import { SignedLotusMessage } from '@glif/filecoin-message'
@@ -11,12 +11,12 @@ export interface PrivateKeyContainer {
 
 export function privateKeyContainer(
   privateKey: string,
-  network: Network,
+  coinType: CoinType,
 ): PrivateKeyContainer {
   const bytes = uint8arrays.fromString(privateKey, 'base16')
   const json = JSON.parse(uint8arrays.toString(bytes))
   const keyType = json.Type
-  const testnet = network === Network.TEST
+  const testnet = coinType === CoinType.TEST
   let extendedKey: ExtendedKey
   if (keyType === 'bls') {
     extendedKey = signingTools.keyRecoverBLS(json.PrivateKey, testnet)

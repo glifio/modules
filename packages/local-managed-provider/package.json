@@ -1,6 +1,6 @@
 {
   "name": "@glif/local-managed-provider",
-  "version": "1.1.0",
+  "version": "2.0.0-alpha.1",
   "description": "a javascript package to send filecoin to addresses",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -16,10 +16,10 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "@glif/filecoin-address": "^1.1.0",
-    "@glif/filecoin-message": "^1.1.0",
-    "@glif/filecoin-wallet-provider": "^1.1.0",
-    "@zondax/filecoin-signing-tools": "^0.14.0",
+    "@glif/filecoin-address": "^2.0.0-alpha.1",
+    "@glif/filecoin-message": "^2.0.0-alpha.1",
+    "@glif/filecoin-wallet-provider": "^2.0.0-alpha.1",
+    "@zondax/filecoin-signing-tools": "^0.18.1",
     "bignumber.js": "^9.0.1",
     "uint8arrays": "^1.1.0"
   },
@@ -30,7 +30,7 @@
     "eslint": "6.1.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "6.7.0",
-    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-import": "2.24.2",
     "jest": "26.6.2",
     "prettier": "^2.2.1",
     "ts-jest": "^26.4.3",
