@@ -13,7 +13,7 @@ import { InvocResult } from '../types'
 import { WalletSubProvider } from '../wallet-sub-provider'
 
 const testSubProviderInstance: WalletSubProvider = {
-  type: 'SINGLE_KEY',
+  type: 'MOCK',
   getAccounts: jest.fn().mockImplementation(() => {}),
   sign: jest.fn().mockImplementation(() => {}),
 }

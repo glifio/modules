@@ -15,6 +15,7 @@ describe('AccountCardAlt', () => {
           address='t0123456789'
           balance='100'
           onClick={() => {}}
+          path=''
           selected
         />
       </ThemeProvider>
@@ -31,6 +32,7 @@ describe('AccountCardAlt', () => {
           address='t0123456789'
           balance='100'
           onClick={() => {}}
+          path=''
         />
       </ThemeProvider>
     )
@@ -46,6 +48,7 @@ describe('AccountCardAlt', () => {
           address='t0123456789'
           balance='100'
           onClick={() => {}}
+          path="m/44'/1'/0'/0/1"
           legacy
         />
       </ThemeProvider>
@@ -62,6 +65,7 @@ describe('AccountCardAlt', () => {
           address='t0123456789'
           balance='100'
           onClick={() => {}}
+          path="m/44'/461'/0'/0/56"
         />
       </ThemeProvider>
     )
@@ -78,6 +82,7 @@ describe('AccountCardAlt', () => {
           balance='100'
           onClick={() => {}}
           selected
+          path=''
         />
       </ThemeProvider>
     )
@@ -96,6 +101,7 @@ describe('AccountCardAlt', () => {
           address='t0123456789'
           balance='100'
           onClick={mockOnAccountSwitch}
+          path=''
         />
       </ThemeProvider>
     )
