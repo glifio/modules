@@ -1,27 +1,48 @@
-import { WalletSubProvider } from '@glif/filecoin-wallet-provider'
+import { WalletSubProvider, errors } from '@glif/filecoin-wallet-provider'
 import { LotusMessage, SignedLotusMessage } from '@glif/filecoin-message'
-import { Network } from '@glif/filecoin-address'
-import {
-  privateKeyContainer,
-  PrivateKeyContainer,
-} from './private-key-container'
+import { CoinType } from '@glif/filecoin-address'
+import { KeyType, privateKeyContainer, SignFunc } from './private-key-container'
 
-export class LocalManagedProvider implements WalletSubProvider {
-  private readonly privateKey: PrivateKeyContainer
-  readonly type = 'SINGLE_KEY'
-  constructor(privateKey: string, network: Network) {
-    this.privateKey = privateKeyContainer(privateKey, network)
+export class SingleKeyProvider implements WalletSubProvider {
+  readonly mainAddress: string
+  readonly type: KeyType
+  readonly _sign: SignFunc
+  constructor(privateKey: string) {
+    if (!privateKey) {
+      throw new errors.InvalidParamsError({
+        message: 'Must pass private key string to single key provider instance',
+      })
+    }
+    const { address, keyType, sign } = privateKeyContainer(
+      privateKey,
+      CoinType.MAIN,
+    )
+    this.mainAddress = address
+    this.type = keyType
+    this._sign = sign
   }
 
-  async getAccounts(): Promise<string[]> {
-    return [this.privateKey.address]
+  async getAccounts(
+    _: number,
+    __: number,
+    coinType: CoinType = CoinType.MAIN,
+  ): Promise<string[]> {
+    if (coinType === CoinType.TEST) {
+      return [`t${this.mainAddress.slice(1)}`]
+    }
+
+    return [this.mainAddress]
   }
 
   async sign(from: string, message: LotusMessage): Promise<SignedLotusMessage> {
-    if (from === this.privateKey.address) {
-      return this.privateKey.sign(message)
-    } else {
-      throw new Error(`Can only sign with address ${this.privateKey.address}`)
+    const addressWithoutCoinType = from.slice(1)
+
+    if (!this.mainAddress.includes(addressWithoutCoinType)) {
+      throw new errors.InvalidParamsError({
+        message: 'Invalid from address for private key',
+      })
     }
+
+    return this._sign(message)
   }
 }
