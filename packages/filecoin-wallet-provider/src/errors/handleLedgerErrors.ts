@@ -9,6 +9,7 @@ const {
 } = errors
 
 export const CommonLedgerError = (error: Error): Error => {
+  // tslint:disable-next-line no-console
   console.log('error', error)
   if (
     error.message.toLowerCase().includes('unable to claim interface.') ||

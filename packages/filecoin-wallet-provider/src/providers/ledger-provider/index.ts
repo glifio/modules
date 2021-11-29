@@ -157,6 +157,7 @@ export class LedgerProvider implements LedgerSubProvider {
 
   ready = async (): Promise<boolean> => {
     try {
+      // tslint:disable-next-line no-unused-expression
       handleLedgerResponseErrors(await this.getVersion()) as LedgerVersion
     } catch (err) {
       if (err instanceof Error) {
