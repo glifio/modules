@@ -26,7 +26,7 @@
     "@glif/filecoin-rpc-client": "^1.1.0",
     "@ledgerhq/hw-transport": "^6.11.2",
     "@ledgerhq/hw-transport-webhid": "^6.11.2",
-    "@zondax/filecoin-signing-tools": "^0.18.1",
+    "@zondax/filecoin-signing-tools": "^0.18.2",
     "@zondax/ledger-filecoin": "^0.11.2",
     "bignumber.js": "9.0.1",
     "bluebird": "^3.7.2"
