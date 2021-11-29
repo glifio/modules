@@ -5,6 +5,7 @@ const {
   LedgerReplugError,
   LedgerNotFoundError,
   LedgerFilecoinAppNotOpenError,
+  TransactionRejectedError,
 } = errors
 
 export const CommonLedgerError = (error: Error): Error => {
@@ -29,6 +30,10 @@ export const CommonLedgerError = (error: Error): Error => {
     error.message.toLowerCase().includes('app does not seem to be open')
   ) {
     return new LedgerFilecoinAppNotOpenError()
+  } else if (
+    error.message.toLocaleLowerCase().includes('transaction rejected')
+  ) {
+    return new TransactionRejectedError()
   } else {
     return new LedgerReplugError(error)
   }

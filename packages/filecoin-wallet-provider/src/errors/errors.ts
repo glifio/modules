@@ -139,6 +139,16 @@ class UnsupportedKeyTypeError extends WalletProviderError {
   }
 }
 
+class TransactionRejectedError extends WalletProviderError {
+  constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
+    super({
+      message: args.message || 'Transaction rejected',
+      ...args,
+    })
+    Object.setPrototypeOf(this, TransactionRejectedError.prototype)
+  }
+}
+
 export default {
   InvalidParamsError,
   LedgerLostConnectionError,
@@ -150,6 +160,7 @@ export default {
   LedgerFilecoinAppBadVersionError,
   LedgerFilecoinAppNotOpenError,
   LedgerDeviceBusyError,
+  TransactionRejectedError,
   TransportNotSupportedError,
   UnsupportedKeyTypeError,
   WalletProviderError,

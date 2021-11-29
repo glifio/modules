@@ -19,7 +19,6 @@
     "watch:babel": "npm run build:babel -- --watch",
     "start": "npm run watch",
     "storybook": "start-storybook -s ./src/public -p 6006",
-    "build:storybook": "build-storybook -s ./src/public",
     "deploy:storybook": "storybook-to-ghpages",
     "prepare": "npm run build",
     "jest-dev": "jest --watch",

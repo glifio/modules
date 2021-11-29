@@ -178,6 +178,7 @@ export class LedgerProvider implements LedgerSubProvider {
     this.ledgerBusy = true
     const path = this.accountToPath[from]
     if (!path) {
+      this.ledgerBusy = false
       throw new errors.WalletProviderError({
         message:
           'Must call getAccounts with to derive this from address before signing with it',
@@ -194,6 +195,8 @@ export class LedgerProvider implements LedgerSubProvider {
             }
           : undefined,
       )
+    } finally {
+      this.ledgerBusy = false
     }
     const serializedMessage = signingTools.transactionSerialize(
       msg.toZondaxType(),
@@ -205,7 +208,6 @@ export class LedgerProvider implements LedgerSubProvider {
           Buffer.from(serializedMessage, 'hex'),
         ),
       ) as LedgerSignature
-      this.ledgerBusy = false
       const signedMessage: SignedLotusMessage = {
         Message: message,
         Signature: {
@@ -220,6 +222,8 @@ export class LedgerProvider implements LedgerSubProvider {
       } else {
         throw new LedgerReplugError()
       }
+    } finally {
+      this.ledgerBusy = false
     }
   }
 
@@ -255,6 +259,8 @@ export class LedgerProvider implements LedgerSubProvider {
         } else {
           throw new LedgerReplugError()
         }
+      } finally {
+        this.ledgerBusy = false
       }
     })
     this.ledgerBusy = false
