@@ -20,6 +20,7 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
+    "@chainsafe/filsnap-types": "^1.0.0",
     "@glif/filecoin-address": "^2.0.0-alpha.5",
     "@glif/filecoin-message": "^2.0.0-alpha.5",
     "@glif/filecoin-number": "^1.1.0",

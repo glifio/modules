@@ -56,6 +56,7 @@ export type WalletType =
   | 'SINGLE_KEY_BLS'
   | 'HD_WALLET'
   | 'LEDGER'
+  | 'METAMASK'
   | 'MOCK'
 
 export type SemanticVersion = {
