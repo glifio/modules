@@ -2,10 +2,10 @@ import axios, { AxiosRequestConfig } from 'axios'
 
 type Headers = Record<string, string | null | undefined>
 
-export function removeEmptyHeaders(headers: Headers): Headers {
-  const newHeaders: Headers = {}
+export function removeEmptyHeaders(headers: Headers): Record<string, string> {
+  const newHeaders: Record<string, string> = {}
   Object.keys(headers).forEach((key) => {
-    if (headers[key]) newHeaders[key] = headers[key]
+    if (headers[key]) newHeaders[key] = headers[key] as string
   })
   return newHeaders
 }
@@ -13,7 +13,7 @@ export function removeEmptyHeaders(headers: Headers): Headers {
 export function configureHeaders(
   headers: Headers = {},
   token?: string,
-): Headers {
+): Record<string, string> {
   const reqHeaders: Headers = Object.assign({}, headers, { Accept: '*/*' })
   if (token) {
     reqHeaders.Authorization = `Bearer ${token}`
@@ -45,7 +45,7 @@ export default class LotusRpcEngine {
   readonly apiAddress: string
   readonly token?: string
   readonly axiosOpts: AxiosRequestConfig
-  readonly headers: Headers
+  readonly headers: Record<string, string>
 
   constructor(config?: LotusRpcEngineConfig) {
     if (!config)
