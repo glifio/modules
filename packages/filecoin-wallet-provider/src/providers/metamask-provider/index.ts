@@ -21,7 +21,6 @@ export class MetaMaskProvider implements WalletSubProvider {
     this.snap = snap
   }
 
-  // right now only 1 account and 1 cointype is supported
   getAccounts = async (nStart = 0, nEnd = 5, coinType = CoinType.MAIN) => {
     if (!validIndexes(nStart, nEnd)) {
       throw new errors.InvalidParamsError({
