@@ -149,6 +149,16 @@ class TransactionRejectedError extends WalletProviderError {
   }
 }
 
+class MetaMaskError extends WalletProviderError {
+  constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
+    super({
+      message: args.message || 'MetaMask error',
+      ...args,
+    })
+    Object.setPrototypeOf(this, MetaMaskError.prototype)
+  }
+}
+
 export default {
   InvalidParamsError,
   LedgerLostConnectionError,
@@ -160,6 +170,7 @@ export default {
   LedgerFilecoinAppBadVersionError,
   LedgerFilecoinAppNotOpenError,
   LedgerDeviceBusyError,
+  MetaMaskError,
   TransactionRejectedError,
   TransportNotSupportedError,
   UnsupportedKeyTypeError,
