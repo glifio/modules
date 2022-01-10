@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-wallet-provider",
-  "version": "1.1.1",
+  "version": "2.0.0-alpha.10",
   "description": "a javascript package to send filecoin to addresses",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,6 +11,7 @@
     "build-node": "../../node_modules/.bin/babel ./src/ --out-dir ./dist/ --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
     "build-types": "../../node_modules/.bin/tsc --emitDeclarationOnly",
     "build": "npm run clean && npm run build-types && npm run build-node && npm run build-browser && npm run build-module",
+    "build:watch": "npm run build-node -- --watch",
     "lint": "tslint -p tsconfig.json",
     "prepublishOnly": "npm run build",
     "test:build": "npm run build && jest",
@@ -20,13 +21,20 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "@glif/filecoin-address": "^1.1.0",
-    "@glif/filecoin-message": "^1.1.0",
-    "@glif/filecoin-number": "^1.1.0",
-    "@glif/filecoin-rpc-client": "^1.1.0",
-    "bignumber.js": "9.0.1"
+    "@chainsafe/filsnap-types": "^1.0.0",
+    "@glif/filecoin-address": "^2.0.0-alpha.10",
+    "@glif/filecoin-message": "^2.0.0-alpha.10",
+    "@glif/filecoin-number": "^2.0.0-alpha.10",
+    "@glif/filecoin-rpc-client": "^2.0.0-alpha.10",
+    "@ledgerhq/hw-transport": "^6.11.2",
+    "@ledgerhq/hw-transport-webhid": "^6.11.2",
+    "@zondax/filecoin-signing-tools": "^0.18.2",
+    "@zondax/ledger-filecoin": "^0.11.2",
+    "bignumber.js": "9.0.1",
+    "bluebird": "^3.7.2"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.36",
     "cids": "^1.0.0",
     "eslint": "6.1.0",
     "eslint-config-airbnb": "18.2.1",
@@ -44,5 +52,5 @@
     "type": "git",
     "url": "https://github.com/glifio/modules/tree/primary/packages/filecoin-wallet-provider"
   },
-  "gitHead": "5b9d592bcc3230fd62c7de8245a9e238e560e3a0"
+  "gitHead": "9df5c49e1ec88905b131549d131555ef639f0c46"
 }

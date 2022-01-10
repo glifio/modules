@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-address",
-  "version": "1.1.0",
+  "version": "2.0.0-alpha.10",
   "description": "The Filecoin address type",
   "main": "./dist/index.js",
   "browser": "./lib/index.js",
@@ -41,5 +41,5 @@
     "type": "git",
     "url": "https://github.com/glifio/modules/tree/primary/packages/filecoin-address"
   },
-  "gitHead": "5b9d592bcc3230fd62c7de8245a9e238e560e3a0"
+  "gitHead": "9df5c49e1ec88905b131549d131555ef639f0c46"
 }

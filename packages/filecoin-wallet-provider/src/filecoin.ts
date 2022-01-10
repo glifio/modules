@@ -1,7 +1,11 @@
 import LotusRpcEngine, { LotusRpcEngineConfig } from '@glif/filecoin-rpc-client'
 import { FilecoinNumber } from '@glif/filecoin-number'
-import { checkAddressString, Network } from '@glif/filecoin-address'
-import { LotusMessage, Message } from '@glif/filecoin-message'
+import { checkAddressString, CoinType } from '@glif/filecoin-address'
+import {
+  LotusMessage,
+  Message,
+  SignedLotusMessage,
+} from '@glif/filecoin-message'
 import {
   computeGasToBurn,
   KNOWN_TYPE_0_ADDRESS,
@@ -48,23 +52,14 @@ export class Filecoin {
   }
 
   sendMessage = async (
-    message: LotusMessage,
-    signature: string,
+    signedLotusMessage: SignedLotusMessage,
   ): Promise<CID> => {
-    if (!message) throw new Error('No message provided.')
-    if (!signature) throw new Error('No signature provided.')
-    const signedMessage = {
-      Message: message,
-      Signature: {
-        // wallet only supports secp256k1 keys for now
-        Type: 1,
-        Data: signature,
-      },
-    }
+    if (!signedLotusMessage.Message) throw new Error('No message provided.')
+    if (!signedLotusMessage.Signature) throw new Error('No signature provided.')
 
     return this.jsonRpcEngine.request<{ '/': string }>(
       'MpoolPush',
-      signedMessage,
+      signedLotusMessage,
     )
   }
 
@@ -77,13 +72,14 @@ export class Filecoin {
       )
       return nonce
     } catch (err) {
-      if (
-        err &&
-        err.message &&
-        err.message.toLowerCase().includes('actor not found')
-      )
-        return 0
-      throw new Error(err)
+      if (err instanceof Error) {
+        if (err?.message.toLowerCase().includes('actor not found')) {
+          return 0
+        }
+
+        throw new Error(err.message)
+      }
+      throw new Error('An unknown error occured when fetching the nonce.')
     }
   }
 
@@ -96,20 +92,22 @@ export class Filecoin {
       await this.jsonRpcEngine.request('StateLookupID', clonedMsg.From, null)
     } catch (err) {
       // if from actor doesnt exist, use a hardcoded known actor address
-      if (err.message.toLowerCase().includes('actor not found')) {
-        const networkPrefix = clonedMsg.From[0] as Network
+      if (
+        err instanceof Error &&
+        err.message.toLowerCase().includes('actor not found')
+      ) {
+        const coinType = clonedMsg.From[0] as CoinType
 
-        if (!clonedMsg.From)
-          clonedMsg.From = KNOWN_TYPE_0_ADDRESS[networkPrefix]
+        if (!clonedMsg.From) clonedMsg.From = KNOWN_TYPE_0_ADDRESS[coinType]
         if (clonedMsg.From[1] === '0')
-          clonedMsg.From = KNOWN_TYPE_0_ADDRESS[networkPrefix]
+          clonedMsg.From = KNOWN_TYPE_0_ADDRESS[coinType]
         else if (clonedMsg.From[1] === '1')
-          clonedMsg.From = KNOWN_TYPE_1_ADDRESS[networkPrefix]
+          clonedMsg.From = KNOWN_TYPE_1_ADDRESS[coinType]
         else if (clonedMsg.From[1] === '3')
-          clonedMsg.From = KNOWN_TYPE_3_ADDRESS[networkPrefix]
+          clonedMsg.From = KNOWN_TYPE_3_ADDRESS[coinType]
         else {
           // this should never happen, only t1 and t3 addresses can be used as a from?
-          clonedMsg.From = KNOWN_TYPE_0_ADDRESS[networkPrefix]
+          clonedMsg.From = KNOWN_TYPE_0_ADDRESS[coinType]
         }
       }
     }

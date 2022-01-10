@@ -6,12 +6,24 @@ import {
   IDAddresses,
   secp256k1Addresses
 } from './constants'
-import { encode, decode, newFromString, validateAddressString, newIDAddress, Network, Address, newActorAddress, newSecp256k1Address, newBLSAddress, idFromAddress } from '../index'
+import {
+  encode,
+  decode,
+  newFromString,
+  validateAddressString,
+  newIDAddress,
+  CoinType,
+  Address,
+  newActorAddress,
+  newSecp256k1Address,
+  newBLSAddress,
+  idFromAddress
+} from '../index'
 
 describe('address', () => {
   describe('newIDAddress', () => {
     test('it should create new ID addresses', async () => {
-      IDAddresses.forEach(item => {
+      IDAddresses.forEach((item) => {
         const address = newIDAddress(item.string.slice(2))
         expect(
           uint8arrays.equals(
@@ -27,10 +39,7 @@ describe('address', () => {
       const data = uint8arrays.fromString('actor')
       const address = newActorAddress(data)
       expect(
-        uint8arrays.equals(
-          address.payload(),
-          blake2b(data, null, 20)
-        )
+        uint8arrays.equals(address.payload(), blake2b(data, null, 20))
       ).toBe(true)
     })
   })
@@ -39,10 +48,7 @@ describe('address', () => {
       const data = uint8arrays.fromString('Secp256k1 pubkey')
       const address = newSecp256k1Address(data)
       expect(
-        uint8arrays.equals(
-          address.payload(),
-          blake2b(data, null, 20)
-        )
+        uint8arrays.equals(address.payload(), blake2b(data, null, 20))
       ).toBe(true)
     })
   })
@@ -50,17 +56,12 @@ describe('address', () => {
     test('it should create new BLS address', () => {
       const data = uint8arrays.fromString('BLS pubkey')
       const address = newBLSAddress(data)
-      expect(
-        uint8arrays.equals(
-          address.payload(),
-          data
-        )
-      ).toBe(true)
+      expect(uint8arrays.equals(address.payload(), data)).toBe(true)
     })
   })
   describe('newFromString', () => {
     test('it should create new ID addresses', async () => {
-      IDAddresses.forEach(item => {
+      IDAddresses.forEach((item) => {
         const address = newFromString(item.string)
         expect(
           uint8arrays.equals(
@@ -72,7 +73,7 @@ describe('address', () => {
     })
 
     test('it should create new secp256k1 addresses', async () => {
-      secp256k1Addresses.forEach(item => {
+      secp256k1Addresses.forEach((item) => {
         const address = newFromString(item.string)
         expect(
           uint8arrays.equals(
@@ -84,7 +85,7 @@ describe('address', () => {
     })
 
     test('it should create new BLS addresses', async () => {
-      BLSAddresses.forEach(item => {
+      BLSAddresses.forEach((item) => {
         const address = newFromString(item.string)
         expect(
           uint8arrays.equals(
@@ -96,7 +97,7 @@ describe('address', () => {
     })
 
     test('it should create new Actor addresses', async () => {
-      actorAddresses.forEach(item => {
+      actorAddresses.forEach((item) => {
         const address = newFromString(item.string)
         expect(
           uint8arrays.equals(
@@ -127,7 +128,9 @@ describe('address', () => {
 
     test('it should throw when given a non-ID address', () => {
       const address = new Address(secp256k1Addresses[0].decodedByteArray)
-      expect(() => idFromAddress(address)).toThrow('Cannot get ID from non ID address')
+      expect(() => idFromAddress(address)).toThrow(
+        'Cannot get ID from non ID address'
+      )
     })
   })
 
@@ -154,55 +157,55 @@ describe('address', () => {
   })
 
   describe('decode', () => {
-    test('it should preserve testnet network', () => {
-      const addressStr = `${Network.TEST}${IDAddresses[0].string.slice(1)}`
+    test('it should preserve testnet coinType', () => {
+      const addressStr = `${CoinType.TEST}${IDAddresses[0].string.slice(1)}`
       const address = decode(addressStr)
-      expect(address.network()).toBe(Network.TEST)
+      expect(address.coinType()).toBe(CoinType.TEST)
       expect(address.toString()).toBe(addressStr)
     })
 
     test('it should preserve mainnet network', () => {
-      const addressStr = `${Network.MAIN}${IDAddresses[0].string.slice(1)}`
+      const addressStr = `${CoinType.MAIN}${IDAddresses[0].string.slice(1)}`
       const address = decode(addressStr)
-      expect(address.network()).toBe(Network.MAIN)
+      expect(address.coinType()).toBe(CoinType.MAIN)
       expect(address.toString()).toBe(addressStr)
     })
   })
 
   describe('toString', () => {
     test('it should stringify ID addresses', () => {
-      IDAddresses.forEach(item => {
-        const tAddr = new Address(item.decodedByteArray, Network.TEST)
-        expect(`${tAddr}`).toBe(`${Network.TEST}${item.string.slice(1)}`)
-        const fAddr = new Address(item.decodedByteArray, Network.MAIN)
-        expect(`${fAddr}`).toBe(`${Network.MAIN}${item.string.slice(1)}`)
+      IDAddresses.forEach((item) => {
+        const tAddr = new Address(item.decodedByteArray, CoinType.TEST)
+        expect(`${tAddr}`).toBe(`${CoinType.TEST}${item.string.slice(1)}`)
+        const fAddr = new Address(item.decodedByteArray, CoinType.MAIN)
+        expect(`${fAddr}`).toBe(`${CoinType.MAIN}${item.string.slice(1)}`)
       })
     })
 
     test('it should stringify secp256k1 addresses', () => {
-      secp256k1Addresses.forEach(item => {
-        const tAddr = new Address(item.decodedByteArray, Network.TEST)
-        expect(`${tAddr}`).toBe(`${Network.TEST}${item.string.slice(1)}`)
-        const fAddr = new Address(item.decodedByteArray, Network.MAIN)
-        expect(`${fAddr}`).toBe(`${Network.MAIN}${item.string.slice(1)}`)
+      secp256k1Addresses.forEach((item) => {
+        const tAddr = new Address(item.decodedByteArray, CoinType.TEST)
+        expect(`${tAddr}`).toBe(`${CoinType.TEST}${item.string.slice(1)}`)
+        const fAddr = new Address(item.decodedByteArray, CoinType.MAIN)
+        expect(`${fAddr}`).toBe(`${CoinType.MAIN}${item.string.slice(1)}`)
       })
     })
 
     test('it should stringify BLS addresses', () => {
-      BLSAddresses.forEach(item => {
-        const tAddr = new Address(item.decodedByteArray, Network.TEST)
-        expect(`${tAddr}`).toBe(`${Network.TEST}${item.string.slice(1)}`)
-        const fAddr = new Address(item.decodedByteArray, Network.MAIN)
-        expect(`${fAddr}`).toBe(`${Network.MAIN}${item.string.slice(1)}`)
+      BLSAddresses.forEach((item) => {
+        const tAddr = new Address(item.decodedByteArray, CoinType.TEST)
+        expect(`${tAddr}`).toBe(`${CoinType.TEST}${item.string.slice(1)}`)
+        const fAddr = new Address(item.decodedByteArray, CoinType.MAIN)
+        expect(`${fAddr}`).toBe(`${CoinType.MAIN}${item.string.slice(1)}`)
       })
     })
 
     test('it should stringify Actor addresses', () => {
-      actorAddresses.forEach(item => {
-        const tAddr = new Address(item.decodedByteArray, Network.TEST)
-        expect(`${tAddr}`).toBe(`${Network.TEST}${item.string.slice(1)}`)
-        const fAddr = new Address(item.decodedByteArray, Network.MAIN)
-        expect(`${fAddr}`).toBe(`${Network.MAIN}${item.string.slice(1)}`)
+      actorAddresses.forEach((item) => {
+        const tAddr = new Address(item.decodedByteArray, CoinType.TEST)
+        expect(`${tAddr}`).toBe(`${CoinType.TEST}${item.string.slice(1)}`)
+        const fAddr = new Address(item.decodedByteArray, CoinType.MAIN)
+        expect(`${fAddr}`).toBe(`${CoinType.MAIN}${item.string.slice(1)}`)
       })
     })
   })

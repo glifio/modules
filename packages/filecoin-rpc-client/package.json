@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-rpc-client",
-  "version": "1.1.0",
+  "version": "2.0.0-alpha.10",
   "description": "a convenience library for interacting with the Lotus jsonrpc",
   "main": "./dist/index.js",
   "browser": "./lib/index.js",
@@ -23,7 +23,7 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "axios": "0.21.0"
+    "axios": "^0.24.0"
   },
   "devDependencies": {
     "nock": "^13.0.5",

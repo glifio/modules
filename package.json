@@ -3,7 +3,9 @@
   "private": false,
   "scripts": {
     "bootstrap": "lerna bootstrap --no-ci",
+    "bootstrap:local": "lerna bootstrap --force-local",
     "build": "lerna run build",
+    "clean": "lerna run clean",
     "lint": "lerna run lint",
     "prepublishOnly": "npm run build",
     "publish": "lerna publish",

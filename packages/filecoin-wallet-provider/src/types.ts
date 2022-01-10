@@ -50,3 +50,17 @@ export interface InvocResult {
   ExecutionTrace: ExecutionTrace
   GasCharges?: any
 }
+
+export type WalletType =
+  | 'SINGLE_KEY_SECP256K1'
+  | 'SINGLE_KEY_BLS'
+  | 'HD_WALLET'
+  | 'LEDGER'
+  | 'METAMASK'
+  | 'MOCK'
+
+export type SemanticVersion = {
+  major: number
+  minor: number
+  patch: number
+}
