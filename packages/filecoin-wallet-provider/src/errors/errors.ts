@@ -159,6 +159,48 @@ class MetaMaskError extends WalletProviderError {
   }
 }
 
+class MetaMaskNotInstalledError extends WalletProviderError {
+  constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
+    super({
+      message: args.message || 'MetaMask not installed',
+      ...args,
+    })
+    Object.setPrototypeOf(this, MetaMaskNotInstalledError.prototype)
+  }
+}
+
+class MetaMaskSnapsNotSupportedError extends WalletProviderError {
+  constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
+    super({
+      message:
+        args.message ||
+        'The installed version of MetaMask does not support Snaps',
+      ...args,
+    })
+    Object.setPrototypeOf(this, MetaMaskSnapsNotSupportedError.prototype)
+  }
+}
+
+class MetaMaskLockedError extends WalletProviderError {
+  constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
+    super({
+      message: args.message || 'MetaMask locked',
+      ...args,
+    })
+    Object.setPrototypeOf(this, MetaMaskLockedError.prototype)
+  }
+}
+
+class MetaMaskFilSnapNotInstalledError extends WalletProviderError {
+  constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
+    super({
+      message: args.message || 'FILSnap not installed',
+      ...args,
+    })
+    Object.setPrototypeOf(this, MetaMaskFilSnapNotInstalledError.prototype)
+  }
+}
+
 export default {
   InvalidParamsError,
   LedgerLostConnectionError,
@@ -171,6 +213,10 @@ export default {
   LedgerFilecoinAppNotOpenError,
   LedgerDeviceBusyError,
   MetaMaskError,
+  MetaMaskNotInstalledError,
+  MetaMaskSnapsNotSupportedError,
+  MetaMaskLockedError,
+  MetaMaskFilSnapNotInstalledError,
   TransactionRejectedError,
   TransportNotSupportedError,
   UnsupportedKeyTypeError,
