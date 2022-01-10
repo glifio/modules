@@ -18,6 +18,10 @@ export class MetaMaskProvider implements WalletSubProvider {
   private accountToPath: Record<string, string> = {}
 
   constructor({ snap }: { snap: FilecoinSnapApi }) {
+    if (!snap)
+      throw new errors.InvalidParamsError({
+        message: 'Must pass `snap` to MetaMask provider',
+      })
     this.snap = snap
   }
 
