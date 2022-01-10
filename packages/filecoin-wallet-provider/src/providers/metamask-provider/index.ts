@@ -100,14 +100,21 @@ export class MetaMaskProvider implements WalletSubProvider {
       )
     }
 
+    let hasParams = false
+    if (message.Params) {
+      if (Array.isArray(message.Params)) hasParams = message.Params.length > 0
+      else hasParams = true
+    }
+
     // use transactionSign instead of transactionSignRaw to show in the MetaMask UI
-    if (message.Method === 0) {
-      const { signature } = await this.snap.signMessage(msg.toZondaxType())
+    if (message.Method === 0 && !hasParams) {
+      const res = await this.snap.signMessage(msg.toZondaxType())
+      if (!res) throw new errors.TransactionRejectedError()
       return {
         Message: message,
         Signature: {
-          Data: signature.data,
-          Type: signature.type,
+          Data: res.signature.data,
+          Type: res.signature.type,
         },
       }
     }
@@ -116,6 +123,7 @@ export class MetaMaskProvider implements WalletSubProvider {
       msg.toZondaxType(),
     )
     const sig = await this.snap.signMessageRaw(serializedMessage)
+    if (!sig) throw new errors.TransactionRejectedError()
     return {
       Message: message,
       Signature: {
