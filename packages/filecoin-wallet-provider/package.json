@@ -21,14 +21,14 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "@chainsafe/filsnap-types": "^1.0.0",
+    "@chainsafe/filsnap-types": "^2.0.0",
     "@glif/filecoin-address": "^2.0.0-alpha.11",
     "@glif/filecoin-message": "^2.0.0-alpha.11",
     "@glif/filecoin-number": "^2.0.0-alpha.11",
     "@glif/filecoin-rpc-client": "^2.0.0-alpha.11",
     "@ledgerhq/hw-transport": "^6.11.2",
     "@ledgerhq/hw-transport-webhid": "^6.11.2",
-    "@zondax/filecoin-signing-tools": "^0.18.3",
+    "@zondax/filecoin-signing-tools": "^0.18.5",
     "@zondax/ledger-filecoin": "^0.11.2",
     "bignumber.js": "9.0.1",
     "bluebird": "^3.7.2"
