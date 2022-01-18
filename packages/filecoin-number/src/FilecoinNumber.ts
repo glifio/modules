@@ -4,7 +4,9 @@ import { BigNumber } from 'bignumber.js'
 BigNumber.set({ ROUNDING_MODE: BigNumber.ROUND_HALF_DOWN })
 BigNumber.config({ EXPONENTIAL_AT: 1e9 })
 
-function asBigNumber(amount: string | number | BigNumber, denom: string) {
+type FilecoinDenomination = 'fil'|'picofil'|'attofil';
+
+function asBigNumber(amount: string | number | BigNumber, denom: FilecoinDenomination) {
   if (!denom) {
     throw new Error('No Filecoin denomination passed in constructor.')
   }
@@ -31,7 +33,7 @@ function asBigNumber(amount: string | number | BigNumber, denom: string) {
 
 // stores filecoin numbers in denominations of Fil, not AttoFil
 export class FilecoinNumber extends BigNumber {
-  constructor(amount: string | number | BigNumber, denom: string) {
+  constructor(amount: string | number | BigNumber, denom: FilecoinDenomination) {
     super(asBigNumber(amount, denom))
   }
 

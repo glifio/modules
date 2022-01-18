@@ -30,6 +30,7 @@ describe('FilecoinNumber', () => {
   })
 
   test('throws error if no denom is specified in constructor', () => {
+    // @ts-ignore
     expect(() => new FilecoinNumber('0.005', 'invalidDenom')).toThrow()
   })
 
