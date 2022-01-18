@@ -8,12 +8,21 @@ import { createPath, coinTypeCode } from '../utils/createPath'
 const configureSpy = jest.fn()
 const getAddressSpy = jest.fn().mockImplementation(() => 'f0123')
 const signMessageSpy = jest.fn().mockImplementation(() => ({
-  signature: {
-    data: 'you are super deep in this right now. well done',
-    type: 1,
+  confirmed: true,
+  error: null,
+  signedMessage: {
+    message: {},
+    signature: {
+      data: 'you are super deep in this right now. well done',
+      type: 1,
+    },
   },
 }))
-const signMessageRawSpy = jest.fn().mockImplementation(() => 'suuup')
+const signMessageRawSpy = jest.fn().mockImplementation(() => ({
+  confirmed: true,
+  error: null,
+  signature: 'yoyoma',
+}))
 
 const mockSnap: FilecoinSnapApi = {
   getPublicKey: jest.fn(),
@@ -130,8 +139,14 @@ describe('metamask subprovider', () => {
     })
 
     test('it throws a transaction reject error if there is no signature', async () => {
-      const emptySignature = jest.fn().mockImplementation(() => null)
-      const mockSnapOverride = overrideMockSnap({ signMessage: emptySignature })
+      const rejectedSignature = jest.fn().mockImplementation(() => ({
+        signedMessage: null,
+        error: null,
+        confirmed: false,
+      }))
+      const mockSnapOverride = overrideMockSnap({
+        signMessage: rejectedSignature,
+      })
 
       const subProvider = new MetaMaskProvider({ snap: mockSnapOverride })
       const [from, to] = await subProvider.getAccounts(0, 2, CoinType.TEST)
@@ -204,9 +219,13 @@ describe('metamask subprovider', () => {
     })
 
     test('it throws a transaction reject error when signMessageRaw returns no signature ', async () => {
-      const emptySignature = jest.fn().mockImplementation(() => null)
+      const rejectedSignature = jest.fn().mockImplementation(() => ({
+        signature: null,
+        error: null,
+        confirmed: false,
+      }))
       const mockSnapOverride = overrideMockSnap({
-        signMessageRaw: emptySignature,
+        signMessage: rejectedSignature,
       })
 
       const subProvider = new MetaMaskProvider({ snap: mockSnapOverride })
