@@ -4,7 +4,7 @@ import { BigNumber } from 'bignumber.js'
 BigNumber.set({ ROUNDING_MODE: BigNumber.ROUND_HALF_DOWN })
 BigNumber.config({ EXPONENTIAL_AT: 1e9 })
 
-function asBigNumber(amount: string | number | BigNumber, denom: string) {
+function asBigNumber(amount: string | number | BigNumber, denom: 'fil'|'picofil'|'attofil') {
   if (!denom) {
     throw new Error('No Filecoin denomination passed in constructor.')
   }
