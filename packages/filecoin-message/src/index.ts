@@ -185,12 +185,12 @@ export class Message {
   }
 
   public toPendingMessage = (cid: string): MessagePending => {
-    let toAddr: Address = {
+    const toAddr: Address = {
       robust: '',
       id: ''
     }
 
-    let fromAddr: Address = {
+    const fromAddr: Address = {
       robust: '',
       id: ''
     }
