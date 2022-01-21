@@ -16,6 +16,26 @@ export interface ZondaxMessage {
   readonly params: string | string[] | undefined
 }
 
+export type Address = {
+  robust: string
+  id: string
+}
+
+export type MessagePending = {
+  cid: string
+  from: Address
+  gasFeeCap: string
+  gasLimit: string
+  gasPremium: string
+  height: number
+  method: string
+  nonce: string
+  params: string | string[]
+  to: Address
+  value: number
+  version?: number
+}
+
 type SerializableMessage = ZondaxMessage
 
 export interface LotusMessage {
@@ -161,6 +181,37 @@ export class Message {
       gaslimit: this.gasLimit,
       method: this.method,
       params: this.params || ''
+    }
+  }
+
+  public toPendingMessage = (cid: string): MessagePending => {
+    const toAddr: Address = {
+      robust: '',
+      id: ''
+    }
+
+    const fromAddr: Address = {
+      robust: '',
+      id: ''
+    }
+    if (this.to[1] === '0') toAddr.id = this.to
+    else toAddr.robust = this.to
+
+    if (this.from[1] === '0') fromAddr.id = this.from
+    else fromAddr.robust = this.from
+    return {
+      to: toAddr,
+      from: fromAddr,
+      cid,
+      method: this.method.toString(),
+      gasFeeCap: this.gasFeeCap.toString(),
+      gasLimit: this.gasLimit.toString(),
+      gasPremium: this.gasPremium.toString(),
+      params: this.params || '',
+      height: 0,
+      // this could become problematic with big numbers...
+      value: this.value.toNumber(),
+      nonce: this.nonce.toString()
     }
   }
 }
