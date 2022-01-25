@@ -27,7 +27,7 @@ export type MessagePending = {
   gasFeeCap: string
   gasLimit: string
   gasPremium: string
-  height: number
+  height: string
   method: string
   nonce: string
   params: string | string[]
@@ -208,7 +208,7 @@ export class Message {
       gasLimit: this.gasLimit.toString(),
       gasPremium: this.gasPremium.toString(),
       params: this.params || '',
-      height: 0,
+      height: '',
       // this could become problematic with big numbers...
       value: this.value.toNumber(),
       nonce: this.nonce.toString()
