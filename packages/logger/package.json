@@ -17,7 +17,8 @@
     "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
     "license": "(Apache-2.0 OR MIT)",
     "dependencies": {
-        "@sentry/browser": "^6.17.2"
+        "@sentry/browser": "^6.17.2",
+        "@sentry/tracing": "^6.17.3"
     },
     "devDependencies": {
         "babel-eslint": "10.1.0",

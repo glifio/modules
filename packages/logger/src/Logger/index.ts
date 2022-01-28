@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/browser'
+import { Integrations as TracingIntegrations } from "@sentry/tracing";
 
 export enum LogLevel {
   DEBUG = 0,
@@ -14,6 +15,7 @@ export interface LoggerOptions {
   sentryLevel?: LogLevel
   sentryDsn: string
   sentryEnv: string
+  sentryTraces?: number
   packageName: string
   packageVersion: string
 }
@@ -34,7 +36,8 @@ export class Logger {
       dsn: options.sentryDsn,
       release: `${options.packageName}@${options.packageVersion}`,
       environment: options.sentryEnv,
-      tracesSampleRate: 1.0
+      integrations: [new TracingIntegrations.BrowserTracing()],
+      tracesSampleRate: options.sentryTraces ?? 0
     })
   }
 
