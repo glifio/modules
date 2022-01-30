@@ -30,9 +30,9 @@ export type MessagePending = {
   height: string
   method: string
   nonce: string
-  params: string | string[]
+  params: string | string[] | undefined
   to: Address
-  value: number
+  value: string
   version?: number
 }
 
@@ -209,8 +209,7 @@ export class Message {
       gasPremium: this.gasPremium.toString(),
       params: this.params || '',
       height: '',
-      // this could become problematic with big numbers...
-      value: this.value.toNumber(),
+      value: this.value.toString(),
       nonce: this.nonce.toString()
     }
   }
