@@ -33,7 +33,7 @@ export type MessagePending = {
   params: string | string[] | undefined
   to: Address
   value: string
-  version?: number
+  version?: string
 }
 
 type SerializableMessage = ZondaxMessage
