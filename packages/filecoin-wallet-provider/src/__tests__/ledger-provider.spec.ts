@@ -237,8 +237,9 @@ describe('ledger wallet subprovider', () => {
       try {
         await subProvider.getVersion()
       } catch (err) {
-        expect(err instanceof errors.WalletProviderError).toBe(true)
-        expect(err.message).toBe('unknown error message')
+        expect(err instanceof errors.WalletProviderError && err.message).toBe(
+          'unknown error message',
+        )
       }
       // let getvs call finish
       await sleep(3100)
