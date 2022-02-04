@@ -2,15 +2,23 @@
   "name": "@glif/styles",
   "version": "2.0.0-alpha.16",
   "description": "Base style sheet for GLIF apps",
-  "main": "src/styles.css",
-  "style": "src/styles.css",
+  "main": "dist/index.css",
+  "style": "dist/index.css",
   "files": [
-    "src/styles.css"
+    "dist/index.css"
   ],
+  "scripts": {
+    "build": "node ./utils/build.js"
+  },
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "repository": {
     "type": "git",
     "url": "https://github.com/glifio/modules/tree/primary/packages/styles"
+  },
+  "dependencies": {
+    "normalize.css": "^8.0.1",
+    "postcss": "^8.4.6",
+    "postcss-url": "^10.1.3"
   }
 }
