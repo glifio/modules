@@ -2,7 +2,6 @@
 
 import { program } from 'commander'
 import { getFilesFromPath, Web3Storage } from 'web3.storage'
-import axios from 'axios'
 
 program
   .command('ipfs <directory> <token>')
@@ -18,40 +17,5 @@ program
     const cid = await client.put(files)
     console.log(cid)
   })
-
-program
-  .command('cloudflare <apiAddr> <websiteName> <authEmail> <authKey>')
-  .description('Update cloudflare proxy')
-  .action(
-    async (
-      apiAddr: string,
-      websiteName: string,
-      authEmail: string,
-      authKey: string,
-    ) => {
-      try {
-        await axios.put(
-          apiAddr,
-          {
-            type: 'A',
-            name: websiteName,
-            content: '127.0.0.1',
-            ttl: '3600',
-            proxied: false,
-          },
-          {
-            headers: {
-              'X-Auth-Email': authEmail,
-              'X-Auth-Key': authKey,
-            },
-          },
-        )
-
-        console.log('success')
-      } catch (err) {
-        console.error(err instanceof Error ? err.message : JSON.stringify(err))
-      }
-    },
-  )
 
 program.parse()

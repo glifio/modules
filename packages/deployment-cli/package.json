@@ -21,7 +21,6 @@
   "dependencies": {
     "@babel/runtime": "^7.17.0",
     "@glif/logger": "^2.0.0-alpha.16",
-    "axios": "^0.25.0",
     "chalk": "^5.0.0",
     "commander": "^9.0.0",
     "web3.storage": "^3.5.4"
