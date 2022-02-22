@@ -18,7 +18,7 @@
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
-    "@types/jest": "^26.0.15",
+    "@types/jest": "^27.4.0",
     "cross-env": "^7.0.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "jest": "^26.0.0",
