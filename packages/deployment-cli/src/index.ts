@@ -2,6 +2,7 @@
 
 import { program } from 'commander'
 import { getFilesFromPath, Web3Storage } from 'web3.storage'
+import { setOutput } from '@actions/core'
 
 program
   .command('ipfs <directory> <token>')
@@ -16,6 +17,7 @@ program
     // @ts-expect-error
     const cid = await client.put(files)
     console.log(cid)
+    setOutput('cid', cid)
   })
 
 program.parse()
