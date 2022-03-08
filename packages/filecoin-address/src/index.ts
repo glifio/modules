@@ -203,6 +203,8 @@ export function checkAddressString(address: string) {
   switch (protocol) {
     case Protocol.ID: {
       if (address.length > 22) throw Error('Invalid ID address length.')
+      else if (isNaN(Number(address.slice(2))))
+        throw Error('Invalid ID address')
       break
     }
     case Protocol.SECP256K1: {

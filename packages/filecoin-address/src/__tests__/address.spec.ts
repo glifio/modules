@@ -243,6 +243,10 @@ describe('address', () => {
       ).toBe(false)
     })
 
+    test('it should invalidate ID address with letters', async () => {
+      expect(validateAddressString('t078fdsafd')).toBe(false)
+    })
+
     test('it should validate good ID address', async () => {
       expect(validateAddressString('t099')).toBe(true)
     })
