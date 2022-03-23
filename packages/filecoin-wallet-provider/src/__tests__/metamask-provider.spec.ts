@@ -165,7 +165,7 @@ describe('metamask subprovider', () => {
       }
     })
 
-    test('it calls the signMessageRaw when the message is not method 0 (send)', async () => {
+    test('it calls the signMessage when the message is not method 0 (send)', async () => {
       const [from, to] = await subProvider.getAccounts(0, 2, CoinType.TEST)
       const message = new Message({
         from,
@@ -187,11 +187,10 @@ describe('metamask subprovider', () => {
       expect(sig.Signature.Type).toBe(1)
       expect(typeof sig.Signature.Data).toBe('string')
       expect(sig.Signature.Data).toBeTruthy()
-      expect(signMessageSpy).not.toHaveBeenCalled()
-      expect(signMessageRawSpy).toHaveBeenCalled()
+      expect(signMessageSpy).toHaveBeenCalled()
     })
 
-    test('it calls the signMessageRaw when the message is method 0 and there are params', async () => {
+    test('it calls the signMessage when the message is method 0 and there are params', async () => {
       const [from, to] = await subProvider.getAccounts(0, 2, CoinType.TEST)
       const message = new Message({
         from,
@@ -214,8 +213,7 @@ describe('metamask subprovider', () => {
       expect(sig.Signature.Type).toBe(1)
       expect(typeof sig.Signature.Data).toBe('string')
       expect(sig.Signature.Data).toBeTruthy()
-      expect(signMessageSpy).not.toHaveBeenCalled()
-      expect(signMessageRawSpy).toHaveBeenCalled()
+      expect(signMessageSpy).toHaveBeenCalled()
     })
 
     test('it throws a transaction reject error when signMessageRaw returns no signature ', async () => {
