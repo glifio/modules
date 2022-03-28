@@ -4,6 +4,7 @@ import {
   LotusMessage,
   Message,
   SignedLotusMessage,
+  ZondaxMessage,
 } from '@glif/filecoin-message'
 import { mapSeries } from 'bluebird'
 import { WalletType } from '../../types'
@@ -90,7 +91,7 @@ export class MetaMaskProvider implements WalletSubProvider {
       })
     }
 
-    let msg
+    let msg: Message
     try {
       msg = Message.fromLotusType(message)
     } catch (err) {
@@ -103,7 +104,9 @@ export class MetaMaskProvider implements WalletSubProvider {
       )
     }
 
-    const signReq = await this.snap.signMessage(msg.toZondaxType())
+    const signReq = await this.snap.signMessage(
+      msg.toZondaxType() as ZondaxMessage & { params: string },
+    )
 
     if (!signReq)
       throw new errors.MetaMaskError({ message: 'Error signing transaction' })
