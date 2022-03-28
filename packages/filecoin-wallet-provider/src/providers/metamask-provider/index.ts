@@ -4,30 +4,13 @@ import {
   LotusMessage,
   Message,
   SignedLotusMessage,
+  ZondaxMessage,
 } from '@glif/filecoin-message'
 import { mapSeries } from 'bluebird'
-import signingTools, { SignedMessage } from '@zondax/filecoin-signing-tools/js'
 import { WalletType } from '../../types'
 import { errors } from '../../errors'
 import { WalletSubProvider } from '../../wallet-sub-provider'
 import { coinTypeCode, createPath, validIndexes } from '../../utils'
-
-const handleSignature = <T>(signMessageResponse?: {
-  sig: T
-  confirmed: boolean
-  error: Error
-}): T => {
-  if (!signMessageResponse)
-    throw new errors.MetaMaskError({ message: 'Error signing transaction' })
-  if (!signMessageResponse.confirmed)
-    throw new errors.TransactionRejectedError()
-  if (signMessageResponse.error)
-    throw new errors.MetaMaskError({
-      message: signMessageResponse.error.message,
-    })
-
-  return signMessageResponse.sig
-}
 
 export class MetaMaskProvider implements WalletSubProvider {
   public type: WalletType = 'METAMASK'
@@ -108,7 +91,7 @@ export class MetaMaskProvider implements WalletSubProvider {
       })
     }
 
-    let msg
+    let msg: Message
     try {
       msg = Message.fromLotusType(message)
     } catch (err) {
@@ -121,46 +104,23 @@ export class MetaMaskProvider implements WalletSubProvider {
       )
     }
 
-    let hasParams = false
-    if (message.Params) {
-      if (Array.isArray(message.Params)) hasParams = message.Params.length > 0
-      else hasParams = true
-    }
-
-    // use transactionSign instead of transactionSignRaw to show in the MetaMask UI
-    if (message.Method === 0 && !hasParams) {
-      const signReq = await this.snap.signMessage(msg.toZondaxType())
-      const { signature } = handleSignature<SignedMessage>({
-        confirmed: signReq.confirmed,
-        error: signReq.error,
-        sig: signReq.signedMessage,
-      })
-
-      return {
-        Message: message,
-        Signature: {
-          Data: signature.data,
-          Type: signature.type,
-        },
-      }
-    }
-
-    const serializedMessage = signingTools.transactionSerialize(
-      msg.toZondaxType(),
+    const signReq = await this.snap.signMessage(
+      msg.toZondaxType() as ZondaxMessage & { params: string },
     )
-    const signRawReq = await this.snap.signMessageRaw(serializedMessage)
 
-    const base64Sig = handleSignature<string>({
-      confirmed: signRawReq.confirmed,
-      error: signRawReq.error,
-      sig: signRawReq.signature,
-    })
+    if (!signReq)
+      throw new errors.MetaMaskError({ message: 'Error signing transaction' })
+    if (!signReq.confirmed) throw new errors.TransactionRejectedError()
+    if (signReq.error)
+      throw new errors.MetaMaskError({
+        message: signReq.error.message,
+      })
 
     return {
       Message: message,
       Signature: {
-        Data: base64Sig,
-        Type: 1,
+        Data: signReq.signedMessage?.signature?.data,
+        Type: signReq.signedMessage?.signature?.type,
       },
     }
   }
