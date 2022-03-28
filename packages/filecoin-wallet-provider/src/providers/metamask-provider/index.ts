@@ -10,7 +10,12 @@ import { mapSeries } from 'bluebird'
 import { WalletType } from '../../types'
 import { errors } from '../../errors'
 import { WalletSubProvider } from '../../wallet-sub-provider'
-import { coinTypeCode, createPath, validIndexes } from '../../utils'
+import {
+  coinTypeCode,
+  createPath,
+  validIndexes,
+  extractCoinTypeFromPath,
+} from '../../utils'
 
 export class MetaMaskProvider implements WalletSubProvider {
   public type: WalletType = 'METAMASK'
@@ -44,7 +49,7 @@ export class MetaMaskProvider implements WalletSubProvider {
       }
       const addresses = await mapSeries(paths, async (path: string) => {
         try {
-          await this.snap.configure({ derivationPath: path })
+          await this.snap.configure({ derivationPath: path, network: coinType })
           const account = await this.snap.getAddress()
           this.accountToPath[account] = path
           return account
@@ -84,7 +89,10 @@ export class MetaMaskProvider implements WalletSubProvider {
     }
 
     try {
-      await this.snap.configure({ derivationPath: path })
+      await this.snap.configure({
+        derivationPath: path,
+        network: extractCoinTypeFromPath(path),
+      })
     } catch (err) {
       throw new errors.MetaMaskError({
         message: err instanceof Error ? err.message : 'Error configuring snap',

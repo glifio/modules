@@ -1,4 +1,5 @@
-import { createPath } from '../utils'
+import { CoinType } from '@glif/filecoin-address'
+import { createPath, extractCoinTypeFromPath } from '../utils'
 
 describe('utils', () => {
   describe('createPath', () => {
@@ -21,6 +22,13 @@ describe('utils', () => {
       // @ts-expect-error
       expect(() => createPath(0, 1)).toThrow()
       expect(() => createPath(461, 2)).not.toThrow()
+    })
+  })
+
+  describe('extractCoinTypeFromPath', () => {
+    test('it extracts testnet and mainnet paths', () => {
+      expect(extractCoinTypeFromPath(createPath(1, 0))).toBe(CoinType.TEST)
+      expect(extractCoinTypeFromPath(createPath(461, 0))).toBe(CoinType.MAIN)
     })
   })
 })
