@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-wallet-provider",
-  "version": "2.0.0-beta.7",
+  "version": "2.0.0-beta.8",
   "description": "a javascript package to send filecoin to addresses",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -25,7 +25,7 @@
     "@glif/filecoin-address": "^2.0.0-beta.3",
     "@glif/filecoin-message": "^2.0.0-beta.7",
     "@glif/filecoin-number": "^2.0.0-beta.0",
-    "@glif/filecoin-rpc-client": "^2.0.0-beta.0",
+    "@glif/filecoin-rpc-client": "^2.0.0-beta.8",
     "@ledgerhq/hw-transport": "^6.11.2",
     "@ledgerhq/hw-transport-webhid": "^6.11.2",
     "@zondax/filecoin-signing-tools": "^0.18.6",
