@@ -14,7 +14,10 @@ export function configureHeaders(
   headers: Headers = {},
   token?: string,
 ): Record<string, string> {
-  const reqHeaders: Headers = Object.assign({}, headers, { Accept: '*/*' })
+  const reqHeaders: Headers = Object.assign({}, headers, {
+    Accept: '*/*',
+    'Content-Type': 'application/json',
+  })
   if (token) {
     reqHeaders.Authorization = `Bearer ${token}`
   }
