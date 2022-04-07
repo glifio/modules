@@ -79,6 +79,7 @@ describe('metamask subprovider', () => {
       expect(configureSpy).toHaveBeenCalledTimes(1)
       expect(configureSpy).toHaveBeenCalledWith({
         derivationPath: createPath(coinTypeCode(CoinType.TEST), 0),
+        network: CoinType.TEST,
       })
 
       jest.clearAllMocks()
@@ -87,6 +88,7 @@ describe('metamask subprovider', () => {
       expect(configureSpy).toHaveBeenCalledTimes(1)
       expect(configureSpy).toHaveBeenCalledWith({
         derivationPath: createPath(coinTypeCode(CoinType.MAIN), 0),
+        network: CoinType.MAIN,
       })
     })
 

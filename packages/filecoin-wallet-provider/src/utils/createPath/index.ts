@@ -13,6 +13,16 @@ export const createPath = (coinTypeCode: CoinTypeCode, i: number) => {
   return `m/44'/${coinTypeCode}'/0'/0/${i}`
 }
 
+export const extractCoinTypeFromPath = (path: string): CoinType => {
+  const [, , coinType, , ,] = path.split('/')
+  const bip44Code = coinType.replace("'", '')
+
+  if (Number(bip44Code) === 1) return CoinType.TEST
+  if (Number(bip44Code) === 461) return CoinType.MAIN
+
+  throw new Error('Invalid path passed')
+}
+
 export const coinTypeCode = (coinType: CoinType): CoinTypeCode => {
   if (coinType === 't') return 1
   if (coinType === 'f') return 461
