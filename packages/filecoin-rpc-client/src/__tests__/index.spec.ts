@@ -1,5 +1,9 @@
 import nock from 'nock'
-import LotusRpcEngine, { removeEmptyHeaders, throwIfErrors } from '../index'
+import LotusRpcEngine, {
+  configureHeaders,
+  removeEmptyHeaders,
+  throwIfErrors,
+} from '../index'
 
 const successfulResponse = {
   jsonrpc: '2.0',
@@ -30,6 +34,15 @@ describe('removeEmptyHeaders', () => {
     expect(removeEmptyHeaders(headers).Authorization).toBeUndefined()
     expect(removeEmptyHeaders(headers)['Content-Type']).toBeTruthy()
     expect(removeEmptyHeaders(headers).Test).toBeTruthy()
+  })
+})
+
+describe('configureHeaders', () => {
+  test('it should return Accept */* and application/json Content-Type', () => {
+    const headers = {}
+
+    expect(configureHeaders(headers).Accept).toBe('*/*')
+    expect(configureHeaders(headers)['Content-Type']).toBe('application/json')
   })
 })
 
