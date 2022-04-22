@@ -306,6 +306,7 @@ export class Filecoin {
     
     const newPremiumBn = new BigNumber(message.GasPremium)
       .times(1.25)
+      .plus(Number.EPSILON)
       .integerValue(BigNumber.ROUND_CEIL)
 
     const newFeeCap = newPremiumBn.isGreaterThan(message.GasFeeCap)
