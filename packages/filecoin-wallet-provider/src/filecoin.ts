@@ -312,18 +312,18 @@ export class Filecoin {
   getReplaceMessageMinGasParams = async (
     message: LotusMessage,
   ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
-    let newFeeCap = message.GasFeeCap
-    const newPremium = new BigNumber(message.GasPremium)
-      .multipliedBy(125)
-      .dividedBy(100)
+    
+    const newPremiumBn = new BigNumber(message.GasPremium)
+      .times(1.25)
+      .integerValue(BigNumber.ROUND_CEIL)
 
-    if (newPremium.isGreaterThan(message.GasFeeCap)) {
-      newFeeCap = newPremium.toFixed(0, BigNumber.ROUND_CEIL)
-    }
+    const newFeeCap = newPremiumBn.isGreaterThan(message.GasFeeCap)
+      ? newPremiumBn.toString()
+      : message.GasFeeCap
 
     return {
       gasFeeCap: newFeeCap,
-      gasPremium: newPremium.toFixed(0, BigNumber.ROUND_CEIL),
+      gasPremium: newPremiumBn.toString(),
       gasLimit: message.GasLimit,
     }
   }
