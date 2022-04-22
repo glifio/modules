@@ -16,7 +16,6 @@ import {
 import { BigNumber } from 'bignumber.js'
 import { WalletSubProvider } from './wallet-sub-provider'
 import { InvocResult, CID } from './types'
-import { num1GreaterThanNum2 } from './utils'
 
 export class Filecoin {
   public wallet: WalletSubProvider
@@ -265,43 +264,35 @@ export class Filecoin {
     message: LotusMessage,
     maxFee: string = new FilecoinNumber('0.1', 'fil').toAttoFil(),
   ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
+
     const {
       gasFeeCap: minGasFeeCap,
       gasLimit: minGasLimit,
       gasPremium: minGasPremium,
     } = await this.getReplaceMessageMinGasParams(message)
 
-    const copiedMessage = { ...message }
-    copiedMessage.GasFeeCap = '0'
-    copiedMessage.GasPremium = '0'
-    copiedMessage.GasLimit = 0
+    const copiedMessage = {
+      ...message,
+      GasFeeCap: '0',
+      GasPremium: '0',
+      GasLimit: 0
+    }
+    
     const {
       GasFeeCap: recommendedGasFeeCap,
       GasLimit: recommendedGasLimit,
       GasPremium: recommendedGasPremium,
     } = (await this.gasEstimateMessageGas(copiedMessage, maxFee)).toLotusType()
 
-    // assume we take the recommended prices
-    let takeMin = false
+    const takeMin =
+      (new BigNumber(minGasFeeCap)).isGreaterThan(recommendedGasFeeCap) ||
+      (new BigNumber(minGasLimit)).isGreaterThan(recommendedGasLimit) ||
+      (new BigNumber(minGasPremium)).isGreaterThan(recommendedGasPremium)
 
-    // if any of the minimum amounts are greater than the recommended,
-    // take the minimum amounts
-    if (num1GreaterThanNum2(minGasFeeCap, recommendedGasFeeCap)) takeMin = true
-    if (num1GreaterThanNum2(minGasLimit, recommendedGasLimit)) takeMin = true
-    if (num1GreaterThanNum2(minGasPremium, recommendedGasPremium))
-      takeMin = true
-
-    if (takeMin) {
-      return {
-        gasFeeCap: minGasFeeCap,
-        gasLimit: minGasLimit,
-        gasPremium: minGasPremium,
-      }
-    }
     return {
-      gasFeeCap: recommendedGasFeeCap,
-      gasLimit: recommendedGasLimit,
-      gasPremium: recommendedGasPremium,
+      gasFeeCap: takeMin ? minGasFeeCap : recommendedGasFeeCap,
+      gasLimit: takeMin ? minGasLimit : recommendedGasLimit,
+      gasPremium: takeMin ? minGasPremium : recommendedGasPremium,
     }
   }
 
