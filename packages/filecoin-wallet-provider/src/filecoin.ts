@@ -303,7 +303,7 @@ export class Filecoin {
   getReplaceMessageMinGasParams = async (
     message: LotusMessage,
   ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
-    
+
     const newPremiumBn = new BigNumber(message.GasPremium)
       .times(1.25)
       .plus(Number.EPSILON)
