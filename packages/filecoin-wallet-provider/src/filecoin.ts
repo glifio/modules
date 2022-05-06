@@ -300,6 +300,11 @@ export class Filecoin {
     message: LotusMessage,
   ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
 
+    // Sometimes the replaced message still got rejected because Lotus expected
+    // a gas premium of 1 higher than what we calculated as the new minimum. In
+    // order to resolve this, we add Epsilon (the smallest possible number) before
+    // rounding up. This causes whole numbers that result from the multiplication
+    // to be rounded up to the next whole number. (e.g. 100 * 1.25 = 125 -> 126)
     const newPremiumBn = new BigNumber(message.GasPremium)
       .times(1.25)
       .plus(Number.EPSILON)
