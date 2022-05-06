@@ -23,7 +23,7 @@
     "axios": "^0.24.0"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.10",
+    "@types/jest": "^27.5.0",
     "babel-eslint": "10.1.0",
     "prettier": "2.6.1",
     "ts-jest": "^26.2.0",
