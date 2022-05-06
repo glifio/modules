@@ -71,27 +71,63 @@ export interface MessageObj {
 }
 
 export class Message {
-  private to: string
-  private from: string
-  private nonce: number
-  private method: number
-  private value: BigNumber
-  private gasPremium: BigNumber
-  private gasFeeCap: BigNumber
-  private gasLimit: number
-  private params: string | string[] | undefined
+  private _to: string
+  private _from: string
+  private _nonce: number
+  private _method: number
+  private _value: BigNumber
+  private _gasPremium: BigNumber
+  private _gasFeeCap: BigNumber
+  private _gasLimit: number
+  private _params: string | string[] | undefined
+
+  public get to(): string {
+    return this._to
+  }
+
+  public get from(): string {
+    return this._from
+  }
+
+  public get nonce(): number {
+    return this._nonce
+  }
+
+  public get method(): number {
+    return this._method
+  }
+
+  public get value(): BigNumber {
+    return this._value
+  }
+
+  public get gasPremium(): BigNumber {
+    return this._gasPremium
+  }
+
+  public get gasFeeCap(): BigNumber {
+    return this._gasFeeCap
+  }
+
+  public get gasLimit(): number {
+    return this._gasLimit
+  }
+
+  public get params(): string | string[] | undefined {
+    return this._params
+  }
 
   public constructor(msg: MessageObj) {
     typeCheck(msg)
-    this.to = msg.to
-    this.from = msg.from
-    this.nonce = msg.nonce
-    this.value = new BigNumber(msg.value)
-    this.gasPremium = new BigNumber(msg.gasPremium || '0')
-    this.gasFeeCap = new BigNumber(msg.gasFeeCap || '0')
-    this.gasLimit = msg.gasLimit || 0
-    this.method = msg.method
-    this.params = msg.params
+    this._to = msg.to
+    this._from = msg.from
+    this._nonce = msg.nonce
+    this._value = new BigNumber(msg.value)
+    this._gasPremium = new BigNumber(msg.gasPremium || '0')
+    this._gasFeeCap = new BigNumber(msg.gasFeeCap || '0')
+    this._gasLimit = msg.gasLimit || 0
+    this._method = msg.method
+    this._params = msg.params
   }
 
   static fromZondaxType = ({
