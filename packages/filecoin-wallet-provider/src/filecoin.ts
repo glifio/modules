@@ -267,8 +267,8 @@ export class Filecoin {
 
     const {
       gasFeeCap: minGasFeeCap,
-      gasLimit: minGasLimit,
       gasPremium: minGasPremium,
+      gasLimit: minGasLimit
     } = await this.getReplaceMessageMinGasParams(message)
 
     const copiedMessage = {
@@ -277,22 +277,18 @@ export class Filecoin {
       GasPremium: '0',
       GasLimit: 0
     }
-    
-    const {
-      GasFeeCap: recommendedGasFeeCap,
-      GasLimit: recommendedGasLimit,
-      GasPremium: recommendedGasPremium,
-    } = (await this.gasEstimateMessageGas(copiedMessage, maxFee)).toLotusType()
+
+    const recommendedMessage = await this.gasEstimateMessageGas(copiedMessage, maxFee)
 
     const takeMin =
-      (new BigNumber(minGasFeeCap)).isGreaterThan(recommendedGasFeeCap) ||
-      (new BigNumber(minGasLimit)).isGreaterThan(recommendedGasLimit) ||
-      (new BigNumber(minGasPremium)).isGreaterThan(recommendedGasPremium)
+      recommendedMessage.gasFeeCap.isLessThan(minGasFeeCap) ||
+      recommendedMessage.gasPremium.isLessThan(minGasPremium) ||
+      recommendedMessage.gasLimit < minGasLimit
 
     return {
-      gasFeeCap: takeMin ? minGasFeeCap : recommendedGasFeeCap,
-      gasLimit: takeMin ? minGasLimit : recommendedGasLimit,
-      gasPremium: takeMin ? minGasPremium : recommendedGasPremium,
+      gasFeeCap: takeMin ? minGasFeeCap : recommendedMessage.gasFeeCap.toString(),
+      gasPremium: takeMin ? minGasPremium : recommendedMessage.gasPremium.toString(),
+      gasLimit: takeMin ? minGasLimit : recommendedMessage.gasLimit
     }
   }
 
