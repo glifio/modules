@@ -62,10 +62,10 @@ export interface MessageObj {
   to: string
   from: string
   nonce: number
-  value: any
   method: number
-  gasPremium?: string | number
-  gasFeeCap?: string | number
+  value: string | number | BigNumber
+  gasPremium?: string | number | BigNumber
+  gasFeeCap?: string | number | BigNumber
   gasLimit?: number
   params?: string | string[]
 }
@@ -122,9 +122,9 @@ export class Message {
     this._to = msg.to
     this._from = msg.from
     this._nonce = msg.nonce
-    this._value = new BigNumber(msg.value)
-    this._gasPremium = new BigNumber(msg.gasPremium || '0')
-    this._gasFeeCap = new BigNumber(msg.gasFeeCap || '0')
+    this._value = new BigNumber(msg.value || 0)
+    this._gasPremium = new BigNumber(msg.gasPremium || 0)
+    this._gasFeeCap = new BigNumber(msg.gasFeeCap || 0)
     this._gasLimit = msg.gasLimit || 0
     this._method = msg.method
     this._params = msg.params
