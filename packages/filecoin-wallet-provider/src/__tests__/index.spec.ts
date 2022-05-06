@@ -885,19 +885,22 @@ describe('provider', () => {
           gasLimit: LIMIT,
           gasPremium: PREMIUM,
         })
+
         const {
           gasPremium,
           gasFeeCap,
           gasLimit,
         } = await filecoin.getReplaceMessageGasParams(message.toLotusType())
+
+        const expectedMinGasPremium = new BigNumber(PREMIUM)
+          .times(1.25)
+          .plus(Number.EPSILON)
+          .integerValue(BigNumber.ROUND_CEIL)
+
         // here the min gasPremium is bumped by 1.25x, so we just make sure the recommended amount is bigger than that
-        expect(
-          new BigNumber(gasPremium).isGreaterThan(
-            new BigNumber(PREMIUM).times(1.25).toFixed(0, BigNumber.ROUND_CEIL),
-          ),
-        ).toBe(true)
-        expect(new BigNumber(gasLimit).isGreaterThan(LIMIT)).toBe(true)
-        expect(new BigNumber(gasFeeCap).isGreaterThan(FEE_CAP)).toBe(true)
+        expect(new BigNumber(gasPremium).isGreaterThanOrEqualTo(expectedMinGasPremium)).toBe(true)
+        expect(new BigNumber(gasLimit).isGreaterThanOrEqualTo(LIMIT)).toBe(true)
+        expect(new BigNumber(gasFeeCap).isGreaterThanOrEqualTo(expectedMinGasPremium)).toBe(true)
       })
 
       test('it returns a message with the min increase in gas parameters if the min increase is larger than the recommended', async () => {
@@ -912,7 +915,6 @@ describe('provider', () => {
         const messageWGas = await filecoin.gasEstimateMessageGas(
           message.toLotusType(),
         )
-        const { GasFeeCap, GasPremium, GasLimit } = messageWGas.toLotusType()
 
         const messageToReplace = new Message({
           to: KNOWN_TYPE_1_ADDRESS[Network.TEST],
@@ -920,30 +922,29 @@ describe('provider', () => {
           value: new FilecoinNumber('1', 'attofil').toAttoFil(),
           method: 0,
           nonce: 0,
-          gasLimit: GasLimit,
-          gasPremium: GasPremium,
-          gasFeeCap: GasFeeCap,
+          gasLimit: messageWGas.gasLimit,
+          gasPremium: messageWGas.gasPremium.toString(),
+          gasFeeCap: messageWGas.gasFeeCap.toString(),
         })
+
         const {
           gasPremium,
-          gasFeeCap,
-          gasLimit,
+          gasFeeCap
         } = await filecoin.getReplaceMessageGasParams(
           messageToReplace.toLotusType(),
         )
-        expect(
-          new BigNumber(gasPremium).isEqualTo(
-            new BigNumber(GasPremium)
-              .times(1.25)
-              .toFixed(0, BigNumber.ROUND_CEIL),
-          ),
-        ).toBe(true)
-        expect(new BigNumber(gasFeeCap).isGreaterThanOrEqualTo(GasFeeCap)).toBe(
-          true,
-        )
-        expect(new BigNumber(gasLimit).isGreaterThanOrEqualTo(GasLimit)).toBe(
-          true,
-        )
+
+        const expectedGasPremium = messageWGas.gasPremium
+          .times(1.25)
+          .plus(Number.EPSILON)
+          .integerValue(BigNumber.ROUND_CEIL)
+
+        const expectedGasFeeCap = expectedGasPremium.isGreaterThan(messageWGas.gasFeeCap)
+          ? expectedGasPremium
+          : messageWGas.gasFeeCap
+
+        expect(gasPremium).toBe(expectedGasPremium.toString())
+        expect(gasFeeCap).toBe(expectedGasFeeCap.toString())
       })
     })
   })
