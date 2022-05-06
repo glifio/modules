@@ -16,7 +16,6 @@ import {
 import { BigNumber } from 'bignumber.js'
 import { WalletSubProvider } from './wallet-sub-provider'
 import { InvocResult, CID } from './types'
-import { num1GreaterThanNum2 } from './utils'
 
 export class Filecoin {
   public wallet: WalletSubProvider
@@ -265,43 +264,31 @@ export class Filecoin {
     message: LotusMessage,
     maxFee: string = new FilecoinNumber('0.1', 'fil').toAttoFil(),
   ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
+
     const {
       gasFeeCap: minGasFeeCap,
-      gasLimit: minGasLimit,
       gasPremium: minGasPremium,
+      gasLimit: minGasLimit
     } = await this.getReplaceMessageMinGasParams(message)
 
-    const copiedMessage = { ...message }
-    copiedMessage.GasFeeCap = '0'
-    copiedMessage.GasPremium = '0'
-    copiedMessage.GasLimit = 0
-    const {
-      GasFeeCap: recommendedGasFeeCap,
-      GasLimit: recommendedGasLimit,
-      GasPremium: recommendedGasPremium,
-    } = (await this.gasEstimateMessageGas(copiedMessage, maxFee)).toLotusType()
-
-    // assume we take the recommended prices
-    let takeMin = false
-
-    // if any of the minimum amounts are greater than the recommended,
-    // take the minimum amounts
-    if (num1GreaterThanNum2(minGasFeeCap, recommendedGasFeeCap)) takeMin = true
-    if (num1GreaterThanNum2(minGasLimit, recommendedGasLimit)) takeMin = true
-    if (num1GreaterThanNum2(minGasPremium, recommendedGasPremium))
-      takeMin = true
-
-    if (takeMin) {
-      return {
-        gasFeeCap: minGasFeeCap,
-        gasLimit: minGasLimit,
-        gasPremium: minGasPremium,
-      }
+    const copiedMessage = {
+      ...message,
+      GasFeeCap: '0',
+      GasPremium: '0',
+      GasLimit: 0
     }
+
+    const recommendedMessage = await this.gasEstimateMessageGas(copiedMessage, maxFee)
+
+    const takeMin =
+      recommendedMessage.gasFeeCap.isLessThan(minGasFeeCap) ||
+      recommendedMessage.gasPremium.isLessThan(minGasPremium) ||
+      recommendedMessage.gasLimit < minGasLimit
+
     return {
-      gasFeeCap: recommendedGasFeeCap,
-      gasLimit: recommendedGasLimit,
-      gasPremium: recommendedGasPremium,
+      gasFeeCap: takeMin ? minGasFeeCap : recommendedMessage.gasFeeCap.toString(),
+      gasPremium: takeMin ? minGasPremium : recommendedMessage.gasPremium.toString(),
+      gasLimit: takeMin ? minGasLimit : recommendedMessage.gasLimit
     }
   }
 
@@ -312,18 +299,24 @@ export class Filecoin {
   getReplaceMessageMinGasParams = async (
     message: LotusMessage,
   ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
-    let newFeeCap = message.GasFeeCap
-    const newPremium = new BigNumber(message.GasPremium)
-      .multipliedBy(125)
-      .dividedBy(100)
 
-    if (newPremium.isGreaterThan(message.GasFeeCap)) {
-      newFeeCap = newPremium.toFixed(0, BigNumber.ROUND_CEIL)
-    }
+    // Sometimes the replaced message still got rejected because Lotus expected
+    // a gas premium of 1 higher than what we calculated as the new minimum. In
+    // order to resolve this, we add Epsilon (the smallest possible number) before
+    // rounding up. This causes whole numbers that result from the multiplication
+    // to be rounded up to the next whole number. (e.g. 100 * 1.25 = 125 -> 126)
+    const newPremiumBn = new BigNumber(message.GasPremium)
+      .times(1.25)
+      .plus(Number.EPSILON)
+      .integerValue(BigNumber.ROUND_CEIL)
+
+    const newFeeCap = newPremiumBn.isGreaterThan(message.GasFeeCap)
+      ? newPremiumBn.toString()
+      : message.GasFeeCap
 
     return {
       gasFeeCap: newFeeCap,
-      gasPremium: newPremium.toFixed(0, BigNumber.ROUND_CEIL),
+      gasPremium: newPremiumBn.toString(),
       gasLimit: message.GasLimit,
     }
   }

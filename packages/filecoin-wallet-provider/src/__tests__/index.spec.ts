@@ -774,13 +774,18 @@ describe('provider', () => {
           gasLimit,
         } = await filecoin.getReplaceMessageMinGasParams(message.toLotusType())
 
-        expect(
-          new BigNumber(gasPremium).isEqualTo(
-            new BigNumber(PREMIUM).times(1.25).toFixed(0, BigNumber.ROUND_CEIL),
-          ),
-        ).toBe(true)
+        const expectedGasPremium = new BigNumber(PREMIUM)
+          .times(1.25)
+          .plus(Number.EPSILON)
+          .integerValue(BigNumber.ROUND_CEIL)
+
+        const expectedGasFeeCap = expectedGasPremium.isGreaterThan(FEE_CAP)
+          ? expectedGasPremium
+          : new BigNumber(FEE_CAP)
+
+        expect(gasPremium).toBe(expectedGasPremium.toString())
+        expect(gasFeeCap).toBe(expectedGasFeeCap.toString())
         expect(gasLimit).toBe(LIMIT)
-        expect(gasFeeCap).toBe(FEE_CAP)
       })
 
       test('it returns a message with the gasFeeCap equal to the gasPremium when the premium * 1.25 is greater than the fee cap', async () => {
@@ -804,23 +809,24 @@ describe('provider', () => {
           gasLimit,
         } = await filecoin.getReplaceMessageMinGasParams(message.toLotusType())
 
-        expect(
-          new BigNumber(gasPremium).isEqualTo(
-            new BigNumber(PREMIUM).times(1.25).toFixed(0, BigNumber.ROUND_CEIL),
-          ),
-        ).toBe(true)
+        const expectedGasPremium = new BigNumber(PREMIUM)
+          .times(1.25)
+          .plus(Number.EPSILON)
+          .integerValue(BigNumber.ROUND_CEIL)
+
+        const expectedGasFeeCap = expectedGasPremium.isGreaterThan(FEE_CAP)
+          ? expectedGasPremium
+          : new BigNumber(FEE_CAP)
+
+        expect(gasPremium).toBe(expectedGasPremium.toString())
+        expect(gasFeeCap).toBe(expectedGasFeeCap.toString())
         expect(gasLimit).toBe(LIMIT)
-        expect(
-          new BigNumber(gasFeeCap).isEqualTo(
-            new BigNumber(PREMIUM).times(1.25).toFixed(0, BigNumber.ROUND_CEIL),
-          ),
-        ).toBe(true)
       })
 
-      test('it rounds up', async () => {
-        const FEE_CAP = '101417'
-        const LIMIT = 611585
-        const PREMIUM = '100363'
+      test('it rounds fractional numbers up to the next whole number', async () => {
+        const FEE_CAP = '1000'
+        const LIMIT = 1000
+        const PREMIUM = '97'
         const message = new Message({
           to: KNOWN_TYPE_1_ADDRESS[Network.TEST],
           from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
@@ -836,7 +842,31 @@ describe('provider', () => {
           message.toLotusType(),
         )
 
-        expect(gasPremium).toBe('125454')
+        // 97 * 1.25 = 121,25 -> 122
+        expect(gasPremium).toBe('122')
+      })
+
+      test('it rounds whole numbers up to the next whole number', async () => {
+        const FEE_CAP = '1000'
+        const LIMIT = 1000
+        const PREMIUM = '100'
+        const message = new Message({
+          to: KNOWN_TYPE_1_ADDRESS[Network.TEST],
+          from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
+          value: new FilecoinNumber('1', 'attofil').toAttoFil(),
+          method: 0,
+          nonce: 0,
+          gasFeeCap: FEE_CAP,
+          gasLimit: LIMIT,
+          gasPremium: PREMIUM,
+        })
+
+        const { gasPremium } = await filecoin.getReplaceMessageMinGasParams(
+          message.toLotusType(),
+        )
+
+        // 100 * 1.25 = 125 -> 126
+        expect(gasPremium).toBe('126')
       })
     })
 
@@ -855,19 +885,22 @@ describe('provider', () => {
           gasLimit: LIMIT,
           gasPremium: PREMIUM,
         })
+
         const {
           gasPremium,
           gasFeeCap,
           gasLimit,
         } = await filecoin.getReplaceMessageGasParams(message.toLotusType())
+
+        const expectedMinGasPremium = new BigNumber(PREMIUM)
+          .times(1.25)
+          .plus(Number.EPSILON)
+          .integerValue(BigNumber.ROUND_CEIL)
+
         // here the min gasPremium is bumped by 1.25x, so we just make sure the recommended amount is bigger than that
-        expect(
-          new BigNumber(gasPremium).isGreaterThan(
-            new BigNumber(PREMIUM).times(1.25).toFixed(0, BigNumber.ROUND_CEIL),
-          ),
-        ).toBe(true)
-        expect(new BigNumber(gasLimit).isGreaterThan(LIMIT)).toBe(true)
-        expect(new BigNumber(gasFeeCap).isGreaterThan(FEE_CAP)).toBe(true)
+        expect(new BigNumber(gasPremium).isGreaterThanOrEqualTo(expectedMinGasPremium)).toBe(true)
+        expect(new BigNumber(gasLimit).isGreaterThanOrEqualTo(LIMIT)).toBe(true)
+        expect(new BigNumber(gasFeeCap).isGreaterThanOrEqualTo(expectedMinGasPremium)).toBe(true)
       })
 
       test('it returns a message with the min increase in gas parameters if the min increase is larger than the recommended', async () => {
@@ -882,7 +915,6 @@ describe('provider', () => {
         const messageWGas = await filecoin.gasEstimateMessageGas(
           message.toLotusType(),
         )
-        const { GasFeeCap, GasPremium, GasLimit } = messageWGas.toLotusType()
 
         const messageToReplace = new Message({
           to: KNOWN_TYPE_1_ADDRESS[Network.TEST],
@@ -890,30 +922,29 @@ describe('provider', () => {
           value: new FilecoinNumber('1', 'attofil').toAttoFil(),
           method: 0,
           nonce: 0,
-          gasLimit: GasLimit,
-          gasPremium: GasPremium,
-          gasFeeCap: GasFeeCap,
+          gasLimit: messageWGas.gasLimit,
+          gasPremium: messageWGas.gasPremium.toString(),
+          gasFeeCap: messageWGas.gasFeeCap.toString(),
         })
+
         const {
           gasPremium,
-          gasFeeCap,
-          gasLimit,
+          gasFeeCap
         } = await filecoin.getReplaceMessageGasParams(
           messageToReplace.toLotusType(),
         )
-        expect(
-          new BigNumber(gasPremium).isEqualTo(
-            new BigNumber(GasPremium)
-              .times(1.25)
-              .toFixed(0, BigNumber.ROUND_CEIL),
-          ),
-        ).toBe(true)
-        expect(new BigNumber(gasFeeCap).isGreaterThanOrEqualTo(GasFeeCap)).toBe(
-          true,
-        )
-        expect(new BigNumber(gasLimit).isGreaterThanOrEqualTo(GasLimit)).toBe(
-          true,
-        )
+
+        const expectedGasPremium = messageWGas.gasPremium
+          .times(1.25)
+          .plus(Number.EPSILON)
+          .integerValue(BigNumber.ROUND_CEIL)
+
+        const expectedGasFeeCap = expectedGasPremium.isGreaterThan(messageWGas.gasFeeCap)
+          ? expectedGasPremium
+          : messageWGas.gasFeeCap
+
+        expect(gasPremium).toBe(expectedGasPremium.toString())
+        expect(gasFeeCap).toBe(expectedGasFeeCap.toString())
       })
     })
   })
