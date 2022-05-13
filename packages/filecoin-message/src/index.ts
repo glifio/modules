@@ -287,11 +287,14 @@ const checkBigNumberValue = (value: any, name: string): void => {
     case 'number':
       return checkPositiveNumber(value, name)
     case 'string':
-      return checkPositiveNumber(Number(value), name)
+      const bigNumber = new BigNumber(value)
+      if (bigNumber.toString() !== value)
+        throw new Error(`Value provided for ${name} is not a valid BigNumber string`)
+      return
     case 'object':
       if (value === null)
         throw new Error(`Value provided for ${name} is null`)
-      if (!('_isBigNumber' in value))
+      if (!BigNumber.isBigNumber(value))
         throw new Error(`Value provided for ${name} is an object, but not a BigNumber`)
       return
     default:
