@@ -122,7 +122,7 @@ export class Message {
     this._to = msg.to
     this._from = msg.from
     this._nonce = msg.nonce
-    this._value = new BigNumber(msg.value || 0)
+    this._value = new BigNumber(msg.value)
     this._gasPremium = new BigNumber(msg.gasPremium || 0)
     this._gasFeeCap = new BigNumber(msg.gasFeeCap || 0)
     this._gasLimit = msg.gasLimit || 0
@@ -252,30 +252,63 @@ export class Message {
 }
 
 const typeCheck = (msg: MessageObj): void => {
-  if (!msg.to) throw new Error('No to address provided')
-  if (!msg.from) throw new Error('No from address provided')
+  if (typeof msg === 'undefined')
+    throw new Error(`Message configuration object not provided`)
 
-  if (!validateAddressString(msg.to))
-    throw new Error('Invalid to address provided')
-  if (!validateAddressString(msg.from))
-    throw new Error('Invalid from address provided')
+  if (typeof msg !== 'object' || msg === null)
+    throw new Error(`Message configuration object not valid`)
 
-  if (!msg.nonce && msg.nonce !== 0) throw new Error('No nonce provided')
-  if (typeof msg.nonce !== 'number') throw new Error('Nonce is not a number')
-  if (!(msg.nonce <= Number.MAX_SAFE_INTEGER))
-    throw new Error('Nonce must be smaller than Number.MAX_SAFE_INTEGER')
+  checkAddressString(msg.to, 'To Address')
+  checkAddressString(msg.from, 'From Address')
+  checkPositiveNumber(msg.nonce, 'Nonce')
+  checkPositiveNumber(msg.nonce, 'Method')
+  checkBigNumberValue(msg.value, 'Value')
+  if (msg.gasPremium)
+    checkBigNumberValue(msg.gasPremium, 'Gas Premium')
+  if (msg.gasFeeCap)
+    checkBigNumberValue(msg.gasFeeCap, 'Gas Fee Cap')
+  if (msg.gasLimit)
+    checkPositiveNumber(msg.nonce, 'Gas Limit')
+}
 
-  if (!msg.value) throw new Error('No value provided')
+const checkAddressString = (value: any, name: string): void => {
+  if (typeof value === 'undefined')
+    throw new Error(`No value provided for ${name}`)
+  if (typeof value !== 'string')
+    throw new Error(`Value provided for ${name} is not a string`)
+  if (!validateAddressString(value))
+    throw new Error(`Value provided for ${name} is not a valid address`)
+}
 
-  if (msg.gasLimit && typeof msg.gasLimit !== 'number')
-    throw new Error('Gas limit is not a number')
-  if (msg.gasLimit && !(msg.gasLimit <= Number.MAX_SAFE_INTEGER))
-    throw new Error('Gas limit must be smaller than Number.MAX_SAFE_INTEGER')
+const checkBigNumberValue = (value: any, name: string): void => {
+  switch (typeof value) {
+    case 'undefined':
+      throw new Error(`No value provided for ${name}`)
+    case 'number':
+      return checkPositiveNumber(value, name)
+    case 'string':
+      return checkPositiveNumber(Number(value), name)
+    case 'object':
+      if (value === null)
+        throw new Error(`Value provided for ${name} is null`)
+      if (!('_isBigNumber' in test))
+        throw new Error(`Value provided for ${name} is an object, but not a BigNumber`)
+    default:
+      throw new Error(`Value provided for ${name} is not a number or string`)
+  }
+}
 
-  if (!msg.method && msg.method !== 0) throw new Error('No method provided')
-  if (typeof msg.method !== 'number') throw new Error('Method is not a number')
-  if (!(msg.method <= Number.MAX_SAFE_INTEGER))
-    throw new Error('Method must be smaller than Number.MAX_SAFE_INTEGER')
+const checkPositiveNumber = (value: any, name: string): void => {
+  if (typeof value === 'undefined')
+    throw new Error(`No value provided for ${name}`)
+  if (typeof value !== 'number')
+    throw new Error(`Value provided for ${name} is not a number`)
+  if (isNaN(value))
+    throw new Error(`Value provided for ${name} is NaN`)
+  if (value < 0)
+    throw new Error(`Value provided for ${name} cannot be lower than 0`)
+  if (value > Number.MAX_SAFE_INTEGER)
+    throw new Error(`Value provided for ${name} cannot be higher than ${Number.MAX_SAFE_INTEGER}`)
 }
 
 export default {
