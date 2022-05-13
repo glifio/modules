@@ -291,7 +291,7 @@ const checkBigNumberValue = (value: any, name: string): void => {
     case 'object':
       if (value === null)
         throw new Error(`Value provided for ${name} is null`)
-      if (!('_isBigNumber' in test))
+      if (!('_isBigNumber' in value))
         throw new Error(`Value provided for ${name} is an object, but not a BigNumber`)
       return
     default:
