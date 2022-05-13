@@ -261,14 +261,14 @@ const typeCheck = (msg: MessageObj): void => {
   checkAddressString(msg.to, 'To Address')
   checkAddressString(msg.from, 'From Address')
   checkPositiveNumber(msg.nonce, 'Nonce')
-  checkPositiveNumber(msg.nonce, 'Method')
+  checkPositiveNumber(msg.method, 'Method')
   checkBigNumberValue(msg.value, 'Value')
   if (msg.gasPremium)
     checkBigNumberValue(msg.gasPremium, 'Gas Premium')
   if (msg.gasFeeCap)
     checkBigNumberValue(msg.gasFeeCap, 'Gas Fee Cap')
   if (msg.gasLimit)
-    checkPositiveNumber(msg.nonce, 'Gas Limit')
+    checkPositiveNumber(msg.gasLimit, 'Gas Limit')
 }
 
 const checkAddressString = (value: any, name: string): void => {
@@ -293,6 +293,7 @@ const checkBigNumberValue = (value: any, name: string): void => {
         throw new Error(`Value provided for ${name} is null`)
       if (!('_isBigNumber' in test))
         throw new Error(`Value provided for ${name} is an object, but not a BigNumber`)
+      return
     default:
       throw new Error(`Value provided for ${name} is not a number or string`)
   }
