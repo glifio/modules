@@ -21,6 +21,15 @@ export class SECP256K1KeyProvider implements WalletSubProvider {
       })
     }
     this.#privateKey = privateKey
+    try {
+      this.mainAddress = signingTools.keyRecover(privateKey, false).address
+    } catch (err) {
+      throw new errors.InvalidParamsError({
+        message: `Invalid private key: ${
+          (err as Error)?.message || JSON.stringify(err)
+        }`,
+      })
+    }
     this.mainAddress = signingTools.keyRecover(privateKey, false).address
   }
 

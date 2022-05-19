@@ -6,11 +6,12 @@ const {
   LedgerNotFoundError,
   LedgerFilecoinAppNotOpenError,
   TransactionRejectedError,
+  WalletProviderError,
 } = errors
 
 export const CommonLedgerError = (error: Error): Error => {
-  // tslint:disable-next-line no-console
-  console.log('error', error)
+  if (error instanceof WalletProviderError) return error
+
   if (
     error.message.toLowerCase().includes('unable to claim interface.') ||
     error.message.toLowerCase().includes('failed to open the device')
@@ -31,9 +32,7 @@ export const CommonLedgerError = (error: Error): Error => {
     error.message.toLowerCase().includes('app does not seem to be open')
   ) {
     return new LedgerFilecoinAppNotOpenError()
-  } else if (
-    error.message.toLocaleLowerCase().includes('transaction rejected')
-  ) {
+  } else if (error.message.toLowerCase().includes('transaction rejected')) {
     return new TransactionRejectedError()
   } else {
     return new LedgerReplugError(error)
