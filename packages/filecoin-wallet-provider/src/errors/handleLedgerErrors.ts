@@ -10,8 +10,6 @@ const {
 } = errors
 
 export const CommonLedgerError = (error: Error): Error => {
-  if (error instanceof WalletProviderError) return error
-
   if (
     error.message.toLowerCase().includes('unable to claim interface.') ||
     error.message.toLowerCase().includes('failed to open the device')
@@ -34,6 +32,8 @@ export const CommonLedgerError = (error: Error): Error => {
     return new LedgerFilecoinAppNotOpenError()
   } else if (error.message.toLowerCase().includes('transaction rejected')) {
     return new TransactionRejectedError()
+  } else if (error instanceof WalletProviderError) {
+    return error
   } else {
     return new LedgerReplugError(error)
   }
