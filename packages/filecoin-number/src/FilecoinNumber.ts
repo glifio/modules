@@ -93,28 +93,28 @@ export class FilecoinNumber extends BigNumber {
   /**
    * Returns a copy of this FilecoinNumber divided by the supplied value n
    */
-  div(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
+  div(n: BigNumber.Value): FilecoinNumber {
     return new FilecoinNumber(super.div(n), 'fil')
   }
 
   /**
    * Returns a copy of this FilecoinNumber divided by the supplied value n
    */
-  dividedBy(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
+  dividedBy(n: BigNumber.Value): FilecoinNumber {
     return this.div(n)
   }
 
   /**
    * Returns a copy of this FilecoinNumber multiplied by the supplied value n
    */
-  times(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
+  times(n: BigNumber.Value): FilecoinNumber {
     return new FilecoinNumber(super.times(n), 'fil')
   }
 
   /**
    * Returns a copy of this FilecoinNumber multiplied by the supplied value n
    */
-  multipliedBy(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
+  multipliedBy(n: BigNumber.Value): FilecoinNumber {
     return this.times(n)
   }
 
