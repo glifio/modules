@@ -4,37 +4,30 @@ import { BigNumber } from 'bignumber.js'
 BigNumber.set({ ROUNDING_MODE: BigNumber.ROUND_HALF_DOWN })
 BigNumber.config({ EXPONENTIAL_AT: 1e9 })
 
-type FilecoinDenomination = 'fil'|'picofil'|'attofil';
+export type FilecoinDenomination = 'fil'|'picofil'|'attofil'
 
-function asBigNumber(amount: BigNumber.Value, denom: FilecoinDenomination) {
-  if (!denom) {
-    throw new Error('No Filecoin denomination passed in constructor.')
-  }
-
-  const formattedDenom = denom.toLowerCase()
-  if (
-    formattedDenom !== 'fil' &&
-    formattedDenom !== 'picofil' &&
-    formattedDenom !== 'attofil'
-  ) {
-    throw new Error(
-      'Unsupported denomination passed in constructor. Must pass picofil or attofil.'
-    )
-  }
-
-  if (formattedDenom === 'picofil') {
-    return new BigNumber(amount).shiftedBy(-12)
-  } else if (formattedDenom === 'attofil') {
-    return new BigNumber(amount).shiftedBy(-18)
-  } else {
-    return amount
+function toBigNumberValue(value: BigNumber.Value, denom: FilecoinDenomination): BigNumber.Value {
+  switch(denom) {
+    case 'fil':
+      return value
+    case 'picofil':
+      return new BigNumber(value).shiftedBy(-12)
+    case 'attofil':
+      return new BigNumber(value).shiftedBy(-18)
+    default:
+      throw new Error(`Unsupported denomination passed to FilecoinNumber constructor: ${denom}. Must be fil, picofil or attofil.`)
   }
 }
 
-// stores filecoin numbers in denominations of Fil, not AttoFil
+/**
+ * FilecoinNumber is a BigNumber specialization that
+ * stores Filecoin values in denominations of Fil.
+ * @param value The value to store as FIL
+ * @param denom The denomination of value (fil, picofil or attofil)
+ */
 export class FilecoinNumber extends BigNumber {
-  constructor(amount: BigNumber.Value, denom: FilecoinDenomination) {
-    super(asBigNumber(amount, denom))
+  constructor(value: BigNumber.Value, denom: FilecoinDenomination) {
+    super(toBigNumberValue(value, denom))
   }
 
   /**
