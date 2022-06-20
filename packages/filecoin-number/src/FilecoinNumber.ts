@@ -37,15 +37,15 @@ export class FilecoinNumber extends BigNumber {
     super(asBigNumber(amount, denom))
   }
 
-  toFil() {
+  toFil(): string {
     return this.toString()
   }
 
-  toPicoFil() {
+  toPicoFil(): string {
     return this.shiftedBy(12).toString()
   }
 
-  toAttoFil() {
+  toAttoFil(): string {
     return this.shiftedBy(18).toFixed(0, 1)
   }
 }
