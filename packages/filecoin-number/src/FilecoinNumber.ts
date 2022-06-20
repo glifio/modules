@@ -53,6 +53,6 @@ export class FilecoinNumber extends BigNumber {
   }
 
   toAttoFil(): string {
-    return this.shiftedBy(18).toFixed(0, 1)
+    return this.shiftedBy(18).toFixed(0, BigNumber.ROUND_DOWN)
   }
 }
