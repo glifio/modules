@@ -37,6 +37,10 @@ export class FilecoinNumber extends BigNumber {
     super(asBigNumber(amount, denom))
   }
 
+  /**
+   * A static method that checks whether the
+   * supplied value is an instance of FilecoinNumber
+   */
   static isFilecoinNumber(value: any): boolean {
     return BigNumber.isBigNumber(value) &&
       'toFil' in value &&
@@ -44,15 +48,93 @@ export class FilecoinNumber extends BigNumber {
       'toPicoFil' in value
   }
 
+  /**
+   * Expresses this FilecoinNumber as a FIL string
+   */
   toFil(): string {
     return this.toString()
   }
 
+  /**
+   * Expresses this FilecoinNumber as a PicoFIL string
+   */
   toPicoFil(): string {
     return this.shiftedBy(12).toString()
   }
 
+  /**
+   * Expresses this FilecoinNumber as an AttoFIL string
+   */
   toAttoFil(): string {
     return this.shiftedBy(18).toFixed(0, BigNumber.ROUND_DOWN)
+  }
+
+  /**
+   * Returns a copy of this FilecoinNumber
+   */
+  clone(): FilecoinNumber {
+    return new FilecoinNumber(this, 'fil')
+  }
+
+  /**
+   * Returns an absolute value copy of this FilecoinNumber
+   */
+  abs(): FilecoinNumber {
+    return new FilecoinNumber(super.abs(), 'fil')
+  }
+
+  /**
+   * Returns an absolute value copy of this FilecoinNumber
+   */
+  absoluteValue(): FilecoinNumber {
+    return this.abs()
+  }
+
+  /**
+   * Returns a copy of this FilecoinNumber divided by the supplied value n
+   */
+  div(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
+    return new FilecoinNumber(super.div(n), 'fil')
+  }
+
+  /**
+   * Returns a copy of this FilecoinNumber divided by the supplied value n
+   */
+  dividedBy(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
+    return this.div(n)
+  }
+
+  /**
+   * Returns a copy of this FilecoinNumber multiplied by the supplied value n
+   */
+  times(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
+    return new FilecoinNumber(super.times(n), 'fil')
+  }
+
+  /**
+   * Returns a copy of this FilecoinNumber multiplied by the supplied value n
+   */
+  multipliedBy(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
+    return this.times(n)
+  }
+
+  /**
+   * Returns a copy of this FilecoinNumber increased by the supplied value n
+   * @param n Needs to be a FilecoinNumber to prevent denomination errors
+   */
+  plus(n: FilecoinNumber): FilecoinNumber {
+    if (!FilecoinNumber.isFilecoinNumber(n))
+      throw new Error('FilecoinNumber.plus(n) must be passed a FilecoinNumber')
+    return new FilecoinNumber(super.plus(n), 'fil')
+  }
+
+  /**
+   * Returns a copy of this FilecoinNumber decreased by the supplied value n
+   * @param n Needs to be a FilecoinNumber to prevent denomination errors
+   */
+  minus(n: FilecoinNumber): FilecoinNumber {
+    if (!FilecoinNumber.isFilecoinNumber(n))
+      throw new Error('FilecoinNumber.minus(n) must be passed a FilecoinNumber')
+    return new FilecoinNumber(super.minus(n), 'fil')
   }
 }
