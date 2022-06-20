@@ -6,7 +6,7 @@ BigNumber.config({ EXPONENTIAL_AT: 1e9 })
 
 type FilecoinDenomination = 'fil'|'picofil'|'attofil';
 
-function asBigNumber(amount: string | number | BigNumber, denom: FilecoinDenomination) {
+function asBigNumber(amount: BigNumber.Value, denom: FilecoinDenomination) {
   if (!denom) {
     throw new Error('No Filecoin denomination passed in constructor.')
   }
@@ -33,7 +33,7 @@ function asBigNumber(amount: string | number | BigNumber, denom: FilecoinDenomin
 
 // stores filecoin numbers in denominations of Fil, not AttoFil
 export class FilecoinNumber extends BigNumber {
-  constructor(amount: string | number | BigNumber, denom: FilecoinDenomination) {
+  constructor(amount: BigNumber.Value, denom: FilecoinDenomination) {
     super(asBigNumber(amount, denom))
   }
 
