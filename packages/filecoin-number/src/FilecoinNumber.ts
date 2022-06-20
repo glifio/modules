@@ -91,6 +91,13 @@ export class FilecoinNumber extends BigNumber {
   }
 
   /**
+   * Returns a negated copy of this FilecoinNumber (multiplied by -1)
+   */
+   negated(): FilecoinNumber {
+    return new FilecoinNumber(super.negated(), 'fil')
+  }
+
+  /**
    * Returns a copy of this FilecoinNumber divided by the supplied value n
    */
   div(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
