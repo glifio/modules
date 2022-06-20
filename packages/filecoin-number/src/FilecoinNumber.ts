@@ -127,21 +127,21 @@ export class FilecoinNumber extends BigNumber {
 
   /**
    * Returns a copy of this FilecoinNumber increased by the supplied value n
-   * @param n Needs to be a FilecoinNumber to prevent denomination errors
+   * @param n Should be a FilecoinNumber to prevent denomination errors
    */
-  plus(n: FilecoinNumber): FilecoinNumber {
+  plus(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
     if (!FilecoinNumber.isFilecoinNumber(n))
-      throw new Error('FilecoinNumber.plus(n) must be passed a FilecoinNumber')
+      console.warn('FilecoinNumber.plus(n) should be passed a FilecoinNumber')
     return new FilecoinNumber(super.plus(n), 'fil')
   }
 
   /**
    * Returns a copy of this FilecoinNumber decreased by the supplied value n
-   * @param n Needs to be a FilecoinNumber to prevent denomination errors
+   * @param n Should be a FilecoinNumber to prevent denomination errors
    */
-  minus(n: FilecoinNumber): FilecoinNumber {
+  minus(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
     if (!FilecoinNumber.isFilecoinNumber(n))
-      throw new Error('FilecoinNumber.minus(n) must be passed a FilecoinNumber')
+      console.warn('FilecoinNumber.minus(n) should be passed a FilecoinNumber')
     return new FilecoinNumber(super.minus(n), 'fil')
   }
 }
