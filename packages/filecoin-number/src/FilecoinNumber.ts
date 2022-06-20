@@ -37,6 +37,13 @@ export class FilecoinNumber extends BigNumber {
     super(asBigNumber(amount, denom))
   }
 
+  static isFilecoinNumber(value: any): boolean {
+    return BigNumber.isBigNumber(value) &&
+      'toFil' in value &&
+      'toAttoFil' in value &&
+      'toPicoFil' in value
+  }
+
   toFil(): string {
     return this.toString()
   }
