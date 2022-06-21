@@ -124,6 +124,7 @@ export class FilecoinNumber extends BigNumber {
    */
   plus(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
     if (!FilecoinNumber.isFilecoinNumber(n))
+      // tslint:disable-next-line:no-console
       console.warn('FilecoinNumber.plus(n) should be passed a FilecoinNumber')
     return new FilecoinNumber(super.plus(n), 'fil')
   }
@@ -134,6 +135,7 @@ export class FilecoinNumber extends BigNumber {
    */
   minus(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
     if (!FilecoinNumber.isFilecoinNumber(n))
+      // tslint:disable-next-line:no-console
       console.warn('FilecoinNumber.minus(n) should be passed a FilecoinNumber')
     return new FilecoinNumber(super.minus(n), 'fil')
   }
