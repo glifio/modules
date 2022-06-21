@@ -1,6 +1,9 @@
 {
   "name": "@glif/modules",
   "private": false,
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "bootstrap": "lerna bootstrap --no-ci",
     "bootstrap:local": "lerna bootstrap --force-local",
