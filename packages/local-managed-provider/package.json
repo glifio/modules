@@ -21,7 +21,7 @@
     "@glif/filecoin-wallet-provider": "^2.0.0-beta.15",
     "@zondax/filecoin-signing-tools": "^0.18.3",
     "bignumber.js": "^9.0.1",
-    "uint8arrays": "^1.1.0"
+    "uint8arrays": "^3.0.0"
   },
   "devDependencies": {
     "@types/jest": "^27.5.0",
