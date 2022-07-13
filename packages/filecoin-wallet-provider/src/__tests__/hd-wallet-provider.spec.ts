@@ -138,6 +138,21 @@ describe('hd wallet subprovider', () => {
       }
     })
 
+    test('it does not reject if the from address has the wrong network prefix', async () => {
+      const [from, to] = await subProvider.getAccounts(0, 2, CoinType.TEST)
+      const message = new Message({
+        from: `f${from.slice(1)}`,
+        to,
+        value,
+        method,
+        nonce,
+      })
+
+      await expect(
+        subProvider.sign(`f${from.slice(1)}`, message.toLotusType()),
+      ).resolves.not.toThrow()
+    })
+
     test('it rejects if the from address mismatches the from address of the message', async () => {
       try {
         const [from, to] = await subProvider.getAccounts(0, 2, CoinType.TEST)

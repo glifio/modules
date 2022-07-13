@@ -365,16 +365,22 @@ describe('ledger wallet subprovider', () => {
       .fn()
       .mockImplementation(async (): Promise<LedgerVersion> => vs)
 
-    const getAddressAndPubKeySpy = jest.fn().mockImplementation(
-      async (path): Promise<{ addrString: string; error_message: string }> => {
-        const coinType = Number(path.split('/')[2].slice(0, -1)) as CoinTypeCode
-        const index = Number(path.split('/')[5])
-        return {
-          addrString: accounts[coinType][index],
-          error_message: 'no errors',
-        }
-      },
-    )
+    const getAddressAndPubKeySpy = jest
+      .fn()
+      .mockImplementation(
+        async (
+          path,
+        ): Promise<{ addrString: string; error_message: string }> => {
+          const coinType = Number(
+            path.split('/')[2].slice(0, -1),
+          ) as CoinTypeCode
+          const index = Number(path.split('/')[5])
+          return {
+            addrString: accounts[coinType][index],
+            error_message: 'no errors',
+          }
+        },
+      )
 
     const showAddressAndPubKeySpy = jest
       .fn()
@@ -492,6 +498,21 @@ describe('ledger wallet subprovider', () => {
         } catch (err) {
           expect(err instanceof errors.WalletProviderError).toBe(true)
         }
+      })
+
+      test('it does not reject if the from address has the wrong network prefix', async () => {
+        const [from, to] = await subProvider.getAccounts(0, 2, CoinType.TEST)
+        const message = new Message({
+          from: `f${from.slice(1)}`,
+          to,
+          value,
+          method,
+          nonce,
+        })
+
+        await expect(
+          subProvider.sign(`f${from.slice(1)}`, message.toLotusType()),
+        ).resolves.not.toThrow()
       })
 
       test('it rejects if the from address mismatches the from address of the message', async () => {

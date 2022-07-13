@@ -9,14 +9,18 @@ import { WalletType } from '../../types'
 import { WalletSubProvider } from '../../wallet-sub-provider'
 import { createPath, coinTypeCode, validIndexes } from '../../utils'
 import { errors } from '../../errors'
+import { AccountStore } from '../../utils/accountStore'
 
-const { InvalidParamsError, WalletProviderError } = errors
+const { InvalidParamsError } = errors
 
-export class HDWalletProvider implements WalletSubProvider {
+export class HDWalletProvider
+  extends AccountStore
+  implements WalletSubProvider
+{
   public type: WalletType = 'HD_WALLET'
-  private accountToPath: Record<string, string> = {}
   #seed: string
   constructor(seed: string) {
+    super()
     if (!seed) throw new InvalidParamsError()
     this.#seed = seed
   }
@@ -43,7 +47,7 @@ export class HDWalletProvider implements WalletSubProvider {
       const path = createPath(coinTypeCode(coinType), i)
       const account = signingTools.keyDerive(this.#seed, path, '').address
       accounts.push(account)
-      this.accountToPath[account] = path
+      this.setAccountPath(account, path)
     }
     return accounts
   }
@@ -55,12 +59,7 @@ export class HDWalletProvider implements WalletSubProvider {
     if (from !== message.From) {
       throw new InvalidParamsError({ message: 'From address mismatch' })
     }
-    const path = this.accountToPath[from]
-    if (!path) {
-      throw new WalletProviderError({
-        message: 'Account was not yet derived from this seed phrase',
-      })
-    }
+    const path = this.getPath(from)
     let msg
     try {
       msg = Message.fromLotusType(message)
