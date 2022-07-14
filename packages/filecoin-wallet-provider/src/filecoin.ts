@@ -42,12 +42,17 @@ export class Filecoin {
   }
 
   simulateMessage = async (message: LotusMessage): Promise<boolean> => {
-    const res = await this.jsonRpcEngine.request<InvocResult>(
-      'StateCall',
-      message,
-      null,
-    )
-    return allCallsExitWithCode0(res)
+    try {
+      const res = await this.jsonRpcEngine.request<InvocResult>(
+        'StateCall',
+        message,
+        null,
+      )
+
+      return allCallsExitWithCode0(res)
+    } catch {
+      return false
+    }
   }
 
   sendMessage = async (
@@ -264,21 +269,23 @@ export class Filecoin {
     message: LotusMessage,
     maxFee: string = new FilecoinNumber('0.1', 'fil').toAttoFil(),
   ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
-
     const {
       gasFeeCap: minGasFeeCap,
       gasPremium: minGasPremium,
-      gasLimit: minGasLimit
+      gasLimit: minGasLimit,
     } = await this.getReplaceMessageMinGasParams(message)
 
     const copiedMessage = {
       ...message,
       GasFeeCap: '0',
       GasPremium: '0',
-      GasLimit: 0
+      GasLimit: 0,
     }
 
-    const recommendedMessage = await this.gasEstimateMessageGas(copiedMessage, maxFee)
+    const recommendedMessage = await this.gasEstimateMessageGas(
+      copiedMessage,
+      maxFee,
+    )
 
     const takeMin =
       recommendedMessage.gasFeeCap.isLessThan(minGasFeeCap) ||
@@ -286,9 +293,13 @@ export class Filecoin {
       recommendedMessage.gasLimit < minGasLimit
 
     return {
-      gasFeeCap: takeMin ? minGasFeeCap : recommendedMessage.gasFeeCap.toString(),
-      gasPremium: takeMin ? minGasPremium : recommendedMessage.gasPremium.toString(),
-      gasLimit: takeMin ? minGasLimit : recommendedMessage.gasLimit
+      gasFeeCap: takeMin
+        ? minGasFeeCap
+        : recommendedMessage.gasFeeCap.toString(),
+      gasPremium: takeMin
+        ? minGasPremium
+        : recommendedMessage.gasPremium.toString(),
+      gasLimit: takeMin ? minGasLimit : recommendedMessage.gasLimit,
     }
   }
 
@@ -299,7 +310,6 @@ export class Filecoin {
   getReplaceMessageMinGasParams = async (
     message: LotusMessage,
   ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
-
     // Sometimes the replaced message still got rejected because Lotus expected
     // a gas premium of 1 higher than what we calculated as the new minimum. In
     // order to resolve this, we add Epsilon (the smallest possible number) before
