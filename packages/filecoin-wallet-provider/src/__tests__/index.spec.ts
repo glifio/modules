@@ -22,7 +22,7 @@ describe('provider', () => {
   let filecoin: Filecoin
   beforeAll(async () => {
     filecoin = new Filecoin(testSubProviderInstance, {
-      apiAddress: 'https://node.glif.io/space07/lotus/rpc/v0',
+      apiAddress: 'http://api.node.glif.io',
     })
   })
 
@@ -141,11 +141,10 @@ describe('provider', () => {
     test('it should return false for an invalid message', async () => {
       const message = new Message({
         to: 'f034066',
-        from: 'f1nq5k2mps5umtebdovlyo7y6a3ywc7u4tobtuo3a',
-        value: '0',
-        method: 2,
+        from: 't165slrweoeuz4inlqwoo54upjpvh2z3lb2dzbdma',
+        value: '100000000000000000000',
+        method: 0,
         nonce: 0,
-        params: 'hEQAkooCQAVYGIJVAWw6rTHy7RkyBG6q8O/jwN4sL9OT9A==',
       })
       const valid = await filecoin.simulateMessage(message.toLotusType())
 
@@ -170,8 +169,7 @@ describe('provider', () => {
           Params:
             'hFUCey0uma1LsJp4RXNaZT8rjXeBryBABVgYglUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
           CID: {
-            '/':
-              'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
+            '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
           },
         },
         MsgRct: {
@@ -203,8 +201,7 @@ describe('provider', () => {
             Params:
               'hFUCey0uma1LsJp4RXNaZT8rjXeBryBABVgYglUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
             CID: {
-              '/':
-                'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
+              '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
             },
           },
           MsgRct: {
@@ -229,8 +226,7 @@ describe('provider', () => {
                 Method: 5,
                 Params: 'glUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
                 CID: {
-                  '/':
-                    'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4',
+                  '/': 'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4',
                 },
               },
               MsgRct: {
@@ -270,8 +266,7 @@ describe('provider', () => {
           Params:
             'hFUCey0uma1LsJp4RXNaZT8rjXeBryBABVgYglUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
           CID: {
-            '/':
-              'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
+            '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
           },
         },
         MsgRct: {
@@ -303,8 +298,7 @@ describe('provider', () => {
             Params:
               'hFUCey0uma1LsJp4RXNaZT8rjXeBryBABVgYglUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
             CID: {
-              '/':
-                'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
+              '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
             },
           },
           MsgRct: {
@@ -329,8 +323,7 @@ describe('provider', () => {
                 Method: 5,
                 Params: 'glUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
                 CID: {
-                  '/':
-                    'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4',
+                  '/': 'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4',
                 },
               },
               MsgRct: {
@@ -355,8 +348,7 @@ describe('provider', () => {
                     Method: 5,
                     Params: 'glUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
                     CID: {
-                      '/':
-                        'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4',
+                      '/': 'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4',
                     },
                   },
                   MsgRct: {
@@ -407,8 +399,7 @@ describe('provider', () => {
         // @ts-ignore
         const res = await filecoin.gasEstimateFeeCap({
           To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
-          From:
-            't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+          From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
           Nonce: 0,
           GasLimit: 1000000,
           Value: '1000',
@@ -424,8 +415,7 @@ describe('provider', () => {
         // @ts-ignore
         const res = await filecoin.gasEstimateFeeCap({
           To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
-          From:
-            't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+          From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
           Nonce: 0,
           Value: '1000',
           Method: 0,
@@ -439,8 +429,7 @@ describe('provider', () => {
       test('it should fail if no or an invalid Lotus message is passed', async () => {
         // @ts-ignore
         const gasEstimateFeeCap = filecoin.gasEstimateFeeCap({
-          To:
-            't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+          To: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
         })
         await expect(gasEstimateFeeCap).rejects.toThrow()
 
@@ -454,8 +443,7 @@ describe('provider', () => {
         // @ts-ignore
         const res = await filecoin.gasEstimateGasLimit({
           To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
-          From:
-            't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+          From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
           Nonce: 0,
           Value: '1000',
           Method: 0,
@@ -469,8 +457,7 @@ describe('provider', () => {
       test('it should throw when no or an invalid message is passed', async () => {
         // @ts-ignore
         const gasEstimateGasLimit = filecoin.gasEstimateGasLimit({
-          To:
-            't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+          To: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
         })
         await expect(gasEstimateGasLimit).rejects.toThrow()
 
@@ -484,8 +471,7 @@ describe('provider', () => {
         // @ts-ignore
         const res = await filecoin.gasEstimateGasPremium({
           To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
-          From:
-            't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+          From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
           Nonce: 0,
           Value: '1000',
           GasLimit: 1000000,
@@ -501,8 +487,7 @@ describe('provider', () => {
         // @ts-ignore
         const res = await filecoin.gasEstimateGasPremium({
           To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
-          From:
-            't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+          From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
           Nonce: 0,
           Value: '1000',
           Method: 0,
@@ -524,8 +509,7 @@ describe('provider', () => {
         // @ts-ignore
         const message = await filecoin.gasEstimateMessageGas({
           To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
-          From:
-            't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+          From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
           Nonce: 0,
           Value: '1000',
           Method: 0,
@@ -543,8 +527,7 @@ describe('provider', () => {
         // @ts-ignore
         const message = await filecoin.gasEstimateMessageGas({
           To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
-          From:
-            't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+          From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
           Nonce: 0,
           Value: '1000',
           Method: 0,
@@ -572,8 +555,7 @@ describe('provider', () => {
         // @ts-ignore
         const message = await filecoin.gasEstimateMessageGas({
           To: 'f1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
-          From:
-            'f3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+          From: 'f3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
           Nonce: 0,
           Value: '1000',
           Method: 0,
@@ -768,11 +750,8 @@ describe('provider', () => {
           gasPremium: PREMIUM,
         })
 
-        const {
-          gasPremium,
-          gasFeeCap,
-          gasLimit,
-        } = await filecoin.getReplaceMessageMinGasParams(message.toLotusType())
+        const { gasPremium, gasFeeCap, gasLimit } =
+          await filecoin.getReplaceMessageMinGasParams(message.toLotusType())
 
         const expectedGasPremium = new BigNumber(PREMIUM)
           .times(1.25)
@@ -803,11 +782,8 @@ describe('provider', () => {
           gasPremium: PREMIUM,
         })
 
-        const {
-          gasPremium,
-          gasFeeCap,
-          gasLimit,
-        } = await filecoin.getReplaceMessageMinGasParams(message.toLotusType())
+        const { gasPremium, gasFeeCap, gasLimit } =
+          await filecoin.getReplaceMessageMinGasParams(message.toLotusType())
 
         const expectedGasPremium = new BigNumber(PREMIUM)
           .times(1.25)
@@ -886,11 +862,8 @@ describe('provider', () => {
           gasPremium: PREMIUM,
         })
 
-        const {
-          gasPremium,
-          gasFeeCap,
-          gasLimit,
-        } = await filecoin.getReplaceMessageGasParams(message.toLotusType())
+        const { gasPremium, gasFeeCap, gasLimit } =
+          await filecoin.getReplaceMessageGasParams(message.toLotusType())
 
         const expectedMinGasPremium = new BigNumber(PREMIUM)
           .times(1.25)
@@ -898,9 +871,17 @@ describe('provider', () => {
           .integerValue(BigNumber.ROUND_CEIL)
 
         // here the min gasPremium is bumped by 1.25x, so we just make sure the recommended amount is bigger than that
-        expect(new BigNumber(gasPremium).isGreaterThanOrEqualTo(expectedMinGasPremium)).toBe(true)
+        expect(
+          new BigNumber(gasPremium).isGreaterThanOrEqualTo(
+            expectedMinGasPremium,
+          ),
+        ).toBe(true)
         expect(new BigNumber(gasLimit).isGreaterThanOrEqualTo(LIMIT)).toBe(true)
-        expect(new BigNumber(gasFeeCap).isGreaterThanOrEqualTo(expectedMinGasPremium)).toBe(true)
+        expect(
+          new BigNumber(gasFeeCap).isGreaterThanOrEqualTo(
+            expectedMinGasPremium,
+          ),
+        ).toBe(true)
       })
 
       test('it returns a message with the min increase in gas parameters if the min increase is larger than the recommended', async () => {
@@ -927,19 +908,19 @@ describe('provider', () => {
           gasFeeCap: messageWGas.gasFeeCap.toString(),
         })
 
-        const {
-          gasPremium,
-          gasFeeCap
-        } = await filecoin.getReplaceMessageGasParams(
-          messageToReplace.toLotusType(),
-        )
+        const { gasPremium, gasFeeCap } =
+          await filecoin.getReplaceMessageGasParams(
+            messageToReplace.toLotusType(),
+          )
 
         const expectedGasPremium = messageWGas.gasPremium
           .times(1.25)
           .plus(Number.EPSILON)
           .integerValue(BigNumber.ROUND_CEIL)
 
-        const expectedGasFeeCap = expectedGasPremium.isGreaterThan(messageWGas.gasFeeCap)
+        const expectedGasFeeCap = expectedGasPremium.isGreaterThan(
+          messageWGas.gasFeeCap,
+        )
           ? expectedGasPremium
           : messageWGas.gasFeeCap
 

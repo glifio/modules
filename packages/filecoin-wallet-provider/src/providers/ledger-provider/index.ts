@@ -23,6 +23,7 @@ const {
 } = errors
 
 import { badVersion } from './badVersion'
+import { AccountStore } from '../../utils/accountStore'
 
 type LedgerResponse = {
   return_code: number
@@ -78,12 +79,11 @@ const throwIfBusy = (busy: boolean): void => {
   if (busy) throw new LedgerDeviceBusyError()
 }
 
-export class LedgerProvider implements LedgerSubProvider {
+export class LedgerProvider extends AccountStore implements LedgerSubProvider {
   public type: WalletType = 'LEDGER'
   public ledgerBusy: boolean = false
   public minLedgerVersion: SemanticVersion
   private transport: Transport
-  private accountToPath: Record<string, string> = {}
 
   constructor({
     transport,
@@ -92,6 +92,7 @@ export class LedgerProvider implements LedgerSubProvider {
     transport: Transport
     minLedgerVersion: SemanticVersion
   }) {
+    super()
     if (!transport)
       throw new errors.InvalidParamsError({
         message: 'Must provide transport when instantiating LedgerSubProvider',
@@ -177,14 +178,7 @@ export class LedgerProvider implements LedgerSubProvider {
     if (from !== message.From)
       throw new errors.InvalidParamsError({ message: 'from address mismatch' })
     this.ledgerBusy = true
-    const path = this.accountToPath[from]
-    if (!path) {
-      this.ledgerBusy = false
-      throw new errors.WalletProviderError({
-        message:
-          'Must call getAccounts with to derive this from address before signing with it',
-      })
-    }
+    const path = this.getPath(from)
     let msg: Message
     try {
       msg = Message.fromLotusType(message)
@@ -252,7 +246,7 @@ export class LedgerProvider implements LedgerSubProvider {
         const { addrString } = handleLedgerResponseErrors(
           await new FilecoinApp(this.transport).getAddressAndPubKey(path),
         ) as LedgerShowAddrAndPubKey
-        this.accountToPath[addrString] = path
+        this.setAccountPath(addrString, path)
         return addrString
       } catch (err) {
         if (err instanceof Error) {
