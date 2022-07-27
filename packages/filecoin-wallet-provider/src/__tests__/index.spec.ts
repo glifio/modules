@@ -15,7 +15,7 @@ import { WalletSubProvider } from '../wallet-sub-provider'
 const testSubProviderInstance: WalletSubProvider = {
   type: 'MOCK',
   getAccounts: jest.fn().mockImplementation(async () => []),
-  keyDerive: jest.fn().mockImplementation(async () => {}),
+  keyDerive: jest.fn().mockImplementation(async () => ''),
   sign: jest.fn().mockImplementation(async () => null),
 }
 
