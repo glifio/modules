@@ -8,6 +8,7 @@ export interface WalletSubProvider {
     nEnd: number,
     coinType: CoinType,
   ): Promise<string[]>
+  keyDerive(path: string): Promise<string>
   sign(from: string, message: LotusMessage): Promise<SignedLotusMessage>
   type: WalletType
 }

@@ -45,6 +45,10 @@ export class SECP256K1KeyProvider implements WalletSubProvider {
     return [this.mainAddress]
   }
 
+  keyDerive = async (_: string): Promise<string> => {
+    return this.#privateKey
+  }
+
   async sign(from: string, message: LotusMessage): Promise<SignedLotusMessage> {
     const addressWithoutCoinType = from.slice(1)
 

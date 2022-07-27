@@ -73,6 +73,10 @@ export class MetaMaskProvider implements WalletSubProvider {
     }
   }
 
+  keyDerive = async (_: string): Promise<string> => {
+    throw new Error('Cannot derive key from MetaMask provider')
+  }
+
   sign = async (
     from: string,
     message: LotusMessage,
