@@ -3,6 +3,7 @@ import { Message } from '@glif/filecoin-message'
 import { HDWalletProvider } from '../providers/hd-wallet-provider'
 import { LedgerProvider } from '../providers/ledger-provider'
 import { errors } from '../errors'
+import { coinTypeCode, createPath } from '../utils'
 
 describe('hd wallet subprovider', () => {
   // these were derived in the Glif UI with WASM and the same seed as below
@@ -86,6 +87,18 @@ describe('hd wallet subprovider', () => {
       } catch (err) {
         expect(err instanceof errors.InvalidParamsError).toBe(true)
       }
+    })
+  })
+
+  describe('keyDerive', () => {
+    test('it returns base64 encoded private keys at different paths', async () => {
+      expect(
+        await subProvider.keyDerive(createPath(coinTypeCode(CoinType.TEST), 0)),
+      ).toBe('Vyh7pZZsrypD5Gi/RcVHqTqRMbutomlsm/MZ1V3y7eo=')
+
+      expect(
+        await subProvider.keyDerive(createPath(coinTypeCode(CoinType.TEST), 1)),
+      ).toBe('06dRC0k4iR9PwlbVLLmzTF3TCvenyCaclORjRmLsxrk=')
     })
   })
 

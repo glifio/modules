@@ -283,6 +283,10 @@ export class LedgerProvider extends AccountStore implements LedgerSubProvider {
     }
   }
 
+  keyDerive = async (_: string): Promise<string> => {
+    throw new Error('Cannot derive key from Ledger provider')
+  }
+
   resetTransport = async (_transport: Transport): Promise<void> => {
     this.transport = _transport
   }

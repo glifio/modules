@@ -110,6 +110,14 @@ describe('metamask subprovider', () => {
     })
   })
 
+  describe('keyDerive', () => {
+    test('it throws an error', async () => {
+      await expect(subProvider.keyDerive('')).rejects.toThrow(
+        'Cannot derive key from MetaMask provider',
+      )
+    })
+  })
+
   describe('sign', () => {
     const value = '10'
     const nonce = 0

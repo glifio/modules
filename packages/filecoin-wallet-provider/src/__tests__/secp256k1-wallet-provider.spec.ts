@@ -53,6 +53,12 @@ describe('single key secp256k1 wallet subprovider', () => {
     })
   })
 
+  describe('keyDerive', () => {
+    test('it returns the private key', async () => {
+      expect(await subProvider.keyDerive('')).toBe(privateKey)
+    })
+  })
+
   describe('sign', () => {
     const value = '10'
     const nonce = 0

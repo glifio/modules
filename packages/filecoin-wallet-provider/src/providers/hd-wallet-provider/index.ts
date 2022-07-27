@@ -52,6 +52,10 @@ export class HDWalletProvider
     return accounts
   }
 
+  keyDerive = async (path: string): Promise<string> => {
+    return signingTools.keyDerive(this.#seed, path, '').private_base64
+  }
+
   sign = async (
     from: string,
     message: LotusMessage,
