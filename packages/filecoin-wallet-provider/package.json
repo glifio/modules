@@ -30,7 +30,7 @@
     "@ledgerhq/hw-transport-webhid": "^6.11.2",
     "@zondax/filecoin-signing-tools": "^0.18.6",
     "@zondax/ledger-filecoin": "^0.11.2",
-    "bignumber.js": "9.0.1",
+    "bignumber.js": "9.0.2",
     "bluebird": "^3.7.2"
   },
   "devDependencies": {
