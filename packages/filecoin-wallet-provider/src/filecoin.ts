@@ -289,8 +289,7 @@ export class Filecoin {
 
     const takeMin =
       recommendedMessage.gasFeeCap.isLessThan(minGasFeeCap) ||
-      recommendedMessage.gasPremium.isLessThan(minGasPremium) ||
-      recommendedMessage.gasLimit < minGasLimit
+      recommendedMessage.gasPremium.isLessThan(minGasPremium)
 
     return {
       gasFeeCap: takeMin
@@ -299,7 +298,7 @@ export class Filecoin {
       gasPremium: takeMin
         ? minGasPremium
         : recommendedMessage.gasPremium.toString(),
-      gasLimit: takeMin ? minGasLimit : recommendedMessage.gasLimit,
+      gasLimit: recommendedMessage.gasLimit,
     }
   }
 
