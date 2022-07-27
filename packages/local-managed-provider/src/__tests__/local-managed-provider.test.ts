@@ -13,6 +13,9 @@ describe('secp256k1', () => {
     const accounts = await provider.getAccounts(0, 0, CoinType.TEST)
     expect(accounts).toEqual(['t17lxg2i2otnl7mmpw2ocd6o4e3b4un3272vny6ka'])
   })
+  test('#keyDerive', async () => {
+    expect(await provider.keyDerive('')).toBe(secp256k1Key)
+  })
   test('#sign', async () => {
     const accounts = await provider.getAccounts(0, 0, CoinType.TEST)
     const address = accounts[0]
@@ -38,6 +41,9 @@ describe('bls', () => {
     expect(accounts).toEqual([
       't3vbrwhphivdxyvs3pxpp54w73664bgxmb7ed4du4ohhu3dc6f5y264cs72yluw7mjbwnlrtzq543ys57plzka',
     ])
+  })
+  test('#keyDerive', async () => {
+    expect(await provider.keyDerive('')).toBe(blsKey)
   })
   test('#sign', async () => {
     const accounts = await provider.getAccounts(0, 0, CoinType.TEST)

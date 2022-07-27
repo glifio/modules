@@ -7,6 +7,8 @@ export class SingleKeyProvider implements WalletSubProvider {
   readonly mainAddress: string
   readonly type: KeyType
   readonly _sign: SignFunc
+  #privateKey: string
+
   constructor(privateKey: string) {
     if (!privateKey) {
       throw new errors.InvalidParamsError({
@@ -20,6 +22,7 @@ export class SingleKeyProvider implements WalletSubProvider {
     this.mainAddress = address
     this.type = keyType
     this._sign = sign
+    this.#privateKey = privateKey
   }
 
   async getAccounts(
@@ -32,6 +35,10 @@ export class SingleKeyProvider implements WalletSubProvider {
     }
 
     return [this.mainAddress]
+  }
+
+  async keyDerive(_: string): Promise<string> {
+    return this.#privateKey
   }
 
   async sign(from: string, message: LotusMessage): Promise<SignedLotusMessage> {
