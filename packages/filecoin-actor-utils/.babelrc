@@ -1,0 +1,36 @@
+{
+  "presets": ["@babel/preset-env", "@babel/preset-typescript"],
+  "plugins": [
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-runtime"
+  ],
+  "env": {
+    "browser": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "browsers": "last 2 versions, ie 10-11"
+            },
+            "modules": false
+          }
+        ]
+      ]
+    },
+    "module": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "node": "16"
+            },
+            "modules": false
+          }
+        ]
+      ]
+    }
+  }
+}
