@@ -27,14 +27,14 @@ export enum Type {
 export type DataType = {
   Type: string
   Name: string
-  Key?: DataType
-  Contains?: DataType
-  Children?: DataTypeMap
-  Methods?: DataTypeMap
-  Params?: DataType[]
-  Returns?: DataType[]
-  IsVariadic?: boolean
-  ChanDir?: string
+  Key?: DataType // For map type
+  Contains?: DataType // For map / array / channel type
+  Children?: DataTypeMap // For object type
+  Methods?: DataTypeMap // For interface type
+  Params?: DataType[] // For function type
+  Returns?: DataType[] // For function type
+  IsVariadic?: boolean // For function type
+  ChanDir?: string // For channel type
 }
 
 export type DataTypeMap = {
