@@ -27,8 +27,7 @@ export const getActorName = (actorCode: string, networkName?: string): string | 
     }
   }
 
-  // Return null when the
-  // actor name is not found
+  // Return null when the actor name is not found
   return null
 }
 
