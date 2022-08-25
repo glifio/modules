@@ -8,9 +8,9 @@
     "put": "./dist/index.js"
   },
   "scripts": {
-    "clean": "../../node_modules/.bin/rimraf dist/* && mkdirp dist",
-    "build-babel": "../../node_modules/.bin/babel ./src/ --out-dir ./dist/ --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
-    "build-types": "../../node_modules/.bin/tsc --emitDeclarationOnly",
+    "clean": "rimraf dist/* && mkdirp dist",
+    "build-babel": "babel ./src/ --out-dir ./dist/ --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
+    "build-types": "tsc --emitDeclarationOnly",
     "build": "npm run clean && npm run build-types && npm run build-babel",
     "lint": "tslint -p tsconfig.json",
     "reinstall": "npm uninstall -g && npm run build && npm i -g",
