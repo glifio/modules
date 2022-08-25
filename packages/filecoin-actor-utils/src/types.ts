@@ -13,15 +13,15 @@ export type NetworkActorCodeMap = {
 }
 
 export enum Type {
-  Bool = "bool",
-  Number = "number",
-  String = "string",
-  Map = "map",
-  Array = "array",
-  Chan = "channel",
-  Object = "object",
-  Function = "function",
-  Interface = "interface"
+  Bool = 'bool',
+  Number = 'number',
+  String = 'string',
+  Map = 'map',
+  Array = 'array',
+  Chan = 'channel',
+  Object = 'object',
+  Function = 'function',
+  Interface = 'interface'
 }
 
 export type DataType = {
