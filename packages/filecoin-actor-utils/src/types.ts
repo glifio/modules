@@ -38,7 +38,7 @@ export type DataType = {
 }
 
 export type DataTypeMap = {
-  [name: PropName]: DataType
+  [propName: PropName]: DataType
 }
 
 export type ActorMethod = {
