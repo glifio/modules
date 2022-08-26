@@ -269,11 +269,8 @@ export class Filecoin {
     message: LotusMessage,
     maxFee: string = new FilecoinNumber('0.1', 'fil').toAttoFil()
   ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
-    const {
-      gasFeeCap: minGasFeeCap,
-      gasPremium: minGasPremium,
-      gasLimit: minGasLimit
-    } = await this.getReplaceMessageMinGasParams(message)
+    const { gasFeeCap: minGasFeeCap, gasPremium: minGasPremium } =
+      await this.getReplaceMessageMinGasParams(message)
 
     const copiedMessage = {
       ...message,
