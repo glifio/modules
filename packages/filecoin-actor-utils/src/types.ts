@@ -8,8 +8,16 @@ export type ActorCodeMap = {
   [actorName: ActorName]: ActorCode
 }
 
+export type ActorCodeMapInv = {
+  [actorCode: ActorCode]: ActorName
+}
+
 export type NetworkActorCodeMap = {
   [networkName: NetworkName]: ActorCodeMap
+}
+
+export type NetworkActorCodeMapInv = {
+  [networkName: NetworkName]: ActorCodeMapInv
 }
 
 export enum Type {
