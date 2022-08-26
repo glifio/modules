@@ -4,7 +4,7 @@ type Headers = Record<string, string | null | undefined>
 
 export function removeEmptyHeaders(headers: Headers): Record<string, string> {
   const newHeaders: Record<string, string> = {}
-  Object.keys(headers).forEach((key) => {
+  Object.keys(headers).forEach(key => {
     if (headers[key]) newHeaders[key] = headers[key] as string
   })
   return newHeaders
@@ -12,11 +12,11 @@ export function removeEmptyHeaders(headers: Headers): Record<string, string> {
 
 export function configureHeaders(
   headers: Headers = {},
-  token?: string,
+  token?: string
 ): Record<string, string> {
   const reqHeaders: Headers = Object.assign({}, headers, {
     Accept: '*/*',
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   })
   if (token) {
     reqHeaders.Authorization = `Bearer ${token}`
@@ -53,7 +53,7 @@ export default class LotusRpcEngine {
   constructor(config?: LotusRpcEngineConfig) {
     if (!config)
       throw new Error(
-        'Must pass a config object to the LotusRpcEngine constructor.',
+        'Must pass a config object to the LotusRpcEngine constructor.'
       )
     this.apiAddress = config.apiAddress || 'http://127.0.0.1:1234/rpc/v0'
     this.token = config.token
@@ -68,12 +68,12 @@ export default class LotusRpcEngine {
         jsonrpc: '2.0',
         method: `Filecoin.${method}`,
         params,
-        id: 1,
+        id: 1
       },
       {
         headers: this.headers,
-        ...this.axiosOpts,
-      },
+        ...this.axiosOpts
+      }
     )
     throwIfErrors(data)
     return data.result

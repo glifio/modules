@@ -2,13 +2,13 @@ import nock from 'nock'
 import LotusRpcEngine, {
   configureHeaders,
   removeEmptyHeaders,
-  throwIfErrors,
+  throwIfErrors
 } from '../index'
 
 const successfulResponse = {
   jsonrpc: '2.0',
   result: 'fake response result',
-  id: 1,
+  id: 1
 }
 
 const errorResponse = {
@@ -17,8 +17,8 @@ const errorResponse = {
   id: 1,
   error: {
     code: 1,
-    message: 'get actor: GetActor called on undefined address',
-  },
+    message: 'get actor: GetActor called on undefined address'
+  }
 }
 
 describe('removeEmptyHeaders', () => {
@@ -27,7 +27,7 @@ describe('removeEmptyHeaders', () => {
       'Content-Type': 'text/plain;charset=UTF-8',
       Test: 'value',
       Accept: undefined,
-      Authorization: null,
+      Authorization: null
     }
 
     expect(removeEmptyHeaders(headers).Accept).toBeUndefined()
@@ -53,7 +53,7 @@ describe('throwIfErrors', () => {
 
   test('it throws a descriptive error if the jsonrpc response comes back with an error', () => {
     expect(() => throwIfErrors(errorResponse)).toThrow(
-      errorResponse.error.message,
+      errorResponse.error.message
     )
   })
 })
@@ -66,10 +66,10 @@ describe('LotusRpcEngine', () => {
 
   describe('request', () => {
     const lotus = new LotusRpcEngine({
-      apiAddress: 'https://proxy.openworklabs.com/rpc/v0',
+      apiAddress: 'https://proxy.openworklabs.com/rpc/v0'
     })
 
-    test('it passes the first argument as the jsonrpc method', (done) => {
+    test('it passes the first argument as the jsonrpc method', done => {
       const method = 'ChainHead'
       nock('https://proxy.openworklabs.com')
         .post('/rpc/v0')
@@ -85,7 +85,7 @@ describe('LotusRpcEngine', () => {
       lotus.request(method)
     })
 
-    test('passes the subsequent arguments as the jsonrpc params', (done) => {
+    test('passes the subsequent arguments as the jsonrpc params', done => {
       const method = 'FakeJsonRpcMethodWithMultipleParams'
       const param1 = 't1mbk7q6gm4rjlndfqw6f2vkfgqotres3fgicb2uq'
       const param2 = 'RIP Kobe.'
@@ -123,7 +123,7 @@ describe('LotusRpcEngine', () => {
         .reply(201, () => errorResponse)
 
       await expect(lotus.request(method)).rejects.toThrow(
-        errorResponse.error.message,
+        errorResponse.error.message
       )
     })
   })
