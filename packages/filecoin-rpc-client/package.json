@@ -32,7 +32,8 @@
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "nock": "^13.0.5"
+    "nock": "^13.0.5",
+    "prettier": "^2.7.1"
   },
   "files": [
     "dist",
