@@ -1,4 +1,4 @@
-import { networkActorCodeMap } from "./data"
+import { networkActorCodeMap, networkActorCodeMapInv } from "./data"
 
 /**
  * Resolves the actor name by providing the actor code. When also providing
@@ -9,22 +9,16 @@ import { networkActorCodeMap } from "./data"
  */
 export const getActorName = (actorCode: string, networkName?: string): string | null => {
   
-  // If "networkName" is provided, find the
-  // actor name for that specific network
+  // If "networkName" is provided, return the actor name
+  // for that specific network or null when not found
   if (networkName) {
-    const actorCodeMap = networkActorCodeMap[networkName]
-    for (const [name, code] of Object.entries(actorCodeMap)) {
-      if (code === actorCode) return name
-    }
+    return networkActorCodeMapInv[networkName]?.[actorCode] ?? null
   }
   
-  // Otherwise, iterate over all the
-  // networks to find the actor name
-  else {
-    for (const network of Object.keys(networkActorCodeMap)) {
-      const name = getActorName(actorCode, network)
-      if (name !== null) return name
-    }
+  // Otherwise, iterate over all the networks to find the actor name
+  for (const network of Object.keys(networkActorCodeMap)) {
+    const name = getActorName(actorCode, network)
+    if (name !== null) return name
   }
 
   // Return null when the actor name is not found
