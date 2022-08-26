@@ -9,5 +9,5 @@ export * from './Converter'
 export default {
   BigNumber,
   FilecoinNumber,
-  Converter,
+  Converter
 }

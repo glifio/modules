@@ -4,10 +4,13 @@ import { BigNumber } from 'bignumber.js'
 BigNumber.set({ ROUNDING_MODE: BigNumber.ROUND_HALF_DOWN })
 BigNumber.config({ EXPONENTIAL_AT: 1e9 })
 
-export type FilecoinDenomination = 'fil'|'picofil'|'attofil'
+export type FilecoinDenomination = 'fil' | 'picofil' | 'attofil'
 
-function toBigNumberValue(value: BigNumber.Value, denom: FilecoinDenomination): BigNumber.Value {
-  switch(denom) {
+function toBigNumberValue(
+  value: BigNumber.Value,
+  denom: FilecoinDenomination
+): BigNumber.Value {
+  switch (denom) {
     case 'fil':
       return value
     case 'picofil':
@@ -15,7 +18,9 @@ function toBigNumberValue(value: BigNumber.Value, denom: FilecoinDenomination): 
     case 'attofil':
       return new BigNumber(value).shiftedBy(-18)
     default:
-      throw new Error(`Unsupported denomination passed to FilecoinNumber constructor: ${denom}. Must be fil, picofil or attofil.`)
+      throw new Error(
+        `Unsupported denomination passed to FilecoinNumber constructor: ${denom}. Must be fil, picofil or attofil.`
+      )
   }
 }
 
@@ -35,10 +40,12 @@ export class FilecoinNumber extends BigNumber {
    * supplied value is an instance of FilecoinNumber
    */
   static isFilecoinNumber(value: any): boolean {
-    return BigNumber.isBigNumber(value) &&
+    return (
+      BigNumber.isBigNumber(value) &&
       'toFil' in value &&
       'toAttoFil' in value &&
       'toPicoFil' in value
+    )
   }
 
   /**
@@ -86,7 +93,7 @@ export class FilecoinNumber extends BigNumber {
   /**
    * Returns a negated copy of this FilecoinNumber (multiplied by -1)
    */
-   negated(): FilecoinNumber {
+  negated(): FilecoinNumber {
     return new FilecoinNumber(super.negated(), 'fil')
   }
 
