@@ -23,7 +23,7 @@ describe('provider', () => {
   let filecoin: Filecoin
   beforeAll(async () => {
     filecoin = new Filecoin(testSubProviderInstance, {
-      apiAddress: 'http://api.node.glif.io',
+      apiAddress: 'https://api.node.glif.io',
     })
   })
 
