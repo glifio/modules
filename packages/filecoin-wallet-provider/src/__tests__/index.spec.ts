@@ -6,7 +6,7 @@ import {
   allCallsExitWithCode0,
   computeGasToBurn,
   KNOWN_TYPE_0_ADDRESS,
-  KNOWN_TYPE_1_ADDRESS,
+  KNOWN_TYPE_1_ADDRESS
 } from '../utils'
 import { Network } from '@glif/filecoin-address'
 import { InvocResult } from '../types'
@@ -16,14 +16,14 @@ const testSubProviderInstance: WalletSubProvider = {
   type: 'MOCK',
   getAccounts: jest.fn().mockImplementation(async () => []),
   keyDerive: jest.fn().mockImplementation(async () => ''),
-  sign: jest.fn().mockImplementation(async () => null),
+  sign: jest.fn().mockImplementation(async () => null)
 }
 
 describe('provider', () => {
   let filecoin: Filecoin
   beforeAll(async () => {
     filecoin = new Filecoin(testSubProviderInstance, {
-      apiAddress: 'https://api.node.glif.io',
+      apiAddress: 'https://api.node.glif.io'
     })
   })
 
@@ -51,14 +51,14 @@ describe('provider', () => {
 
     test('should call WalletBalance with address', async () => {
       const balance = await filecoin.getBalance(
-        KNOWN_TYPE_0_ADDRESS[Network.TEST],
+        KNOWN_TYPE_0_ADDRESS[Network.TEST]
       )
       expect(balance.isGreaterThanOrEqualTo(0)).toBeTruthy()
     })
 
     test('should return an instance of filecoin number', async () => {
       const balance = await filecoin.getBalance(
-        KNOWN_TYPE_0_ADDRESS[Network.TEST],
+        KNOWN_TYPE_0_ADDRESS[Network.TEST]
       )
       expect(balance instanceof FilecoinNumber).toBeTruthy()
     })
@@ -90,7 +90,7 @@ describe('provider', () => {
         from: KNOWN_TYPE_0_ADDRESS[Network.TEST],
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
-        nonce: 0,
+        nonce: 0
       })
 
       // @ts-ignore
@@ -105,17 +105,17 @@ describe('provider', () => {
         from: KNOWN_TYPE_0_ADDRESS[Network.TEST],
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
-        nonce,
+        nonce
       })
 
       const msgWithGas = await filecoin.gasEstimateMessageGas(
-        message.toLotusType(),
+        message.toLotusType()
       )
 
       const { Signature } = await filecoin.jsonRpcEngine.request(
         'WalletSignMessage',
         KNOWN_TYPE_0_ADDRESS[Network.TEST],
-        msgWithGas,
+        msgWithGas
       )
 
       // @ts-ignore
@@ -132,7 +132,7 @@ describe('provider', () => {
         from: 'f1nq5k2mps5umtebdovlyo7y6a3ywc7u4tobtuo3a',
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
-        nonce: 0,
+        nonce: 0
       })
       const valid = await filecoin.simulateMessage(message.toLotusType())
 
@@ -145,7 +145,7 @@ describe('provider', () => {
         from: 't165slrweoeuz4inlqwoo54upjpvh2z3lb2dzbdma',
         value: '100000000000000000000',
         method: 0,
-        nonce: 0,
+        nonce: 0
       })
       const valid = await filecoin.simulateMessage(message.toLotusType())
 
@@ -155,7 +155,7 @@ describe('provider', () => {
     test('allCallsExitWithCode0 finds nonzero execution calls and returns false', () => {
       const invalidCall: InvocResult = {
         MsgCid: {
-          '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
+          '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni'
         },
         Msg: {
           Version: 0,
@@ -170,13 +170,13 @@ describe('provider', () => {
           Params:
             'hFUCey0uma1LsJp4RXNaZT8rjXeBryBABVgYglUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
           CID: {
-            '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
-          },
+            '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni'
+          }
         },
         MsgRct: {
           ExitCode: 0,
           Return: 'hAH1EkA=',
-          GasUsed: 0,
+          GasUsed: 0
         },
         GasCost: {
           Message: null,
@@ -186,7 +186,7 @@ describe('provider', () => {
           MinerPenalty: '0',
           MinerTip: '0',
           Refund: '0',
-          TotalCost: '0',
+          TotalCost: '0'
         },
         ExecutionTrace: {
           Msg: {
@@ -202,13 +202,13 @@ describe('provider', () => {
             Params:
               'hFUCey0uma1LsJp4RXNaZT8rjXeBryBABVgYglUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
             CID: {
-              '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
-            },
+              '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni'
+            }
           },
           MsgRct: {
             ExitCode: 0,
             Return: 'hAH1EkA=',
-            GasUsed: 3413871,
+            GasUsed: 3413871
           },
           Error: '',
           Duration: 394016,
@@ -227,23 +227,23 @@ describe('provider', () => {
                 Method: 5,
                 Params: 'glUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
                 CID: {
-                  '/': 'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4',
-                },
+                  '/': 'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4'
+                }
               },
               MsgRct: {
                 ExitCode: 18,
                 Return: null,
-                GasUsed: 2386357,
+                GasUsed: 2386357
               },
               Error: 't02357 is already a signer (RetCode=18)',
               Duration: 85358,
               GasCharges: null,
-              Subcalls: null,
-            },
-          ],
+              Subcalls: null
+            }
+          ]
         },
         Error: '',
-        Duration: 394177,
+        Duration: 394177
       }
 
       expect(allCallsExitWithCode0(invalidCall)).toBe(false)
@@ -252,7 +252,7 @@ describe('provider', () => {
     test('allCallsExitWithCode0 finds nonzero execution calls and returns false', () => {
       const invalidCall: InvocResult = {
         MsgCid: {
-          '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
+          '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni'
         },
         Msg: {
           Version: 0,
@@ -267,13 +267,13 @@ describe('provider', () => {
           Params:
             'hFUCey0uma1LsJp4RXNaZT8rjXeBryBABVgYglUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
           CID: {
-            '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
-          },
+            '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni'
+          }
         },
         MsgRct: {
           ExitCode: 0,
           Return: 'hAH1EkA=',
-          GasUsed: 0,
+          GasUsed: 0
         },
         GasCost: {
           Message: null,
@@ -283,7 +283,7 @@ describe('provider', () => {
           MinerPenalty: '0',
           MinerTip: '0',
           Refund: '0',
-          TotalCost: '0',
+          TotalCost: '0'
         },
         ExecutionTrace: {
           Msg: {
@@ -299,13 +299,13 @@ describe('provider', () => {
             Params:
               'hFUCey0uma1LsJp4RXNaZT8rjXeBryBABVgYglUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
             CID: {
-              '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni',
-            },
+              '/': 'bafy2bzacedkkh57vsdngemo4xtgpo5vnfm65o5xfnqkj3iqc6matzrdpwejni'
+            }
           },
           MsgRct: {
             ExitCode: 0,
             Return: 'hAH1EkA=',
-            GasUsed: 3413871,
+            GasUsed: 3413871
           },
           Error: '',
           Duration: 394016,
@@ -324,13 +324,13 @@ describe('provider', () => {
                 Method: 5,
                 Params: 'glUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
                 CID: {
-                  '/': 'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4',
-                },
+                  '/': 'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4'
+                }
               },
               MsgRct: {
                 ExitCode: 0,
                 Return: null,
-                GasUsed: 2386357,
+                GasUsed: 2386357
               },
               Error: 't02357 is already a signer (RetCode=18)',
               Duration: 85358,
@@ -349,25 +349,25 @@ describe('provider', () => {
                     Method: 5,
                     Params: 'glUBbDqtMfLtGTIEbqrw7+PA3iwv05P0',
                     CID: {
-                      '/': 'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4',
-                    },
+                      '/': 'bafy2bzacec6dvnfywjfmoml4prnpcjvotl4degrtmtdpzv3udd6lc76rgiff4'
+                    }
                   },
                   MsgRct: {
                     ExitCode: 18,
                     Return: null,
-                    GasUsed: 2386357,
+                    GasUsed: 2386357
                   },
                   Error: 't02357 is already a signer (RetCode=18)',
                   Duration: 85358,
                   GasCharges: null,
-                  Subcalls: null,
-                },
-              ],
-            },
-          ],
+                  Subcalls: null
+                }
+              ]
+            }
+          ]
         },
         Error: '',
-        Duration: 394177,
+        Duration: 394177
       }
 
       expect(allCallsExitWithCode0(invalidCall)).toBe(false)
@@ -405,7 +405,7 @@ describe('provider', () => {
           GasLimit: 1000000,
           Value: '1000',
           Method: 0,
-          Params: [],
+          Params: []
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -420,7 +420,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: [],
+          Params: []
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -430,7 +430,7 @@ describe('provider', () => {
       test('it should fail if no or an invalid Lotus message is passed', async () => {
         // @ts-ignore
         const gasEstimateFeeCap = filecoin.gasEstimateFeeCap({
-          To: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+          To: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq'
         })
         await expect(gasEstimateFeeCap).rejects.toThrow()
 
@@ -448,7 +448,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: [],
+          Params: []
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -458,7 +458,7 @@ describe('provider', () => {
       test('it should throw when no or an invalid message is passed', async () => {
         // @ts-ignore
         const gasEstimateGasLimit = filecoin.gasEstimateGasLimit({
-          To: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+          To: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq'
         })
         await expect(gasEstimateGasLimit).rejects.toThrow()
 
@@ -477,7 +477,7 @@ describe('provider', () => {
           Value: '1000',
           GasLimit: 1000000,
           Method: 0,
-          Params: [],
+          Params: []
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -492,7 +492,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: [],
+          Params: []
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -514,7 +514,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: [],
+          Params: []
         })
 
         expect(message instanceof Message).toBe(true)
@@ -532,19 +532,19 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: [],
+          Params: []
         })
 
         const lotusMsg = message.toLotusType()
         expect(lotusMsg.From).toBe(
-          't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+          't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq'
         )
       })
 
       test('it throws when no or an invalid message is passed', async () => {
         // @ts-ignore
         const gasEstimateMessageGas = filecoin.gasEstimateMessageGas({
-          To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
+          To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei'
         })
         await expect(gasEstimateMessageGas).rejects.toThrow()
 
@@ -560,12 +560,12 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: [],
+          Params: []
         })
 
         const lotusMsg = message.toLotusType()
         expect(lotusMsg.From).toBe(
-          'f3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+          'f3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq'
         )
         expect(lotusMsg.To).toBe('f1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei')
       })
@@ -580,11 +580,11 @@ describe('provider', () => {
         from: unknownFromAddr,
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
-        nonce: 0,
+        nonce: 0
       })
 
       const clonedMsg = await filecoin.cloneMsgWOnChainFromAddr(
-        message.toLotusType(),
+        message.toLotusType()
       )
 
       expect(clonedMsg.From).toBeTruthy()
@@ -597,11 +597,11 @@ describe('provider', () => {
         from: KNOWN_TYPE_0_ADDRESS[Network.TEST],
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
-        nonce: 0,
+        nonce: 0
       })
 
       const clonedMsg = await filecoin.cloneMsgWOnChainFromAddr(
-        message.toLotusType(),
+        message.toLotusType()
       )
 
       expect(clonedMsg.From).toBeTruthy()
@@ -614,7 +614,7 @@ describe('provider', () => {
         from: unknownFromAddr,
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
-        nonce: 0,
+        nonce: 0
       })
 
       const msg = message.toLotusType()
@@ -637,7 +637,7 @@ describe('provider', () => {
         gasPremium,
         gasLimit,
         baseFee,
-        gasUsed,
+        gasUsed
       )
 
       expect(fee.toAttoFil()).toBe('431705363143440')
@@ -655,7 +655,7 @@ describe('provider', () => {
         gasPremium,
         gasLimit,
         baseFee,
-        gasUsed,
+        gasUsed
       )
 
       expect(fee.toAttoFil()).toBe('1515778754527')
@@ -673,7 +673,7 @@ describe('provider', () => {
         gasPremium,
         gasLimit,
         baseFee,
-        gasUsed,
+        gasUsed
       )
 
       expect(fee.toAttoFil()).toBe('41677092465327312')
@@ -687,8 +687,8 @@ describe('provider', () => {
       expect(
         computeGasToBurn(
           new BigNumber(gasUsed),
-          new BigNumber(gasLimit),
-        ).toString(),
+          new BigNumber(gasLimit)
+        ).toString()
       ).toBe('15337')
     })
 
@@ -698,8 +698,8 @@ describe('provider', () => {
       expect(
         computeGasToBurn(
           new BigNumber(gasUsed),
-          new BigNumber(gasLimit),
-        ).toString(),
+          new BigNumber(gasLimit)
+        ).toString()
       ).toBe('303450')
     })
 
@@ -709,8 +709,8 @@ describe('provider', () => {
       expect(
         computeGasToBurn(
           new BigNumber(gasUsed),
-          new BigNumber(gasLimit),
-        ).toString(),
+          new BigNumber(gasLimit)
+        ).toString()
       ).toBe('1510801')
     })
   })
@@ -722,7 +722,7 @@ describe('provider', () => {
         from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
-        nonce: 0,
+        nonce: 0
       })
 
       const res = await filecoin.gasEstimateMaxFee(message.toLotusType())
@@ -748,7 +748,7 @@ describe('provider', () => {
           nonce: 0,
           gasFeeCap: FEE_CAP,
           gasLimit: LIMIT,
-          gasPremium: PREMIUM,
+          gasPremium: PREMIUM
         })
 
         const { gasPremium, gasFeeCap, gasLimit } =
@@ -780,7 +780,7 @@ describe('provider', () => {
           nonce: 0,
           gasFeeCap: FEE_CAP,
           gasLimit: LIMIT,
-          gasPremium: PREMIUM,
+          gasPremium: PREMIUM
         })
 
         const { gasPremium, gasFeeCap, gasLimit } =
@@ -812,11 +812,11 @@ describe('provider', () => {
           nonce: 0,
           gasFeeCap: FEE_CAP,
           gasLimit: LIMIT,
-          gasPremium: PREMIUM,
+          gasPremium: PREMIUM
         })
 
         const { gasPremium } = await filecoin.getReplaceMessageMinGasParams(
-          message.toLotusType(),
+          message.toLotusType()
         )
 
         // 97 * 1.25 = 121,25 -> 122
@@ -835,11 +835,11 @@ describe('provider', () => {
           nonce: 0,
           gasFeeCap: FEE_CAP,
           gasLimit: LIMIT,
-          gasPremium: PREMIUM,
+          gasPremium: PREMIUM
         })
 
         const { gasPremium } = await filecoin.getReplaceMessageMinGasParams(
-          message.toLotusType(),
+          message.toLotusType()
         )
 
         // 100 * 1.25 = 125 -> 126
@@ -860,7 +860,7 @@ describe('provider', () => {
           nonce: 0,
           gasFeeCap: FEE_CAP,
           gasLimit: LIMIT,
-          gasPremium: PREMIUM,
+          gasPremium: PREMIUM
         })
 
         const { gasPremium, gasFeeCap, gasLimit } =
@@ -874,14 +874,12 @@ describe('provider', () => {
         // here the min gasPremium is bumped by 1.25x, so we just make sure the recommended amount is bigger than that
         expect(
           new BigNumber(gasPremium).isGreaterThanOrEqualTo(
-            expectedMinGasPremium,
-          ),
+            expectedMinGasPremium
+          )
         ).toBe(true)
         expect(new BigNumber(gasLimit).isGreaterThanOrEqualTo(LIMIT)).toBe(true)
         expect(
-          new BigNumber(gasFeeCap).isGreaterThanOrEqualTo(
-            expectedMinGasPremium,
-          ),
+          new BigNumber(gasFeeCap).isGreaterThanOrEqualTo(expectedMinGasPremium)
         ).toBe(true)
       })
 
@@ -891,11 +889,11 @@ describe('provider', () => {
           from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
           value: new FilecoinNumber('1', 'attofil').toAttoFil(),
           method: 0,
-          nonce: 0,
+          nonce: 0
         })
 
         const messageWGas = await filecoin.gasEstimateMessageGas(
-          message.toLotusType(),
+          message.toLotusType()
         )
 
         const messageToReplace = new Message({
@@ -906,12 +904,12 @@ describe('provider', () => {
           nonce: 0,
           gasLimit: messageWGas.gasLimit,
           gasPremium: messageWGas.gasPremium.toString(),
-          gasFeeCap: messageWGas.gasFeeCap.toString(),
+          gasFeeCap: messageWGas.gasFeeCap.toString()
         })
 
         const { gasPremium, gasFeeCap } =
           await filecoin.getReplaceMessageGasParams(
-            messageToReplace.toLotusType(),
+            messageToReplace.toLotusType()
           )
 
         const expectedGasPremium = messageWGas.gasPremium
@@ -920,7 +918,7 @@ describe('provider', () => {
           .integerValue(BigNumber.ROUND_CEIL)
 
         const expectedGasFeeCap = expectedGasPremium.isGreaterThan(
-          messageWGas.gasFeeCap,
+          messageWGas.gasFeeCap
         )
           ? expectedGasPremium
           : messageWGas.gasFeeCap

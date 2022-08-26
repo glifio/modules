@@ -4,14 +4,14 @@ import { checkAddressString, CoinType } from '@glif/filecoin-address'
 import {
   LotusMessage,
   Message,
-  SignedLotusMessage,
+  SignedLotusMessage
 } from '@glif/filecoin-message'
 import {
   computeGasToBurn,
   KNOWN_TYPE_0_ADDRESS,
   KNOWN_TYPE_1_ADDRESS,
   KNOWN_TYPE_3_ADDRESS,
-  allCallsExitWithCode0,
+  allCallsExitWithCode0
 } from './utils'
 import { BigNumber } from 'bignumber.js'
 import { WalletSubProvider } from './wallet-sub-provider'
@@ -24,8 +24,8 @@ export class Filecoin {
   constructor(
     provider: WalletSubProvider,
     config: LotusRpcEngineConfig = {
-      apiAddress: 'http://127.0.0.1:1234/rpc/v0',
-    },
+      apiAddress: 'http://127.0.0.1:1234/rpc/v0'
+    }
   ) {
     if (!provider) throw new Error('No provider provided.')
     this.wallet = provider
@@ -36,7 +36,7 @@ export class Filecoin {
     checkAddressString(address)
     const balance = await this.jsonRpcEngine.request<string>(
       'WalletBalance',
-      address,
+      address
     )
     return new FilecoinNumber(balance, 'attofil')
   }
@@ -46,7 +46,7 @@ export class Filecoin {
       const res = await this.jsonRpcEngine.request<InvocResult>(
         'StateCall',
         message,
-        null,
+        null
       )
 
       return allCallsExitWithCode0(res)
@@ -56,14 +56,14 @@ export class Filecoin {
   }
 
   sendMessage = async (
-    signedLotusMessage: SignedLotusMessage,
+    signedLotusMessage: SignedLotusMessage
   ): Promise<CID> => {
     if (!signedLotusMessage.Message) throw new Error('No message provided.')
     if (!signedLotusMessage.Signature) throw new Error('No signature provided.')
 
     return this.jsonRpcEngine.request<{ '/': string }>(
       'MpoolPush',
-      signedLotusMessage,
+      signedLotusMessage
     )
   }
 
@@ -72,7 +72,7 @@ export class Filecoin {
     checkAddressString(address)
     try {
       const nonce = Number(
-        await this.jsonRpcEngine.request('MpoolGetNonce', address),
+        await this.jsonRpcEngine.request('MpoolGetNonce', address)
       )
       return nonce
     } catch (err) {
@@ -88,7 +88,7 @@ export class Filecoin {
   }
 
   cloneMsgWOnChainFromAddr = async (
-    message: LotusMessage,
+    message: LotusMessage
   ): Promise<LotusMessage> => {
     const clonedMsg = Object.assign({}, message)
     try {
@@ -119,7 +119,7 @@ export class Filecoin {
   }
 
   gasEstimateFeeCap = async (
-    message: LotusMessage,
+    message: LotusMessage
   ): Promise<FilecoinNumber> => {
     if (!message) throw new Error('No message provided.')
     const clonedMsg = await this.cloneMsgWOnChainFromAddr(message)
@@ -127,14 +127,14 @@ export class Filecoin {
       'GasEstimateFeeCap',
       clonedMsg,
       0,
-      null,
+      null
     )
 
     return new FilecoinNumber(feeCap, 'attofil')
   }
 
   gasEstimateGasLimit = async (
-    message: LotusMessage,
+    message: LotusMessage
   ): Promise<FilecoinNumber> => {
     if (!message) throw new Error('No message provided.')
     const clonedMsg = await this.cloneMsgWOnChainFromAddr(message)
@@ -142,7 +142,7 @@ export class Filecoin {
     const gasLimit = await this.jsonRpcEngine.request<string>(
       'GasEstimateGasLimit',
       clonedMsg,
-      null,
+      null
     )
 
     return new FilecoinNumber(gasLimit, 'attofil')
@@ -150,7 +150,7 @@ export class Filecoin {
 
   gasEstimateGasPremium = async (
     message: LotusMessage,
-    numBlocksIncluded: number = 0,
+    numBlocksIncluded = 0
   ): Promise<FilecoinNumber> => {
     if (!message) throw new Error('No message provided.')
     const clonedMsg = await this.cloneMsgWOnChainFromAddr(message)
@@ -160,7 +160,7 @@ export class Filecoin {
       numBlocksIncluded,
       clonedMsg.From,
       clonedMsg.GasLimit || 0,
-      null,
+      null
     )
 
     return new FilecoinNumber(gasPremium, 'attofil')
@@ -168,7 +168,7 @@ export class Filecoin {
 
   gasEstimateMessageGas = async (
     message: LotusMessage,
-    maxFee: string = new FilecoinNumber('0.1', 'fil').toAttoFil(),
+    maxFee: string = new FilecoinNumber('0.1', 'fil').toAttoFil()
   ): Promise<Message> => {
     if (!message) throw new Error('No message provided.')
     const clonedMsg = await this.cloneMsgWOnChainFromAddr(message)
@@ -180,12 +180,12 @@ export class Filecoin {
       GasLimit,
       Method,
       Nonce,
-      Params,
+      Params
     } = await this.jsonRpcEngine.request(
       'GasEstimateMessageGas',
       clonedMsg,
       { MaxFee: maxFee },
-      null,
+      null
     )
 
     // this is a hack to get by weird UI bugs where f addresses convert to t addresses
@@ -199,19 +199,19 @@ export class Filecoin {
       gasLimit: GasLimit,
       method: Method,
       nonce: Nonce,
-      params: Params,
+      params: Params
     })
   }
 
   gasEstimateMaxFee = async (
-    message: LotusMessage,
+    message: LotusMessage
   ): Promise<{ maxFee: FilecoinNumber; message: LotusMessage }> => {
     const msgWithGas = (await this.gasEstimateMessageGas(message)).toLotusType()
     const feeCap = new BigNumber(msgWithGas.GasFeeCap)
     const limit = new BigNumber(msgWithGas.GasLimit)
     return {
       maxFee: new FilecoinNumber(feeCap.times(limit), 'attofil'),
-      message: msgWithGas,
+      message: msgWithGas
     }
   }
 
@@ -234,7 +234,7 @@ export class Filecoin {
     gasPremium: string,
     gasLimit: number,
     baseFee: string,
-    gasUsed: string,
+    gasUsed: string
   ): Promise<FilecoinNumber> => {
     const gasFeeCapBN = new BigNumber(gasFeeCap)
     const gasPremiumBN = new BigNumber(gasPremium)
@@ -267,24 +267,24 @@ export class Filecoin {
 
   getReplaceMessageGasParams = async (
     message: LotusMessage,
-    maxFee: string = new FilecoinNumber('0.1', 'fil').toAttoFil(),
+    maxFee: string = new FilecoinNumber('0.1', 'fil').toAttoFil()
   ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
     const {
       gasFeeCap: minGasFeeCap,
       gasPremium: minGasPremium,
-      gasLimit: minGasLimit,
+      gasLimit: minGasLimit
     } = await this.getReplaceMessageMinGasParams(message)
 
     const copiedMessage = {
       ...message,
       GasFeeCap: '0',
       GasPremium: '0',
-      GasLimit: 0,
+      GasLimit: 0
     }
 
     const recommendedMessage = await this.gasEstimateMessageGas(
       copiedMessage,
-      maxFee,
+      maxFee
     )
 
     const takeMin =
@@ -298,7 +298,7 @@ export class Filecoin {
       gasPremium: takeMin
         ? minGasPremium
         : recommendedMessage.gasPremium.toString(),
-      gasLimit: recommendedMessage.gasLimit,
+      gasLimit: recommendedMessage.gasLimit
     }
   }
 
@@ -307,7 +307,7 @@ export class Filecoin {
    *  (1.25x prev gasPremium, bump fee cap as needed)
    */
   getReplaceMessageMinGasParams = async (
-    message: LotusMessage,
+    message: LotusMessage
   ): Promise<{ gasFeeCap: string; gasPremium: string; gasLimit: number }> => {
     // Sometimes the replaced message still got rejected because Lotus expected
     // a gas premium of 1 higher than what we calculated as the new minimum. In
@@ -326,7 +326,7 @@ export class Filecoin {
     return {
       gasFeeCap: newFeeCap,
       gasPremium: newPremiumBn.toString(),
-      gasLimit: message.GasLimit,
+      gasLimit: message.GasLimit
     }
   }
 }
