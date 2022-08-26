@@ -1,4 +1,5 @@
 import { networkActorCodeMap, networkActorCodeMapInv } from "./data"
+import { ActorCode, ActorName, NetworkName } from "./types"
 
 /**
  * Resolves the actor name by providing the actor code. When also providing
@@ -7,7 +8,7 @@ import { networkActorCodeMap, networkActorCodeMapInv } from "./data"
  * @param networkName (optional) the network in which to search for the actor name 
  * @returns the actor name when found or null when not found
  */
-export const getActorName = (actorCode: string, networkName?: string): string | null => {
+export const getActorName = (actorCode: ActorCode, networkName?: NetworkName): ActorName | null => {
   
   // If "networkName" is provided, return the actor name
   // for that specific network or null when not found
@@ -32,7 +33,7 @@ export const getActorName = (actorCode: string, networkName?: string): string | 
  * @param networkName (optional) the network in which to search for the actor code, defaults to "mainnet"
  * @returns the actor code when found or null when not found
  */
-export const getActorCode = (actorName: string, networkName: string = 'mainnet'): string | null => {
+export const getActorCode = (actorName: ActorName, networkName: NetworkName = 'mainnet'): ActorCode | null => {
 
   // Return null when the actor code is not found
   return networkActorCodeMap[networkName]?.[actorName] ?? null
