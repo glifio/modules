@@ -263,12 +263,9 @@ const typeCheck = (msg: MessageObj): void => {
   checkPositiveNumber(msg.nonce, 'Nonce')
   checkPositiveNumber(msg.method, 'Method')
   checkBigNumberValue(msg.value, 'Value')
-  if (msg.gasPremium)
-    checkBigNumberValue(msg.gasPremium, 'Gas Premium')
-  if (msg.gasFeeCap)
-    checkBigNumberValue(msg.gasFeeCap, 'Gas Fee Cap')
-  if (msg.gasLimit)
-    checkPositiveNumber(msg.gasLimit, 'Gas Limit')
+  if (msg.gasPremium) checkBigNumberValue(msg.gasPremium, 'Gas Premium')
+  if (msg.gasFeeCap) checkBigNumberValue(msg.gasFeeCap, 'Gas Fee Cap')
+  if (msg.gasLimit) checkPositiveNumber(msg.gasLimit, 'Gas Limit')
 }
 
 const checkAddressString = (value: any, name: string): void => {
@@ -287,15 +284,17 @@ const checkBigNumberValue = (value: any, name: string): void => {
     case 'number':
       return checkPositiveNumber(value, name)
     case 'string':
-      const bigNumber = new BigNumber(value)
-      if (bigNumber.toString() !== value)
-        throw new Error(`Value provided for ${name} is not a valid BigNumber string`)
+      if (new BigNumber(value).toString() !== value)
+        throw new Error(
+          `Value provided for ${name} is not a valid BigNumber string`
+        )
       return
     case 'object':
-      if (value === null)
-        throw new Error(`Value provided for ${name} is null`)
+      if (value === null) throw new Error(`Value provided for ${name} is null`)
       if (!BigNumber.isBigNumber(value))
-        throw new Error(`Value provided for ${name} is an object, but not a BigNumber`)
+        throw new Error(
+          `Value provided for ${name} is an object, but not a BigNumber`
+        )
       return
     default:
       throw new Error(`Value provided for ${name} is not a number or string`)
@@ -307,12 +306,13 @@ const checkPositiveNumber = (value: any, name: string): void => {
     throw new Error(`No value provided for ${name}`)
   if (typeof value !== 'number')
     throw new Error(`Value provided for ${name} is not a number`)
-  if (isNaN(value))
-    throw new Error(`Value provided for ${name} is NaN`)
+  if (isNaN(value)) throw new Error(`Value provided for ${name} is NaN`)
   if (value < 0)
     throw new Error(`Value provided for ${name} cannot be lower than 0`)
   if (value > Number.MAX_SAFE_INTEGER)
-    throw new Error(`Value provided for ${name} cannot be higher than ${Number.MAX_SAFE_INTEGER}`)
+    throw new Error(
+      `Value provided for ${name} cannot be higher than ${Number.MAX_SAFE_INTEGER}`
+    )
 }
 
 export default {
