@@ -7,6 +7,17 @@
       }
     },
     "Methods": {
+      "0": {
+        "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        }
+      },
       "1": {
         "Name": "Constructor",
         "Param": {
@@ -53,6 +64,17 @@
       }
     },
     "Methods": {
+      "0": {
+        "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        }
+      },
       "1": {
         "Name": "Constructor",
         "Param": {
@@ -119,6 +141,17 @@
       }
     },
     "Methods": {
+      "0": {
+        "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        }
+      },
       "1": {
         "Name": "Constructor",
         "Param": {
@@ -221,6 +254,17 @@
       }
     },
     "Methods": {
+      "0": {
+        "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        }
+      },
       "1": {
         "Name": "Constructor",
         "Param": {
@@ -518,6 +562,17 @@
       }
     },
     "Methods": {
+      "0": {
+        "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        }
+      },
       "1": {
         "Name": "Constructor",
         "Param": {
@@ -742,6 +797,17 @@
       }
     },
     "Methods": {
+      "0": {
+        "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        }
+      },
       "1": {
         "Name": "Constructor",
         "Param": {
@@ -910,6 +976,17 @@
       }
     },
     "Methods": {
+      "0": {
+        "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        }
+      },
       "1": {
         "Name": "Constructor",
         "Param": {
@@ -1365,6 +1442,17 @@
       }
     },
     "Methods": {
+      "0": {
+        "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        }
+      },
       "1": {
         "Name": "Constructor",
         "Param": {
@@ -2404,6 +2492,17 @@
       }
     },
     "Methods": {
+      "0": {
+        "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        }
+      },
       "1": {
         "Name": "Constructor",
         "Param": {
@@ -2715,6 +2814,17 @@
       }
     },
     "Methods": {
+      "0": {
+        "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue"
+        }
+      },
       "1": {
         "Name": "Constructor",
         "Param": {
