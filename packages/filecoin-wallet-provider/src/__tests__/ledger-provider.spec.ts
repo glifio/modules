@@ -541,7 +541,7 @@ describe('ledger wallet subprovider', () => {
       })
 
       test('it rejects if the message is poorly formed', async () => {
-        const [from, to] = await subProvider.getAccounts(0, 2, CoinType.TEST)
+        const [from, _to] = await subProvider.getAccounts(0, 2, CoinType.TEST)
 
         try {
           // @ts-expect-error
