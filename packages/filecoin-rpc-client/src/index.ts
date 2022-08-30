@@ -39,7 +39,7 @@ export function deleteHeaders(opts: AxiosRequestConfig): AxiosRequestConfig {
 }
 
 export type LotusRpcEngineConfig = {
-  apiAddress?: string
+  apiAddress: string
   token?: string
   axiosOpts?: AxiosRequestConfig
 }
@@ -55,7 +55,7 @@ export default class LotusRpcEngine {
       throw new Error(
         'Must pass a config object to the LotusRpcEngine constructor.'
       )
-    this.apiAddress = config.apiAddress || 'http://127.0.0.1:1234/rpc/v0'
+    this.apiAddress = config.apiAddress
     this.token = config.token
     this.headers = configureHeaders(config?.axiosOpts?.headers, config.token)
     this.axiosOpts = deleteHeaders(config.axiosOpts || {})
