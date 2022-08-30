@@ -67,3 +67,13 @@ export type ActorDescriptor = {
 export type ActorDescriptorMap = {
   [actorName: ActorName]: ActorDescriptor
 }
+
+export type LotusCID = {
+  '/': string
+}
+
+export type LotusActorState = {
+  Balance: string
+  Code: LotusCID
+  State: object | null
+}
