@@ -73,8 +73,8 @@ export type LotusCID = {
   '/': string
 }
 
-export type LotusActorState = {
+export type LotusActorState<T = object | null> = {
   Balance: string
   Code: LotusCID
-  State: object | null
+  State: T
 }
