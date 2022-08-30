@@ -33,7 +33,7 @@ export enum Type {
 }
 
 export type DataType = {
-  Type: string
+  Type: Type
   Name: string
   Key?: DataType // For map type
   Contains?: DataType // For map / array / channel type
