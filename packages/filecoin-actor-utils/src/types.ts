@@ -35,6 +35,7 @@ export enum Type {
 export type DataType = {
   Type: Type
   Name: string
+  Value?: boolean | string | number
   Key?: DataType // For map type
   Contains?: DataType // For map / array / channel type
   Children?: DataTypeMap // For object type
