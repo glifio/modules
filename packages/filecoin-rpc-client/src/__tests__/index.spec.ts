@@ -26,8 +26,8 @@ describe('removeEmptyHeaders', () => {
     const headers = {
       'Content-Type': 'text/plain;charset=UTF-8',
       Test: 'value',
-      Accept: undefined,
-      Authorization: null
+      Accept: '',
+      Authorization: ''
     }
 
     expect(removeEmptyHeaders(headers).Accept).toBeUndefined()
