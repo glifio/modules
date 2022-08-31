@@ -55,7 +55,7 @@ export default class LotusRpcEngine {
       )
     this.apiAddress = config.apiAddress
     this.token = config.token
-    this.headers = configureHeaders(config?.axiosOpts?.headers, config.token)
+    this.headers = configureHeaders(config.axiosOpts?.headers, config.token)
     this.axiosOpts = deleteHeaders(config.axiosOpts || {})
   }
 
