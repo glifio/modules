@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 
 type Headers = Record<string, string | null | undefined>
 
-export function removeEmptyHeaders(headers: Headers): Record<string, string> {
+function removeEmptyHeaders(headers: Headers): Record<string, string> {
   const newHeaders: Record<string, string> = {}
   Object.keys(headers).forEach(key => {
     if (headers[key]) newHeaders[key] = headers[key] as string
@@ -10,7 +10,7 @@ export function removeEmptyHeaders(headers: Headers): Record<string, string> {
   return newHeaders
 }
 
-export function configureHeaders(
+function configureHeaders(
   headers: Headers = {},
   token?: string
 ): Record<string, string> {
@@ -24,7 +24,7 @@ export function configureHeaders(
   return removeEmptyHeaders(reqHeaders)
 }
 
-export function throwIfErrors(response: any): any {
+function throwIfErrors(response: any): any {
   if (response.error) {
     if (response.error.message) throw new Error(response.error.message)
     else throw new Error('Unknown jsonrpc error')
@@ -33,7 +33,7 @@ export function throwIfErrors(response: any): any {
   }
 }
 
-export function deleteHeaders(opts: AxiosRequestConfig): AxiosRequestConfig {
+function deleteHeaders(opts: AxiosRequestConfig): AxiosRequestConfig {
   delete opts.headers
   return opts
 }
