@@ -24,5 +24,19 @@
     "storagepower": "bafk2bzacebjvqva6ppvysn5xpmiqcdfelwbbcxmghx5ww6hr37cgred6dyrpm",
     "system": "bafk2bzacedwq5uppsw7vp55zpj7jdieizirmldceehu6wvombw3ixq2tcq57w",
     "verifiedregistry": "bafk2bzaceb3zbkjz3auizmoln2unmxep7dyfcmsre64vnqfhdyh7rkqfoxlw4"
+  },
+  "wallabynet": {
+    "account": "bafk2bzaceduxzx7iz4ov7dvjnmimydefdt4hxbnrq6xyj7rafp6mx5bvjlnuw",
+    "cron": "bafk2bzaced5nlwr2scq7upethw4fml4mtodpipd6ltf4hotpofl2av6jsouv4",
+    "evm": "bafk2bzaceda6ch4cjae7covrcf7pk5ic7qc2itdv7f2hcpypqfbxzpkcqcvto",
+    "init": "bafk2bzacechjgohnzdj5ndxey6av4tksxftqhkxiqv62r7ekq6w4jmlt3dedw",
+    "multisig": "bafk2bzaceaozlaqbk6ufiqwktug52u45jnrhkoa232i2hipgwnqylou6ae5ps",
+    "paymentchannel": "bafk2bzacedrvtrxhbv7acei64v4sdnrpdidfdniywhyvqfi54qycj6afe542a",
+    "reward": "bafk2bzacecomgsz5nw5csrsmozcopzr6ybuokivtc46hck7hndhqzfqo5vzbi",
+    "storagemarket": "bafk2bzacecmjjzkoyil7hhu4rhwops32g24qcjx4nwdecn2nsjcww5jawlapy",
+    "storageminer": "bafk2bzacedlalvdvee3jxeyekt65aeoh7ogzyl4ljkacz3sjvlvle6ywwtu5e",
+    "storagepower": "bafk2bzaceabxu46b5bqysw2lyyshotvc4n26yshj3jtnqhrhjqodnvbgeja3s",
+    "system": "bafk2bzaced4h2mz2zztppuuwqtjpdccnrxinm6bcy2ixll5yxqkm4jwtlwoeg",
+    "verifiedregistry": "bafk2bzacec5ca5feawf4dgdq6kg6pdv4z2qprleft2zefzn5dlekpel2clnx6"
   }
 }
