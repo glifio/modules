@@ -331,7 +331,7 @@
           "Name": "ProposeReturn",
           "Children": {
             "Applied": {
-              "Type": "bool",
+              "Type": "boolean",
               "Name": "bool"
             },
             "Code": {
@@ -378,7 +378,7 @@
           "Name": "ApproveReturn",
           "Children": {
             "Applied": {
-              "Type": "bool",
+              "Type": "boolean",
               "Name": "bool"
             },
             "Code": {
@@ -428,7 +428,7 @@
           "Name": "AddSignerParams",
           "Children": {
             "Increase": {
-              "Type": "bool",
+              "Type": "boolean",
               "Name": "bool"
             },
             "Signer": {
@@ -449,7 +449,7 @@
           "Name": "RemoveSignerParams",
           "Children": {
             "Decrease": {
-              "Type": "bool",
+              "Type": "boolean",
               "Name": "bool"
             },
             "Signer": {
@@ -1090,7 +1090,7 @@
                             }
                           },
                           "notString": {
-                            "Type": "bool",
+                            "Type": "boolean",
                             "Name": "bool"
                           }
                         }
@@ -1126,7 +1126,7 @@
                         "Name": "FilecoinNumber"
                       },
                       "VerifiedDeal": {
-                        "Type": "bool",
+                        "Type": "boolean",
                         "Name": "bool"
                       }
                     }
@@ -1349,7 +1349,7 @@
         "Name": "uint64"
       },
       "DeadlineCronActive": {
-        "Type": "bool",
+        "Type": "boolean",
         "Name": "bool"
       },
       "Deadlines": {
@@ -1958,7 +1958,7 @@
                     "Name": "ChainEpoch"
                   },
                   "ReplaceCapacity": {
-                    "Type": "bool",
+                    "Type": "boolean",
                     "Name": "bool"
                   },
                   "ReplaceSectorDeadline": {
@@ -2241,7 +2241,7 @@
               "Name": "ChainEpoch"
             },
             "ReplaceCapacity": {
-              "Type": "bool",
+              "Type": "boolean",
               "Name": "bool"
             },
             "ReplaceSectorDeadline": {
@@ -2392,7 +2392,7 @@
           "Name": "TerminateSectorsReturn",
           "Children": {
             "Done": {
-              "Type": "bool",
+              "Type": "boolean",
               "Name": "bool"
             }
           }

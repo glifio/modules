@@ -21,7 +21,7 @@ export type NetworkActorCodeMapInv = {
 }
 
 export enum Type {
-  Bool = 'bool',
+  Bool = 'boolean',
   Number = 'number',
   String = 'string',
   Map = 'map',
@@ -35,7 +35,7 @@ export enum Type {
 export type DataType = {
   Type: Type
   Name: string
-  Value?: boolean | string | number
+  Value?: boolean | string | number | Array<boolean | string | number>
   Key?: DataType // For map type
   Contains?: DataType // For map / array / channel type
   Children?: DataTypeMap // For object type
@@ -73,7 +73,7 @@ export type LotusCID = {
   '/': string
 }
 
-export type LotusActorState<T = object | null> = {
+export type LotusActorState<T = Record<string, any> | null> = {
   Balance: string
   Code: LotusCID
   State: T
