@@ -28,8 +28,6 @@ function throwIfErrors(response: any): any {
   if (response.error) {
     if (response.error.message) throw new Error(response.error.message)
     else throw new Error('Unknown jsonrpc error')
-  } else {
-    return response
   }
 }
 
