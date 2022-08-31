@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-number",
-  "version": "2.0.0-beta.16",
+  "version": "2.0.0",
   "description": "a javascript package to handle Filecoin numbers like Fil and AttoFil",
   "main": "./dist/index.js",
   "browser": "./lib/index.js",
