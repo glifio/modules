@@ -1,6 +1,6 @@
 import nock from 'nock'
 import LotusRpcEngine, {
-  configureHeaders,
+  getHeaders,
   removeEmptyHeaders,
   throwIfErrors
 } from '../index'
@@ -37,12 +37,12 @@ describe('removeEmptyHeaders', () => {
   })
 })
 
-describe('configureHeaders', () => {
+describe('getHeaders', () => {
   test('it should return Accept */* and application/json Content-Type', () => {
     const headers = {}
 
-    expect(configureHeaders(headers).Accept).toBe('*/*')
-    expect(configureHeaders(headers)['Content-Type']).toBe('application/json')
+    expect(getHeaders(headers).Accept).toBe('*/*')
+    expect(getHeaders(headers)['Content-Type']).toBe('application/json')
   })
 })
 
