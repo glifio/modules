@@ -149,8 +149,7 @@ const describeArray = (
   const valueType = typeof value
 
   // Check malformed descriptor
-  if (!Contains)
-    throw new Error(`Expected Contains property in array DataType`)
+  if (!Contains) throw new Error(`Expected Contains property in array DataType`)
 
   // Check the value type
   if (!Array.isArray(value))
