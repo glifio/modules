@@ -4,7 +4,7 @@ import {
   LotusMessage,
   Message,
   SignedLotusMessage,
-  ZondaxMessage,
+  ZondaxMessage
 } from '@glif/filecoin-message'
 import { mapSeries } from 'bluebird'
 import { WalletType } from '../../types'
@@ -14,7 +14,7 @@ import {
   coinTypeCode,
   createPath,
   validIndexes,
-  extractCoinTypeFromPath,
+  extractCoinTypeFromPath
 } from '../../utils'
 
 export class MetaMaskProvider implements WalletSubProvider {
@@ -25,7 +25,7 @@ export class MetaMaskProvider implements WalletSubProvider {
   constructor({ snap }: { snap: FilecoinSnapApi }) {
     if (!snap)
       throw new errors.InvalidParamsError({
-        message: 'Must pass `snap` to MetaMask provider',
+        message: 'Must pass `snap` to MetaMask provider'
       })
     this.snap = snap
   }
@@ -33,13 +33,13 @@ export class MetaMaskProvider implements WalletSubProvider {
   getAccounts = async (nStart = 0, nEnd = 5, coinType = CoinType.MAIN) => {
     if (!validIndexes(nStart, nEnd)) {
       throw new errors.InvalidParamsError({
-        message: 'invalid account indexes passed to getAccounts',
+        message: 'invalid account indexes passed to getAccounts'
       })
     }
 
     if (coinType !== CoinType.MAIN && coinType !== CoinType.TEST) {
       throw new errors.InvalidParamsError({
-        message: 'invalid coinType passed to getAccounts',
+        message: 'invalid coinType passed to getAccounts'
       })
     }
     try {
@@ -58,7 +58,7 @@ export class MetaMaskProvider implements WalletSubProvider {
             message:
               err instanceof Error
                 ? err.message
-                : 'Error getting accounts from MetaMask',
+                : 'Error getting accounts from MetaMask'
           })
         }
       })
@@ -68,7 +68,7 @@ export class MetaMaskProvider implements WalletSubProvider {
         message:
           err instanceof Error
             ? err.message
-            : 'Error getting accounts from MetaMask',
+            : 'Error getting accounts from MetaMask'
       })
     }
   }
@@ -79,7 +79,7 @@ export class MetaMaskProvider implements WalletSubProvider {
 
   sign = async (
     from: string,
-    message: LotusMessage,
+    message: LotusMessage
   ): Promise<SignedLotusMessage> => {
     if (from !== message.From) {
       throw new errors.InvalidParamsError({ message: 'From address mismatch' })
@@ -88,18 +88,18 @@ export class MetaMaskProvider implements WalletSubProvider {
     if (!path) {
       throw new errors.WalletProviderError({
         message:
-          'Must call getAccounts with to derive this from address before signing with it',
+          'Must call getAccounts with to derive this from address before signing with it'
       })
     }
 
     try {
       await this.snap.configure({
         derivationPath: path,
-        network: extractCoinTypeFromPath(path),
+        network: extractCoinTypeFromPath(path)
       })
     } catch (err) {
       throw new errors.MetaMaskError({
-        message: err instanceof Error ? err.message : 'Error configuring snap',
+        message: err instanceof Error ? err.message : 'Error configuring snap'
       })
     }
 
@@ -110,14 +110,14 @@ export class MetaMaskProvider implements WalletSubProvider {
       throw new errors.InvalidParamsError(
         err instanceof Error
           ? {
-              message: `Invalid message params passed to sign call: ${err.message}`,
+              message: `Invalid message params passed to sign call: ${err.message}`
             }
-          : undefined,
+          : undefined
       )
     }
 
     const signReq = await this.snap.signMessage(
-      msg.toZondaxType() as ZondaxMessage & { params: string },
+      msg.toZondaxType() as ZondaxMessage & { params: string }
     )
 
     if (!signReq)
@@ -125,15 +125,15 @@ export class MetaMaskProvider implements WalletSubProvider {
     if (!signReq.confirmed) throw new errors.TransactionRejectedError()
     if (signReq.error)
       throw new errors.MetaMaskError({
-        message: signReq.error.message,
+        message: signReq.error.message
       })
 
     return {
       Message: message,
       Signature: {
         Data: signReq.signedMessage?.signature?.data,
-        Type: signReq.signedMessage?.signature?.type,
-      },
+        Type: signReq.signedMessage?.signature?.type
+      }
     }
   }
 }

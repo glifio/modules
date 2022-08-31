@@ -23,7 +23,7 @@ class LedgerLostConnectionError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'connection lost',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, LedgerLostConnectionError.prototype)
   }
@@ -33,7 +33,7 @@ class TransportNotSupportedError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'transport not supported by device',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, TransportNotSupportedError.prototype)
   }
@@ -43,7 +43,7 @@ class LedgerReplugError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'unknown',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, LedgerReplugError.prototype)
   }
@@ -53,7 +53,7 @@ class LedgerDisconnectedError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'ledger device disconnected',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, LedgerDisconnectedError.prototype)
   }
@@ -63,7 +63,7 @@ class LedgerInUseByAnotherApp extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'ledger device in use by another app',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, LedgerInUseByAnotherApp.prototype)
   }
@@ -73,7 +73,7 @@ class LedgerNotFoundError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'ledger device not found',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, LedgerNotFoundError.prototype)
   }
@@ -83,7 +83,7 @@ class LedgerDeviceLockedError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'ledger device locked',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, LedgerDeviceLockedError.prototype)
   }
@@ -93,7 +93,7 @@ class LedgerFilecoinAppBadVersionError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'bad filecoin app version on ledger device',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, LedgerFilecoinAppBadVersionError.prototype)
   }
@@ -103,7 +103,7 @@ class LedgerFilecoinAppNotOpenError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'filecoin app not open on device',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, LedgerFilecoinAppNotOpenError.prototype)
   }
@@ -113,7 +113,7 @@ class LedgerDeviceBusyError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'ledger device locked or busy',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, LedgerDeviceBusyError.prototype)
   }
@@ -123,7 +123,7 @@ class InvalidParamsError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'invalid params',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, InvalidParamsError.prototype)
   }
@@ -133,7 +133,7 @@ class UnsupportedKeyTypeError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'unsupported key type',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, UnsupportedKeyTypeError.prototype)
   }
@@ -143,7 +143,7 @@ class TransactionRejectedError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'Transaction rejected',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, TransactionRejectedError.prototype)
   }
@@ -153,7 +153,7 @@ class MetaMaskError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'MetaMask error',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, MetaMaskError.prototype)
   }
@@ -163,7 +163,7 @@ class MetaMaskNotInstalledError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'MetaMask not installed',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, MetaMaskNotInstalledError.prototype)
   }
@@ -175,7 +175,7 @@ class MetaMaskSnapsNotSupportedError extends WalletProviderError {
       message:
         args.message ||
         'The installed version of MetaMask does not support Snaps',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, MetaMaskSnapsNotSupportedError.prototype)
   }
@@ -185,7 +185,7 @@ class MetaMaskLockedError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'MetaMask locked',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, MetaMaskLockedError.prototype)
   }
@@ -195,7 +195,7 @@ class MetaMaskFilSnapNotInstalledError extends WalletProviderError {
   constructor({ ...args }: Partial<WalletProviderErrorInterface> = {}) {
     super({
       message: args.message || 'FILSnap not installed',
-      ...args,
+      ...args
     })
     Object.setPrototypeOf(this, MetaMaskFilSnapNotInstalledError.prototype)
   }
@@ -220,5 +220,5 @@ export default {
   TransactionRejectedError,
   TransportNotSupportedError,
   UnsupportedKeyTypeError,
-  WalletProviderError,
+  WalletProviderError
 }

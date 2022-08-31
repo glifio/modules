@@ -13,7 +13,7 @@ export class AccountStore {
 
     if (!path) {
       throw new errors.WalletProviderError({
-        message: 'Account was not yet derived from this seed phrase',
+        message: 'Account was not yet derived from this seed phrase'
       })
     }
 

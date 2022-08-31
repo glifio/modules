@@ -8,7 +8,7 @@
     "browser": {
       "presets": [
         [
-          "@babel/env",
+          "@babel/preset-env",
           {
             "targets": {
               "browsers": "last 2 versions, ie 10-11"
@@ -21,10 +21,10 @@
     "module": {
       "presets": [
         [
-          "@babel/env",
+          "@babel/preset-env",
           {
             "targets": {
-              "node": "6.10"
+              "node": "16"
             },
             "modules": false
           }

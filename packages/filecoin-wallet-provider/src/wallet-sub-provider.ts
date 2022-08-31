@@ -6,7 +6,7 @@ export interface WalletSubProvider {
   getAccounts(
     nStart: number,
     nEnd: number,
-    coinType: CoinType,
+    coinType: CoinType
   ): Promise<string[]>
   keyDerive(path: string): Promise<string>
   sign(from: string, message: LotusMessage): Promise<SignedLotusMessage>

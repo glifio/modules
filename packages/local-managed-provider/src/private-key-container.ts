@@ -6,7 +6,7 @@ import * as signingTools from '@zondax/filecoin-signing-tools'
 
 export enum KeyType {
   'bls' = 'SINGLE_KEY_BLS',
-  'secp256k1' = 'SINGLE_KEY_SECP256K1',
+  'secp256k1' = 'SINGLE_KEY_SECP256K1'
 }
 
 export type SignFunc = (message: MessageParams) => Promise<SignedLotusMessage>
@@ -19,7 +19,7 @@ export interface PrivateKeyContainer {
 
 export function privateKeyContainer(
   privateKey: string,
-  coinType: CoinType,
+  coinType: CoinType
 ): PrivateKeyContainer {
   const bytes = fromString(privateKey, 'base16')
   const json = JSON.parse(toString(bytes))
@@ -39,10 +39,10 @@ export function privateKeyContainer(
     sign: async (message: MessageParams) => {
       const asString = await signingTools.transactionSignLotus(
         message,
-        extendedKey.private_base64,
+        extendedKey.private_base64
       )
-      return JSON.parse((asString as unknown) as string)
+      return JSON.parse(asString as unknown as string)
     },
-    keyType: KeyType[keyType],
+    keyType: KeyType[keyType]
   }
 }

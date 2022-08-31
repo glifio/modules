@@ -5,7 +5,7 @@ import { mapSeries } from 'bluebird'
 import {
   LotusMessage,
   Message,
-  SignedLotusMessage,
+  SignedLotusMessage
 } from '@glif/filecoin-message'
 import signingTools from '@zondax/filecoin-signing-tools/js'
 import { createPath, coinTypeCode, validIndexes } from '../../utils'
@@ -19,7 +19,7 @@ const {
   LedgerFilecoinAppBadVersionError,
   LedgerReplugError,
   LedgerDeviceBusyError,
-  WalletProviderError,
+  WalletProviderError
 } = errors
 
 import { badVersion } from './badVersion'
@@ -81,13 +81,13 @@ const throwIfBusy = (busy: boolean): void => {
 
 export class LedgerProvider extends AccountStore implements LedgerSubProvider {
   public type: WalletType = 'LEDGER'
-  public ledgerBusy: boolean = false
+  public ledgerBusy = false
   public minLedgerVersion: SemanticVersion
   private transport: Transport
 
   constructor({
     transport,
-    minLedgerVersion,
+    minLedgerVersion
   }: {
     transport: Transport
     minLedgerVersion: SemanticVersion
@@ -95,7 +95,7 @@ export class LedgerProvider extends AccountStore implements LedgerSubProvider {
     super()
     if (!transport)
       throw new errors.InvalidParamsError({
-        message: 'Must provide transport when instantiating LedgerSubProvider',
+        message: 'Must provide transport when instantiating LedgerSubProvider'
       })
     if (
       !minLedgerVersion ||
@@ -104,7 +104,7 @@ export class LedgerProvider extends AccountStore implements LedgerSubProvider {
       typeof minLedgerVersion.patch !== 'number'
     )
       throw new errors.InvalidParamsError({
-        message: 'Must provide valid minLedgerVersions',
+        message: 'Must provide valid minLedgerVersions'
       })
 
     this.transport = transport
@@ -132,8 +132,8 @@ export class LedgerProvider extends AccountStore implements LedgerSubProvider {
         try {
           const vs = handleLedgerResponseErrors(
             (await new FilecoinApp(
-              this.transport,
-            ).getVersion()) as LedgerVersion,
+              this.transport
+            ).getVersion()) as LedgerVersion
           ) as LedgerVersion
 
           if (badVersion(this.minLedgerVersion, vs))
@@ -141,7 +141,7 @@ export class LedgerProvider extends AccountStore implements LedgerSubProvider {
               message: `
               Filecoin App on Ledger device should be version
               ${this.minLedgerVersion.major}.${this.minLedgerVersion.minor}.${this.minLedgerVersion.patch}
-            `,
+            `
             })
           return resolve(vs)
         } catch (err) {
@@ -172,7 +172,7 @@ export class LedgerProvider extends AccountStore implements LedgerSubProvider {
 
   sign = async (
     from: string,
-    message: LotusMessage,
+    message: LotusMessage
   ): Promise<SignedLotusMessage> => {
     throwIfBusy(this.ledgerBusy)
     if (from !== message.From)
@@ -186,29 +186,29 @@ export class LedgerProvider extends AccountStore implements LedgerSubProvider {
       throw new errors.InvalidParamsError(
         err instanceof Error
           ? {
-              message: `Invalid message params passed to sign call: ${err.message}`,
+              message: `Invalid message params passed to sign call: ${err.message}`
             }
-          : undefined,
+          : undefined
       )
     } finally {
       this.ledgerBusy = false
     }
     const serializedMessage = signingTools.transactionSerialize(
-      msg.toZondaxType(),
+      msg.toZondaxType()
     )
     try {
       const res = handleLedgerResponseErrors(
         await new FilecoinApp(this.transport).sign(
           path,
-          Buffer.from(serializedMessage, 'hex'),
-        ),
+          Buffer.from(serializedMessage, 'hex')
+        )
       ) as LedgerSignature
       const signedMessage: SignedLotusMessage = {
         Message: message,
         Signature: {
           Data: res.signature_compact.toString('base64'),
-          Type: 1,
-        },
+          Type: 1
+        }
       }
       return signedMessage
     } catch (err) {
@@ -226,13 +226,13 @@ export class LedgerProvider extends AccountStore implements LedgerSubProvider {
     throwIfBusy(this.ledgerBusy)
     if (!validIndexes(nStart, nEnd)) {
       throw new errors.InvalidParamsError({
-        message: 'invalid account indexes passed to getAccounts',
+        message: 'invalid account indexes passed to getAccounts'
       })
     }
 
     if (coinType !== CoinType.MAIN && coinType !== CoinType.TEST) {
       throw new errors.InvalidParamsError({
-        message: 'invalid coinType passed to getAccounts',
+        message: 'invalid coinType passed to getAccounts'
       })
     }
 
@@ -244,7 +244,7 @@ export class LedgerProvider extends AccountStore implements LedgerSubProvider {
     const addresses = await mapSeries(paths, async (path: string) => {
       try {
         const { addrString } = handleLedgerResponseErrors(
-          await new FilecoinApp(this.transport).getAddressAndPubKey(path),
+          await new FilecoinApp(this.transport).getAddressAndPubKey(path)
         ) as LedgerShowAddrAndPubKey
         this.setAccountPath(addrString, path)
         return addrString
@@ -263,13 +263,13 @@ export class LedgerProvider extends AccountStore implements LedgerSubProvider {
   }
 
   showAddressAndPubKey = async (
-    path: string,
+    path: string
   ): Promise<LedgerShowAddrAndPubKey> => {
     throwIfBusy(this.ledgerBusy)
     this.ledgerBusy = true
     try {
       const res = handleLedgerResponseErrors(
-        await new FilecoinApp(this.transport).showAddressAndPubKey(path),
+        await new FilecoinApp(this.transport).showAddressAndPubKey(path)
       ) as LedgerShowAddrAndPubKey
       return res
     } catch (err) {

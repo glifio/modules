@@ -14,14 +14,14 @@ const signMessageSpy = jest.fn().mockImplementation(() => ({
     message: {},
     signature: {
       data: 'you are super deep in this right now. well done',
-      type: 1,
-    },
-  },
+      type: 1
+    }
+  }
 }))
 const signMessageRawSpy = jest.fn().mockImplementation(() => ({
   confirmed: true,
   error: null,
-  signature: 'yoyoma',
+  signature: 'yoyoma'
 }))
 
 const mockSnap: FilecoinSnapApi = {
@@ -34,12 +34,12 @@ const mockSnap: FilecoinSnapApi = {
   signMessageRaw: signMessageRawSpy,
   sendMessage: jest.fn(),
   getMessages: jest.fn(),
-  calculateGasForMessage: jest.fn(),
+  calculateGasForMessage: jest.fn()
 }
 
 const overrideMockSnap = (overrides: object): FilecoinSnapApi => ({
   ...mockSnap,
-  ...overrides,
+  ...overrides
 })
 
 describe('metamask subprovider', () => {
@@ -68,7 +68,7 @@ describe('metamask subprovider', () => {
       await subProvider.getAccounts(0, 5, CoinType.TEST)
       expect(configureSpy).toHaveBeenCalledTimes(5)
       configureSpy.mock.calls.forEach(([{ derivationPath }], i) =>
-        expect(Number(derivationPath.split('/')[5])).toBe(Number(i)),
+        expect(Number(derivationPath.split('/')[5])).toBe(Number(i))
       )
 
       expect(getAddressSpy).toHaveBeenCalledTimes(5)
@@ -79,7 +79,7 @@ describe('metamask subprovider', () => {
       expect(configureSpy).toHaveBeenCalledTimes(1)
       expect(configureSpy).toHaveBeenCalledWith({
         derivationPath: createPath(coinTypeCode(CoinType.TEST), 0),
-        network: CoinType.TEST,
+        network: CoinType.TEST
       })
 
       jest.clearAllMocks()
@@ -88,7 +88,7 @@ describe('metamask subprovider', () => {
       expect(configureSpy).toHaveBeenCalledTimes(1)
       expect(configureSpy).toHaveBeenCalledWith({
         derivationPath: createPath(coinTypeCode(CoinType.MAIN), 0),
-        network: CoinType.MAIN,
+        network: CoinType.MAIN
       })
     })
 
@@ -113,7 +113,7 @@ describe('metamask subprovider', () => {
   describe('keyDerive', () => {
     test('it throws an error', async () => {
       await expect(subProvider.keyDerive('')).rejects.toThrow(
-        'Cannot derive key from MetaMask provider',
+        'Cannot derive key from MetaMask provider'
       )
     })
   })
@@ -130,7 +130,7 @@ describe('metamask subprovider', () => {
         to,
         value,
         method,
-        nonce,
+        nonce
       })
 
       const sig = await subProvider.sign(from, message.toLotusType())
@@ -152,10 +152,10 @@ describe('metamask subprovider', () => {
       const rejectedSignature = jest.fn().mockImplementation(() => ({
         signedMessage: null,
         error: null,
-        confirmed: false,
+        confirmed: false
       }))
       const mockSnapOverride = overrideMockSnap({
-        signMessage: rejectedSignature,
+        signMessage: rejectedSignature
       })
 
       const subProvider = new MetaMaskProvider({ snap: mockSnapOverride })
@@ -165,7 +165,7 @@ describe('metamask subprovider', () => {
         to,
         value,
         method,
-        nonce,
+        nonce
       })
 
       try {
@@ -182,7 +182,7 @@ describe('metamask subprovider', () => {
         to,
         value,
         method: 1,
-        nonce,
+        nonce
       })
 
       const sig = await subProvider.sign(from, message.toLotusType())
@@ -208,7 +208,7 @@ describe('metamask subprovider', () => {
         value,
         method: 0,
         nonce,
-        params: 'ejwhioah',
+        params: 'ejwhioah'
       })
 
       const sig = await subProvider.sign(from, message.toLotusType())
@@ -230,10 +230,10 @@ describe('metamask subprovider', () => {
       const rejectedSignature = jest.fn().mockImplementation(() => ({
         signature: null,
         error: null,
-        confirmed: false,
+        confirmed: false
       }))
       const mockSnapOverride = overrideMockSnap({
-        signMessage: rejectedSignature,
+        signMessage: rejectedSignature
       })
 
       const subProvider = new MetaMaskProvider({ snap: mockSnapOverride })
@@ -245,7 +245,7 @@ describe('metamask subprovider', () => {
         value,
         method: 1,
         nonce,
-        params: 'ejwhioah',
+        params: 'ejwhioah'
       })
       try {
         await subProvider.sign(from, message.toLotusType())

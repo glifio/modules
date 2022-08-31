@@ -6,7 +6,7 @@ const {
   LedgerNotFoundError,
   LedgerFilecoinAppNotOpenError,
   TransactionRejectedError,
-  WalletProviderError,
+  WalletProviderError
 } = errors
 
 export const CommonLedgerError = (error: Error): Error => {

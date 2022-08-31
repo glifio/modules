@@ -1,64 +1,53 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios'
 
-type Headers = Record<string, string | null | undefined>
+export const removeEmptyHeaders = (
+  headers: AxiosRequestHeaders
+): AxiosRequestHeaders =>
+  Object.fromEntries(Object.entries(headers).filter(([_key, value]) => !!value))
 
-export function removeEmptyHeaders(headers: Headers): Record<string, string> {
-  const newHeaders: Record<string, string> = {}
-  Object.keys(headers).forEach((key) => {
-    if (headers[key]) newHeaders[key] = headers[key] as string
-  })
-  return newHeaders
-}
+export const getHeaders = (
+  headers?: AxiosRequestHeaders,
+  token?: string
+): AxiosRequestHeaders => ({
+  ...headers,
+  Accept: '*/*',
+  'Content-Type': 'application/json',
+  ...(token
+    ? {
+        Authorization: `Bearer ${token}`
+      }
+    : {})
+})
 
-export function configureHeaders(
-  headers: Headers = {},
-  token?: string,
-): Record<string, string> {
-  const reqHeaders: Headers = Object.assign({}, headers, {
-    Accept: '*/*',
-    'Content-Type': 'application/json',
-  })
-  if (token) {
-    reqHeaders.Authorization = `Bearer ${token}`
+export const throwIfErrors = (data: any) => {
+  if (data.error) {
+    if (data.error.message) throw new Error(data.error.message)
+    throw new Error(`JSON-RPC error: ${JSON.stringify(data.error)}`)
   }
-  return removeEmptyHeaders(reqHeaders)
-}
-
-export function throwIfErrors(response: any): any {
-  if (response.error) {
-    if (response.error.message) throw new Error(response.error.message)
-    else throw new Error('Unknown jsonrpc error')
-  } else {
-    return response
-  }
-}
-
-export function deleteHeaders(opts: AxiosRequestConfig): AxiosRequestConfig {
-  delete opts.headers
-  return opts
 }
 
 export type LotusRpcEngineConfig = {
-  apiAddress?: string
+  apiAddress: string
   token?: string
+  namespace?: string
   axiosOpts?: AxiosRequestConfig
 }
 
 export default class LotusRpcEngine {
   readonly apiAddress: string
-  readonly token?: string
+  readonly namespace: string
   readonly axiosOpts: AxiosRequestConfig
-  readonly headers: Record<string, string>
 
-  constructor(config?: LotusRpcEngineConfig) {
+  constructor(config: LotusRpcEngineConfig) {
     if (!config)
       throw new Error(
-        'Must pass a config object to the LotusRpcEngine constructor.',
+        'Must pass a config object to the LotusRpcEngine constructor.'
       )
-    this.apiAddress = config.apiAddress || 'http://127.0.0.1:1234/rpc/v0'
-    this.token = config.token
-    this.headers = configureHeaders(config?.axiosOpts?.headers, config.token)
-    this.axiosOpts = deleteHeaders(config.axiosOpts || {})
+    this.apiAddress = config.apiAddress
+    this.namespace = config.namespace || 'Filecoin'
+    this.axiosOpts = config.axiosOpts || {}
+    this.axiosOpts.headers = getHeaders(this.axiosOpts.headers, config.token)
+    this.axiosOpts.headers = removeEmptyHeaders(this.axiosOpts.headers)
   }
 
   async request<A = any>(method: string, ...params: any[]): Promise<A> {
@@ -66,14 +55,11 @@ export default class LotusRpcEngine {
       this.apiAddress,
       {
         jsonrpc: '2.0',
-        method: `Filecoin.${method}`,
+        method: `${this.namespace}.${method}`,
         params,
-        id: 1,
+        id: 1
       },
-      {
-        headers: this.headers,
-        ...this.axiosOpts,
-      },
+      this.axiosOpts
     )
     throwIfErrors(data)
     return data.result

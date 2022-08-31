@@ -1,14 +1,14 @@
 import nock from 'nock'
 import LotusRpcEngine, {
-  configureHeaders,
+  getHeaders,
   removeEmptyHeaders,
-  throwIfErrors,
+  throwIfErrors
 } from '../index'
 
 const successfulResponse = {
   jsonrpc: '2.0',
   result: 'fake response result',
-  id: 1,
+  id: 1
 }
 
 const errorResponse = {
@@ -17,8 +17,8 @@ const errorResponse = {
   id: 1,
   error: {
     code: 1,
-    message: 'get actor: GetActor called on undefined address',
-  },
+    message: 'get actor: GetActor called on undefined address'
+  }
 }
 
 describe('removeEmptyHeaders', () => {
@@ -26,8 +26,8 @@ describe('removeEmptyHeaders', () => {
     const headers = {
       'Content-Type': 'text/plain;charset=UTF-8',
       Test: 'value',
-      Accept: undefined,
-      Authorization: null,
+      Accept: '',
+      Authorization: ''
     }
 
     expect(removeEmptyHeaders(headers).Accept).toBeUndefined()
@@ -37,39 +37,40 @@ describe('removeEmptyHeaders', () => {
   })
 })
 
-describe('configureHeaders', () => {
+describe('getHeaders', () => {
   test('it should return Accept */* and application/json Content-Type', () => {
     const headers = {}
 
-    expect(configureHeaders(headers).Accept).toBe('*/*')
-    expect(configureHeaders(headers)['Content-Type']).toBe('application/json')
+    expect(getHeaders(headers).Accept).toBe('*/*')
+    expect(getHeaders(headers)['Content-Type']).toBe('application/json')
   })
 })
 
 describe('throwIfErrors', () => {
   test('it returns responses with no errors', () => {
-    expect(throwIfErrors(successfulResponse)).toBe(successfulResponse)
+    expect(() => throwIfErrors(successfulResponse)).not.toThrow()
   })
 
   test('it throws a descriptive error if the jsonrpc response comes back with an error', () => {
     expect(() => throwIfErrors(errorResponse)).toThrow(
-      errorResponse.error.message,
+      errorResponse.error.message
     )
   })
 })
 
 describe('LotusRpcEngine', () => {
   test('it throws an error if no apiAddress is passed to constructor', () => {
+    // @ts-ignore
     const instantiateLotusRpcEngine = () => new LotusRpcEngine()
     expect(instantiateLotusRpcEngine).toThrow()
   })
 
   describe('request', () => {
     const lotus = new LotusRpcEngine({
-      apiAddress: 'https://proxy.openworklabs.com/rpc/v0',
+      apiAddress: 'https://proxy.openworklabs.com/rpc/v0'
     })
 
-    test('it passes the first argument as the jsonrpc method', (done) => {
+    test('it passes the first argument as the jsonrpc method', done => {
       const method = 'ChainHead'
       nock('https://proxy.openworklabs.com')
         .post('/rpc/v0')
@@ -85,7 +86,7 @@ describe('LotusRpcEngine', () => {
       lotus.request(method)
     })
 
-    test('passes the subsequent arguments as the jsonrpc params', (done) => {
+    test('passes the subsequent arguments as the jsonrpc params', done => {
       const method = 'FakeJsonRpcMethodWithMultipleParams'
       const param1 = 't1mbk7q6gm4rjlndfqw6f2vkfgqotres3fgicb2uq'
       const param2 = 'RIP Kobe.'
@@ -123,7 +124,7 @@ describe('LotusRpcEngine', () => {
         .reply(201, () => errorResponse)
 
       await expect(lotus.request(method)).rejects.toThrow(
-        errorResponse.error.message,
+        errorResponse.error.message
       )
     })
   })

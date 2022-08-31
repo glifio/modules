@@ -41,11 +41,11 @@ declare module '@zondax/filecoin-signing-tools/js' {
 
   export function transactionSignRaw(
     unsignedMessage: Message | string,
-    privateKey: string,
+    privateKey: string
   ): Buffer
   export function transactionSign(
     unsignedMessage: Message,
-    privateKey: string,
+    privateKey: string
   ): SignedMessage
 
   export function keyRecover(privateKey: Buffer, testnet: boolean): ExtendedKey
@@ -53,7 +53,7 @@ declare module '@zondax/filecoin-signing-tools/js' {
   export function keyDerive(
     mnemonic: string,
     path: string,
-    password: string,
+    password: string
   ): ExtendedKey
 
   export interface Buffer {

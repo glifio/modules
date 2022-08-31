@@ -2,12 +2,12 @@ import { SemanticVersion } from '../../types'
 
 export const badVersion = (
   enforce: SemanticVersion,
-  current: SemanticVersion,
+  current: SemanticVersion
 ): boolean => {
   const {
     major: LEDGER_VERSION_MAJOR,
     minor: LEDGER_VERSION_MINOR,
-    patch: LEDGER_VERSION_PATCH,
+    patch: LEDGER_VERSION_PATCH
   } = enforce
 
   const aboveMajor = current.major > LEDGER_VERSION_MAJOR

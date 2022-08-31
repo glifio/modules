@@ -7,12 +7,12 @@ import { CoinTypeCode } from '../utils/createPath'
 import { SemanticVersion } from '../types'
 
 const sleep = (time: number) =>
-  new Promise((resolve) => setTimeout(resolve, time))
+  new Promise(resolve => setTimeout(resolve, time))
 
 const LedgerAppSpy = jest.spyOn(require('@zondax/ledger-filecoin'), 'default')
 const handleErrSpy = jest.spyOn(
   require('../errors/handleLedgerErrors'),
-  'CommonLedgerError',
+  'CommonLedgerError'
 )
 
 describe('ledger wallet subprovider', () => {
@@ -23,7 +23,7 @@ describe('ledger wallet subprovider', () => {
     subProvider = new LedgerProvider({
       // @ts-expect-error
       transport: {},
-      minLedgerVersion: { major: 0, minor: 20, patch: 0 },
+      minLedgerVersion: { major: 0, minor: 20, patch: 0 }
     })
   })
 
@@ -35,7 +35,7 @@ describe('ledger wallet subprovider', () => {
     try {
       // @ts-expect-error
       new LedgerProvider({
-        minLedgerVersion: { major: 0, minor: 0, patch: 1 },
+        minLedgerVersion: { major: 0, minor: 0, patch: 1 }
       })
     } catch (err) {
       expect(err instanceof errors.InvalidParamsError).toBe(true)
@@ -44,7 +44,7 @@ describe('ledger wallet subprovider', () => {
     try {
       new LedgerProvider({
         // @ts-expect-error
-        transport: {},
+        transport: {}
       })
     } catch (err) {
       expect(err instanceof errors.InvalidParamsError).toBe(true)
@@ -61,7 +61,7 @@ describe('ledger wallet subprovider', () => {
         target_id: '',
         major: 0,
         minor: 20,
-        patch: 0,
+        patch: 0
       }
 
       const getVsnSpy = jest
@@ -69,7 +69,7 @@ describe('ledger wallet subprovider', () => {
         .mockImplementation(async (): Promise<LedgerVersion> => vs)
 
       LedgerAppSpy.mockImplementation(() => ({
-        getVersion: getVsnSpy,
+        getVersion: getVsnSpy
       }))
 
       const vsRes = await subProvider.getVersion()
@@ -85,7 +85,7 @@ describe('ledger wallet subprovider', () => {
         target_id: '',
         major: 0,
         minor: 20,
-        patch: 0,
+        patch: 0
       }
 
       const getVsnSpy = jest.fn().mockImplementation(async () => {
@@ -94,7 +94,7 @@ describe('ledger wallet subprovider', () => {
       })
 
       LedgerAppSpy.mockImplementation(() => ({
-        getVersion: getVsnSpy,
+        getVersion: getVsnSpy
       }))
       try {
         await subProvider.getVersion()
@@ -112,7 +112,7 @@ describe('ledger wallet subprovider', () => {
         target_id: '',
         major: 0,
         minor: 20,
-        patch: 0,
+        patch: 0
       }
 
       const getVsnSpy = jest
@@ -124,7 +124,7 @@ describe('ledger wallet subprovider', () => {
         .mockImplementation(async (): Promise<LedgerVersion> => vs)
 
       LedgerAppSpy.mockImplementation(() => ({
-        getVersion: getVsnSpy,
+        getVersion: getVsnSpy
       }))
       await subProvider.getVersion()
       try {
@@ -143,7 +143,7 @@ describe('ledger wallet subprovider', () => {
         target_id: '',
         major: 0,
         minor: 20,
-        patch: 0,
+        patch: 0
       }
 
       const getVsnSpy = jest
@@ -155,7 +155,7 @@ describe('ledger wallet subprovider', () => {
         .mockImplementation(async (): Promise<LedgerVersion> => vs)
 
       LedgerAppSpy.mockImplementation(() => ({
-        getVersion: getVsnSpy,
+        getVersion: getVsnSpy
       }))
 
       const vsRes1 = await subProvider.getVersion()
@@ -176,13 +176,13 @@ describe('ledger wallet subprovider', () => {
         target_id: '',
         major: 0,
         minor: 20,
-        patch: 0,
+        patch: 0
       }
 
       const getVsnSpy = jest.fn().mockImplementation(async () => vs)
 
       LedgerAppSpy.mockImplementation(() => ({
-        getVersion: getVsnSpy,
+        getVersion: getVsnSpy
       }))
       try {
         await subProvider.getVersion()
@@ -200,13 +200,13 @@ describe('ledger wallet subprovider', () => {
         target_id: '',
         major: 0,
         minor: 20,
-        patch: 0,
+        patch: 0
       }
 
       const getVsnSpy = jest.fn().mockImplementation(async () => vs)
 
       LedgerAppSpy.mockImplementation(() => ({
-        getVersion: getVsnSpy,
+        getVersion: getVsnSpy
       }))
       try {
         await subProvider.getVersion()
@@ -226,19 +226,19 @@ describe('ledger wallet subprovider', () => {
         target_id: '',
         major: 0,
         minor: 20,
-        patch: 0,
+        patch: 0
       }
 
       const getVsnSpy = jest.fn().mockImplementation(async () => vs)
 
       LedgerAppSpy.mockImplementation(() => ({
-        getVersion: getVsnSpy,
+        getVersion: getVsnSpy
       }))
       try {
         await subProvider.getVersion()
       } catch (err) {
         expect(err instanceof errors.WalletProviderError && err.message).toBe(
-          'unknown error message',
+          'unknown error message'
         )
       }
       // let getvs call finish
@@ -254,19 +254,19 @@ describe('ledger wallet subprovider', () => {
         target_id: '',
         major: 0,
         minor: 19,
-        patch: 0,
+        patch: 0
       }
 
       const getVsnSpy = jest.fn().mockImplementation(async () => vs)
 
       LedgerAppSpy.mockImplementation(() => ({
-        getVersion: getVsnSpy,
+        getVersion: getVsnSpy
       }))
       try {
         await subProvider.getVersion()
       } catch (err) {
         expect(err instanceof errors.LedgerFilecoinAppBadVersionError).toBe(
-          true,
+          true
         )
       }
       // let getvs call finish
@@ -285,7 +285,7 @@ describe('ledger wallet subprovider', () => {
         target_id: '',
         major: 0,
         minor: 20,
-        patch: 0,
+        patch: 0
       }
 
       const getVsnSpy = jest
@@ -293,7 +293,7 @@ describe('ledger wallet subprovider', () => {
         .mockImplementation(async (): Promise<LedgerVersion> => vs)
 
       LedgerAppSpy.mockImplementation(() => ({
-        getVersion: getVsnSpy,
+        getVersion: getVsnSpy
       }))
 
       const ready = await subProvider.ready()
@@ -311,7 +311,7 @@ describe('ledger wallet subprovider', () => {
         target_id: '',
         major: 0,
         minor: 20,
-        patch: 0,
+        patch: 0
       }
 
       const getVsnSpy = jest
@@ -319,7 +319,7 @@ describe('ledger wallet subprovider', () => {
         .mockImplementation(async (): Promise<LedgerVersion> => vs)
 
       LedgerAppSpy.mockImplementation(() => ({
-        getVersion: getVsnSpy,
+        getVersion: getVsnSpy
       }))
 
       try {
@@ -340,15 +340,15 @@ describe('ledger wallet subprovider', () => {
         'f1cgtnoxba3367ihzqsedwoz6nsv5pwtwddg4erti',
         'f1tu5s7pvnrf64fthklnbdwb5xishgkl2ifqa2lby',
         'f1kftnqd3rfyxee65wd74sjvi5caoa2eg5jj25awy',
-        'f1sqmhaf5aao3aa23dmsff3je5ofrzxlut2jkffba',
+        'f1sqmhaf5aao3aa23dmsff3je5ofrzxlut2jkffba'
       ],
       '1': [
         't15ba3jkx7vd2kv4jmgfngokpf2po2bi465fh4b3q',
         't1wwfwfceoyewvdp46j5qhh3rn23wqgae2gqi6b6i',
         't15zrt6khytsqph6ttpkue3mvkb7b5kdczvordnqq',
         't1hzwwrruzsujikrh454ybxjk4p7iq6j23ucnjggy',
-        't1tsg3yvyzxgvqrr253qrhfuaargex3o2k6oe2iti',
-      ],
+        't1tsg3yvyzxgvqrr253qrhfuaargex3o2k6oe2iti'
+      ]
     }
     const vs: LedgerVersion = {
       return_code: 0,
@@ -358,7 +358,7 @@ describe('ledger wallet subprovider', () => {
       target_id: '',
       major: 0,
       minor: 20,
-      patch: 0,
+      patch: 0
     }
 
     const getVsnSpy = jest
@@ -369,17 +369,17 @@ describe('ledger wallet subprovider', () => {
       .fn()
       .mockImplementation(
         async (
-          path,
+          path
         ): Promise<{ addrString: string; error_message: string }> => {
           const coinType = Number(
-            path.split('/')[2].slice(0, -1),
+            path.split('/')[2].slice(0, -1)
           ) as CoinTypeCode
           const index = Number(path.split('/')[5])
           return {
             addrString: accounts[coinType][index],
-            error_message: 'no errors',
+            error_message: 'no errors'
           }
-        },
+        }
       )
 
     const showAddressAndPubKeySpy = jest
@@ -393,16 +393,16 @@ describe('ledger wallet subprovider', () => {
       }> => {
         return {
           signature_compact: Buffer.from('i <3 glif'),
-          error_message: 'no errors',
+          error_message: 'no errors'
         }
-      },
+      }
     )
     beforeEach(() => {
       LedgerAppSpy.mockImplementation(() => ({
         getVersion: getVsnSpy,
         getAddressAndPubKey: getAddressAndPubKeySpy,
         showAddressAndPubKey: showAddressAndPubKeySpy,
-        sign: signSpy,
+        sign: signSpy
       }))
     })
     describe('showAddressAndPubKey', () => {
@@ -457,7 +457,7 @@ describe('ledger wallet subprovider', () => {
     describe('keyDerive', () => {
       test('it throws an error', async () => {
         await expect(subProvider.keyDerive('')).rejects.toThrow(
-          'Cannot derive key from Ledger provider',
+          'Cannot derive key from Ledger provider'
         )
       })
     })
@@ -474,7 +474,7 @@ describe('ledger wallet subprovider', () => {
           to,
           value,
           method,
-          nonce,
+          nonce
         })
 
         const sig = await subProvider.sign(from, message.toLotusType())
@@ -499,7 +499,7 @@ describe('ledger wallet subprovider', () => {
             to: accounts['1'][1],
             value,
             method,
-            nonce,
+            nonce
           })
 
           await subProvider.sign(accounts['1'][0], message.toLotusType())
@@ -515,11 +515,11 @@ describe('ledger wallet subprovider', () => {
           to,
           value,
           method,
-          nonce,
+          nonce
         })
 
         await expect(
-          subProvider.sign(`f${from.slice(1)}`, message.toLotusType()),
+          subProvider.sign(`f${from.slice(1)}`, message.toLotusType())
         ).resolves.not.toThrow()
       })
 
@@ -531,7 +531,7 @@ describe('ledger wallet subprovider', () => {
             to,
             value,
             method,
-            nonce,
+            nonce
           })
 
           await subProvider.sign(to, message.toLotusType())
@@ -541,7 +541,7 @@ describe('ledger wallet subprovider', () => {
       })
 
       test('it rejects if the message is poorly formed', async () => {
-        const [from, to] = await subProvider.getAccounts(0, 2, CoinType.TEST)
+        const [from, _to] = await subProvider.getAccounts(0, 2, CoinType.TEST)
 
         try {
           // @ts-expect-error
@@ -562,7 +562,7 @@ describe('badVersion', () => {
   const enforce: SemanticVersion = {
     major: LEDGER_VERSION_MAJOR,
     minor: LEDGER_VERSION_MINOR,
-    patch: LEDGER_VERSION_PATCH,
+    patch: LEDGER_VERSION_PATCH
   }
 
   test('it returns true if the version is below the LEDGER_VERSION_MAJOR LEDGER_VERSION_MINOR or LEDGER_VERSION_PATCH', () => {
@@ -570,15 +570,15 @@ describe('badVersion', () => {
       badVersion(enforce, {
         major: LEDGER_VERSION_MAJOR,
         minor: LEDGER_VERSION_MINOR,
-        patch: LEDGER_VERSION_PATCH - 1,
-      }),
+        patch: LEDGER_VERSION_PATCH - 1
+      })
     ).toBe(true)
     expect(
       badVersion(enforce, {
         major: LEDGER_VERSION_MAJOR,
         minor: LEDGER_VERSION_MINOR - 1,
-        patch: LEDGER_VERSION_PATCH,
-      }),
+        patch: LEDGER_VERSION_PATCH
+      })
     ).toBe(true)
   })
 
@@ -587,15 +587,15 @@ describe('badVersion', () => {
       badVersion(enforce, {
         major: LEDGER_VERSION_MAJOR,
         minor: LEDGER_VERSION_MINOR,
-        patch: LEDGER_VERSION_PATCH,
-      }),
+        patch: LEDGER_VERSION_PATCH
+      })
     ).toBe(false)
     expect(
       badVersion(enforce, {
         major: LEDGER_VERSION_MAJOR + 1,
         minor: LEDGER_VERSION_MINOR + 1,
-        patch: LEDGER_VERSION_PATCH + 1,
-      }),
+        patch: LEDGER_VERSION_PATCH + 1
+      })
     ).toBe(false)
   })
 })

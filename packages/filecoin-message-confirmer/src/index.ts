@@ -26,10 +26,10 @@ const defaultConfig: Required<ConfirmerConfig> = {
 const STATE_SEARCH_MESSAGE = 'StateSearchMsg'
 
 const createCancelToken = (timeoutAfter: number) =>
-  new axios.CancelToken((c) => setTimeout(c, timeoutAfter))
+  new axios.CancelToken(c => setTimeout(c, timeoutAfter))
 
 const sleep = (time: number) =>
-  new Promise((resolve) => setTimeout(resolve, time))
+  new Promise(resolve => setTimeout(resolve, time))
 
 const confirmMessage = async (
   msgCid: CID,

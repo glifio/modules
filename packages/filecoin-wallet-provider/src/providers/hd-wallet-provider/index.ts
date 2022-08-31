@@ -2,7 +2,7 @@ import { CoinType } from '@glif/filecoin-address'
 import {
   Message,
   SignedLotusMessage,
-  LotusMessage,
+  LotusMessage
 } from '@glif/filecoin-message'
 import signingTools from '@zondax/filecoin-signing-tools/js'
 import { WalletType } from '../../types'
@@ -28,17 +28,17 @@ export class HDWalletProvider
   getAccounts = async (
     nStart = 0,
     nEnd = 5,
-    coinType = CoinType.MAIN,
+    coinType = CoinType.MAIN
   ): Promise<string[]> => {
     if (!validIndexes(nStart, nEnd)) {
       throw new InvalidParamsError({
-        message: 'Invalid indexes provided to getAccounts',
+        message: 'Invalid indexes provided to getAccounts'
       })
     }
 
     if (coinType !== CoinType.MAIN && coinType !== CoinType.TEST) {
       throw new InvalidParamsError({
-        message: 'Invalid coinType passed to getAccounts',
+        message: 'Invalid coinType passed to getAccounts'
       })
     }
 
@@ -58,7 +58,7 @@ export class HDWalletProvider
 
   sign = async (
     from: string,
-    message: LotusMessage,
+    message: LotusMessage
   ): Promise<SignedLotusMessage> => {
     if (from !== message.From) {
       throw new InvalidParamsError({ message: 'From address mismatch' })
@@ -71,24 +71,24 @@ export class HDWalletProvider
       throw new InvalidParamsError(
         err instanceof Error
           ? {
-              message: `Invalid message params passed to sign call: ${err.message}`,
+              message: `Invalid message params passed to sign call: ${err.message}`
             }
-          : undefined,
+          : undefined
       )
     }
 
     const { private_hexstring } = signingTools.keyDerive(this.#seed, path, '')
     const { signature } = signingTools.transactionSign(
       msg.toZondaxType(),
-      Buffer.from(private_hexstring, 'hex').toString('base64'),
+      Buffer.from(private_hexstring, 'hex').toString('base64')
     ) as { signature: { data: string; type: number } }
 
     return {
       Message: message,
       Signature: {
         Type: signature.type,
-        Data: signature.data,
-      },
+        Data: signature.data
+      }
     }
   }
 }

@@ -28,7 +28,7 @@ describe('secp256k1', () => {
       GasPremium: '1',
       GasLimit: 1000,
       Nonce: 0,
-      Params: '',
+      Params: ''
     })
     expect(sig).toMatchSnapshot()
   })
@@ -39,7 +39,7 @@ describe('bls', () => {
   test('#getAccounts', async () => {
     const accounts = await provider.getAccounts(0, 0, CoinType.TEST)
     expect(accounts).toEqual([
-      't3vbrwhphivdxyvs3pxpp54w73664bgxmb7ed4du4ohhu3dc6f5y264cs72yluw7mjbwnlrtzq543ys57plzka',
+      't3vbrwhphivdxyvs3pxpp54w73664bgxmb7ed4du4ohhu3dc6f5y264cs72yluw7mjbwnlrtzq543ys57plzka'
     ])
   })
   test('#keyDerive', async () => {
@@ -57,7 +57,7 @@ describe('bls', () => {
       GasPremium: '1',
       GasLimit: 1000,
       Nonce: 0,
-      Params: '',
+      Params: ''
     })
     expect(sig).toMatchSnapshot()
   })

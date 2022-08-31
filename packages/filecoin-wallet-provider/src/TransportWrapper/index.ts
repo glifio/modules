@@ -6,14 +6,14 @@ import { errors, CommonLedgerError } from '../errors'
 const {
   TransportNotSupportedError,
   LedgerReplugError,
-  LedgerDisconnectedError,
+  LedgerDisconnectedError
 } = errors
 
 type TransportType = 'WEB_HID' | 'WEB_USB'
 
 export default class WebHIDTransportWrapper {
   type: TransportType = 'WEB_HID'
-  initted: boolean = false
+  initted = false
 
   private _transport: Transport | null = null
 

@@ -12,12 +12,12 @@ export class SingleKeyProvider implements WalletSubProvider {
   constructor(privateKey: string) {
     if (!privateKey) {
       throw new errors.InvalidParamsError({
-        message: 'Must pass private key string to single key provider instance',
+        message: 'Must pass private key string to single key provider instance'
       })
     }
     const { address, keyType, sign } = privateKeyContainer(
       privateKey,
-      CoinType.MAIN,
+      CoinType.MAIN
     )
     this.mainAddress = address
     this.type = keyType
@@ -28,7 +28,7 @@ export class SingleKeyProvider implements WalletSubProvider {
   async getAccounts(
     _: number,
     __: number,
-    coinType: CoinType = CoinType.MAIN,
+    coinType: CoinType = CoinType.MAIN
   ): Promise<string[]> {
     if (coinType === CoinType.TEST) {
       return [`t${this.mainAddress.slice(1)}`]
@@ -46,7 +46,7 @@ export class SingleKeyProvider implements WalletSubProvider {
 
     if (!this.mainAddress.includes(addressWithoutCoinType)) {
       throw new errors.InvalidParamsError({
-        message: 'Invalid from address for private key',
+        message: 'Invalid from address for private key'
       })
     }
 

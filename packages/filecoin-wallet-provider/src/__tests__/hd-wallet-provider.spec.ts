@@ -1,7 +1,6 @@
 import { CoinType } from '@glif/filecoin-address'
 import { Message } from '@glif/filecoin-message'
 import { HDWalletProvider } from '../providers/hd-wallet-provider'
-import { LedgerProvider } from '../providers/ledger-provider'
 import { errors } from '../errors'
 import { coinTypeCode, createPath } from '../utils'
 
@@ -12,7 +11,7 @@ describe('hd wallet subprovider', () => {
     'f1cgtnoxba3367ihzqsedwoz6nsv5pwtwddg4erti',
     'f1tu5s7pvnrf64fthklnbdwb5xishgkl2ifqa2lby',
     'f1kftnqd3rfyxee65wd74sjvi5caoa2eg5jj25awy',
-    'f1sqmhaf5aao3aa23dmsff3je5ofrzxlut2jkffba',
+    'f1sqmhaf5aao3aa23dmsff3je5ofrzxlut2jkffba'
   ]
 
   const testnetCoinTypeAccounts = [
@@ -20,7 +19,7 @@ describe('hd wallet subprovider', () => {
     't1wwfwfceoyewvdp46j5qhh3rn23wqgae2gqi6b6i',
     't15zrt6khytsqph6ttpkue3mvkb7b5kdczvordnqq',
     't1hzwwrruzsujikrh454ybxjk4p7iq6j23ucnjggy',
-    't1tsg3yvyzxgvqrr253qrhfuaargex3o2k6oe2iti',
+    't1tsg3yvyzxgvqrr253qrhfuaargex3o2k6oe2iti'
   ]
   const seed =
     'dream visual owner guilt key flee spoil flip lunar anxiety you current build manual craft three husband mix level busy away flip cushion swift'
@@ -93,11 +92,11 @@ describe('hd wallet subprovider', () => {
   describe('keyDerive', () => {
     test('it returns base64 encoded private keys at different paths', async () => {
       expect(
-        await subProvider.keyDerive(createPath(coinTypeCode(CoinType.TEST), 0)),
+        await subProvider.keyDerive(createPath(coinTypeCode(CoinType.TEST), 0))
       ).toBe('Vyh7pZZsrypD5Gi/RcVHqTqRMbutomlsm/MZ1V3y7eo=')
 
       expect(
-        await subProvider.keyDerive(createPath(coinTypeCode(CoinType.TEST), 1)),
+        await subProvider.keyDerive(createPath(coinTypeCode(CoinType.TEST), 1))
       ).toBe('06dRC0k4iR9PwlbVLLmzTF3TCvenyCaclORjRmLsxrk=')
     })
   })
@@ -114,7 +113,7 @@ describe('hd wallet subprovider', () => {
         to,
         value,
         method,
-        nonce,
+        nonce
       })
 
       const sig = await subProvider.sign(from, message.toLotusType())
@@ -128,7 +127,7 @@ describe('hd wallet subprovider', () => {
       expect(sig.Message.GasPremium).toBeDefined()
       expect(sig.Signature.Type).toBe(1)
       expect(sig.Signature.Data).toBe(
-        'NHdmTmLwa/jn+7ZAK5MCcuC7YCsc5F/fyEosIBKiuJcR0kjk75wD25ETexFXZe6AdAd7ee/CWy3ExDkZiEQIaQE=',
+        'NHdmTmLwa/jn+7ZAK5MCcuC7YCsc5F/fyEosIBKiuJcR0kjk75wD25ETexFXZe6AdAd7ee/CWy3ExDkZiEQIaQE='
       )
     })
 
@@ -139,12 +138,12 @@ describe('hd wallet subprovider', () => {
           to: testnetCoinTypeAccounts[1],
           value,
           method,
-          nonce,
+          nonce
         })
 
         await subProvider.sign(
           testnetCoinTypeAccounts[0],
-          message.toLotusType(),
+          message.toLotusType()
         )
       } catch (err) {
         expect(err instanceof errors.WalletProviderError).toBe(true)
@@ -158,11 +157,11 @@ describe('hd wallet subprovider', () => {
         to,
         value,
         method,
-        nonce,
+        nonce
       })
 
       await expect(
-        subProvider.sign(`f${from.slice(1)}`, message.toLotusType()),
+        subProvider.sign(`f${from.slice(1)}`, message.toLotusType())
       ).resolves.not.toThrow()
     })
 
@@ -174,7 +173,7 @@ describe('hd wallet subprovider', () => {
           to,
           value,
           method,
-          nonce,
+          nonce
         })
 
         await subProvider.sign(to, message.toLotusType())
@@ -184,7 +183,7 @@ describe('hd wallet subprovider', () => {
     })
 
     test('it rejects if the message is poorly formed', async () => {
-      const [from, to] = await subProvider.getAccounts(0, 2, CoinType.TEST)
+      const [from, _to] = await subProvider.getAccounts(0, 2, CoinType.TEST)
 
       try {
         // @ts-expect-error

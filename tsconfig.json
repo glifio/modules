@@ -7,6 +7,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "isolatedModules": true,
+    "resolveJsonModule": true,
     "strict": true,
     "noImplicitAny": true,
     "noImplicitThis": true,

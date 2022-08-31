@@ -71,7 +71,7 @@ describe('single key secp256k1 wallet subprovider', () => {
         to: from,
         value,
         method,
-        nonce,
+        nonce
       })
 
       const sig = await subProvider.sign(from, message.toLotusType())
@@ -85,7 +85,7 @@ describe('single key secp256k1 wallet subprovider', () => {
       expect(sig.Message.GasPremium).toBeDefined()
       expect(sig.Signature.Type).toBe(1)
       expect(sig.Signature.Data).toBe(
-        'ELCUyw9QZN8xhhJn9Vyc2XNKdQWZ/w8aG9dE1yGRl3NhdSIrRGms23nAYpMUOcKIlcm269IlNxAoXdvKVMVLJQA=',
+        'ELCUyw9QZN8xhhJn9Vyc2XNKdQWZ/w8aG9dE1yGRl3NhdSIrRGms23nAYpMUOcKIlcm269IlNxAoXdvKVMVLJQA='
       )
     })
 
@@ -97,7 +97,7 @@ describe('single key secp256k1 wallet subprovider', () => {
           to: testnetCoinTypeAccount,
           value,
           method,
-          nonce,
+          nonce
         })
 
         await subProvider.sign(testnetCoinTypeAccount, message.toLotusType())

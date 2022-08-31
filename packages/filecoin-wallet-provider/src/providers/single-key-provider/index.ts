@@ -1,7 +1,7 @@
 import {
   LotusMessage,
   SignedLotusMessage,
-  Message,
+  Message
 } from '@glif/filecoin-message'
 import { CoinType } from '@glif/filecoin-address'
 import signingTools from '@zondax/filecoin-signing-tools/js'
@@ -17,7 +17,7 @@ export class SECP256K1KeyProvider implements WalletSubProvider {
   constructor(privateKey: string) {
     if (!privateKey) {
       throw new errors.InvalidParamsError({
-        message: 'Must pass private key string to single key provider instance',
+        message: 'Must pass private key string to single key provider instance'
       })
     }
     this.#privateKey = privateKey
@@ -27,7 +27,7 @@ export class SECP256K1KeyProvider implements WalletSubProvider {
       throw new errors.InvalidParamsError({
         message: `Invalid private key: ${
           (err as Error)?.message || JSON.stringify(err)
-        }`,
+        }`
       })
     }
     this.mainAddress = signingTools.keyRecover(privateKey, false).address
@@ -36,7 +36,7 @@ export class SECP256K1KeyProvider implements WalletSubProvider {
   async getAccounts(
     _: number,
     __: number,
-    coinType: CoinType = CoinType.MAIN,
+    coinType: CoinType = CoinType.MAIN
   ): Promise<string[]> {
     if (coinType === CoinType.TEST) {
       return [`t${this.mainAddress.slice(1)}`]
@@ -54,14 +54,14 @@ export class SECP256K1KeyProvider implements WalletSubProvider {
 
     if (!this.mainAddress.includes(addressWithoutCoinType)) {
       throw new errors.InvalidParamsError({
-        message: 'Invalid from address for private key',
+        message: 'Invalid from address for private key'
       })
     }
 
     const useTestCoinType = (from[0] as CoinType) === CoinType.TEST
     const { private_hexstring } = signingTools.keyRecover(
       this.#privateKey,
-      useTestCoinType,
+      useTestCoinType
     )
 
     let msg
@@ -71,23 +71,23 @@ export class SECP256K1KeyProvider implements WalletSubProvider {
       throw new errors.InvalidParamsError(
         err instanceof Error
           ? {
-              message: `Invalid message params passed to sign call: ${err.message}`,
+              message: `Invalid message params passed to sign call: ${err.message}`
             }
-          : undefined,
+          : undefined
       )
     }
 
     const { signature } = signingTools.transactionSign(
       msg.toZondaxType(),
-      Buffer.from(private_hexstring, 'hex').toString('base64'),
+      Buffer.from(private_hexstring, 'hex').toString('base64')
     ) as { signature: { data: string; type: number } }
 
     return {
       Message: message,
       Signature: {
         Type: signature.type,
-        Data: signature.data,
-      },
+        Data: signature.data
+      }
     }
   }
 }
