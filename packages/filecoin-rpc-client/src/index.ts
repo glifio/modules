@@ -29,11 +29,13 @@ export const throwIfErrors = (data: any) => {
 export type LotusRpcEngineConfig = {
   apiAddress: string
   token?: string
+  namespace?: string
   axiosOpts?: AxiosRequestConfig
 }
 
 export default class LotusRpcEngine {
   readonly apiAddress: string
+  readonly namespace: string
   readonly axiosOpts: AxiosRequestConfig
 
   constructor(config: LotusRpcEngineConfig) {
@@ -42,6 +44,7 @@ export default class LotusRpcEngine {
         'Must pass a config object to the LotusRpcEngine constructor.'
       )
     this.apiAddress = config.apiAddress
+    this.namespace = config.namespace || 'Filecoin'
     this.axiosOpts = config.axiosOpts || {}
     this.axiosOpts.headers = getHeaders(this.axiosOpts.headers, config.token)
     this.axiosOpts.headers = removeEmptyHeaders(this.axiosOpts.headers)
@@ -52,7 +55,7 @@ export default class LotusRpcEngine {
       this.apiAddress,
       {
         jsonrpc: '2.0',
-        method: `Filecoin.${method}`,
+        method: `${this.namespace}.${method}`,
         params,
         id: 1
       },
