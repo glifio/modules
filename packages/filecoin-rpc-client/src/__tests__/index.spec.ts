@@ -48,7 +48,7 @@ describe('getHeaders', () => {
 
 describe('throwIfErrors', () => {
   test('it returns responses with no errors', () => {
-    expect(throwIfErrors(successfulResponse)).toBe(successfulResponse)
+    expect(() => throwIfErrors(successfulResponse)).not.toThrow()
   })
 
   test('it throws a descriptive error if the jsonrpc response comes back with an error', () => {
@@ -60,6 +60,7 @@ describe('throwIfErrors', () => {
 
 describe('LotusRpcEngine', () => {
   test('it throws an error if no apiAddress is passed to constructor', () => {
+    // @ts-ignore
     const instantiateLotusRpcEngine = () => new LotusRpcEngine()
     expect(instantiateLotusRpcEngine).toThrow()
   })
