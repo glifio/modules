@@ -1,11 +1,11 @@
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios'
 
-const removeEmptyHeaders = (
+export const removeEmptyHeaders = (
   headers: AxiosRequestHeaders
 ): AxiosRequestHeaders =>
   Object.fromEntries(Object.entries(headers).filter(([_key, value]) => !!value))
 
-const getHeaders = (
+export const getHeaders = (
   headers?: AxiosRequestHeaders,
   token?: string
 ): AxiosRequestHeaders => ({
@@ -18,6 +18,13 @@ const getHeaders = (
       }
     : {})
 })
+
+export const throwIfErrors = (data: any) => {
+  if (data.error) {
+    if (data.error.message) throw new Error(data.error.message)
+    throw new Error(`JSON-RPC error: ${JSON.stringify(data.error)}`)
+  }
+}
 
 export type LotusRpcEngineConfig = {
   apiAddress: string
@@ -51,10 +58,7 @@ export default class LotusRpcEngine {
       },
       this.axiosOpts
     )
-    if (data.error) {
-      if (data.error.message) throw new Error(data.error.message)
-      throw new Error(`JSON-RPC error: ${JSON.stringify(data.error)}`)
-    }
+    throwIfErrors(data)
     return data.result
   }
 }
