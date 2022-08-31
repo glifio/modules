@@ -50,7 +50,7 @@ export default class LotusRpcEngine {
   readonly axiosOpts: AxiosRequestConfig
   readonly headers: Record<string, string>
 
-  constructor(config?: LotusRpcEngineConfig) {
+  constructor(config: LotusRpcEngineConfig) {
     if (!config)
       throw new Error(
         'Must pass a config object to the LotusRpcEngine constructor.'
