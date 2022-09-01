@@ -32,10 +32,12 @@ export enum Type {
   Interface = 'interface'
 }
 
+export type BaseValue = boolean | string | number
+
 export type DataType = {
   Type: Type
   Name: string
-  Value?: boolean | string | number | Array<boolean | string | number>
+  Value?: BaseValue | Array<BaseValue>
   Key?: DataType // For map type
   Contains?: DataType // For map / array / channel type
   Children?: DataTypeMap // For object type
