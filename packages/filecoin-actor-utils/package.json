@@ -9,9 +9,9 @@
   "scripts": {
     "start": "npm run clean && npm run build-browser -- --watch",
     "clean": "rimraf dist/ lib/ module/",
-    "build-browser": "cross-env BABEL_ENV=browser babel ./src --out-dir ./lib --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
-    "build-module": "cross-env BABEL_ENV=module babel ./src --out-dir ./module --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
-    "build-node": "babel ./src/ --out-dir ./dist/ --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
+    "build-browser": "cross-env BABEL_ENV=browser babel ./src --out-dir ./lib --copy-files --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
+    "build-module": "cross-env BABEL_ENV=module babel ./src --out-dir ./module --copy-files --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
+    "build-node": "babel ./src --out-dir ./dist --copy-files --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
     "build-types": "tsc --emitDeclarationOnly",
     "build": "npm run clean && npm run build-types && npm run build-node && npm run build-browser && npm run build-module",
     "prepublishOnly": "npm run build",
