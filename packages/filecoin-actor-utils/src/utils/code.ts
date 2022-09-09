@@ -29,9 +29,10 @@ export const getActorName = (
   try {
     const buffer = base32Decode(actorCode.slice(1).toUpperCase(), 'RFC4648')
     const decoded = new TextDecoder('utf-8').decode(buffer.slice(4))
-    if (decoded.startsWith('fil/'))
-      return decoded.split('/')[2]
-  } catch {}
+    if (decoded.startsWith('fil/')) return decoded.split('/')[2]
+  } catch {
+    // failed to decode as V1-7 actor
+  }
 
   // Return null when the actor name is not found
   return null
