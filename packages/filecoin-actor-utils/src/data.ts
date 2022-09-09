@@ -27,4 +27,20 @@ export const networkActorCodeMapInv = Object.fromEntries(
   ])
 ) as NetworkActorCodeMapInv
 
-export const actorDescriptorMap = actorDescriptorMapJSON as ActorDescriptorMap
+/**
+ * Returns the actor descriptors with MethodNum converted to number from string.
+ * This conversion is necessary because JSON does not allow numerical object keys.
+ */
+export const actorDescriptorMap = Object.fromEntries(
+  Object.entries(actorDescriptorMapJSON).map(([actorName, actorDescriptor]) => [
+    actorName,
+    {
+      ...actorDescriptor,
+      Methods: Object.fromEntries(
+        Object.entries(actorDescriptor.Methods).map(
+          ([methodNum, actorMethod]) => [Number(methodNum), actorMethod]
+        )
+      )
+    }
+  ])
+) as ActorDescriptorMap
