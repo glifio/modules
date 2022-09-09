@@ -1,3 +1,4 @@
+import base32Decode from 'base32-decode'
 import { networkActorCodeMap, networkActorCodeMapInv } from '../data'
 import { ActorCode, ActorName, NetworkName } from '../types'
 
@@ -23,6 +24,14 @@ export const getActorName = (
     const name = getActorName(actorCode, network)
     if (name !== null) return name
   }
+
+  // Decode V1-7 actor codes
+  try {
+    const buffer = base32Decode(actorCode.slice(1).toUpperCase(), 'RFC4648')
+    const decoded = new TextDecoder('utf-8').decode(buffer.slice(4))
+    if (decoded.startsWith('fil/'))
+      return decoded.split('/')[2]
+  } catch {}
 
   // Return null when the actor name is not found
   return null
