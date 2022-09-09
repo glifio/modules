@@ -1,5 +1,5 @@
 import { networkActorCodeMap } from '../src/data'
-import { getActorName, getActorCode } from '../src/utils'
+import { getActorName, getActorCode } from '../src/utils/code'
 
 describe('utils', () => {
 
