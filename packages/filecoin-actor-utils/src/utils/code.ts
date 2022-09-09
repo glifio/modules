@@ -29,15 +29,14 @@ export const getActorName = (
 }
 
 /**
- * Resolves the actor code by providing the actor name and the network
- * name. When the network name is not provided, it defaults to "mainnet".
+ * Resolves the actor code by providing the actor name and the network name.
  * @param actorName the actor name which is used to resolve the actor code
- * @param networkName (optional) the network in which to search for the actor code, defaults to "mainnet"
+ * @param networkName the network in which to search for the actor code
  * @returns the actor code when found or null when not found
  */
 export const getActorCode = (
   actorName: ActorName,
-  networkName: NetworkName = 'mainnet'
+  networkName: NetworkName
 ): ActorCode | null => {
   // Return null when the actor code is not found
   return networkActorCodeMap[networkName]?.[actorName] ?? null
