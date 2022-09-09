@@ -43,7 +43,10 @@ export const describeActorState = (
   actorName: ActorName,
   actorState: Record<string, any>
 ): DataTypeMap => {
-  const descriptor = actorDescriptorMap[actorName].State
+  const descriptor = actorDescriptorMap[actorName]?.State
+  if (!descriptor)
+    throw new Error(`Missing actor state descriptor for: ${actorName}`)
+
   const dataType = {
     Type: Type.Object,
     Name: 'State',
