@@ -15,13 +15,12 @@ describe('utils', () => {
       expect(getActorName(code, 'calibrationnet')).toBe(null)
     })
 
-    test('should find the actor name when not providing a network', () => {
-      const code = networkActorCodeMap['mainnet']['multisig']
-      expect(getActorName(code)).toBe('multisig')
+    test('should not find the actor name when the code does not exist', () => {
+      expect(getActorName('abc123', 'mainnet')).toBe(null)
     })
 
-    test('should not find the actor name when the code does not exist', () => {
-      expect(getActorName("abc123")).toBe(null)
+    test('it decodes v7 actors', () => {
+      expect(getActorName('bafkqadtgnfwc6njpnv2wy5djonuwo', 'calibrationnet')).toBe('multisig')
     })
   })
 
