@@ -11,14 +11,14 @@ import { getActorName } from './code'
 import { describeObject } from './generic'
 
 /**
- * Returns a descriptor with values for the provided Lotus actor state
+ * Returns a descriptor with values for the provided Lotus actor state and network name
  * @param lotusActorState the Lotus actor state as returned from StateReadState
- * @param networkName (optional) the network in which to search for the actor name
+ * @param networkName the network in which to search for the actor name
  * @returns the described actor state or null when the state is null
  */
 export const describeLotusActorState = (
   lotusActorState: LotusActorState,
-  networkName?: NetworkName
+  networkName: NetworkName
 ): DataTypeMap | null => {
   // Return null when the actor state is null
   if (lotusActorState.State === null) return null
