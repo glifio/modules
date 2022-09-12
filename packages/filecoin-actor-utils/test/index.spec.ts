@@ -34,7 +34,7 @@ describe('utils', () => {
 
     test('should find the mainnet actor code when not providing a network', () => {
       const code = networkActorCodeMap['mainnet']['multisig']
-      expect(getActorCode('multisig')).toBe(code)
+      expect(getActorCode('multisig', 'mainnet')).toBe(code)
     })
 
     test('should not find the actor code when the actor name does not exist', () => {
