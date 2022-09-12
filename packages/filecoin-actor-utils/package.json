@@ -25,6 +25,7 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
+    "base32-decode": "^1.0.0",
     "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {
