@@ -2,7 +2,8 @@ import { BigNumber } from 'bignumber.js'
 import { Converter } from '../Converter'
 import { FilecoinNumber } from '../FilecoinNumber'
 
-describe('Converter', () => {
+// Tests are disabled since https://cmc-proxy.openworklabs.com is not available
+describe.skip('Converter', () => {
   describe('Setup', () => {
     let converter: Converter
     beforeAll(() => {
