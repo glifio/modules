@@ -1,6 +1,6 @@
 import base32Decode from 'base32-decode'
 import { networkActorCodeMap, networkActorCodeMapInv } from '../data'
-import { ActorCode, ActorName, NetworkName } from '../types'
+import { ActorCode, ActorName, LotusCID, NetworkName } from '../types'
 
 /**
  * Resolves the actor name by providing the actor code. When also providing
@@ -10,13 +10,15 @@ import { ActorCode, ActorName, NetworkName } from '../types'
  * @returns the actor name when found or null when not found
  */
 export const getActorName = (
-  actorCode: ActorCode,
+  actorCode: ActorCode | LotusCID,
   networkName?: NetworkName
 ): ActorName | null => {
+  const code = typeof actorCode === 'string' ? actorCode : actorCode['/']
+
   // If "networkName" is provided, return the actor name
   // for that specific network or null when not found
   if (networkName) {
-    return networkActorCodeMapInv[networkName]?.[actorCode] ?? null
+    return networkActorCodeMapInv[networkName]?.[code] ?? null
   }
 
   // Otherwise, iterate over all the networks to find the actor name
