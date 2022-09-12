@@ -47,7 +47,4 @@ export const getActorName = (
 export const getActorCode = (
   actorName: ActorName,
   networkName: NetworkName
-): ActorCode | null => {
-  // Return null when the actor code is not found
-  return networkActorCodeMap[networkName]?.[actorName] ?? null
-}
+): ActorCode | null => networkActorCodeMap[networkName]?.[actorName] ?? null
