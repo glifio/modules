@@ -40,8 +40,8 @@ export const describeActorState = (
   actorName: ActorName,
   actorState: Record<string, any> | null
 ): DataTypeMap | null => {
-  // Return null when the actor state is null
-  if (actorState === null) return null
+  // Return null for falsy actor state
+  if (!actorState) return null
 
   // Retrieve the actor state descriptor
   const descriptor = actorDescriptorMap[actorName]?.State
