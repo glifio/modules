@@ -20,7 +20,13 @@ export const describeDataType = (dataType: DataType, value: any) => {
       describeObject(dataType, value)
       return
     default:
-      throw new Error(getErrorMsg(dataType, value, `Unexpected descriptor DataType: ${dataType.Type}`))
+      throw new Error(
+        getErrorMsg(
+          dataType,
+          value,
+          `Unexpected descriptor DataType: ${dataType.Type}`
+        )
+      )
   }
 }
 
@@ -50,11 +56,24 @@ export const describeArray = (
   const valueType = typeof value
 
   // Check malformed descriptor
-  if (!Contains) throw new Error(getErrorMsg(dataType, value, `Expected Contains property in array DataType`))
+  if (!Contains)
+    throw new Error(
+      getErrorMsg(
+        dataType,
+        value,
+        `Expected Contains property in array DataType`
+      )
+    )
 
   // Check the value type
   if (!Array.isArray(value))
-    throw new Error(getErrorMsg(dataType, value, `Expected array value for ${Name}, received ${valueType}`))
+    throw new Error(
+      getErrorMsg(
+        dataType,
+        value,
+        `Expected array value for ${Name}, received ${valueType}`
+      )
+    )
 
   // Check the value types for the array items
   // The array should not contain complex types
@@ -65,7 +84,13 @@ export const describeArray = (
       value.forEach(v => checkValueType(Contains, v))
       break
     default:
-      throw new Error(getErrorMsg(dataType, value, `Unexpected array descriptor DataType: ${dataType.Type}`))
+      throw new Error(
+        getErrorMsg(
+          dataType,
+          value,
+          `Unexpected array descriptor DataType: ${dataType.Type}`
+        )
+      )
   }
 
   // Add the value to the descriptor
@@ -83,7 +108,13 @@ export const describeObject = (
 ) => {
   // Check malformed descriptor
   if (!dataType.Children)
-    throw new Error(getErrorMsg(dataType, value, `Expected Children property in object DataType`))
+    throw new Error(
+      getErrorMsg(
+        dataType,
+        value,
+        `Expected Children property in object DataType`
+      )
+    )
 
   // Check the value type
   checkValueType(dataType, value)
@@ -104,7 +135,13 @@ const checkValueType = (dataType: DataType, value: any) => {
   const { Type, Name } = dataType
   const valueType = typeof value
   if (valueType !== Type)
-    throw new Error(getErrorMsg(dataType, value, `Expected ${Type} value for ${Name}, received ${valueType}`))
+    throw new Error(
+      getErrorMsg(
+        dataType,
+        value,
+        `Expected ${Type} value for ${Name}, received ${valueType}`
+      )
+    )
 }
 
 /**
