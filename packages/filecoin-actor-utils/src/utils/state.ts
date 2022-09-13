@@ -20,9 +20,6 @@ export const describeLotusActorState = (
   lotusActorState: LotusActorState,
   networkName: NetworkName
 ): DataTypeMap | null => {
-  // Return null when the actor state is null
-  if (lotusActorState.State === null) return null
-
   // Retrieve the actor name from the code
   const actorCode = lotusActorState.Code['/']
   const actorName = getActorName(actorCode, networkName)
@@ -41,17 +38,24 @@ export const describeLotusActorState = (
  */
 export const describeActorState = (
   actorName: ActorName,
-  actorState: Record<string, any>
-): DataTypeMap => {
+  actorState: Record<string, any> | null
+): DataTypeMap | null => {
+  // Return null when the actor state is null
+  if (actorState === null) return null
+
+  // Retrieve the actor state descriptor
   const descriptor = actorDescriptorMap[actorName]?.State
   if (!descriptor)
     throw new Error(`Missing actor state descriptor for: ${actorName}`)
 
+  // Supplement the descriptor with state values
   const dataType = {
     Type: Type.Object,
     Name: 'State',
     Children: cloneDeep<DataTypeMap>(descriptor)
   }
   describeObject(dataType, actorState)
+
+  // Return the described state
   return dataType.Children
 }
