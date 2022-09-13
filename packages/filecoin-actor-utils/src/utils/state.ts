@@ -24,7 +24,9 @@ export const describeLotusActorState = (
   const actorCode = lotusActorState.Code['/']
   const actorName = getActorName(actorCode, networkName)
   if (!actorName)
-    throw new Error(`Failed to resolve actor name for code: ${actorCode}`)
+    throw new Error(
+      `Failed to resolve actor name for code: ${actorCode}, in network: ${networkName}`
+    )
 
   // Return the described actor state
   return describeActorState(actorName, lotusActorState.State)
