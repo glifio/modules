@@ -7,16 +7,16 @@ import { describeDataType } from './generic'
  * Returns a descriptor with values based on the provided actor name, method number and params
  * @param actorName the name of the actor on which the method was called
  * @param methodNum the number of the method that was called on the actor
- * @param params the parameters that were passed to the method
+ * @param msgParams the parameters that were passed to the method
  * @returns the described message params
  */
 export const describeMessageParams = (
   actorName: ActorName,
   methodNum: MethodNum,
-  params: any
+  msgParams: any
 ): DataType | null => {
   // Return null for falsy message params
-  if (!params) return null
+  if (!msgParams) return null
 
   // Retrieve the message params descriptor
   const descriptor = actorDescriptorMap[actorName]?.Methods[methodNum]?.Param
@@ -25,9 +25,9 @@ export const describeMessageParams = (
       `Missing message params descriptor for: ${actorName}, method: ${methodNum}`
     )
 
-  // Supplement the descriptor with state values
+  // Supplement the descriptor with parameter values
   const dataType = cloneDeep<DataType>(descriptor)
-  describeDataType(dataType, params)
+  describeDataType(dataType, msgParams)
 
   // Return the described params
   return dataType
