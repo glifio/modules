@@ -12,7 +12,7 @@ export const getActorName = (
   actorCode: ActorCode | LotusCID,
   networkName: NetworkName
 ): ActorName | null => {
-  const code = typeof actorCode === 'string' ? actorCode : actorCode['/']
+  const code = typeof actorCode === 'object' ? actorCode?.['/'] : actorCode
 
   // Attempt the actor code lookup
   const name = networkActorCodeMapInv[networkName]?.[code] ?? null
