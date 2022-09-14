@@ -1,6 +1,6 @@
 export type ActorName = string
 export type ActorCode = string
-export type MethodNum = string
+export type MethodNum = number
 export type NetworkName = string
 export type PropName = string
 

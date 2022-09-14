@@ -15,30 +15,33 @@ describe('utils', () => {
       expect(getActorName(code, 'calibrationnet')).toBe(null)
     })
 
-    test('should find the actor name when not providing a network', () => {
-      const code = networkActorCodeMap['mainnet']['multisig']
-      expect(getActorName(code)).toBe('multisig')
+    test('should not find the actor name when the code does not exist', () => {
+      expect(getActorName('abc123', 'mainnet')).toBe(null)
     })
 
-    test('should not find the actor name when the code does not exist', () => {
-      expect(getActorName("abc123")).toBe(null)
+    test('it decodes v7 actors', () => {
+      expect(getActorName('bafkqadtgnfwc6njpnv2wy5djonuwo', 'calibrationnet')).toBe('multisig')
     })
   })
 
   describe('getActorCode', () => {
 
-    test('should find the actor code when given a name and network', () => {
+    test('should find the multisig actor code on calibrationnet', () => {
       const code = networkActorCodeMap['calibrationnet']['multisig']
       expect(getActorCode('multisig', 'calibrationnet')).toBe(code)
     })
 
-    test('should find the mainnet actor code when not providing a network', () => {
+    test('should find the multisig actor code on mainnet', () => {
       const code = networkActorCodeMap['mainnet']['multisig']
-      expect(getActorCode('multisig')).toBe(code)
+      expect(getActorCode('multisig', 'mainnet')).toBe(code)
     })
 
     test('should not find the actor code when the actor name does not exist', () => {
       expect(getActorCode('test', 'mainnet')).toBe(null)
+    })
+
+    test('should not find the actor code when the network name does not exist', () => {
+      expect(getActorCode('multisig', 'test')).toBe(null)
     })
   })
 })

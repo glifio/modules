@@ -20,7 +20,13 @@ export const describeDataType = (dataType: DataType, value: any) => {
       describeObject(dataType, value)
       return
     default:
-      throw new Error(`Unexpected descriptor DataType: ${dataType.Type}`)
+      throw new Error(
+        getErrorMsg(
+          dataType,
+          value,
+          `Unexpected descriptor DataType: ${dataType.Type}`
+        )
+      )
   }
 }
 
@@ -50,11 +56,24 @@ export const describeArray = (
   const valueType = typeof value
 
   // Check malformed descriptor
-  if (!Contains) throw new Error(`Expected Contains property in array DataType`)
+  if (!Contains)
+    throw new Error(
+      getErrorMsg(
+        dataType,
+        value,
+        `Expected Contains property in array DataType`
+      )
+    )
 
   // Check the value type
   if (!Array.isArray(value))
-    throw new Error(`Expected array value for ${Name}, received ${valueType}`)
+    throw new Error(
+      getErrorMsg(
+        dataType,
+        value,
+        `Expected array value for ${Name}, received ${valueType}`
+      )
+    )
 
   // Check the value types for the array items
   // The array should not contain complex types
@@ -65,7 +84,13 @@ export const describeArray = (
       value.forEach(v => checkValueType(Contains, v))
       break
     default:
-      throw new Error(`Unexpected array descriptor DataType: ${dataType.Type}`)
+      throw new Error(
+        getErrorMsg(
+          dataType,
+          value,
+          `Unexpected array descriptor DataType: ${dataType.Type}`
+        )
+      )
   }
 
   // Add the value to the descriptor
@@ -83,7 +108,13 @@ export const describeObject = (
 ) => {
   // Check malformed descriptor
   if (!dataType.Children)
-    throw new Error(`Expected Children property in object DataType`)
+    throw new Error(
+      getErrorMsg(
+        dataType,
+        value,
+        `Expected Children property in object DataType`
+      )
+    )
 
   // Check the value type
   checkValueType(dataType, value)
@@ -104,5 +135,40 @@ const checkValueType = (dataType: DataType, value: any) => {
   const { Type, Name } = dataType
   const valueType = typeof value
   if (valueType !== Type)
-    throw new Error(`Expected ${Type} value for ${Name}, received ${valueType}`)
+    throw new Error(
+      getErrorMsg(
+        dataType,
+        value,
+        `Expected ${Type} value for ${Name}, received ${valueType}`
+      )
+    )
+}
+
+/**
+ * Throws a verbose error for problems with matching DataTypes and values
+ * @param dataType the DataType where the descriptor failed
+ * @param value the value where the descriptor failed
+ * @param message a message describing the descriptor issue
+ */
+const getErrorMsg = (
+  dataType: DataType,
+  value: any,
+  message: string
+): string => {
+  const dataTypeStr = toString(dataType)
+  const valueStr = toString(value)
+  return `Descriptor failed for DataType: ${dataTypeStr} and value: ${valueStr} with message: ${message}`
+}
+
+/**
+ * Converts any value to a string representation
+ * @param value the value to convert to a string
+ * @returns the string representation of the value
+ */
+const toString = (value: any): string => {
+  try {
+    return JSON.stringify(value)
+  } catch {
+    return String(value)
+  }
 }

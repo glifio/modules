@@ -46,7 +46,7 @@
     "State": {
       "Entries": {
         "Type": "array",
-        "Name": "[]Entry",
+        "Name": "",
         "Contains": {
           "Type": "object",
           "Name": "Entry",
@@ -83,7 +83,7 @@
           "Children": {
             "Entries": {
               "Type": "array",
-              "Name": "[]Entry",
+              "Name": "",
               "Contains": {
                 "Type": "object",
                 "Name": "Entry",
@@ -186,12 +186,8 @@
               }
             },
             "ConstructorParams": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             }
           }
         },
@@ -238,7 +234,7 @@
       },
       "Signers": {
         "Type": "array",
-        "Name": "[]Address",
+        "Name": "",
         "Contains": {
           "Type": "string",
           "Name": "Address"
@@ -277,7 +273,7 @@
             },
             "Signers": {
               "Type": "array",
-              "Name": "[]Address",
+              "Name": "",
               "Contains": {
                 "Type": "string",
                 "Name": "Address"
@@ -309,12 +305,8 @@
               "Name": "MethodNum"
             },
             "Params": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             },
             "To": {
               "Type": "string",
@@ -339,12 +331,8 @@
               "Name": "ExitCode"
             },
             "Ret": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             },
             "TxnID": {
               "Type": "number",
@@ -364,12 +352,8 @@
               "Name": "TxnID"
             },
             "ProposalHash": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             }
           }
         },
@@ -386,12 +370,8 @@
               "Name": "ExitCode"
             },
             "Ret": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             }
           }
         }
@@ -407,12 +387,8 @@
               "Name": "TxnID"
             },
             "ProposalHash": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             }
           }
         },
@@ -601,12 +577,8 @@
           "Name": "UpdateChannelStateParams",
           "Children": {
             "Secret": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             },
             "Sv": {
               "Type": "object",
@@ -629,12 +601,8 @@
                       "Name": "Address"
                     },
                     "Data": {
-                      "Type": "array",
-                      "Name": "[]uint8",
-                      "Contains": {
-                        "Type": "number",
-                        "Name": "uint8"
-                      }
+                      "Type": "string",
+                      "Name": ""
                     },
                     "Method": {
                       "Type": "number",
@@ -648,7 +616,7 @@
                 },
                 "Merges": {
                   "Type": "array",
-                  "Name": "[]Merge",
+                  "Name": "",
                   "Contains": {
                     "Type": "object",
                     "Name": "Merge",
@@ -673,24 +641,16 @@
                   "Name": "uint64"
                 },
                 "SecretHash": {
-                  "Type": "array",
-                  "Name": "[]uint8",
-                  "Contains": {
-                    "Type": "number",
-                    "Name": "uint8"
-                  }
+                  "Type": "string",
+                  "Name": ""
                 },
                 "Signature": {
                   "Type": "object",
                   "Name": "Signature",
                   "Children": {
                     "Data": {
-                      "Type": "array",
-                      "Name": "[]uint8",
-                      "Contains": {
-                        "Type": "number",
-                        "Name": "uint8"
-                      }
+                      "Type": "string",
+                      "Name": ""
                     },
                     "Type": {
                       "Type": "number",
@@ -1038,7 +998,7 @@
           "Children": {
             "Deals": {
               "Type": "array",
-              "Name": "[]ClientDealProposal",
+              "Name": "",
               "Contains": {
                 "Type": "object",
                 "Name": "ClientDealProposal",
@@ -1048,12 +1008,8 @@
                     "Name": "Signature",
                     "Children": {
                       "Data": {
-                        "Type": "array",
-                        "Name": "[]uint8",
-                        "Contains": {
-                          "Type": "number",
-                          "Name": "uint8"
-                        }
+                        "Type": "string",
+                        "Name": ""
                       },
                       "Type": {
                         "Type": "number",
@@ -1082,12 +1038,8 @@
                         "Name": "DealLabel",
                         "Children": {
                           "bs": {
-                            "Type": "array",
-                            "Name": "[]uint8",
-                            "Contains": {
-                              "Type": "number",
-                              "Name": "uint8"
-                            }
+                            "Type": "string",
+                            "Name": ""
                           },
                           "notString": {
                             "Type": "boolean",
@@ -1142,7 +1094,7 @@
           "Children": {
             "IDs": {
               "Type": "array",
-              "Name": "[]DealID",
+              "Name": "",
               "Contains": {
                 "Type": "number",
                 "Name": "DealID"
@@ -1167,14 +1119,14 @@
           "Children": {
             "Sectors": {
               "Type": "array",
-              "Name": "[]SectorDeals",
+              "Name": "",
               "Contains": {
                 "Type": "object",
                 "Name": "SectorDeals",
                 "Children": {
                   "DealIDs": {
                     "Type": "array",
-                    "Name": "[]DealID",
+                    "Name": "",
                     "Contains": {
                       "Type": "number",
                       "Name": "DealID"
@@ -1195,7 +1147,7 @@
           "Children": {
             "Sectors": {
               "Type": "array",
-              "Name": "[]SectorWeights",
+              "Name": "",
               "Contains": {
                 "Type": "object",
                 "Name": "SectorWeights",
@@ -1226,7 +1178,7 @@
           "Children": {
             "DealIDs": {
               "Type": "array",
-              "Name": "[]DealID",
+              "Name": "",
               "Contains": {
                 "Type": "number",
                 "Name": "DealID"
@@ -1251,7 +1203,7 @@
           "Children": {
             "DealIDs": {
               "Type": "array",
-              "Name": "[]DealID",
+              "Name": "",
               "Contains": {
                 "Type": "number",
                 "Name": "DealID"
@@ -1276,14 +1228,14 @@
           "Children": {
             "Inputs": {
               "Type": "array",
-              "Name": "[]SectorDataSpec",
+              "Name": "",
               "Contains": {
                 "Type": "object",
                 "Name": "SectorDataSpec",
                 "Children": {
                   "DealIDs": {
                     "Type": "array",
-                    "Name": "[]DealID",
+                    "Name": "",
                     "Contains": {
                       "Type": "number",
                       "Name": "DealID"
@@ -1304,7 +1256,7 @@
           "Children": {
             "CommDs": {
               "Type": "array",
-              "Name": "[]CborCid",
+              "Name": "",
               "Contains": {
                 "Type": "object",
                 "Name": "CborCid",
@@ -1461,7 +1413,7 @@
           "Children": {
             "ControlAddrs": {
               "Type": "array",
-              "Name": "[]Address",
+              "Name": "",
               "Contains": {
                 "Type": "string",
                 "Name": "Address"
@@ -1469,14 +1421,10 @@
             },
             "Multiaddrs": {
               "Type": "array",
-              "Name": "[][]uint8",
+              "Name": "",
               "Contains": {
-                "Type": "array",
-                "Name": "[]uint8",
-                "Contains": {
-                  "Type": "number",
-                  "Name": "uint8"
-                }
+                "Type": "string",
+                "Name": ""
               }
             },
             "OwnerAddr": {
@@ -1484,12 +1432,8 @@
               "Name": "Address"
             },
             "PeerId": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             },
             "WindowPoStProofType": {
               "Type": "number",
@@ -1514,7 +1458,7 @@
           "Children": {
             "Faults": {
               "Type": "array",
-              "Name": "[]FaultDeclaration",
+              "Name": "",
               "Contains": {
                 "Type": "object",
                 "Name": "FaultDeclaration",
@@ -1553,7 +1497,7 @@
           "Children": {
             "Recoveries": {
               "Type": "array",
-              "Name": "[]RecoveryDeclaration",
+              "Name": "",
               "Contains": {
                 "Type": "object",
                 "Name": "RecoveryDeclaration",
@@ -1591,12 +1535,8 @@
           "Name": "DeferredCronEventParams",
           "Children": {
             "EventPayload": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             },
             "QualityAdjPowerSmoothed": {
               "Type": "object",
@@ -1678,28 +1618,16 @@
           "Name": "ReportConsensusFaultParams",
           "Children": {
             "BlockHeader1": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             },
             "BlockHeader2": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             },
             "BlockHeaderExtra": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             }
           }
         },
@@ -1765,7 +1693,7 @@
             },
             "Sectors": {
               "Type": "array",
-              "Name": "[]SectorNumber",
+              "Name": "",
               "Contains": {
                 "Type": "number",
                 "Name": "SectorNumber"
@@ -1786,14 +1714,10 @@
           "Children": {
             "NewMultiaddrs": {
               "Type": "array",
-              "Name": "[][]uint8",
+              "Name": "",
               "Contains": {
-                "Type": "array",
-                "Name": "[]uint8",
-                "Contains": {
-                  "Type": "number",
-                  "Name": "uint8"
-                }
+                "Type": "string",
+                "Name": ""
               }
             }
           }
@@ -1840,7 +1764,7 @@
           "Children": {
             "ControlAddrs": {
               "Type": "array",
-              "Name": "[]Address",
+              "Name": "",
               "Contains": {
                 "Type": "string",
                 "Name": "Address"
@@ -1940,14 +1864,14 @@
           "Children": {
             "Sectors": {
               "Type": "array",
-              "Name": "[]SectorPreCommitInfo",
+              "Name": "",
               "Contains": {
                 "Type": "object",
                 "Name": "SectorPreCommitInfo",
                 "Children": {
                   "DealIDs": {
                     "Type": "array",
-                    "Name": "[]DealID",
+                    "Name": "",
                     "Contains": {
                       "Type": "number",
                       "Name": "DealID"
@@ -2012,12 +1936,8 @@
           "Name": "ProveCommitAggregateParams",
           "Children": {
             "AggregateProof": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             },
             "SectorNumbers": {
               "Type": "array",
@@ -2042,7 +1962,7 @@
           "Children": {
             "Updates": {
               "Type": "array",
-              "Name": "[]ReplicaUpdate",
+              "Name": "",
               "Contains": {
                 "Type": "object",
                 "Name": "ReplicaUpdate",
@@ -2053,7 +1973,7 @@
                   },
                   "Deals": {
                     "Type": "array",
-                    "Name": "[]DealID",
+                    "Name": "",
                     "Contains": {
                       "Type": "number",
                       "Name": "DealID"
@@ -2074,12 +1994,8 @@
                     "Name": "uint64"
                   },
                   "ReplicaProof": {
-                    "Type": "array",
-                    "Name": "[]uint8",
-                    "Contains": {
-                      "Type": "number",
-                      "Name": "uint8"
-                    }
+                    "Type": "string",
+                    "Name": ""
                   },
                   "SectorID": {
                     "Type": "number",
@@ -2111,7 +2027,7 @@
           "Children": {
             "NewControlAddrs": {
               "Type": "array",
-              "Name": "[]Address",
+              "Name": "",
               "Contains": {
                 "Type": "string",
                 "Name": "Address"
@@ -2135,12 +2051,8 @@
           "Name": "ChangePeerIDParams",
           "Children": {
             "NewID": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             }
           }
         },
@@ -2160,12 +2072,8 @@
               "Name": "ChainEpoch"
             },
             "ChainCommitRand": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": "Randomness"
             },
             "Deadline": {
               "Type": "number",
@@ -2173,7 +2081,7 @@
             },
             "Partitions": {
               "Type": "array",
-              "Name": "[]PoStPartition",
+              "Name": "",
               "Contains": {
                 "Type": "object",
                 "Name": "PoStPartition",
@@ -2195,7 +2103,7 @@
             },
             "Proofs": {
               "Type": "array",
-              "Name": "[]PoStProof",
+              "Name": "",
               "Contains": {
                 "Type": "object",
                 "Name": "PoStProof",
@@ -2205,12 +2113,8 @@
                     "Name": "RegisteredPoStProof"
                   },
                   "ProofBytes": {
-                    "Type": "array",
-                    "Name": "[]uint8",
-                    "Contains": {
-                      "Type": "number",
-                      "Name": "uint8"
-                    }
+                    "Type": "string",
+                    "Name": ""
                   }
                 }
               }
@@ -2230,7 +2134,7 @@
           "Children": {
             "DealIDs": {
               "Type": "array",
-              "Name": "[]DealID",
+              "Name": "",
               "Contains": {
                 "Type": "number",
                 "Name": "DealID"
@@ -2292,12 +2196,8 @@
           "Name": "ProveCommitSectorParams",
           "Children": {
             "Proof": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             },
             "SectorNumber": {
               "Type": "number",
@@ -2318,7 +2218,7 @@
           "Children": {
             "Extensions": {
               "Type": "array",
-              "Name": "[]ExpirationExtension",
+              "Name": "",
               "Contains": {
                 "Type": "object",
                 "Name": "ExpirationExtension",
@@ -2361,7 +2261,7 @@
           "Children": {
             "Terminations": {
               "Type": "array",
-              "Name": "[]TerminationDeclaration",
+              "Name": "",
               "Contains": {
                 "Type": "object",
                 "Name": "TerminationDeclaration",
@@ -2522,14 +2422,10 @@
           "Children": {
             "Multiaddrs": {
               "Type": "array",
-              "Name": "[][]uint8",
+              "Name": "",
               "Contains": {
-                "Type": "array",
-                "Name": "[]uint8",
-                "Contains": {
-                  "Type": "number",
-                  "Name": "uint8"
-                }
+                "Type": "string",
+                "Name": ""
               }
             },
             "Owner": {
@@ -2537,12 +2433,8 @@
               "Name": "Address"
             },
             "Peer": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             },
             "WindowPoStProofType": {
               "Type": "number",
@@ -2601,12 +2493,8 @@
               "Name": "ChainEpoch"
             },
             "Payload": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             }
           }
         },
@@ -2645,35 +2533,23 @@
           "Children": {
             "DealIDs": {
               "Type": "array",
-              "Name": "[]DealID",
+              "Name": "",
               "Contains": {
                 "Type": "number",
                 "Name": "DealID"
               }
             },
             "InteractiveRandomness": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": "InteractiveSealRandomness"
             },
             "Proof": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": ""
             },
             "Randomness": {
-              "Type": "array",
-              "Name": "[]uint8",
-              "Contains": {
-                "Type": "number",
-                "Name": "uint8"
-              }
+              "Type": "string",
+              "Name": "SealRandomness"
             },
             "SealProof": {
               "Type": "number",
@@ -2958,12 +2834,8 @@
                   "Name": "Signature",
                   "Children": {
                     "Data": {
-                      "Type": "array",
-                      "Name": "[]uint8",
-                      "Contains": {
-                        "Type": "number",
-                        "Name": "uint8"
-                      }
+                      "Type": "string",
+                      "Name": ""
                     },
                     "Type": {
                       "Type": "number",
@@ -2986,12 +2858,8 @@
                   "Name": "Signature",
                   "Children": {
                     "Data": {
-                      "Type": "array",
-                      "Name": "[]uint8",
-                      "Contains": {
-                        "Type": "number",
-                        "Name": "uint8"
-                      }
+                      "Type": "string",
+                      "Name": ""
                     },
                     "Type": {
                       "Type": "number",
