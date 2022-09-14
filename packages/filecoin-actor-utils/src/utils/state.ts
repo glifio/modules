@@ -20,6 +20,9 @@ export const describeLotusActorState = (
   lotusActorState: LotusActorState,
   networkName: NetworkName
 ): DataTypeMap | null => {
+  // Return null for falsy actor state
+  if (!lotusActorState?.State) return null
+
   // Retrieve the actor name from the code
   const actorCode = lotusActorState.Code['/']
   const actorName = getActorName(actorCode, networkName)
