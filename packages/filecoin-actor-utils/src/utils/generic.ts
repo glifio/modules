@@ -175,16 +175,17 @@ export const describeObject = (
  * should match typeof value (boolean, string, number, object)
  * @param dataType the DataType which the value should match with
  * @param value the value which should match with the DataType
+ * @param type (optional) the type to check for, if dataType.Type is not a native type
  */
-const checkValueType = (dataType: DataType, value: any) => {
+const checkValueType = (dataType: DataType, value: any, type?: string) => {
   const { Type, Name } = dataType
   const valueType = typeof value
-  if (valueType !== Type)
+  if (valueType !== expectedType)
     throw new Error(
       getErrorMsg(
         dataType,
         value,
-        `Expected ${Type} value for ${Name}, received ${valueType}`
+        `Expected ${expectedType} value for ${Name}, received ${valueType}`
       )
     )
 }
