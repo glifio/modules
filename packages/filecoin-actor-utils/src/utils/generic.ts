@@ -1,3 +1,4 @@
+import { toString as BytesToString } from 'uint8arrays'
 import { DataType, Type } from '../types'
 
 /**
@@ -13,12 +14,19 @@ export const describeDataType = (dataType: DataType, value: any) => {
     case Type.Number:
       describeBaseValue(dataType, value)
       return
+
+    case Type.Bytes:
+      describeBytes(dataType, value)
+      return
+
     case Type.Array:
       describeArray(dataType, value)
       return
+
     case Type.Object:
       describeObject(dataType, value)
       return
+
     default:
       throw new Error(
         getErrorMsg(
@@ -41,6 +49,34 @@ export const describeBaseValue = (
 ) => {
   checkValueType(dataType, value)
   dataType.Value = value
+}
+
+/**
+ * Adds a byte value (Uint8Array or string) to a descriptor
+ * @param dataType the descriptor to add the value to
+ * @param value the value to add to the descriptor
+ */
+export const describeBytes = (
+  dataType: DataType,
+  value: string | Uint8Array
+) => {
+  const { Name } = dataType
+  const isBytes = value instanceof Uint8Array
+  const base64 = isBytes ? BytesToString(value, 'base64') : value
+  const base64Type = typeof base64
+
+  // Check the value type
+  if (base64Type !== 'string')
+    throw new Error(
+      getErrorMsg(
+        dataType,
+        value,
+        `Expected Uint8Array or string value for ${Name}, received ${base64Type}`
+      )
+    )
+
+  // Add the value to the descriptor
+  dataType.Value = base64
 }
 
 /**
