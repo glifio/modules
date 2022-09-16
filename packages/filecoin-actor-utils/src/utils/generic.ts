@@ -116,13 +116,22 @@ export const describeObject = (
       )
     )
 
-  // Check the value type
-  checkValueType(dataType, value)
+  // When receiving an array instead of an object, but with the same amount of
+  // values, attempt to describe the array values by index instead of object key
+  const childrenLength = Object.keys(dataType.Children).length
+  if (Array.isArray(value) && value.length === childrenLength) {
+    Object.values(dataType.Children).forEach((child, index) => {
+      describeDataType(child, value[index])
+    })
+  } else {
+    // Check the value type
+    checkValueType(dataType, value)
 
-  // Add values to the children of the object descriptor
-  Object.entries(dataType.Children).forEach(([key, child]) => {
-    describeDataType(child, value[key])
-  })
+    // Add values to the children of the object descriptor
+    Object.entries(dataType.Children).forEach(([key, child]) => {
+      describeDataType(child, value[key])
+    })
+  }
 }
 
 /**
