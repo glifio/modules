@@ -179,6 +179,7 @@ export const describeObject = (
  */
 const checkValueType = (dataType: DataType, value: any, type?: string) => {
   const { Type, Name } = dataType
+  const expectedType = type || Type
   const valueType = typeof value
   if (valueType !== expectedType)
     throw new Error(
