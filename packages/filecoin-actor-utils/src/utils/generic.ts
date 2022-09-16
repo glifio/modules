@@ -1,3 +1,4 @@
+import { Address } from '@glif/filecoin-address'
 import { toString as BytesToString } from 'uint8arrays'
 import { DataType, Type } from '../types'
 
@@ -8,6 +9,14 @@ import { DataType, Type } from '../types'
  * @param value the value to add to the descriptor
  */
 export const describeDataType = (dataType: DataType, value: any) => {
+  // Check special types by name
+  switch (dataType.Name) {
+    case 'Address':
+      describeAddress(dataType, value)
+      return
+  }
+
+  // Check normal data types
   switch (dataType.Type) {
     case Type.Bool:
     case Type.String:
@@ -52,6 +61,24 @@ export const describeBaseValue = (
 }
 
 /**
+ * Adds an address value (Uint8Array or string) to a descriptor
+ * @param dataType the descriptor to add the value to
+ * @param value the value to add to the descriptor
+ */
+export const describeAddress = (
+  dataType: DataType,
+  value: string | Uint8Array
+) => {
+  // Convert bytes to address string
+  const isBytes = value instanceof Uint8Array
+  const address = isBytes ? new Address(value).toString() : value
+
+  // Check the value type and add to the descriptor
+  checkValueType(dataType, address, 'string')
+  dataType.Value = address
+}
+
+/**
  * Adds a byte value (Uint8Array or string) to a descriptor
  * @param dataType the descriptor to add the value to
  * @param value the value to add to the descriptor
@@ -63,7 +90,7 @@ export const describeBytes = (
   // Convert bytes to base64 string
   const isBytes = value instanceof Uint8Array
   const base64 = isBytes ? BytesToString(value, 'base64') : value
-  
+
   // Check the value type and add to the descriptor
   checkValueType(dataType, base64, 'string')
   dataType.Value = base64
