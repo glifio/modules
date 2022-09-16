@@ -26,7 +26,8 @@
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
     "base32-decode": "^1.0.0",
-    "lodash.clonedeep": "^4.5.0"
+    "lodash.clonedeep": "^4.5.0",
+    "uint8arrays": "^3.1.0"
   },
   "devDependencies": {
     "@types/lodash.clonedeep": "^4.5.7",
