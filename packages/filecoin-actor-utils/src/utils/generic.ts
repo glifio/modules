@@ -60,22 +60,12 @@ export const describeBytes = (
   dataType: DataType,
   value: string | Uint8Array
 ) => {
-  const { Name } = dataType
+  // Convert bytes to base64 string
   const isBytes = value instanceof Uint8Array
   const base64 = isBytes ? BytesToString(value, 'base64') : value
-  const base64Type = typeof base64
-
-  // Check the value type
-  if (base64Type !== 'string')
-    throw new Error(
-      getErrorMsg(
-        dataType,
-        value,
-        `Expected Uint8Array or string value for ${Name}, received ${base64Type}`
-      )
-    )
-
-  // Add the value to the descriptor
+  
+  // Check the value type and add to the descriptor
+  checkValueType(dataType, base64, 'string')
   dataType.Value = base64
 }
 
