@@ -24,6 +24,7 @@ export enum Type {
   Bool = 'boolean',
   Number = 'number',
   String = 'string',
+  Bytes = 'bytes',
   Map = 'map',
   Array = 'array',
   Chan = 'channel',

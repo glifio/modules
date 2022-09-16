@@ -198,7 +198,7 @@
               }
             },
             "ConstructorParams": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             }
           }
@@ -328,7 +328,7 @@
               "Name": "MethodNum"
             },
             "Params": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             }
           }
@@ -350,7 +350,7 @@
               "Name": "ExitCode"
             },
             "Ret": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             }
           }
@@ -367,7 +367,7 @@
               "Name": "TxnID"
             },
             "ProposalHash": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             }
           }
@@ -385,7 +385,7 @@
               "Name": "ExitCode"
             },
             "Ret": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             }
           }
@@ -402,7 +402,7 @@
               "Name": "TxnID"
             },
             "ProposalHash": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             }
           }
@@ -617,7 +617,7 @@
                   "Name": "ChainEpoch"
                 },
                 "SecretHash": {
-                  "Type": "string",
+                  "Type": "bytes",
                   "Name": ""
                 },
                 "Extra": {
@@ -633,7 +633,7 @@
                       "Name": "MethodNum"
                     },
                     "Data": {
-                      "Type": "string",
+                      "Type": "bytes",
                       "Name": ""
                     }
                   }
@@ -681,7 +681,7 @@
                       "Name": "SigType"
                     },
                     "Data": {
-                      "Type": "string",
+                      "Type": "bytes",
                       "Name": ""
                     }
                   }
@@ -689,7 +689,7 @@
               }
             },
             "Secret": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             }
           }
@@ -1078,7 +1078,7 @@
                         "Name": "DealLabel",
                         "Children": {
                           "bs": {
-                            "Type": "string",
+                            "Type": "bytes",
                             "Name": ""
                           },
                           "notString": {
@@ -1118,7 +1118,7 @@
                         "Name": "SigType"
                       },
                       "Data": {
-                        "Type": "string",
+                        "Type": "bytes",
                         "Name": ""
                       }
                     }
@@ -1478,14 +1478,14 @@
               "Name": "RegisteredPoStProof"
             },
             "PeerId": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             },
             "Multiaddrs": {
               "Type": "array",
               "Name": "",
               "Contains": {
-                "Type": "string",
+                "Type": "bytes",
                 "Name": ""
               }
             }
@@ -1584,7 +1584,7 @@
           "Name": "DeferredCronEventParams",
           "Children": {
             "EventPayload": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             },
             "RewardSmoothed": {
@@ -1670,15 +1670,15 @@
           "Name": "ReportConsensusFaultParams",
           "Children": {
             "BlockHeader1": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             },
             "BlockHeader2": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             },
             "BlockHeaderExtra": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             }
           }
@@ -1770,7 +1770,7 @@
               "Type": "array",
               "Name": "",
               "Contains": {
-                "Type": "string",
+                "Type": "bytes",
                 "Name": ""
               }
             }
@@ -2009,7 +2009,7 @@
               }
             },
             "AggregateProof": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             }
           }
@@ -2068,7 +2068,7 @@
                     "Name": "RegisteredUpdateProof"
                   },
                   "ReplicaProof": {
-                    "Type": "string",
+                    "Type": "bytes",
                     "Name": ""
                   }
                 }
@@ -2118,7 +2118,7 @@
           "Name": "ChangePeerIDParams",
           "Children": {
             "NewID": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             }
           }
@@ -2173,7 +2173,7 @@
                     "Name": "RegisteredPoStProof"
                   },
                   "ProofBytes": {
-                    "Type": "string",
+                    "Type": "bytes",
                     "Name": ""
                   }
                 }
@@ -2184,7 +2184,7 @@
               "Name": "ChainEpoch"
             },
             "ChainCommitRand": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": "Randomness"
             }
           }
@@ -2270,7 +2270,7 @@
               "Name": "SectorNumber"
             },
             "Proof": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             }
           }
@@ -2509,14 +2509,14 @@
               "Name": "RegisteredPoStProof"
             },
             "Peer": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             },
             "Multiaddrs": {
               "Type": "array",
               "Name": "",
               "Contains": {
-                "Type": "string",
+                "Type": "bytes",
                 "Name": ""
               }
             }
@@ -2570,7 +2570,7 @@
               "Name": "ChainEpoch"
             },
             "Payload": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             }
           }
@@ -2639,15 +2639,15 @@
               }
             },
             "Randomness": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": "SealRandomness"
             },
             "InteractiveRandomness": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": "InteractiveSealRandomness"
             },
             "Proof": {
-              "Type": "string",
+              "Type": "bytes",
               "Name": ""
             },
             "SealedCID": {
@@ -2929,7 +2929,7 @@
                       "Name": "SigType"
                     },
                     "Data": {
-                      "Type": "string",
+                      "Type": "bytes",
                       "Name": ""
                     }
                   }
@@ -2953,7 +2953,7 @@
                       "Name": "SigType"
                     },
                     "Data": {
-                      "Type": "string",
+                      "Type": "bytes",
                       "Name": ""
                     }
                   }
