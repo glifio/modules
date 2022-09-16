@@ -1,3 +1,5 @@
+import { Address } from '@glif/filecoin-address'
+import { toString as BytesToString } from 'uint8arrays'
 import { DataType, Type } from '../types'
 
 /**
@@ -7,18 +9,33 @@ import { DataType, Type } from '../types'
  * @param value the value to add to the descriptor
  */
 export const describeDataType = (dataType: DataType, value: any) => {
+  // Check special types by name
+  switch (dataType.Name) {
+    case 'Address':
+      describeAddress(dataType, value)
+      return
+  }
+
+  // Check normal data types
   switch (dataType.Type) {
     case Type.Bool:
     case Type.String:
     case Type.Number:
       describeBaseValue(dataType, value)
       return
+
+    case Type.Bytes:
+      describeBytes(dataType, value)
+      return
+
     case Type.Array:
       describeArray(dataType, value)
       return
+
     case Type.Object:
       describeObject(dataType, value)
       return
+
     default:
       throw new Error(
         getErrorMsg(
@@ -41,6 +58,42 @@ export const describeBaseValue = (
 ) => {
   checkValueType(dataType, value)
   dataType.Value = value
+}
+
+/**
+ * Adds an address value (Uint8Array or string) to a descriptor
+ * @param dataType the descriptor to add the value to
+ * @param value the value to add to the descriptor
+ */
+export const describeAddress = (
+  dataType: DataType,
+  value: string | Uint8Array
+) => {
+  // Convert bytes to address string
+  const isBytes = value instanceof Uint8Array
+  const address = isBytes ? new Address(value).toString() : value
+
+  // Check the value type and add to the descriptor
+  checkValueType(dataType, address, 'string')
+  dataType.Value = address
+}
+
+/**
+ * Adds a byte value (Uint8Array or string) to a descriptor
+ * @param dataType the descriptor to add the value to
+ * @param value the value to add to the descriptor
+ */
+export const describeBytes = (
+  dataType: DataType,
+  value: string | Uint8Array
+) => {
+  // Convert bytes to base64 string
+  const isBytes = value instanceof Uint8Array
+  const base64 = isBytes ? BytesToString(value, 'base64') : value
+
+  // Check the value type and add to the descriptor
+  checkValueType(dataType, base64, 'string')
+  dataType.Value = base64
 }
 
 /**
@@ -116,13 +169,22 @@ export const describeObject = (
       )
     )
 
-  // Check the value type
-  checkValueType(dataType, value)
+  // When receiving an array instead of an object, but with the same amount of
+  // values, attempt to describe the array values by index instead of object key
+  const childrenLength = Object.keys(dataType.Children).length
+  if (Array.isArray(value) && value.length === childrenLength) {
+    Object.values(dataType.Children).forEach((child, index) => {
+      describeDataType(child, value[index])
+    })
+  } else {
+    // Check the value type
+    checkValueType(dataType, value)
 
-  // Add values to the children of the object descriptor
-  Object.entries(dataType.Children).forEach(([key, child]) => {
-    describeDataType(child, value[key])
-  })
+    // Add values to the children of the object descriptor
+    Object.entries(dataType.Children).forEach(([key, child]) => {
+      describeDataType(child, value[key])
+    })
+  }
 }
 
 /**
@@ -130,16 +192,18 @@ export const describeObject = (
  * should match typeof value (boolean, string, number, object)
  * @param dataType the DataType which the value should match with
  * @param value the value which should match with the DataType
+ * @param type (optional) the type to check for, if dataType.Type is not a native type
  */
-const checkValueType = (dataType: DataType, value: any) => {
+const checkValueType = (dataType: DataType, value: any, type?: string) => {
   const { Type, Name } = dataType
+  const expectedType = type || Type
   const valueType = typeof value
-  if (valueType !== Type)
+  if (valueType !== expectedType)
     throw new Error(
       getErrorMsg(
         dataType,
         value,
-        `Expected ${Type} value for ${Name}, received ${valueType}`
+        `Expected ${expectedType} value for ${Name}, received ${valueType}`
       )
     )
 }
