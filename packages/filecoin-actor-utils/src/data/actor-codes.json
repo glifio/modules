@@ -26,17 +26,18 @@
     "verifiedregistry": "bafk2bzaceb3zbkjz3auizmoln2unmxep7dyfcmsre64vnqfhdyh7rkqfoxlw4"
   },
   "wallabynet": {
-    "account": "bafk2bzaceaim6le4oi7mowvu7m446rkrkcazz4m7lumcnss2zesrfzmwsd44y",
-    "cron": "bafk2bzacebj36encw4pwlfgf44s3jlgtgdveboh54gsya6cf35eihcdvada2c",
-    "evm": "bafk2bzaceby6fqurr4yzveyu4rchso36gdytfrezdrjgae4aef45z3dh42wrc",
-    "init": "bafk2bzacecfjzxcmgvlp75ilour4pc7357mf3p2ejd3rr53s2oebfh5nxjf6e",
-    "multisig": "bafk2bzacecbhni3gajjv6gufir7gimzqowglpvcj4qmybchuebdsf7dhw3v3w",
-    "paymentchannel": "bafk2bzacedkanqqrxgujnzpibpeaac7d3df5vlrsssl5fyy5nh6sj6eajufx6",
-    "reward": "bafk2bzaceaytbigqo33vzjkt2mbzbvtco4ud54y3hxhlwpoze7kbeaiz45d4m",
-    "storagemarket": "bafk2bzacecrlvrpmh4jriqhd6mdbinu3pmety3auw4w5okhapsrysxxs27fmm",
-    "storageminer": "bafk2bzacectuxeuqmao3tguxqws53zs3cho776qpm5t5swvovurpjrijsajmm",
-    "storagepower": "bafk2bzacea7tmvoe6n6iokirfgq7x6axeuczpfokc4ntiv6rp6ni3so2jutvm",
-    "system": "bafk2bzacebnhy6266xogjboqwjgkj3om25qksaehctgtuf5cpft6m3ntqg3pe",
-    "verifiedregistry": "bafk2bzacec6pmr7gcmuejycmtraywq74hsadypchifziqjzm3rijubxun4kqe"
+    "account": "bafk2bzacecxnsdegdl62m73e65ibfqcbhypobyk4glzwjj7nxgtomrozui5we",
+    "cron": "bafk2bzacedj3re4c6szhudd6c4f4dr3rne3djkp2dmrctsgw5lzdwurw4sfte",
+    "embryo": "bafk2bzacecau3tohdilfx66pohfqdrngpuqd5oew2j5iv3c7sjlrkcm5npqos",
+    "evm": "bafk2bzacecgwjrepfw6r4ozuw47qw435n2jwgxnkdy7yrkbnsdgnqwd2wkcve",
+    "init": "bafk2bzacedxloyc67jkyiq2m73okepm6v6yhpmedynk4s7krtuc4hvgdlkov4",
+    "multisig": "bafk2bzaceb566bxmxwtg3rjlugv45ooojdpevnvvxhd5wxeugyhz2sa3ajr7u",
+    "paymentchannel": "bafk2bzacecgvgh3pwomkbkmthqdem5uizavm33qs2t6yfruzbhgo3i3piuzzo",
+    "reward": "bafk2bzaceb24upzz7ejojiui3ispa7cgkem5dogdbxfnwapgw55ezhi6uxs5c",
+    "storagemarket": "bafk2bzacea7hmpueee36xmo2dzy55y7i7esz22745nya4dlclywbkax2ambti",
+    "storageminer": "bafk2bzaceayyuoopw52rue7i2q42bhfk6xyn3ttha5czq7nfls66kven5vzzo",
+    "storagepower": "bafk2bzaceaura3adt35vgx5gowzgxos7mqyd67oliuy5rxsof4vmuozs5jbba",
+    "system": "bafk2bzaceco7wlkurgyobq2ylz73mzayekdgvnmxu5p3nkggucjl6tld7sjsc",
+    "verifiedregistry": "bafk2bzaceacs6zpbhi2ffskijbqxrjc2kombyntuiurdajj6dqu6g3ypx7zns"
   }
 }
