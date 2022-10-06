@@ -1,0 +1,53 @@
+name: update actor codes
+
+on:
+  workflow_dispatch:
+
+env:
+  node_version: 16
+  git_email: jpschwartz2@uwalumni.com
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: glifio/filecoin-descriptors
+          submodules: recursive
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+      - run: |
+          go get ./...
+          go run *.go
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: actor-info
+          path: output/
+
+      - uses: actions/checkout@v3
+
+      - run: rm -rf packages/filecoin-actor-utils/src/data
+      - run: mkdir -p packages/filecoin-actor-utils/src/data
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: actor-info
+          path: packages/filecoin-actor-utils/src/data
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: Update actor-info
+          committer: ${{ github.actor }} <${{ env.git_email }}>
+          author: ${{ github.actor }} <${{ env.git_email }}>
+          branch: actions/update-actor-info
+          delete-branch: true
+          title: "Update actor codes and descriptors"
+          body: "Update actor codes and descriptors"
+          labels: |
+            automated pr
