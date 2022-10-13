@@ -30,12 +30,14 @@ export type LotusRpcEngineConfig = {
   apiAddress: string
   token?: string
   namespace?: string
+  delimeter?: string
   axiosOpts?: AxiosRequestConfig
 }
 
 export default class LotusRpcEngine {
   readonly apiAddress: string
   readonly namespace: string
+  readonly delimeter: string
   readonly axiosOpts: AxiosRequestConfig
 
   constructor(config: LotusRpcEngineConfig) {
@@ -45,6 +47,7 @@ export default class LotusRpcEngine {
       )
     this.apiAddress = config.apiAddress
     this.namespace = config.namespace || 'Filecoin'
+    this.delimeter = config.delimeter || '.'
     this.axiosOpts = config.axiosOpts || {}
     this.axiosOpts.headers = getHeaders(this.axiosOpts.headers, config.token)
     this.axiosOpts.headers = removeEmptyHeaders(this.axiosOpts.headers)
@@ -55,7 +58,7 @@ export default class LotusRpcEngine {
       this.apiAddress,
       {
         jsonrpc: '2.0',
-        method: `${this.namespace}.${method}`,
+        method: `${this.namespace}${this.delimeter}${method}`,
         params,
         id: 1
       },
