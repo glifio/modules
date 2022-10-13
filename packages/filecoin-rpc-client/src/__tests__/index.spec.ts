@@ -127,5 +127,26 @@ describe('LotusRpcEngine', () => {
         errorResponse.error.message
       )
     })
+
+    test('it properly sends requests to the eth namespace', done => {
+      const ethNamespace = new LotusRpcEngine({
+        apiAddress: 'https://proxy.openworklabs.com/rpc/v0',
+        namespace: 'eth',
+        delimeter: '_'
+      })
+      const method = 'getTransactionCount'
+      nock('https://proxy.openworklabs.com')
+        .post('/rpc/v0')
+        .reply(201, (uri, body) => {
+          if (typeof body !== 'string') {
+            expect(body.method).toBe(`eth_${method}`)
+          } else {
+            throw new Error(`Body should be Record`)
+          }
+          done()
+        })
+
+      ethNamespace.request(method)
+    })
   })
 })
