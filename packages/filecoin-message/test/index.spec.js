@@ -6,7 +6,8 @@ const baseMessage = {
   from: 't1pyfq7dg6sq65acyomqvzvbgwni4zllglqffw5dy',
   nonce: 10,
   value: new BigNumber('11416382733294334924'),
-  method: 0
+  method: 0,
+  params: ''
 }
 
 const customizedGasMessage = {
@@ -124,6 +125,7 @@ describe('message', () => {
         nonce: 10,
         value: new BigNumber('11416382733294334924'),
         method: 0,
+        params: '',
         value: '100000000000000000000000000000000000000000000',
         gasPremium: '100000000000000000000000000000000000000000000',
         gasFeeCap: '100000000000000000000000000000000000000000000'
@@ -177,6 +179,7 @@ describe('message', () => {
         from: 't1pyfq7dg6sq65acyomqvzvbgwni4zllglqffw5dy',
         nonce: 10,
         method: 0,
+        params: '',
         value: '100000000000000000000000000000000000000000000',
         gasPremium: '100000000000000000000000000000000000000000000',
         gasFeeCap: '100000000000000000000000000000000000000000000'

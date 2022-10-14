@@ -90,6 +90,7 @@ describe('provider', () => {
         from: KNOWN_TYPE_0_ADDRESS[Network.TEST],
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
+        params: '',
         nonce: 0
       })
 
@@ -105,6 +106,7 @@ describe('provider', () => {
         from: KNOWN_TYPE_0_ADDRESS[Network.TEST],
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
+        params: '',
         nonce
       })
 
@@ -132,6 +134,7 @@ describe('provider', () => {
         from: 'f1nq5k2mps5umtebdovlyo7y6a3ywc7u4tobtuo3a',
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
+        params: '',
         nonce: 0
       })
       const valid = await filecoin.simulateMessage(message.toLotusType())
@@ -145,6 +148,7 @@ describe('provider', () => {
         from: 't165slrweoeuz4inlqwoo54upjpvh2z3lb2dzbdma',
         value: '100000000000000000000',
         method: 0,
+        params: '',
         nonce: 0
       })
       const valid = await filecoin.simulateMessage(message.toLotusType())
@@ -405,7 +409,7 @@ describe('provider', () => {
           GasLimit: 1000000,
           Value: '1000',
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -420,7 +424,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -448,7 +452,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -477,7 +481,7 @@ describe('provider', () => {
           Value: '1000',
           GasLimit: 1000000,
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -492,7 +496,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -514,7 +518,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         expect(message instanceof Message).toBe(true)
@@ -532,7 +536,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         const lotusMsg = message.toLotusType()
@@ -560,7 +564,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         const lotusMsg = message.toLotusType()
@@ -580,6 +584,7 @@ describe('provider', () => {
         from: unknownFromAddr,
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
+        params: '',
         nonce: 0
       })
 
@@ -597,6 +602,7 @@ describe('provider', () => {
         from: KNOWN_TYPE_0_ADDRESS[Network.TEST],
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
+        params: '',
         nonce: 0
       })
 
@@ -614,6 +620,7 @@ describe('provider', () => {
         from: unknownFromAddr,
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
+        params: '',
         nonce: 0
       })
 
@@ -722,6 +729,7 @@ describe('provider', () => {
         from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
         value: new FilecoinNumber('1', 'attofil').toAttoFil(),
         method: 0,
+        params: '',
         nonce: 0
       })
 
@@ -745,6 +753,7 @@ describe('provider', () => {
           from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
           value: new FilecoinNumber('1', 'attofil').toAttoFil(),
           method: 0,
+          params: '',
           nonce: 0,
           gasFeeCap: FEE_CAP,
           gasLimit: LIMIT,
@@ -777,6 +786,7 @@ describe('provider', () => {
           from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
           value: new FilecoinNumber('1', 'attofil').toAttoFil(),
           method: 0,
+          params: '',
           nonce: 0,
           gasFeeCap: FEE_CAP,
           gasLimit: LIMIT,
@@ -809,6 +819,7 @@ describe('provider', () => {
           from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
           value: new FilecoinNumber('1', 'attofil').toAttoFil(),
           method: 0,
+          params: '',
           nonce: 0,
           gasFeeCap: FEE_CAP,
           gasLimit: LIMIT,
@@ -832,6 +843,7 @@ describe('provider', () => {
           from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
           value: new FilecoinNumber('1', 'attofil').toAttoFil(),
           method: 0,
+          params: '',
           nonce: 0,
           gasFeeCap: FEE_CAP,
           gasLimit: LIMIT,
@@ -857,6 +869,7 @@ describe('provider', () => {
           from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
           value: new FilecoinNumber('1', 'attofil').toAttoFil(),
           method: 0,
+          params: '',
           nonce: 0,
           gasFeeCap: FEE_CAP,
           gasLimit: LIMIT,
@@ -889,6 +902,7 @@ describe('provider', () => {
           from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
           value: new FilecoinNumber('1', 'attofil').toAttoFil(),
           method: 0,
+          params: '',
           nonce: 0
         })
 
@@ -901,6 +915,7 @@ describe('provider', () => {
           from: KNOWN_TYPE_1_ADDRESS[Network.TEST],
           value: new FilecoinNumber('1', 'attofil').toAttoFil(),
           method: 0,
+          params: '',
           nonce: 0,
           gasLimit: messageWGas.gasLimit,
           gasPremium: messageWGas.gasPremium.toString(),

@@ -63,6 +63,7 @@ describe('single key secp256k1 wallet subprovider', () => {
     const value = '10'
     const nonce = 0
     const method = 0
+    const params = ''
 
     test('it signs a validly formed message', async () => {
       const [from] = await subProvider.getAccounts(0, 2, CoinType.TEST)
@@ -71,6 +72,7 @@ describe('single key secp256k1 wallet subprovider', () => {
         to: from,
         value,
         method,
+        params,
         nonce
       })
 
@@ -97,6 +99,7 @@ describe('single key secp256k1 wallet subprovider', () => {
           to: testnetCoinTypeAccount,
           value,
           method,
+          params,
           nonce
         })
 
