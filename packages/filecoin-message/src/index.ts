@@ -13,7 +13,7 @@ export interface ZondaxMessage {
   readonly gaslimit: number
   readonly gasfeecap: string
   readonly method: number
-  readonly params: string | string[] | undefined
+  readonly params: string
 }
 
 export type Address = {
@@ -30,7 +30,7 @@ export type MessagePending = {
   height: string
   method: string
   nonce: string
-  params: string | string[] | undefined
+  params: string
   to: Address
   value: string
   version?: string
@@ -47,7 +47,7 @@ export interface LotusMessage {
   GasLimit: number
   GasFeeCap: string
   Method: number
-  Params?: string | string[]
+  Params: string
 }
 
 export interface SignedLotusMessage {
@@ -67,7 +67,7 @@ export interface MessageObj {
   gasPremium?: string | number | BigNumber
   gasFeeCap?: string | number | BigNumber
   gasLimit?: number
-  params?: string | string[]
+  params: string
 }
 
 export class Message {
@@ -79,7 +79,7 @@ export class Message {
   private _gasPremium: BigNumber
   private _gasFeeCap: BigNumber
   private _gasLimit: number
-  private _params: string | string[] | undefined
+  private _params: string
 
   public get to(): string {
     return this._to
@@ -113,7 +113,7 @@ export class Message {
     return this._gasLimit
   }
 
-  public get params(): string | string[] | undefined {
+  public get params(): string {
     return this._params
   }
 
@@ -216,7 +216,7 @@ export class Message {
       gasfeecap: this.gasFeeCap.toFixed(0, 1),
       gaslimit: this.gasLimit,
       method: this.method,
-      params: this.params || ''
+      params: this.params
     }
   }
 
@@ -243,7 +243,7 @@ export class Message {
       gasFeeCap: this.gasFeeCap.toString(),
       gasLimit: this.gasLimit.toString(),
       gasPremium: this.gasPremium.toString(),
-      params: this.params || '',
+      params: this.params,
       height: '',
       value: this.value.toString(),
       nonce: this.nonce.toString()
@@ -266,13 +266,18 @@ const typeCheck = (msg: MessageObj): void => {
   if (msg.gasPremium) checkBigNumberValue(msg.gasPremium, 'Gas Premium')
   if (msg.gasFeeCap) checkBigNumberValue(msg.gasFeeCap, 'Gas Fee Cap')
   if (msg.gasLimit) checkPositiveNumber(msg.gasLimit, 'Gas Limit')
+  checkString(msg.params, 'Params')
 }
 
-const checkAddressString = (value: any, name: string): void => {
+const checkString = (value: any, name: string): void => {
   if (typeof value === 'undefined')
     throw new Error(`No value provided for ${name}`)
   if (typeof value !== 'string')
     throw new Error(`Value provided for ${name} is not a string`)
+}
+
+const checkAddressString = (value: any, name: string): void => {
+  checkString(value, name)
   if (!validateAddressString(value))
     throw new Error(`Value provided for ${name} is not a valid address`)
 }
