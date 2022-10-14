@@ -409,7 +409,7 @@ describe('provider', () => {
           GasLimit: 1000000,
           Value: '1000',
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -424,7 +424,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -452,7 +452,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -481,7 +481,7 @@ describe('provider', () => {
           Value: '1000',
           GasLimit: 1000000,
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -496,7 +496,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         expect(res instanceof FilecoinNumber).toBe(true)
@@ -518,7 +518,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         expect(message instanceof Message).toBe(true)
@@ -536,7 +536,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         const lotusMsg = message.toLotusType()
@@ -564,7 +564,7 @@ describe('provider', () => {
           Nonce: 0,
           Value: '1000',
           Method: 0,
-          Params: []
+          Params: ''
         })
 
         const lotusMsg = message.toLotusType()
