@@ -1,6 +1,6 @@
 {
   "name": "@glif/local-managed-provider",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "a javascript package to send filecoin to addresses",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -18,8 +18,8 @@
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
     "@glif/filecoin-address": "^2.0.1",
-    "@glif/filecoin-message": "^2.0.1",
-    "@glif/filecoin-wallet-provider": "^2.0.8",
+    "@glif/filecoin-message": "^2.0.9",
+    "@glif/filecoin-wallet-provider": "^2.0.9",
     "@zondax/filecoin-signing-tools": "^0.18.3",
     "bignumber.js": "^9.0.1",
     "uint8arrays": "^3.0.0"
