@@ -15,7 +15,8 @@ const message = new Message({
   from: 't1pyfq7dg6sq65acyomqvzvbgwni4zllglqffw5dy',
   nonce: 1,
   value: new BigNumber('1000000000'),
-  method: 0
+  method: 0,
+  params: ''
 })
 
 const messageForSerialization = await message.toSerializeableType()

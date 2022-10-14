@@ -466,6 +466,7 @@ describe('ledger wallet subprovider', () => {
       const value = '10'
       const nonce = 0
       const method = 0
+      const params = ''
 
       test('it signs a validly formed message', async () => {
         const [from, to] = await subProvider.getAccounts(0, 2, CoinType.TEST)
@@ -474,6 +475,7 @@ describe('ledger wallet subprovider', () => {
           to,
           value,
           method,
+          params,
           nonce
         })
 
@@ -499,6 +501,7 @@ describe('ledger wallet subprovider', () => {
             to: accounts['1'][1],
             value,
             method,
+            params,
             nonce
           })
 
@@ -515,6 +518,7 @@ describe('ledger wallet subprovider', () => {
           to,
           value,
           method,
+          params,
           nonce
         })
 
@@ -531,6 +535,7 @@ describe('ledger wallet subprovider', () => {
             to,
             value,
             method,
+            params,
             nonce
           })
 
