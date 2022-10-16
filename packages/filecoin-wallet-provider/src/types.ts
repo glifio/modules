@@ -28,7 +28,7 @@ export interface ExecutionTrace {
   Error: string
   Duration: number
   GasCharges: any
-  Subcalls: ExecutionTrace[]
+  Subcalls: ExecutionTrace[] | null
 }
 
 export interface InvocResult {
