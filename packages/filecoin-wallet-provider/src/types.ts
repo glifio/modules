@@ -22,22 +22,13 @@ export interface InvokedMessage {
   CID: CID
 }
 
-export interface Subcall {
-  Msg: InvokedMessage
-  MsgRct: MessageReceipt
-  Error: string
-  Duration: number
-  GasCharges: any
-  Subcalls: Subcall[] | null
-}
-
 export interface ExecutionTrace {
   Msg: InvokedMessage
   MsgRct: MessageReceipt
   Error: string
   Duration: number
   GasCharges: any
-  Subcalls: Subcall[] | null
+  Subcalls: ExecutionTrace[]
 }
 
 export interface InvocResult {
