@@ -1,6 +1,6 @@
-import { InvocResult, Subcall } from '../types'
+import { InvocResult, ExecutionTrace } from '../types'
 
-const subcallExitsWithCode0 = (subcall: Subcall): boolean => {
+const subcallExitsWithCode0 = (subcall: ExecutionTrace): boolean => {
   if (subcall.MsgRct.ExitCode !== 0) return false
   if (Array.isArray(subcall.Subcalls) && subcall.Subcalls.length > 0) {
     return subcall.Subcalls.every(subcallExitsWithCode0)
