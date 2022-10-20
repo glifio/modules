@@ -59,6 +59,18 @@ describe('single key secp256k1 wallet subprovider', () => {
     })
   })
 
+  describe('hex key', () => {
+    test('it derives the right address from a hex key', async () => {
+      const fromHex = new SECP256K1KeyProvider(
+        '8182b5bf5b9c966e001934ebaf008f65516290cef6e3069d11e718cbd4336aae',
+        'hex'
+      )
+
+      const [account] = await fromHex.getAccounts(0, 1, CoinType.MAIN)
+      expect(account).toBe('f1gs7o2r4xqtxgmsqy4naytwpvhzrgpytiwc6fnsa')
+    })
+  })
+
   describe('sign', () => {
     const value = '10'
     const nonce = 0
