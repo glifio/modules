@@ -14,7 +14,7 @@ export class SECP256K1KeyProvider implements WalletSubProvider {
 
   readonly type = 'SINGLE_KEY_SECP256K1'
 
-  constructor(privateKey: string) {
+  constructor(privateKey: string, encoding: 'base64' | 'hex' = 'base64') {
     if (!privateKey) {
       throw new errors.InvalidParamsError({
         message: 'Must pass private key string to single key provider instance'
@@ -22,7 +22,11 @@ export class SECP256K1KeyProvider implements WalletSubProvider {
     }
     this.#privateKey = privateKey
     try {
-      this.mainAddress = signingTools.keyRecover(privateKey, false).address
+      const key =
+        encoding === 'hex'
+          ? Buffer.from(privateKey, 'hex').toString('base64')
+          : privateKey
+      this.mainAddress = signingTools.keyRecover(key, false).address
     } catch (err) {
       throw new errors.InvalidParamsError({
         message: `Invalid private key: ${
@@ -30,7 +34,6 @@ export class SECP256K1KeyProvider implements WalletSubProvider {
         }`
       })
     }
-    this.mainAddress = signingTools.keyRecover(privateKey, false).address
   }
 
   async getAccounts(
