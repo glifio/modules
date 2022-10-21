@@ -1,8 +1,9 @@
 import * as leb from 'leb128'
 import Int64 from 'node-int64'
 import { blake2b } from 'blakejs'
-import { base32 as base32Function } from './base32'
 import * as uint8arrays from 'uint8arrays'
+import { utils } from 'ethers'
+import { base32 as base32Function } from './base32'
 import { Protocol } from './protocol'
 import { CoinType } from './coinType'
 
@@ -272,7 +273,33 @@ export function idFromAddress(address: Address): number {
   return parseInt(leb.unsigned.decode(address.payload()), 10)
 }
 
+/**
+ * _delegatedFromEthHex is an experimental method for deriving the f410 address from an ethereum hex address
+ *
+ */
+
+export function _delegatedFromEthHex(
+  ethAddr: string,
+  coinType: CoinType = CoinType.TEST
+) {
+  if (!utils.isAddress(ethAddr)) {
+    throw new Error('Invalid Ethereum address')
+  }
+
+  const protocolByte = new Uint8Array([4])
+  const namespace = new Uint8Array([10])
+  const subAddr = uint8arrays.fromString(ethAddr)
+  const checksum = getChecksum(
+    uint8arrays.concat([protocolByte, namespace, subAddr])
+  )
+
+  return `${coinType}${Protocol.DELEGATED}${namespace}f${base32
+    .encode(uint8arrays.concat([subAddr, checksum]))
+    .toString()}`
+}
+
 export default {
+  _delegatedFromEthHex,
   Address,
   newAddress,
   newIDAddress,

@@ -16,8 +16,8 @@
     "prepublishOnly": "npm run build",
     "lint": "eslint --ext .jsx,.js,.ts,.tsx ./src",
     "lint:fix": "eslint --ext .jsx,.js,.ts,.tsx ./src --fix",
-    "test": "npm run lint && jest",
-    "test:watch": "jest --watch",
+    "test": "npm run build && npm run lint && jest",
+    "test:watch": "npm run build && jest --watch",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch"
   },
@@ -26,6 +26,7 @@
   "dependencies": {
     "blakejs": "1.1.0",
     "borc": "3.0.0",
+    "ethers": "^5.7.2",
     "leb128": "0.0.5",
     "node-int64": "^0.4.0",
     "uint8arrays": "3.0.0"

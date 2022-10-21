@@ -3,7 +3,6 @@ import { blake2b } from 'blakejs'
 import {
   actorAddresses,
   BLSAddresses,
-  delegatedAddresses,
   IDAddresses,
   secp256k1Addresses
 } from './constants'
@@ -19,7 +18,7 @@ import {
   newSecp256k1Address,
   newBLSAddress,
   idFromAddress,
-  newDelegatedAddress
+  _delegatedFromEthHex
 } from '../index'
 
 describe('address', () => {
@@ -59,16 +58,6 @@ describe('address', () => {
       const data = uint8arrays.fromString('BLS pubkey')
       const address = newBLSAddress(data)
       expect(uint8arrays.equals(address.payload(), data)).toBe(true)
-    })
-  })
-  describe.only('newDelegatedAddress', () => {
-    test('it should create new delegated address', () => {
-      const address = newDelegatedAddress(
-        new Uint8Array([10]),
-        uint8arrays.fromString('0x200e5333054ff745df86083a5b73fa44d496244a')
-      )
-
-      console.log(address.toString())
     })
   })
   describe('newFromString', () => {
@@ -166,11 +155,6 @@ describe('address', () => {
       const address = newFromString(actorAddresses[0].string)
       expect(encode('t', address)).toBe(actorAddresses[0].string)
     })
-
-    test('it should encode a Delegated address', async () => {
-      const address = newFromString(delegatedAddresses[0].string)
-      expect(encode('t', address)).toBe(delegatedAddresses[0].string)
-    })
   })
 
   describe('decode', () => {
@@ -218,15 +202,6 @@ describe('address', () => {
     })
 
     test('it should stringify Actor addresses', () => {
-      actorAddresses.forEach(item => {
-        const tAddr = new Address(item.decodedByteArray, CoinType.TEST)
-        expect(`${tAddr}`).toBe(`${CoinType.TEST}${item.string.slice(1)}`)
-        const fAddr = new Address(item.decodedByteArray, CoinType.MAIN)
-        expect(`${fAddr}`).toBe(`${CoinType.MAIN}${item.string.slice(1)}`)
-      })
-    })
-
-    test('it should stringify Delegated addresses', () => {
       actorAddresses.forEach(item => {
         const tAddr = new Address(item.decodedByteArray, CoinType.TEST)
         expect(`${tAddr}`).toBe(`${CoinType.TEST}${item.string.slice(1)}`)
@@ -352,5 +327,25 @@ describe('address', () => {
         )
       ).toBe(false)
     })
+  })
+
+  describe('_delegatedFromEthHex', () => {
+    expect(
+      _delegatedFromEthHex(
+        '0x33a96ff53945374ce14853bc370999b38a899026',
+        CoinType.TEST
+      )
+    ).toBe(
+      't410fgb4dgm3bhe3gmzrvgm4tinjtg42ggzjrgq4dkm3cmmztombzhe4wemzyme4dsojqgi3chkxqgm'
+    )
+
+    expect(
+      _delegatedFromEthHex(
+        '0x200e5333054ff745df86083a5b73fa44d496244a',
+        CoinType.TEST
+      )
+    ).toBe(
+      't410fgb4dembqmu2tgmztga2tiztgg42dkzdgha3daobtme2wenztmzqtindegq4tmmrugrqylntvte'
+    )
   })
 })
