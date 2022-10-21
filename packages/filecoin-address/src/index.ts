@@ -207,10 +207,21 @@ export function encode(coinType: string, address: Address): string {
       return `${prefix}${leb.unsigned.decode(payload)}`
     }
     case Protocol.DELEGATED: {
-      const checksum = getChecksum(address.bytes)
+      // Retrieve the namespace from the Int64 bytes in the payload
       const nsBytes = new Uint8Array(payload, 0, namespaceByteLen)
       const namespace = new Int64(nsBytes).toNumber()
+
+      // The subaddress is the portion after the namespace
       const subAddr = payload.slice(namespaceByteLen)
+
+      // To calculate the checksum from the address bytes, namespace
+      // needs to be a simple Buffer, not the Int64 representation
+      const protocolByte = new Uint8Array([protocol])
+      const namespaceByte = leb.unsigned.encode(namespace)
+      const checksum = getChecksum(
+        uint8arrays.concat([protocolByte, namespaceByte, subAddr])
+      )
+
       const bytes = uint8arrays.concat([subAddr, checksum])
       return `${prefix}${namespace}f${base32.encode(bytes)}`
     }
