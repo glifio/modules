@@ -170,18 +170,13 @@ export function newDelegatedAddress(
 /**
  * newDelegatedEthAddress returns an address for eth using the Delegated protocol.
  */
-export function newDelegatedEthAddress (
+export function newDelegatedEthAddress(
   ethAddr: string,
   coinType?: CoinType
 ): Address {
-  if (!utils.isAddress(ethAddr))
-    throw new Error('Invalid Ethereum address')
+  if (!utils.isAddress(ethAddr)) throw new Error('Invalid Ethereum address')
 
-  return newDelegatedAddress(
-    10,
-    uint8arrays.fromString(ethAddr),
-    coinType
-  )
+  return newDelegatedAddress(10, uint8arrays.fromString(ethAddr), coinType)
 }
 
 export function decode(address: string): Address {
