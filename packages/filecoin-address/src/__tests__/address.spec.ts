@@ -17,7 +17,8 @@ import {
   newActorAddress,
   newSecp256k1Address,
   newBLSAddress,
-  idFromAddress
+  idFromAddress,
+  _delegatedFromEthHex
 } from '../index'
 
 describe('address', () => {
@@ -27,7 +28,7 @@ describe('address', () => {
         const address = newIDAddress(item.string.slice(2))
         expect(
           uint8arrays.equals(
-            Uint8Array.from(address.str),
+            Uint8Array.from(address.bytes),
             item.decodedByteArray
           )
         ).toBe(true)
@@ -65,7 +66,7 @@ describe('address', () => {
         const address = newFromString(item.string)
         expect(
           uint8arrays.equals(
-            Uint8Array.from(address.str),
+            Uint8Array.from(address.bytes),
             item.decodedByteArray
           )
         ).toBe(true)
@@ -77,7 +78,7 @@ describe('address', () => {
         const address = newFromString(item.string)
         expect(
           uint8arrays.equals(
-            Uint8Array.from(address.str),
+            Uint8Array.from(address.bytes),
             item.decodedByteArray
           )
         ).toBe(true)
@@ -89,7 +90,7 @@ describe('address', () => {
         const address = newFromString(item.string)
         expect(
           uint8arrays.equals(
-            Uint8Array.from(address.str),
+            Uint8Array.from(address.bytes),
             item.decodedByteArray
           )
         ).toBe(true)
@@ -101,7 +102,7 @@ describe('address', () => {
         const address = newFromString(item.string)
         expect(
           uint8arrays.equals(
-            Uint8Array.from(address.str),
+            Uint8Array.from(address.bytes),
             item.decodedByteArray
           )
         ).toBe(true)
@@ -326,5 +327,25 @@ describe('address', () => {
         )
       ).toBe(false)
     })
+  })
+
+  describe('_delegatedFromEthHex', () => {
+    expect(
+      _delegatedFromEthHex(
+        '0x33a96ff53945374ce14853bc370999b38a899026',
+        CoinType.TEST
+      )
+    ).toBe(
+      't410fgb4dgm3bhe3gmzrvgm4tinjtg42ggzjrgq4dkm3cmmztombzhe4wemzyme4dsojqgi3chkxqgm'
+    )
+
+    expect(
+      _delegatedFromEthHex(
+        '0x200e5333054ff745df86083a5b73fa44d496244a',
+        CoinType.TEST
+      )
+    ).toBe(
+      't410fgb4dembqmu2tgmztga2tiztgg42dkzdgha3daobtme2wenztmzqtindegq4tmmrugrqylntvte'
+    )
   })
 })

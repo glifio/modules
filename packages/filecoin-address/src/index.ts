@@ -1,7 +1,9 @@
 import * as leb from 'leb128'
+import Int64 from 'node-int64'
 import { blake2b } from 'blakejs'
-import { base32 as base32Function } from './base32'
 import * as uint8arrays from 'uint8arrays'
+import { utils } from 'ethers'
+import { base32 as base32Function } from './base32'
 import { Protocol } from './protocol'
 import { CoinType } from './coinType'
 
@@ -11,27 +13,33 @@ export * from './protocol'
 const defaultCoinType = CoinType.MAIN
 const base32 = base32Function('abcdefghijklmnopqrstuvwxyz234567')
 
-// PayloadHashLength defines the hash length taken over addresses using the
-// Actor and SECP256K1 protocols.
+// Defines the hash length taken over addresses
+// using the Actor and SECP256K1 protocols.
 const payloadHashLength = 20
+
+// The maximum length of a delegated address's sub-address.
+const maxSubaddressLen = 54
+
+// The number of bytes that are reserved for namespace
+const namespaceByteLen = new Int64(0).toBuffer().length
 
 function addressHash(ingest: Uint8Array): Uint8Array {
   return blake2b(ingest, null, payloadHashLength)
 }
 
 export class Address {
-  readonly str: Uint8Array
-  readonly _protocol: Protocol
+  readonly bytes: Uint8Array
   readonly _coinType: CoinType
 
-  constructor(str: Uint8Array, coinType: CoinType = defaultCoinType) {
-    if (!str || str.length < 1) throw new Error('Missing str in address')
-    this.str = str
-    this._protocol = this.str[0] as Protocol
-    if (!Protocol[this._protocol]) {
-      throw new Error(`Invalid protocol ${this._protocol}`)
-    }
+  constructor(bytes: Uint8Array, coinType: CoinType = defaultCoinType) {
+    if (!bytes || !bytes.length) throw new Error('Missing bytes in address')
+
+    this.bytes = bytes
     this._coinType = coinType
+
+    if (!(this.protocol() in Protocol)) {
+      throw new Error(`Invalid protocol ${this.protocol()}`)
+    }
   }
 
   network(): CoinType {
@@ -43,11 +51,11 @@ export class Address {
   }
 
   protocol(): Protocol {
-    return this._protocol
+    return this.bytes[0]
   }
 
   payload(): Uint8Array {
-    return this.str.slice(1, this.str.length)
+    return this.bytes.slice(1)
   }
 
   /**
@@ -62,13 +70,13 @@ export class Address {
   /**
    * equals determines if this address is the "same" address as the passed
    * address. Two addresses are considered equal if they are the same instance
-   * OR if their "str" property matches byte for byte.
+   * OR if their "bytes" property matches byte for byte.
    */
   equals(addr: Address): boolean {
     if (this === addr) {
       return true
     }
-    return uint8arrays.equals(this.str, addr.str)
+    return uint8arrays.equals(this.bytes, addr.bytes)
   }
 }
 
@@ -93,15 +101,15 @@ export function validateChecksum(
 export function newAddress(
   protocol: Protocol,
   payload: Uint8Array,
-  coinType: CoinType = defaultCoinType
+  coinType?: CoinType
 ): Address {
-  const protocolByte = new Uint8Array([protocol])
+  const protocolByte = leb.unsigned.encode(protocol)
   return new Address(uint8arrays.concat([protocolByte, payload]), coinType)
 }
 
 export function newIDAddress(
   id: number | string,
-  coinType: CoinType = defaultCoinType
+  coinType?: CoinType
 ): Address {
   return newAddress(Protocol.ID, leb.unsigned.encode(id), coinType)
 }
@@ -109,22 +117,66 @@ export function newIDAddress(
 /**
  * newActorAddress returns an address using the Actor protocol.
  */
-export function newActorAddress(data: Uint8Array): Address {
-  return newAddress(Protocol.ACTOR, addressHash(data))
+export function newActorAddress(
+  data: Uint8Array,
+  coinType?: CoinType
+): Address {
+  return newAddress(Protocol.ACTOR, addressHash(data), coinType)
 }
 
 /**
  * newSecp256k1Address returns an address using the SECP256K1 protocol.
  */
-export function newSecp256k1Address(pubkey: Uint8Array): Address {
-  return newAddress(Protocol.SECP256K1, addressHash(pubkey))
+export function newSecp256k1Address(
+  pubkey: Uint8Array,
+  coinType?: CoinType
+): Address {
+  return newAddress(Protocol.SECP256K1, addressHash(pubkey), coinType)
 }
 
 /**
  * newBLSAddress returns an address using the BLS protocol.
  */
-export function newBLSAddress(pubkey: Uint8Array): Address {
-  return newAddress(Protocol.BLS, pubkey)
+export function newBLSAddress(
+  pubkey: Uint8Array,
+  coinType?: CoinType
+): Address {
+  return newAddress(Protocol.BLS, pubkey, coinType)
+}
+
+/**
+ * newDelegatedAddress returns an address using the Delegated protocol.
+ */
+export function newDelegatedAddress(
+  namespace: number,
+  subAddr: Uint8Array,
+  coinType?: CoinType
+): Address {
+  if (namespace > Int64.MAX_INT)
+    throw new Error('Namespace must be less than 2^63')
+
+  if (subAddr.length > maxSubaddressLen)
+    throw new Error('Subaddress address length')
+
+  const namespaceBuf = new Int64(namespace).toBuffer()
+
+  return newAddress(
+    Protocol.DELEGATED,
+    uint8arrays.concat([namespaceBuf, subAddr]),
+    coinType
+  )
+}
+
+/**
+ * newDelegatedEthAddress returns an address for eth using the Delegated protocol.
+ */
+export function newDelegatedEthAddress(
+  ethAddr: string,
+  coinType?: CoinType
+): Address {
+  if (!utils.isAddress(ethAddr)) throw new Error('Invalid Ethereum address')
+
+  return newDelegatedAddress(10, uint8arrays.fromString(ethAddr), coinType)
 }
 
 export function decode(address: string): Address {
@@ -134,7 +186,7 @@ export function decode(address: string): Address {
   /* tslint:disable-next-line:radix */
   const protocol = parseInt(address.slice(1, 2)) as Protocol
   const raw = address.substring(2, address.length)
-  const protocolByte = new Uint8Array([protocol])
+  const protocolByte = leb.unsigned.encode(protocol)
 
   if (protocol === Protocol.ID) {
     return newIDAddress(raw, coinType)
@@ -156,24 +208,39 @@ export function decode(address: string): Address {
 }
 
 export function encode(coinType: string, address: Address): string {
-  if (!address || !address.str) throw Error('Invalid address')
-  const payload = address.payload()
+  if (!address || !address.bytes) throw Error('Invalid address')
 
-  switch (address.protocol()) {
-    case 0: {
-      return (
-        coinType +
-        String(address.protocol()) +
-        leb.unsigned.decode(address.payload())
+  const protocol = address.protocol()
+  const payload = address.payload()
+  const prefix = `${coinType}${protocol}`
+
+  switch (protocol) {
+    case Protocol.ID: {
+      return `${prefix}${leb.unsigned.decode(payload)}`
+    }
+    case Protocol.DELEGATED: {
+      // Retrieve the namespace from the Int64 bytes in the payload
+      const nsBytes = new Uint8Array(payload, 0, namespaceByteLen)
+      const namespace = new Int64(nsBytes).toNumber()
+
+      // The subaddress is the portion after the namespace
+      const subAddr = payload.slice(namespaceByteLen)
+
+      // To calculate the checksum from the address bytes, namespace
+      // needs to be a simple Buffer, not the Int64 representation
+      const protocolByte = leb.unsigned.encode(protocol)
+      const namespaceByte = leb.unsigned.encode(namespace)
+      const checksum = getChecksum(
+        uint8arrays.concat([protocolByte, namespaceByte, subAddr])
       )
+
+      const bytes = uint8arrays.concat([subAddr, checksum])
+      return `${prefix}${namespace}f${base32.encode(bytes)}`
     }
     default: {
-      const protocolByte = new Uint8Array([address.protocol()])
-      const checksum = getChecksum(uint8arrays.concat([protocolByte, payload]))
+      const checksum = getChecksum(address.bytes)
       const bytes = uint8arrays.concat([payload, checksum])
-      return (
-        String(coinType) + String(address.protocol()) + base32.encode(bytes)
-      )
+      return `${prefix}${base32.encode(bytes)}`
     }
   }
 }
@@ -239,7 +306,20 @@ export function idFromAddress(address: Address): number {
   return parseInt(leb.unsigned.decode(address.payload()), 10)
 }
 
+/**
+ * _delegatedFromEthHex is an experimental method for deriving the f410 address from an ethereum hex address
+ *
+ */
+
+export function _delegatedFromEthHex(
+  ethAddr: string,
+  coinType: CoinType = CoinType.TEST
+) {
+  return newDelegatedEthAddress(ethAddr, coinType).toString()
+}
+
 export default {
+  _delegatedFromEthHex,
   Address,
   newAddress,
   newIDAddress,
