@@ -24,8 +24,11 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
+    "base-endecoder": "^1.0.0",
+    "base32.js": "^0.1.0",
     "blakejs": "1.1.0",
     "borc": "3.0.0",
+    "ethers": "^5.7.2",
     "leb128": "0.0.5",
     "uint8arrays": "3.0.0"
   },
