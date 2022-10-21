@@ -127,6 +127,20 @@ export function newBLSAddress(pubkey: Uint8Array): Address {
   return newAddress(Protocol.BLS, pubkey)
 }
 
+/**
+ *
+ * newDelegatedAddress returns a Delegated address
+ */
+export function newDelegatedAddress(
+  namespace: Uint8Array,
+  subAddr: Uint8Array
+): Address {
+  return newAddress(
+    Protocol.DELEGATED,
+    uint8arrays.concat([namespace, subAddr])
+  )
+}
+
 export function decode(address: string): Address {
   checkAddressString(address)
 
@@ -165,6 +179,19 @@ export function encode(coinType: string, address: Address): string {
         coinType +
         String(address.protocol()) +
         leb.unsigned.decode(address.payload())
+      )
+    }
+    case Protocol.DELEGATED: {
+      const protocolByte = new Uint8Array([address.protocol()])
+      const namespace = payload[0]
+      const subAddr = payload.slice(1)
+      const checksum = getChecksum(uint8arrays.concat([protocolByte, subAddr]))
+
+      return (
+        String(coinType) +
+        String(address.protocol()) +
+        String(namespace) +
+        base32.encode(subAddr)
       )
     }
     default: {

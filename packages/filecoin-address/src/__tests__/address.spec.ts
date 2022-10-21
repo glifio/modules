@@ -3,6 +3,7 @@ import { blake2b } from 'blakejs'
 import {
   actorAddresses,
   BLSAddresses,
+  delegatedAddresses,
   IDAddresses,
   secp256k1Addresses
 } from './constants'
@@ -17,7 +18,8 @@ import {
   newActorAddress,
   newSecp256k1Address,
   newBLSAddress,
-  idFromAddress
+  idFromAddress,
+  newDelegatedAddress
 } from '../index'
 
 describe('address', () => {
@@ -57,6 +59,16 @@ describe('address', () => {
       const data = uint8arrays.fromString('BLS pubkey')
       const address = newBLSAddress(data)
       expect(uint8arrays.equals(address.payload(), data)).toBe(true)
+    })
+  })
+  describe.only('newDelegatedAddress', () => {
+    test('it should create new delegated address', () => {
+      const address = newDelegatedAddress(
+        new Uint8Array([10]),
+        uint8arrays.fromString('0x200e5333054ff745df86083a5b73fa44d496244a')
+      )
+
+      console.log(address.toString())
     })
   })
   describe('newFromString', () => {
@@ -154,6 +166,11 @@ describe('address', () => {
       const address = newFromString(actorAddresses[0].string)
       expect(encode('t', address)).toBe(actorAddresses[0].string)
     })
+
+    test('it should encode a Delegated address', async () => {
+      const address = newFromString(delegatedAddresses[0].string)
+      expect(encode('t', address)).toBe(delegatedAddresses[0].string)
+    })
   })
 
   describe('decode', () => {
@@ -201,6 +218,15 @@ describe('address', () => {
     })
 
     test('it should stringify Actor addresses', () => {
+      actorAddresses.forEach(item => {
+        const tAddr = new Address(item.decodedByteArray, CoinType.TEST)
+        expect(`${tAddr}`).toBe(`${CoinType.TEST}${item.string.slice(1)}`)
+        const fAddr = new Address(item.decodedByteArray, CoinType.MAIN)
+        expect(`${fAddr}`).toBe(`${CoinType.MAIN}${item.string.slice(1)}`)
+      })
+    })
+
+    test('it should stringify Delegated addresses', () => {
       actorAddresses.forEach(item => {
         const tAddr = new Address(item.decodedByteArray, CoinType.TEST)
         expect(`${tAddr}`).toBe(`${CoinType.TEST}${item.string.slice(1)}`)

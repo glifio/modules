@@ -588,3 +588,10 @@ export const BLSAddresses = [
     )
   }
 ]
+
+export const delegatedAddresses = [
+  {
+    string:
+      't410fgb4dembqmu2tgmztga2tiztgg42dkzdgha3daobtme2wenztmzqtindegq4tmmrugrqylntvte%'
+  }
+]
