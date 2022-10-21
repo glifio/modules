@@ -16,8 +16,8 @@
     "prepublishOnly": "npm run build",
     "lint": "eslint --ext .jsx,.js,.ts,.tsx ./src",
     "lint:fix": "eslint --ext .jsx,.js,.ts,.tsx ./src --fix",
-    "test": "npm run lint && jest",
-    "test:watch": "jest --watch",
+    "test": "npm run build && npm run lint && jest",
+    "test:watch": "npm run build && jest --watch",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch"
   },
