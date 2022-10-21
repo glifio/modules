@@ -107,7 +107,7 @@ export function newAddress(
   return new Address(uint8arrays.concat([protocolByte, payload]), coinType)
 }
 
-export function newIDAddress(id: number | string, coinType: CoinType): Address {
+export function newIDAddress(id: number | string, coinType?: CoinType): Address {
   return newAddress(Protocol.ID, leb.unsigned.encode(id), coinType)
 }
 
