@@ -103,7 +103,7 @@ export function newAddress(
   payload: Uint8Array,
   coinType?: CoinType
 ): Address {
-  const protocolByte = new Uint8Array([protocol])
+  const protocolByte = leb.unsigned.encode(protocol)
   return new Address(uint8arrays.concat([protocolByte, payload]), coinType)
 }
 
@@ -174,7 +174,7 @@ export function decode(address: string): Address {
   /* tslint:disable-next-line:radix */
   const protocol = parseInt(address.slice(1, 2)) as Protocol
   const raw = address.substring(2, address.length)
-  const protocolByte = new Uint8Array([protocol])
+  const protocolByte = leb.unsigned.encode(protocol)
 
   if (protocol === Protocol.ID) {
     return newIDAddress(raw, coinType)
@@ -216,7 +216,7 @@ export function encode(coinType: string, address: Address): string {
 
       // To calculate the checksum from the address bytes, namespace
       // needs to be a simple Buffer, not the Int64 representation
-      const protocolByte = new Uint8Array([protocol])
+      const protocolByte = leb.unsigned.encode(protocol)
       const namespaceByte = leb.unsigned.encode(namespace)
       const checksum = getChecksum(
         uint8arrays.concat([protocolByte, namespaceByte, subAddr])
