@@ -29,7 +29,7 @@ describe('address', () => {
         const address = newIDAddress(item.string.slice(2))
         expect(
           uint8arrays.equals(
-            Uint8Array.from(address.str),
+            Uint8Array.from(address.bytes),
             item.decodedByteArray
           )
         ).toBe(true)
@@ -77,7 +77,7 @@ describe('address', () => {
         const address = newFromString(item.string)
         expect(
           uint8arrays.equals(
-            Uint8Array.from(address.str),
+            Uint8Array.from(address.bytes),
             item.decodedByteArray
           )
         ).toBe(true)
@@ -89,7 +89,7 @@ describe('address', () => {
         const address = newFromString(item.string)
         expect(
           uint8arrays.equals(
-            Uint8Array.from(address.str),
+            Uint8Array.from(address.bytes),
             item.decodedByteArray
           )
         ).toBe(true)
@@ -101,7 +101,7 @@ describe('address', () => {
         const address = newFromString(item.string)
         expect(
           uint8arrays.equals(
-            Uint8Array.from(address.str),
+            Uint8Array.from(address.bytes),
             item.decodedByteArray
           )
         ).toBe(true)
@@ -113,7 +113,7 @@ describe('address', () => {
         const address = newFromString(item.string)
         expect(
           uint8arrays.equals(
-            Uint8Array.from(address.str),
+            Uint8Array.from(address.bytes),
             item.decodedByteArray
           )
         ).toBe(true)
