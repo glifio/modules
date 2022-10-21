@@ -1,4 +1,5 @@
 import * as leb from 'leb128'
+import Int64 from 'node-int64'
 import { blake2b } from 'blakejs'
 import { base32 as base32Function } from './base32'
 import * as uint8arrays from 'uint8arrays'
@@ -11,27 +12,33 @@ export * from './protocol'
 const defaultCoinType = CoinType.MAIN
 const base32 = base32Function('abcdefghijklmnopqrstuvwxyz234567')
 
-// PayloadHashLength defines the hash length taken over addresses using the
-// Actor and SECP256K1 protocols.
+// Defines the hash length taken over addresses
+// using the Actor and SECP256K1 protocols.
 const payloadHashLength = 20
+
+// The maximum length of a delegated address's sub-address.
+const maxSubaddressLen = 54
+
+// The number of bytes that are reserved for namespace
+const namespaceByteLen = new Int64(0).toBuffer().length
 
 function addressHash(ingest: Uint8Array): Uint8Array {
   return blake2b(ingest, null, payloadHashLength)
 }
 
 export class Address {
-  readonly str: Uint8Array
-  readonly _protocol: Protocol
+  readonly bytes: Uint8Array
   readonly _coinType: CoinType
 
-  constructor(str: Uint8Array, coinType: CoinType = defaultCoinType) {
-    if (!str || str.length < 1) throw new Error('Missing str in address')
-    this.str = str
-    this._protocol = this.str[0] as Protocol
-    if (!Protocol[this._protocol]) {
-      throw new Error(`Invalid protocol ${this._protocol}`)
-    }
+  constructor(bytes: Uint8Array, coinType: CoinType = defaultCoinType) {
+    if (!bytes || !bytes.length) throw new Error('Missing bytes in address')
+
+    this.bytes = bytes
     this._coinType = coinType
+
+    if (!(this.protocol() in Protocol)) {
+      throw new Error(`Invalid protocol ${this.protocol()}`)
+    }
   }
 
   network(): CoinType {
@@ -43,11 +50,11 @@ export class Address {
   }
 
   protocol(): Protocol {
-    return this._protocol
+    return this.bytes[0]
   }
 
   payload(): Uint8Array {
-    return this.str.slice(1, this.str.length)
+    return this.bytes.slice(1)
   }
 
   /**
@@ -62,13 +69,13 @@ export class Address {
   /**
    * equals determines if this address is the "same" address as the passed
    * address. Two addresses are considered equal if they are the same instance
-   * OR if their "str" property matches byte for byte.
+   * OR if their "bytes" property matches byte for byte.
    */
   equals(addr: Address): boolean {
     if (this === addr) {
       return true
     }
-    return uint8arrays.equals(this.str, addr.str)
+    return uint8arrays.equals(this.bytes, addr.bytes)
   }
 }
 
@@ -128,16 +135,24 @@ export function newBLSAddress(pubkey: Uint8Array): Address {
 }
 
 /**
- *
- * newDelegatedAddress returns a Delegated address
+ * newDelegatedAddress returns an address using the Delegated protocol.
  */
 export function newDelegatedAddress(
-  namespace: Uint8Array,
+  namespace: number,
   subAddr: Uint8Array
 ): Address {
+  if (namespace > Int64.MAX_INT)
+    throw new Error('Namespace must be less than 2^63')
+
+  if (subAddr.length > maxSubaddressLen)
+    throw new Error('Subaddress address length')
+
+  const namespaceInt64 = new Int64(namespace)
+  const namespaceBuf = namespaceInt64.toBuffer()
+
   return newAddress(
     Protocol.DELEGATED,
-    uint8arrays.concat([namespace, subAddr])
+    uint8arrays.concat([namespaceBuf, subAddr])
   )
 }
 
@@ -170,37 +185,28 @@ export function decode(address: string): Address {
 }
 
 export function encode(coinType: string, address: Address): string {
-  if (!address || !address.str) throw Error('Invalid address')
-  const payload = address.payload()
+  if (!address || !address.bytes) throw Error('Invalid address')
 
-  switch (address.protocol()) {
-    case 0: {
-      return (
-        coinType +
-        String(address.protocol()) +
-        leb.unsigned.decode(address.payload())
-      )
+  const protocol = address.protocol()
+  const payload = address.payload()
+  const prefix = `${coinType}${protocol}`
+
+  switch (protocol) {
+    case Protocol.ID: {
+      return `${prefix}${leb.unsigned.decode(payload)}`
     }
     case Protocol.DELEGATED: {
-      const protocolByte = new Uint8Array([address.protocol()])
-      const namespace = payload[0]
-      const subAddr = payload.slice(1)
-      const checksum = getChecksum(uint8arrays.concat([protocolByte, subAddr]))
-
-      return (
-        String(coinType) +
-        String(address.protocol()) +
-        String(namespace) +
-        base32.encode(subAddr)
-      )
+      const checksum = getChecksum(address.bytes)
+      const nsBytes = new Uint8Array(payload, 0, namespaceByteLen)
+      const namespace = new Int64(nsBytes).toNumber()
+      const subAddr = payload.slice(namespaceByteLen)
+      const bytes = uint8arrays.concat([subAddr, checksum])
+      return `${prefix}${namespace}f${base32.encode(bytes)}`
     }
     default: {
-      const protocolByte = new Uint8Array([address.protocol()])
-      const checksum = getChecksum(uint8arrays.concat([protocolByte, payload]))
+      const checksum = getChecksum(address.bytes)
       const bytes = uint8arrays.concat([payload, checksum])
-      return (
-        String(coinType) + String(address.protocol()) + base32.encode(bytes)
-      )
+      return `${prefix}${base32.encode(bytes)}`
     }
   }
 }
