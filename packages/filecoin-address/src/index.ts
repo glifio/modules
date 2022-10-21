@@ -167,6 +167,23 @@ export function newDelegatedAddress(
   )
 }
 
+/**
+ * newDelegatedEthAddress returns an address for eth using the Delegated protocol.
+ */
+export function newDelegatedEthAddress (
+  ethAddr: string,
+  coinType?: CoinType
+): Address {
+  if (!utils.isAddress(ethAddr))
+    throw new Error('Invalid Ethereum address')
+
+  return newDelegatedAddress(
+    10,
+    uint8arrays.fromString(ethAddr),
+    coinType
+  )
+}
+
 export function decode(address: string): Address {
   checkAddressString(address)
 
@@ -303,12 +320,7 @@ export function _delegatedFromEthHex(
   ethAddr: string,
   coinType: CoinType = CoinType.TEST
 ) {
-  if (!utils.isAddress(ethAddr)) {
-    throw new Error('Invalid Ethereum address')
-  }
-  const subAddr = uint8arrays.fromString(ethAddr)
-  const address = newDelegatedAddress(10, subAddr, coinType)
-  return address.toString()
+  return newDelegatedEthAddress(ethAddr, coinType).toString()
 }
 
 export default {
