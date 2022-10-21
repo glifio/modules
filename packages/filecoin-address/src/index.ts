@@ -148,8 +148,7 @@ export function newDelegatedAddress(
   if (subAddr.length > maxSubaddressLen)
     throw new Error('Subaddress address length')
 
-  const namespaceInt64 = new Int64(namespace)
-  const namespaceBuf = namespaceInt64.toBuffer()
+  const namespaceBuf = new Int64(namespace).toBuffer()
 
   return newAddress(
     Protocol.DELEGATED,
