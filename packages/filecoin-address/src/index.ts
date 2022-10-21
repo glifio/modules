@@ -101,38 +101,44 @@ export function validateChecksum(
 export function newAddress(
   protocol: Protocol,
   payload: Uint8Array,
-  coinType: CoinType = defaultCoinType
+  coinType?: CoinType
 ): Address {
   const protocolByte = new Uint8Array([protocol])
   return new Address(uint8arrays.concat([protocolByte, payload]), coinType)
 }
 
-export function newIDAddress(
-  id: number | string,
-  coinType: CoinType = defaultCoinType
-): Address {
+export function newIDAddress(id: number | string, coinType: CoinType): Address {
   return newAddress(Protocol.ID, leb.unsigned.encode(id), coinType)
 }
 
 /**
  * newActorAddress returns an address using the Actor protocol.
  */
-export function newActorAddress(data: Uint8Array): Address {
-  return newAddress(Protocol.ACTOR, addressHash(data))
+export function newActorAddress(
+  data: Uint8Array,
+  coinType?: CoinType
+): Address {
+  return newAddress(Protocol.ACTOR, addressHash(data), coinType)
 }
 
 /**
  * newSecp256k1Address returns an address using the SECP256K1 protocol.
  */
-export function newSecp256k1Address(pubkey: Uint8Array): Address {
-  return newAddress(Protocol.SECP256K1, addressHash(pubkey))
+export function newSecp256k1Address(
+  pubkey: Uint8Array,
+  coinType?: CoinType
+): Address {
+  return newAddress(Protocol.SECP256K1, addressHash(pubkey), coinType)
 }
 
 /**
  * newBLSAddress returns an address using the BLS protocol.
  */
-export function newBLSAddress(pubkey: Uint8Array): Address {
-  return newAddress(Protocol.BLS, pubkey)
+export function newBLSAddress(
+  pubkey: Uint8Array,
+  coinType?: CoinType
+): Address {
+  return newAddress(Protocol.BLS, pubkey, coinType)
 }
 
 /**
@@ -140,7 +146,8 @@ export function newBLSAddress(pubkey: Uint8Array): Address {
  */
 export function newDelegatedAddress(
   namespace: number,
-  subAddr: Uint8Array
+  subAddr: Uint8Array,
+  coinType?: CoinType
 ): Address {
   if (namespace > Int64.MAX_INT)
     throw new Error('Namespace must be less than 2^63')
@@ -152,7 +159,8 @@ export function newDelegatedAddress(
 
   return newAddress(
     Protocol.DELEGATED,
-    uint8arrays.concat([namespaceBuf, subAddr])
+    uint8arrays.concat([namespaceBuf, subAddr]),
+    coinType
   )
 }
 
@@ -284,17 +292,9 @@ export function _delegatedFromEthHex(
   if (!utils.isAddress(ethAddr)) {
     throw new Error('Invalid Ethereum address')
   }
-
-  const protocolByte = new Uint8Array([4])
-  const namespace = new Uint8Array([10])
   const subAddr = uint8arrays.fromString(ethAddr)
-  const checksum = getChecksum(
-    uint8arrays.concat([protocolByte, namespace, subAddr])
-  )
-
-  return `${coinType}${Protocol.DELEGATED}${namespace}f${base32
-    .encode(uint8arrays.concat([subAddr, checksum]))
-    .toString()}`
+  const address = newDelegatedAddress(10, subAddr, coinType)
+  return address.toString()
 }
 
 export default {
