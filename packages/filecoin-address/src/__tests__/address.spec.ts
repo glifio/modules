@@ -209,15 +209,6 @@ describe('address', () => {
         expect(`${fAddr}`).toBe(`${CoinType.MAIN}${item.string.slice(1)}`)
       })
     })
-
-    test('it should stringify Delegated addresses', () => {
-      actorAddresses.forEach(item => {
-        const tAddr = new Address(item.decodedByteArray, CoinType.TEST)
-        expect(`${tAddr}`).toBe(`${CoinType.TEST}${item.string.slice(1)}`)
-        const fAddr = new Address(item.decodedByteArray, CoinType.MAIN)
-        expect(`${fAddr}`).toBe(`${CoinType.MAIN}${item.string.slice(1)}`)
-      })
-    })
   })
 
   describe('equals', () => {
