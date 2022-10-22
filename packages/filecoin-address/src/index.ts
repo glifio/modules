@@ -176,7 +176,7 @@ export function newDelegatedEthAddress(
 ): Address {
   if (!utils.isAddress(ethAddr)) throw new Error('Invalid Ethereum address')
 
-  return newDelegatedAddress(10, uint8arrays.fromString(ethAddr), coinType)
+  return newDelegatedAddress(10, utils.arrayify(ethAddr), coinType)
 }
 
 export function decode(address: string): Address {
