@@ -23,17 +23,16 @@ export type Address = {
 
 export type MessagePending = {
   cid: string
-  from: Address
-  gasFeeCap: string
-  gasLimit: string
-  gasPremium: string
-  height: string
-  method: string
-  nonce: string
-  params: string
   to: Address
+  from: Address
+  nonce: number
+  height: number
+  method: number
+  params: string
   value: string
-  version?: string
+  gasFeeCap: string
+  gasLimit: number
+  gasPremium: string
 }
 
 type SerializableMessage = ZondaxMessage
@@ -230,23 +229,25 @@ export class Message {
       robust: '',
       id: ''
     }
+
     if (this.to[1] === '0') toAddr.id = this.to
     else toAddr.robust = this.to
 
     if (this.from[1] === '0') fromAddr.id = this.from
     else fromAddr.robust = this.from
+
     return {
+      cid,
       to: toAddr,
       from: fromAddr,
-      cid,
-      method: this.method.toString(),
-      gasFeeCap: this.gasFeeCap.toString(),
-      gasLimit: this.gasLimit.toString(),
-      gasPremium: this.gasPremium.toString(),
+      nonce: this.nonce,
+      height: 0,
+      method: this.method,
       params: this.params,
-      height: '',
       value: this.value.toString(),
-      nonce: this.nonce.toString()
+      gasFeeCap: this.gasFeeCap.toString(),
+      gasLimit: this.gasLimit,
+      gasPremium: this.gasPremium.toString()
     }
   }
 }
