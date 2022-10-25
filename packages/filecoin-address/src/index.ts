@@ -10,18 +10,37 @@ import { CoinType } from './coinType'
 export * from './coinType'
 export * from './protocol'
 
+interface AddressData {
+  protocol: Protocol
+  payload: Uint8Array
+  coinType: CoinType
+}
+
 const defaultCoinType = CoinType.MAIN
 const base32 = base32Function('abcdefghijklmnopqrstuvwxyz234567')
+
+// Store valid CoinTypes / Protocols for runtime validation
+const coinTypes = Object.values(CoinType)
+const protocols = Object.values(Protocol).filter(p => typeof p === 'number')
 
 // Defines the hash length taken over addresses
 // using the Actor and SECP256K1 protocols.
 const payloadHashLength = 20
+
+// The length of a BLS public key
+const blsPublicKeyBytes = 48
 
 // The maximum length of a delegated address's sub-address.
 const maxSubaddressLen = 54
 
 // The number of bytes that are reserved for namespace
 const namespaceByteLen = new Int64(0).toBuffer().length
+
+// The maximum length of `int64` as a string.
+const maxInt64StringLength = 19
+
+// The hash length used for calculating address checksums.
+const checksumHashLength = 4
 
 function addressHash(ingest: Uint8Array): Uint8Array {
   return blake2b(ingest, null, payloadHashLength)
@@ -87,7 +106,7 @@ export function bigintToArray(v: string | bigint | number): Uint8Array {
 }
 
 export function getChecksum(ingest: string | Uint8Array): Uint8Array {
-  return blake2b(ingest, null, 4)
+  return blake2b(ingest, null, checksumHashLength)
 }
 
 export function validateChecksum(
@@ -180,31 +199,8 @@ export function newDelegatedEthAddress(
 }
 
 export function decode(address: string): Address {
-  checkAddressString(address)
-
-  const coinType = address.slice(0, 1) as CoinType
-  /* tslint:disable-next-line:radix */
-  const protocol = parseInt(address.slice(1, 2)) as Protocol
-  const raw = address.substring(2, address.length)
-  const protocolByte = leb.unsigned.encode(protocol)
-
-  if (protocol === Protocol.ID) {
-    return newIDAddress(raw, coinType)
-  }
-
-  const payloadChecksum = base32.decode(raw)
-  const length = payloadChecksum.length
-  const payload = payloadChecksum.slice(0, length - 4)
-  const checksum = payloadChecksum.slice(length - 4, length)
-  if (validateChecksum(uint8arrays.concat([protocolByte, payload]), checksum)) {
-    throw Error("Checksums don't match")
-  }
-
-  const addressObj = newAddress(protocol, payload, coinType)
-  if (encode(coinType, addressObj) !== address)
-    throw Error(`Did not encode this address properly: ${address}`)
-
-  return addressObj
+  const { protocol, payload, coinType } = checkAddressString(address)
+  return newAddress(protocol, payload, coinType)
 }
 
 export function encode(coinType: string, address: Address): string {
@@ -258,38 +254,85 @@ export function validateAddressString(addressString: string): boolean {
   }
 }
 
-export function checkAddressString(address: string) {
-  if (!address) throw Error('No bytes to validate.')
-  if (address.length < 3) throw Error('Address is too short to validate.')
-  if (address[0] !== 'f' && address[0] !== 't') {
-    throw Error('Unknown address coinType.')
-  }
+export function checkAddressString(address: string): AddressData {
+  if (typeof address !== 'string' || address.length < 3)
+    throw Error('Address should be a string of at least 3 characters')
 
-  /* tslint:disable-next-line:radix */
-  const protocol = parseInt(address[1]) as Protocol
+  const coinType = address[0] as CoinType
+  if (!coinTypes.includes(coinType))
+    throw Error(`Address cointype should be one of: ${coinTypes.join(', ')}`)
+
+  const protocol = Number(address[1]) as Protocol
+  if (!protocols.includes(protocol))
+    throw Error(`Address protocol should be one of: ${protocols.join(', ')}`)
+
+  const raw = address.slice(2)
+
   switch (protocol) {
     case Protocol.ID: {
-      if (address.length > 22) throw Error('Invalid ID address length.')
-      else if (isNaN(Number(address.slice(2))))
-        throw Error('Invalid ID address')
-      break
+      if (raw.length > maxInt64StringLength)
+        throw Error('Invalid ID address length')
+      if (isNaN(Number(raw))) throw Error('Invalid ID address')
+      const payload = leb.unsigned.encode(raw)
+      return { protocol, payload, coinType }
     }
-    case Protocol.SECP256K1: {
-      if (address.length !== 41)
-        throw Error('Invalid secp256k1 address length.')
-      break
+
+    case Protocol.DELEGATED: {
+      const splitIndex = raw.indexOf('f')
+      if (splitIndex === -1) throw new Error('Invalid delegated address')
+
+      const namespaceStr = raw.slice(0, splitIndex)
+      if (namespaceStr.length > maxInt64StringLength)
+        throw new Error('Invalid delegated address namespace')
+
+      const subAddrStr = raw.slice(splitIndex + 1)
+      const subAddrCksm = base32.decode(subAddrStr)
+      if (subAddrCksm.length < checksumHashLength)
+        throw Error('Invalid delegated address length')
+
+      const subAddr = subAddrCksm.slice(0, -checksumHashLength)
+      const checksum = subAddrCksm.slice(subAddr.length)
+      if (subAddr.length > maxSubaddressLen)
+        throw Error('Invalid delegated address length')
+
+      const namespace = Number(namespaceStr)
+      const namespaceByte = leb.unsigned.encode(namespace)
+      const bytes = uint8arrays.concat([namespaceByte, subAddr])
+
+      if (!validateChecksum(bytes, checksum))
+        throw Error('Invalid delegated address checksum')
+
+      const namespaceBuf = new Int64(namespace).toBuffer()
+      const payload = uint8arrays.concat([namespaceBuf, subAddr])
+      return { protocol, payload, coinType }
     }
-    case Protocol.ACTOR: {
-      if (address.length !== 41) throw Error('Invalid Actor address length.')
-      break
-    }
+
+    case Protocol.SECP256K1:
+    case Protocol.ACTOR:
     case Protocol.BLS: {
-      if (address.length !== 86) throw Error('Invalid BLS address length.')
-      break
+      const payloadCksm = base32.decode(raw)
+      if (payloadCksm.length < checksumHashLength)
+        throw Error('Invalid address length')
+
+      const payload = payloadCksm.slice(0, -checksumHashLength)
+      const checksum = payloadCksm.slice(payload.length)
+
+      if (protocol === Protocol.SECP256K1 || protocol === Protocol.ACTOR)
+        if (payload.length !== payloadHashLength)
+          throw Error('Invalid address length')
+
+      if (protocol === Protocol.BLS)
+        if (payload.length !== blsPublicKeyBytes)
+          throw Error('Invalid address length')
+
+      if (!validateChecksum(payload, checksum))
+        throw Error('Invalid address checksum')
+
+      return { protocol, payload, coinType }
     }
-    default: {
-      throw new Error('Invalid address protocol.')
-    }
+
+    default:
+      throw Error(`Invalid address protocall: ${protocol}`)
   }
 }
 
