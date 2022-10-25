@@ -332,7 +332,7 @@ describe('address', () => {
   const hex = '0x52963EF50e27e06D72D59fcB4F3c2a687BE3cfEf'
   const del = 't410fkkld55ioe7qg24wvt7fu6pbknb56ht7pt4zamxa'
 
-  describe('decode eth addresses', () => {
+  describe('decode f4 addresses', () => {
     expect(decode(del).toString()).toBe(del)
   })
 
