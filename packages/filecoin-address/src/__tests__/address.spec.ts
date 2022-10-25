@@ -329,12 +329,21 @@ describe('address', () => {
     })
   })
 
+  const hex1 = '0x33a96ff53945374ce14853bc370999b38a899026'
+  const del1 =
+    't410fgb4dgm3bhe3gmzrvgm4tinjtg42ggzjrgq4dkm3cmmztombzhe4wemzyme4dsojqgi3chkxqgm'
+
+  const hex2 = '0x200e5333054ff745df86083a5b73fa44d496244a'
+  const del2 =
+    't410fgb4dembqmu2tgmztga2tiztgg42dkzdgha3daobtme2wenztmzqtindegq4tmmrugrqylntvte'
+
+  describe('decode eth addresses', () => {
+    expect(decode(del1).toString()).toBe(del1)
+    expect(decode(del1).toString()).toBe(del1)
+  })
+
   describe('_delegatedFromEthHex', () => {
-    expect(
-      _delegatedFromEthHex(
-        '0x52963EF50e27e06D72D59fcB4F3c2a687BE3cfEf',
-        CoinType.TEST
-      )
-    ).toBe('t410fkkld55ioe7qg24wvt7fu6pbknb56ht7pt4zamxa')
+    expect(_delegatedFromEthHex(hex1, CoinType.TEST)).toBe(del1)
+    expect(_delegatedFromEthHex(hex2, CoinType.TEST)).toBe(del2)
   })
 })
