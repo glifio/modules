@@ -326,9 +326,7 @@ export function checkAddressString(address: string): AddressData {
         if (payload.length !== blsPublicKeyBytes)
           throw Error('Invalid address length')
 
-      const protocolByte = leb.unsigned.encode(protocol)
-      const bytes = uint8arrays.concat([protocolByte, payload])
-      if (!validateChecksum(bytes, checksum))
+      if (!validateChecksum(payload, checksum))
         throw Error('Invalid address checksum')
 
       return { protocol, payload, coinType }
