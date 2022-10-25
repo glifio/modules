@@ -296,9 +296,8 @@ export function checkAddressString(address: string): AddressData {
         throw Error('Invalid delegated address length')
 
       const namespace = Number(namespaceStr)
-      const protocolByte = leb.unsigned.encode(protocol)
       const namespaceByte = leb.unsigned.encode(namespace)
-      const bytes = uint8arrays.concat([protocolByte, namespaceByte, subAddr])
+      const bytes = uint8arrays.concat([namespaceByte, subAddr])
 
       if (!validateChecksum(bytes, checksum))
         throw Error('Invalid delegated address checksum')

@@ -333,7 +333,7 @@ describe('address', () => {
   const del = 't410fkkld55ioe7qg24wvt7fu6pbknb56ht7pt4zamxa'
 
   describe('decode eth addresses', () => {
-    expect(decode(del).toString()).toBe(hex)
+    expect(decode(del).toString()).toBe(del)
   })
 
   describe('_delegatedFromEthHex', () => {
