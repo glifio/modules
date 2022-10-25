@@ -315,7 +315,7 @@ describe('address', () => {
     test('it should invalidate address with invalid protocol', async () => {
       expect(
         validateAddressString(
-          't4vvmn62lofvhjd2ugzca6sof2j2ubwok6cj4xxbfzz4yuxfkgobpihhd2thlanmsh3w2ptld2gqkn2jvlss4a'
+          't5vvmn62lofvhjd2ugzca6sof2j2ubwok6cj4xxbfzz4yuxfkgobpihhd2thlanmsh3w2ptld2gqkn2jvlss4a'
         )
       ).toBe(false)
     })
