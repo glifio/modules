@@ -110,11 +110,10 @@ export function getChecksum(ingest: string | Uint8Array): Uint8Array {
 }
 
 export function validateChecksum(
-  ingest: string | Uint8Array,
-  expect: Uint8Array
-) {
-  const digest = getChecksum(ingest)
-  return uint8arrays.compare(digest, expect)
+  data: string | Uint8Array,
+  checksum: Uint8Array
+): boolean {
+  return uint8arrays.equals(getChecksum(data), checksum)
 }
 
 export function newAddress(
