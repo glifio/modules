@@ -110,11 +110,10 @@ export function getChecksum(ingest: string | Uint8Array): Uint8Array {
 }
 
 export function validateChecksum(
-  ingest: string | Uint8Array,
-  expect: Uint8Array
-) {
-  const digest = getChecksum(ingest)
-  return uint8arrays.compare(digest, expect)
+  data: string | Uint8Array,
+  checksum: Uint8Array
+): boolean {
+  return uint8arrays.equals(getChecksum(data), checksum)
 }
 
 export function newAddress(
@@ -216,22 +215,22 @@ export function encode(coinType: string, address: Address): string {
     }
     case Protocol.DELEGATED: {
       // Retrieve the namespace from the Int64 bytes in the payload
-      const nsBytes = new Uint8Array(payload, 0, namespaceByteLen)
-      const namespace = new Int64(nsBytes).toNumber()
+      const namespaceBytes = new Uint8Array(payload, 0, namespaceByteLen)
+      const namespaceNumber = new Int64(namespaceBytes).toNumber()
 
       // The subaddress is the portion after the namespace
-      const subAddr = payload.slice(namespaceByteLen)
+      const subAddrBytes = payload.slice(namespaceByteLen)
 
       // To calculate the checksum from the address bytes, namespace
       // needs to be a simple Buffer, not the Int64 representation
       const protocolByte = leb.unsigned.encode(protocol)
-      const namespaceByte = leb.unsigned.encode(namespace)
-      const checksum = getChecksum(
-        uint8arrays.concat([protocolByte, namespaceByte, subAddr])
+      const namespaceByte = leb.unsigned.encode(namespaceNumber)
+      const checksumBytes = getChecksum(
+        uint8arrays.concat([protocolByte, namespaceByte, subAddrBytes])
       )
 
-      const bytes = uint8arrays.concat([subAddr, checksum])
-      return `${prefix}${namespace}f${base32.encode(bytes)}`
+      const bytes = uint8arrays.concat([subAddrBytes, checksumBytes])
+      return `${prefix}${namespaceNumber}f${base32.encode(bytes)}`
     }
     default: {
       const checksum = getChecksum(address.bytes)
@@ -285,25 +284,30 @@ export function checkAddressString(address: string): AddressData {
       if (namespaceStr.length > maxInt64StringLength)
         throw new Error('Invalid delegated address namespace')
 
-      const subAddrStr = raw.slice(splitIndex + 1)
-      const subAddrCksm = base32.decode(subAddrStr)
-      if (subAddrCksm.length < checksumHashLength)
+      const subAddrCksmStr = raw.slice(splitIndex + 1)
+      const subAddrCksmBytes = base32.decode(subAddrCksmStr)
+      if (subAddrCksmBytes.length < checksumHashLength)
         throw Error('Invalid delegated address length')
 
-      const subAddr = subAddrCksm.slice(0, -checksumHashLength)
-      const checksum = subAddrCksm.slice(subAddr.length)
-      if (subAddr.length > maxSubaddressLen)
+      const subAddrBytes = subAddrCksmBytes.slice(0, -checksumHashLength)
+      const checksumBytes = subAddrCksmBytes.slice(subAddrBytes.length)
+      if (subAddrBytes.length > maxSubaddressLen)
         throw Error('Invalid delegated address length')
 
-      const namespace = Number(namespaceStr)
-      const namespaceByte = leb.unsigned.encode(namespace)
-      const bytes = uint8arrays.concat([namespaceByte, subAddr])
+      const protocolByte = leb.unsigned.encode(protocol)
+      const namespaceNumber = Number(namespaceStr)
+      const namespaceByte = leb.unsigned.encode(namespaceNumber)
+      const bytes = uint8arrays.concat([
+        protocolByte,
+        namespaceByte,
+        subAddrBytes
+      ])
 
-      if (!validateChecksum(bytes, checksum))
+      if (!validateChecksum(bytes, checksumBytes))
         throw Error('Invalid delegated address checksum')
 
-      const namespaceBuf = new Int64(namespace).toBuffer()
-      const payload = uint8arrays.concat([namespaceBuf, subAddr])
+      const namespaceBuf = new Int64(namespaceNumber).toBuffer()
+      const payload = uint8arrays.concat([namespaceBuf, subAddrBytes])
       return { protocol, payload, coinType }
     }
 
@@ -325,7 +329,9 @@ export function checkAddressString(address: string): AddressData {
         if (payload.length !== blsPublicKeyBytes)
           throw Error('Invalid address length')
 
-      if (!validateChecksum(payload, checksum))
+      const protocolByte = leb.unsigned.encode(protocol)
+      const bytes = uint8arrays.concat([protocolByte, payload])
+      if (!validateChecksum(bytes, checksum))
         throw Error('Invalid address checksum')
 
       return { protocol, payload, coinType }

@@ -339,4 +339,12 @@ describe('address', () => {
   describe('_delegatedFromEthHex', () => {
     expect(_delegatedFromEthHex(hex, CoinType.TEST)).toBe(del)
   })
+
+  test('it should validate correct filecoin addresses', () => {
+    expect(validateAddressString(del)).toBe(true)
+  })
+
+  test('it should invalidate incorrect filecoin addresses', () => {
+    expect(validateAddressString(del.slice(0, -1))).toBe(false)
+  })
 })
