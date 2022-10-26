@@ -284,25 +284,26 @@ export function checkAddressString(address: string): AddressData {
       if (namespaceStr.length > maxInt64StringLength)
         throw new Error('Invalid delegated address namespace')
 
-      const subAddrStr = raw.slice(splitIndex + 1)
-      const subAddrCksm = base32.decode(subAddrStr)
-      if (subAddrCksm.length < checksumHashLength)
+      const subAddrCksmStr = raw.slice(splitIndex + 1)
+      const subAddrCksmBytes = base32.decode(subAddrCksmStr)
+      if (subAddrCksmBytes.length < checksumHashLength)
         throw Error('Invalid delegated address length')
 
-      const subAddr = subAddrCksm.slice(0, -checksumHashLength)
-      const checksum = subAddrCksm.slice(subAddr.length)
-      if (subAddr.length > maxSubaddressLen)
+      const subAddrBytes = subAddrCksmBytes.slice(0, -checksumHashLength)
+      const checksumBytes = subAddrCksmBytes.slice(subAddrBytes.length)
+      if (subAddrBytes.length > maxSubaddressLen)
         throw Error('Invalid delegated address length')
 
-      const namespace = Number(namespaceStr)
-      const namespaceByte = leb.unsigned.encode(namespace)
-      const bytes = uint8arrays.concat([namespaceByte, subAddr])
+      const protocolByte = leb.unsigned.encode(protocol)
+      const namespaceNumber = Number(namespaceStr)
+      const namespaceByte = leb.unsigned.encode(namespaceNumber)
+      const bytes = uint8arrays.concat([protocolByte, namespaceByte, subAddrBytes])
 
-      if (!validateChecksum(bytes, checksum))
+      if (!validateChecksum(bytes, checksumBytes))
         throw Error('Invalid delegated address checksum')
 
-      const namespaceBuf = new Int64(namespace).toBuffer()
-      const payload = uint8arrays.concat([namespaceBuf, subAddr])
+      const namespaceBuf = new Int64(namespaceNumber).toBuffer()
+      const payload = uint8arrays.concat([namespaceBuf, subAddrBytes])
       return { protocol, payload, coinType }
     }
 
