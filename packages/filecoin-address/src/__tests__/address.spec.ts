@@ -18,7 +18,8 @@ import {
   newSecp256k1Address,
   newBLSAddress,
   idFromAddress,
-  _delegatedFromEthHex
+  delegatedFromEthAddress,
+  ethAddressFromDelegated
 } from '../index'
 
 describe('address', () => {
@@ -336,8 +337,12 @@ describe('address', () => {
     expect(decode(del).toString()).toBe(del)
   })
 
-  describe('_delegatedFromEthHex', () => {
-    expect(_delegatedFromEthHex(hex, CoinType.TEST)).toBe(del)
+  describe('delegatedFromEthAddress', () => {
+    expect(delegatedFromEthAddress(hex, CoinType.TEST)).toBe(del)
+  })
+
+  describe('ethAddressFromDelegated', () => {
+    expect(ethAddressFromDelegated(del)).toBe(hex)
   })
 
   test('it should validate correct filecoin addresses', () => {
