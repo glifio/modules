@@ -77,6 +77,22 @@ export class Address {
     return this.bytes.slice(1)
   }
 
+  get namespace(): number {
+    if (this.protocol() !== Protocol.DELEGATED)
+      throw new Error('Can only get namespace for delegated addresses')
+    return new Int64(this.payload().slice(0, namespaceByteLen)).toNumber()
+  }
+
+  get subAddr(): Uint8Array {
+    if (this.protocol() !== Protocol.DELEGATED)
+      throw new Error('Can only get subaddress for delegated addresses')
+    return this.payload().slice(namespaceByteLen)
+  }
+
+  get subAddrHex(): string {
+    return uint8arrays.toString(this.subAddr, 'hex')
+  }
+
   /**
    * toString returns a string representation of this address. If no "coinType"
    * parameter was passed to the constructor the address will be prefixed with
@@ -214,23 +230,16 @@ export function encode(coinType: string, address: Address): string {
       return `${prefix}${leb.unsigned.decode(payload)}`
     }
     case Protocol.DELEGATED: {
-      // Retrieve the namespace from the Int64 bytes in the payload
-      const namespaceBytes = new Uint8Array(payload, 0, namespaceByteLen)
-      const namespaceNumber = new Int64(namespaceBytes).toNumber()
-
-      // The subaddress is the portion after the namespace
-      const subAddrBytes = payload.slice(namespaceByteLen)
-
-      // To calculate the checksum from the address bytes, namespace
-      // needs to be a simple Buffer, not the Int64 representation
+      const namespace = address.namespace
+      const subAddrBytes = address.subAddr
       const protocolByte = leb.unsigned.encode(protocol)
-      const namespaceByte = leb.unsigned.encode(namespaceNumber)
+      const namespaceByte = leb.unsigned.encode(namespace)
       const checksumBytes = getChecksum(
         uint8arrays.concat([protocolByte, namespaceByte, subAddrBytes])
       )
 
       const bytes = uint8arrays.concat([subAddrBytes, checksumBytes])
-      return `${prefix}${namespaceNumber}f${base32.encode(bytes)}`
+      return `${prefix}${namespace}f${base32.encode(bytes)}`
     }
     default: {
       const checksum = getChecksum(address.bytes)
@@ -356,19 +365,25 @@ export function idFromAddress(address: Address): number {
 }
 
 /**
- * _delegatedFromEthHex is an experimental method for deriving the f410 address from an ethereum hex address
- *
+ * delegatedFromEthAddress derives the f410 address from an ethereum hex address
  */
 
-export function _delegatedFromEthHex(
+export function delegatedFromEthAddress(
   ethAddr: string,
   coinType: CoinType = CoinType.TEST
 ) {
   return newDelegatedEthAddress(ethAddr, coinType).toString()
 }
 
+/**
+ * ethAddressFromDelegated derives the ethereum address from an f410 address
+ */
+
+export function ethAddressFromDelegated(delegated: string) {
+  return `0x${decode(delegated).subAddrHex}`
+}
+
 export default {
-  _delegatedFromEthHex,
   Address,
   newAddress,
   newIDAddress,
@@ -384,6 +399,8 @@ export default {
   validateAddressString,
   checkAddressString,
   idFromAddress,
+  delegatedFromEthAddress,
+  ethAddressFromDelegated,
   CoinType,
   Protocol
 }
