@@ -342,7 +342,7 @@ describe('address', () => {
   })
 
   describe('ethAddressFromDelegated', () => {
-    expect(ethAddressFromDelegated(del)).toBe(hex.toLocaleLowerCase())
+    expect(ethAddressFromDelegated(del)).toBe(hex)
   })
 
   test('it should validate correct filecoin addresses', () => {

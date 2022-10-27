@@ -380,7 +380,7 @@ export function delegatedFromEthAddress(
  */
 
 export function ethAddressFromDelegated(delegated: string) {
-  return `0x${decode(delegated).subAddrHex}`
+  return utils.getAddress(`0x${decode(delegated).subAddrHex}`)
 }
 
 export default {
