@@ -44,8 +44,7 @@ export const describeFEVMMessageReturn = (
   const paramsHex = cborToHex(inputParams)
   const { name } = iface.parseTransaction({ data: paramsHex })
 
-  const returnBuffer = Buffer.from(returnVal, 'base64').subarray(2)
-  const returnHex = `0x${returnBuffer.toString('hex')}`
+  const returnHex = cborToHex(returnVal)
   const result = iface.decodeFunctionResult(name as string, returnHex)
   return result
 }
