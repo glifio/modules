@@ -16,13 +16,13 @@ export const getMethodName = (
 
 /**
  * Resolves the method name by providing the actor name and the method number.
- * @param messageParams the `params` from a Filecoin Message type
- * @param abi the abi of the contract that lives at the `to` address of the message
+ * @param params the base64 encoded `params` of a Filecoin / Lotus message
+ * @param abi the ABI of the contract that lives at the `to` address of the message
  * @returns the method name
  */
-export const getFEVMMethodName = (messageParams: string, abi: ABI): string => {
+export const getFEVMMethodName = (params: string, abi: ABI): string => {
   const iface = new ethers.utils.Interface(abi)
-  const paramsHex = cborToHex(messageParams)
-  const { name } = iface.parseTransaction({ data: paramsHex })
+  const data = cborToHex(params)
+  const { name } = iface.parseTransaction({ data })
   return name
 }
