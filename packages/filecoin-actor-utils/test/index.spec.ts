@@ -81,7 +81,8 @@ describe('utils', () => {
           returnVal,
           abi
         )
-        expect(describedReturn[0]).toBe(true)
+
+        expect(describedReturn?.Name).toBe('transfer')
       })
     })
 
