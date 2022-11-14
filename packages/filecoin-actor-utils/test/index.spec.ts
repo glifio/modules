@@ -5,6 +5,7 @@ import { networkActorCodeMap } from '../src/data'
 import { getActorName, getActorCode } from '../src/utils/code'
 import { abi } from './erc20ABI'
 import { Type } from '../src/types'
+import { cborToHex } from '../src/utils/abi'
 
 describe('utils', () => {
   describe('getActorName', () => {
@@ -92,6 +93,15 @@ describe('utils', () => {
           'WESpBZy7AAAAAAAAAAAAAAAAqV4VZ+c6Em/FjMB4NX+woThFrgwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4Lazp2QAAA=='
         const name = getFEVMMethodName(transferParams, abi)
         expect(name).toBe('transfer')
+      })
+    })
+
+    describe('cborToHex', () => {
+      test('it correctly decodes a base64 CBOR string to the ethereum hex representation', () => {
+        const base64 = 'WESpBZy7AAAAAAAAAAAAAAAA26ZZUz16hecbJB+IemfoJpPCUyUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4Lazp2QAAA=='
+        const ethHex = '0xa9059cbb000000000000000000000000dba659533d7a85e71b241f887a67e82693c253250000000000000000000000000000000000000000000000000de0b6b3a7640000'
+        const result = cborToHex(base64)
+        expect(result).toBe(ethHex)
       })
     })
   })
