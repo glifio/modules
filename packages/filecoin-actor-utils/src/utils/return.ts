@@ -1,6 +1,8 @@
+import { ethers } from 'ethers'
 import cloneDeep from 'lodash.clonedeep'
 import { actorDescriptorMap } from '../data'
 import { ActorName, DataType, MethodNum } from '../types'
+import { ABI, cborToHex } from './abi'
 import { describeDataType } from './generic'
 
 /**
@@ -31,4 +33,19 @@ export const describeMessageReturn = (
 
   // Return the described return value
   return dataType
+}
+
+export const describeFEVMMessageReturn = (
+  inputParams: string,
+  returnVal: string,
+  abi: ABI
+) => {
+  const iface = new ethers.utils.Interface(abi)
+  const paramsHex = cborToHex(inputParams)
+  const { name } = iface.parseTransaction({ data: paramsHex })
+
+  const returnBuffer = Buffer.from(returnVal, 'base64').subarray(2)
+  const returnHex = `0x${returnBuffer.toString('hex')}`
+  const result = iface.decodeFunctionResult(name as string, returnHex)
+  return result
 }

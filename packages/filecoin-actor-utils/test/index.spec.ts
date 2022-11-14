@@ -1,10 +1,13 @@
+import { describeFEVMMessageParams } from '../src/utils/params'
+import { describeFEVMMessageReturn } from '../src/utils/return'
+import { getFEVMMethodName } from '../src/utils/method'
 import { networkActorCodeMap } from '../src/data'
 import { getActorName, getActorCode } from '../src/utils/code'
+import { abi } from './erc20ABI'
+import { Type } from '../src/types'
 
 describe('utils', () => {
-
   describe('getActorName', () => {
-
     test('should find the actor name when given a code and network', () => {
       const code = networkActorCodeMap['mainnet']['multisig']
       expect(getActorName(code, 'mainnet')).toBe('multisig')
@@ -20,12 +23,13 @@ describe('utils', () => {
     })
 
     test('it decodes v7 actors', () => {
-      expect(getActorName('bafkqadtgnfwc6njpnv2wy5djonuwo', 'calibrationnet')).toBe('multisig')
+      expect(
+        getActorName('bafkqadtgnfwc6njpnv2wy5djonuwo', 'calibrationnet')
+      ).toBe('multisig')
     })
   })
 
   describe('getActorCode', () => {
-
     test('should find the multisig actor code on calibrationnet', () => {
       const code = networkActorCodeMap['calibrationnet']['multisig']
       expect(getActorCode('multisig', 'calibrationnet')).toBe(code)
@@ -42,6 +46,52 @@ describe('utils', () => {
 
     test('should not find the actor code when the network name does not exist', () => {
       expect(getActorCode('multisig', 'test')).toBe(null)
+    })
+  })
+  describe('FEVM', () => {
+    describe('describeFEVMMessageParams', () => {
+      test('it decodes an ERC20 transfer', () => {
+        const transferParams =
+          'WESpBZy7AAAAAAAAAAAAAAAAqV4VZ+c6Em/FjMB4NX+woThFrgwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4Lazp2QAAA=='
+        const describedParams = describeFEVMMessageParams(transferParams, abi)
+        expect(describedParams.Name).toBe('transfer')
+        expect(describedParams.Type).toBe(Type.Object)
+
+        expect(describedParams.Children?.['to'].Name).toBe('to')
+        expect(describedParams.Children?.['to'].Type).toBe('address')
+        expect(describedParams.Children?.['to'].Value).toBe(
+          '0xA95e1567e73A126FC58cc078357fb0A13845AE0C'
+        )
+
+        expect(describedParams.Children?.['amount'].Name).toBe('amount')
+        expect(describedParams.Children?.['amount'].Type).toBe('uint256')
+        expect(describedParams.Children?.['amount'].Value?.toString()).toBe(
+          '1000000000000000000'
+        )
+      })
+    })
+
+    describe('describeFEVMMessageReturn', () => {
+      test('it decodes an ERC20 transfer return', () => {
+        const transferParams =
+          'WESpBZy7AAAAAAAAAAAAAAAAqV4VZ+c6Em/FjMB4NX+woThFrgwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4Lazp2QAAA=='
+        const returnVal = 'WCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=='
+        const describedReturn = describeFEVMMessageReturn(
+          transferParams,
+          returnVal,
+          abi
+        )
+        expect(describedReturn[0]).toBe(true)
+      })
+    })
+
+    describe('getFEVMMethodName', () => {
+      test('it return the correct ERC20 method name (transfer)', () => {
+        const transferParams =
+          'WESpBZy7AAAAAAAAAAAAAAAAqV4VZ+c6Em/FjMB4NX+woThFrgwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4Lazp2QAAA=='
+        const name = getFEVMMethodName(transferParams, abi)
+        expect(name).toBe('transfer')
+      })
     })
   })
 })

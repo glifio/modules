@@ -5,3 +5,7 @@ export enum Protocol {
   BLS = 3,
   DELEGATED = 4
 }
+
+export enum DelegatedNamespace {
+  EVM = 10
+}
