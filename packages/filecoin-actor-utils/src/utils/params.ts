@@ -37,16 +37,18 @@ export const describeMessageParams = (
 
 // TODO: (nice to have) enable typechain artifact as a typescript generic here so the described params are typed?
 export const describeFEVMMessageParams = (
-  messageParams: string,
+  params: string,
   abi: ABI
 ): DataType => {
   const iface = new ethers.utils.Interface(abi)
-  const paramsHex = cborToHex(messageParams)
-  const parsed = iface.parseTransaction({ data: paramsHex })
+  const data = cborToHex(params)
+  const tx = iface.parseTransaction({ data })
+
+  
 
   // TODO: how to handle solidity structs as inputs? I believe structs are encoded as `tuple` type https://docs.soliditylang.org/en/v0.5.3/abi-spec.html#mapping-solidity-to-abi-types
   // TODO: unstandardized capitalization from built-in actors
-  const children = parsed.functionFragment.inputs.reduce<
+  const children = tx.functionFragment.inputs.reduce<
     Record<string, DataType>
   >((accum, ele) => {
     return {
