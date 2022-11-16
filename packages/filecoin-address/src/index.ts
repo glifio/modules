@@ -4,11 +4,11 @@ import { blake2b } from 'blakejs'
 import * as uint8arrays from 'uint8arrays'
 import { utils } from 'ethers'
 import { base32 as base32Function } from './base32'
-import { DelegatedNamespace, Protocol } from './protocol'
+import { DelegatedNamespace, Protocol } from './enums'
 import { CoinType } from './coinType'
 
 export * from './coinType'
-export * from './protocol'
+export * from './enums'
 
 interface AddressData {
   protocol: Protocol
