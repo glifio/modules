@@ -4,11 +4,11 @@ import { blake2b } from 'blakejs'
 import * as uint8arrays from 'uint8arrays'
 import { utils } from 'ethers'
 import { base32 as base32Function } from './base32'
-import { Protocol } from './protocol'
+import { DelegatedNamespace, Protocol } from './enums'
 import { CoinType } from './coinType'
 
 export * from './coinType'
-export * from './protocol'
+export * from './enums'
 
 interface AddressData {
   protocol: Protocol
@@ -210,7 +210,11 @@ export function newDelegatedEthAddress(
 ): Address {
   if (!utils.isAddress(ethAddr)) throw new Error('Invalid Ethereum address')
 
-  return newDelegatedAddress(10, utils.arrayify(ethAddr), coinType)
+  return newDelegatedAddress(
+    DelegatedNamespace.EVM,
+    utils.arrayify(ethAddr),
+    coinType
+  )
 }
 
 export function decode(address: string): Address {

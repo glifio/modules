@@ -26,7 +26,9 @@
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
     "@glif/filecoin-address": "^2.0.18",
+    "@ipld/dag-cbor": "^7.0.3",
     "base32-decode": "^1.0.0",
+    "ethers": "^5.7.2",
     "lodash.clonedeep": "^4.5.0",
     "uint8arrays": "^3.1.0"
   },
