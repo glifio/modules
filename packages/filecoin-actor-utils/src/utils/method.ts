@@ -20,8 +20,13 @@ export const getMethodName = (
  * @param abi the ABI of the contract that lives at the `to` address of the message
  * @returns the method name
  */
-export const getFEVMMethodName = (params: string, abi: ABI): string => {
-  const iface = new ethers.utils.Interface(abi)
-  const data = cborToHex(params)
-  return iface.parseTransaction({ data }).name
+export const getFEVMMethodName = (params: string, abi: ABI): string | null => {
+  if (!params || !abi) return null
+  try {
+    const iface = new ethers.utils.Interface(abi)
+    const data = cborToHex(params)
+    return iface.parseTransaction({ data }).name
+  } catch {
+    return null
+  }
 }
