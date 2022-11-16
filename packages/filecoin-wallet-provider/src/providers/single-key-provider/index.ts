@@ -20,12 +20,12 @@ export class SECP256K1KeyProvider implements WalletSubProvider {
         message: 'Must pass private key string to single key provider instance'
       })
     }
-    this.#privateKey = privateKey
     try {
       const key =
         encoding === 'hex'
           ? Buffer.from(privateKey, 'hex').toString('base64')
           : privateKey
+      this.#privateKey = key
       this.mainAddress = signingTools.keyRecover(key, false).address
     } catch (err) {
       throw new errors.InvalidParamsError({
