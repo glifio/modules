@@ -71,10 +71,7 @@ export const describeBaseValue = (
  * @param dataType the descriptor to add the value to
  * @param value the value to add to the descriptor
  */
-export const describeBigNumber = (
-  dataType: DataType,
-  value: BigNumber
-) => {
+export const describeBigNumber = (dataType: DataType, value: BigNumber) => {
   dataType.Value = value.toString()
 }
 

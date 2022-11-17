@@ -64,9 +64,10 @@ export const describeFEVMTxReturn = (
   const result = iface.decodeFunctionResult(tx.name, returnHex)
 
   // Convert ABI outputs to descriptor
-  const dataType = outputs.length === 1
-    ? abiParamToDataType(outputs[0])
-    : abiParamsToDataType('Outputs', outputs)
+  const dataType =
+    outputs.length === 1
+      ? abiParamToDataType(outputs[0])
+      : abiParamsToDataType('Outputs', outputs)
 
   // Supplement the descriptor with return values
   describeDataType(dataType, outputs.length === 1 ? result[0] : result)

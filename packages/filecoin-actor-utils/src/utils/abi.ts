@@ -22,13 +22,15 @@ export const cborToHex = (base64: string): string => {
  * @param params the ABI function fragment's inputs or outputs
  * @returns the Object DataType with the params as its Children
  */
-export const abiParamsToDataType = (name: string, params: ParamType[]): DataType => ({
+export const abiParamsToDataType = (
+  name: string,
+  params: ParamType[]
+): DataType => ({
   Type: Type.Object,
   Name: name,
-  Children: Object.fromEntries(params.map(param => [
-    param.name,
-    abiParamToDataType(param)
-  ]))
+  Children: Object.fromEntries(
+    params.map(param => [param.name, abiParamToDataType(param)])
+  )
 })
 
 /**
@@ -36,25 +38,27 @@ export const abiParamsToDataType = (name: string, params: ParamType[]): DataType
  * @param param the ParamType to convert to a DataType
  * @returns the DataType created from the ParamType
  */
-export const abiParamToDataType = (param: ParamType) : DataType => {
-  switch(param.baseType) {
-    case 'array': return {
-      Type: Type.Array,
-      Name: param.type,
-      Contains: abiParamToDataType(param.arrayChildren)
-    }
-    case 'tuple': return {
-      Type: Type.Object,
-      Name: param.type,
-      Children: Object.fromEntries(param.components.map(comp => [
-        comp.name,
-        abiParamToDataType(comp)
-      ]))
-    }
-    default: return {
-      Type: getTypeFromAbiType(param.baseType),
-      Name: param.type
-    }
+export const abiParamToDataType = (param: ParamType): DataType => {
+  switch (param.baseType) {
+    case 'array':
+      return {
+        Type: Type.Array,
+        Name: param.type,
+        Contains: abiParamToDataType(param.arrayChildren)
+      }
+    case 'tuple':
+      return {
+        Type: Type.Object,
+        Name: param.type,
+        Children: Object.fromEntries(
+          param.components.map(comp => [comp.name, abiParamToDataType(comp)])
+        )
+      }
+    default:
+      return {
+        Type: getTypeFromAbiType(param.baseType),
+        Name: param.type
+      }
   }
 }
 
@@ -72,10 +76,15 @@ const getTypeFromAbiType = (type: string): Type => {
   if (abiFixedRegex.test(type)) return Type.Number
   if (abiBytesRegex.test(type)) return Type.String
   switch (type) {
-    case 'bool': return Type.Bool
-    case 'string': return Type.String
-    case 'address': return Type.String
-    case 'function': return Type.String
-    default: throw new Error(`Unhandled ABI base type: ${type}`)
+    case 'bool':
+      return Type.Bool
+    case 'string':
+      return Type.String
+    case 'address':
+      return Type.String
+    case 'function':
+      return Type.String
+    default:
+      throw new Error(`Unhandled ABI base type: ${type}`)
   }
 }
