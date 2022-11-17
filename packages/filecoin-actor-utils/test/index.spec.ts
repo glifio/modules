@@ -1,5 +1,5 @@
-import { describeFEVMMessageParams } from '../src/utils/params'
-import { describeFEVMMessageReturn } from '../src/utils/return'
+import { describeFEVMTxParams } from '../src/utils/params'
+import { describeFEVMTxReturn } from '../src/utils/return'
 import { getFEVMMethodName } from '../src/utils/method'
 import { networkActorCodeMap } from '../src/data'
 import { getActorName, getActorCode } from '../src/utils/code'
@@ -54,19 +54,20 @@ describe('utils', () => {
       test('it decodes an ERC20 transfer', () => {
         const transferParams =
           'WESpBZy7AAAAAAAAAAAAAAAAqV4VZ+c6Em/FjMB4NX+woThFrgwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4Lazp2QAAA=='
-        const describedParams = describeFEVMMessageParams(transferParams, abi)
-        expect(describedParams.Name).toBe('transfer')
-        expect(describedParams.Type).toBe(Type.Object)
+        const describedParams = describeFEVMTxParams(transferParams, abi)
+        expect(describedParams).not.toBeNull()
+        expect(describedParams?.Name).toBe('Inputs')
+        expect(describedParams?.Type).toBe(Type.Object)
 
-        expect(describedParams.Children?.['to'].Name).toBe('to')
-        expect(describedParams.Children?.['to'].Type).toBe('address')
-        expect(describedParams.Children?.['to'].Value).toBe(
+        expect(describedParams?.Children?.['to'].Name).toBe('address')
+        expect(describedParams?.Children?.['to'].Type).toBe(Type.String)
+        expect(describedParams?.Children?.['to'].Value).toBe(
           '0xA95e1567e73A126FC58cc078357fb0A13845AE0C'
         )
 
-        expect(describedParams.Children?.['amount'].Name).toBe('amount')
-        expect(describedParams.Children?.['amount'].Type).toBe('uint256')
-        expect(describedParams.Children?.['amount'].Value?.toString()).toBe(
+        expect(describedParams?.Children?.['amount'].Name).toBe('uint256')
+        expect(describedParams?.Children?.['amount'].Type).toBe(Type.Number)
+        expect(describedParams?.Children?.['amount'].Value).toBe(
           '1000000000000000000'
         )
       })
@@ -77,13 +78,16 @@ describe('utils', () => {
         const transferParams =
           'WESpBZy7AAAAAAAAAAAAAAAAqV4VZ+c6Em/FjMB4NX+woThFrgwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4Lazp2QAAA=='
         const returnVal = 'WCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=='
-        const describedReturn = describeFEVMMessageReturn(
+        const describedReturn = describeFEVMTxReturn(
           transferParams,
           returnVal,
           abi
         )
 
-        expect(describedReturn?.Name).toBe('transfer')
+        expect(describedReturn).not.toBeNull()
+        expect(describedReturn?.Type).toBe(Type.Bool)
+        expect(describedReturn?.Name).toBe('bool')
+        expect(describedReturn?.Value).toBe(true)
       })
     })
 
