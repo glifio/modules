@@ -274,16 +274,6 @@
       "NetworkName": {
         "Type": "string",
         "Name": "string"
-      },
-      "InstalledActors": {
-        "Type": "object",
-        "Name": "Cid",
-        "Children": {
-          "/": {
-            "Type": "string",
-            "Name": "CidString"
-          }
-        }
       }
     },
     "Methods": {
