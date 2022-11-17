@@ -1,9 +1,9 @@
 import cloneDeep from 'lodash.clonedeep'
 import { ethers } from 'ethers'
 import { actorDescriptorMap } from '../data'
-import { ActorName, DataType, MethodNum, Type } from '../types'
+import { ActorName, DataType, MethodNum } from '../types'
+import { ABI, cborToHex, abiParamsToDataType } from './abi'
 import { describeDataType } from './generic'
-import { ABI, cborToHex } from './abi'
 
 /**
  * Returns a descriptor with values based on the provided actor name, method number and params
@@ -35,31 +35,34 @@ export const describeMessageParams = (
   return dataType
 }
 
-// TODO: (nice to have) enable typechain artifact as a typescript generic here so the described params are typed?
-export const describeFEVMMessageParams = (
+/**
+ * Returns a descriptor with values based on the provided FEVM params and ABI
+ * @param params the FEVM params as a base64 encoded CBOR string
+ * @param abi the ABI of the contract that performed this transaction
+ * @returns the described message params
+ */
+export const describeFEVMTxParams = (
   params: string,
   abi: ABI
-): DataType => {
+): DataType | null => {
+  // Return null for falsy tx params
+  if (!params) return null
+
+  // Parse transaction from params
   const iface = new ethers.utils.Interface(abi)
   const data = cborToHex(params)
   const tx = iface.parseTransaction({ data })
+  const { inputs } = tx.functionFragment
 
-  
+  // Return null for empty ABI inputs
+  if (!inputs.length) return null
 
-  // TODO: how to handle solidity structs as inputs? I believe structs are encoded as `tuple` type https://docs.soliditylang.org/en/v0.5.3/abi-spec.html#mapping-solidity-to-abi-types
-  // TODO: unstandardized capitalization from built-in actors
-  const children = tx.functionFragment.inputs.reduce<
-    Record<string, DataType>
-  >((accum, ele) => {
-    return {
-      ...accum,
-      [ele.name]: {
-        Name: ele.name,
-        Type: ele.type as Type,
-        Value: parsed.args[ele.name]
-      }
-    }
-  }, {})
+  // Convert ABI inputs to descriptor
+  const dataType = abiParamsToDataType('Inputs', tx.functionFragment.inputs)
 
-  return { Type: Type.Object, Name: parsed.name, Children: children }
+  // Supplement the descriptor with parameter values
+  describeDataType(dataType, tx.args)
+
+  // Return the described params
+  return dataType
 }
