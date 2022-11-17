@@ -1,6 +1,8 @@
+import { ethers } from 'ethers'
 import cloneDeep from 'lodash.clonedeep'
 import { actorDescriptorMap } from '../data'
 import { ActorName, DataType, MethodNum } from '../types'
+import { ABI, cborToHex, abiParamsToDataType, abiParamToDataType } from './abi'
 import { describeDataType } from './generic'
 
 /**
@@ -28,6 +30,47 @@ export const describeMessageReturn = (
   // Supplement the descriptor with return values
   const dataType = cloneDeep<DataType>(descriptor)
   describeDataType(dataType, msgReturn)
+
+  // Return the described return value
+  return dataType
+}
+
+/**
+ * Returns a descriptor with values based on the provided FEVM params, return value and ABI
+ * @param params the FEVM params as a base64 encoded CBOR string
+ * @param returnVal the FEVM return value as a base64 encoded CBOR string
+ * @param abi the ABI of the contract that performed this transaction
+ * @returns the described message return value
+ */
+export const describeFEVMTxReturn = (
+  params: string,
+  returnVal: string,
+  abi: ABI
+): DataType | null => {
+  // Return null for falsy tx params or return
+  if (!params || !returnVal) return null
+
+  // Parse transaction from params
+  const iface = new ethers.utils.Interface(abi)
+  const data = cborToHex(params)
+  const tx = iface.parseTransaction({ data })
+  const { outputs } = tx.functionFragment
+
+  // Return null for empty ABI outputs
+  if (!outputs?.length) return null
+
+  // Decode return value
+  const returnHex = cborToHex(returnVal)
+  const result = iface.decodeFunctionResult(tx.name, returnHex)
+
+  // Convert ABI outputs to descriptor
+  const dataType =
+    outputs.length === 1
+      ? abiParamToDataType(outputs[0])
+      : abiParamsToDataType('Outputs', outputs)
+
+  // Supplement the descriptor with return values
+  describeDataType(dataType, outputs.length === 1 ? result[0] : result)
 
   // Return the described return value
   return dataType
