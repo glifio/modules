@@ -27,19 +27,20 @@
     "verifiedregistry": "bafk2bzaceb3zbkjz3auizmoln2unmxep7dyfcmsre64vnqfhdyh7rkqfoxlw4"
   },
   "wallabynet": {
-    "account": "bafk2bzacecy3hive4t2j2ytbq3jrhueu3q3yvtmdny4lq6gwpaaovb5nrr76s",
-    "cron": "bafk2bzaceaqq2p7g5g2gbrwviwi5rerq7gclsryzmr3cgwdym3q6cuwr2m6jy",
-    "eam": "bafk2bzacedwuvyzfaaf6vpxx4lhervvs4qs4ukfqitjxikeemzpec3lbqu5ba",
+    "account": "bafk2bzacebbgq2oimxo5p2ihaoypcrhlvukpld7utnqn55nwcyyvgdjc64msq",
+    "cron": "bafk2bzaceazc3w34spjwb5j4jtpxogswcgq26gc4txi4r4s7gpgoswma6imgc",
+    "datacap": "bafk2bzaceb565ky3uoa6ezxuvjq4c6ibszk7pco2ewpy66qxaehkwi7snpckw",
+    "eam": "bafk2bzaced77dco63zvpboicxlyy5p3vzip6h5tcgmvxwoxs67t4qk7xmhhws",
     "embryo": "bafk2bzacecau3tohdilfx66pohfqdrngpuqd5oew2j5iv3c7sjlrkcm5npqos",
-    "evm": "bafk2bzacedzg2dsdry6cy5nzfldtqatuopljgdxt5hxdwn2gmuj3fk566bndg",
-    "init": "bafk2bzacebfgbr3jpistckeoomgmub65hplg7mhwnvznqprxxg7ujajkvixoi",
-    "multisig": "bafk2bzacebdwl2ffznau33xzjztvgyiptgbsz6imn2g2pakpvwuguacwigxtg",
-    "paymentchannel": "bafk2bzacedu3vnale73bu5k2dcaiz423orrtyvx4bazte773kyabiwgdvw6ye",
-    "reward": "bafk2bzacec2yqixjcmwnhplqnpfflcn3md3illzd7n4sxs4axbvoux6lkim3w",
-    "storagemarket": "bafk2bzaceddnsy6esfaxzpcczcwo6vjgwd6zqhy7n67mmok5o2zfj3fyaw6ow",
-    "storageminer": "bafk2bzacebc5dnbl2q3u6aevyxxk6x7aoomkg3hbp73i7u5bo4ltc2kjpsuzo",
-    "storagepower": "bafk2bzacebdq4txea7jncypuxoomanpsiz6q2zmz7ejga3rkg4reryjozkcbk",
-    "system": "bafk2bzacebevepzhwqe25epwpkjbekm4std6l4b3umlvdxrzd2x2dyaq6p224",
-    "verifiedregistry": "bafk2bzacecfa4bxq2tdkscq4iu2ys5skq6by7x534p3oxziooc6oymsg64sdo"
+    "evm": "bafk2bzacec6vkieea5jap2qsc3nslav3nlgu5xikfqozb3uuvsbeswifpnyz2",
+    "init": "bafk2bzacedxae6kta4v6eetz4t53fyd6mpem423ox5kzikfhrawtavdt2ikik",
+    "multisig": "bafk2bzaceb3lcdycypkx5shzvcisstxgen65kfxrrlk73fftmssn66aqe5fue",
+    "paymentchannel": "bafk2bzacediwf2rwabjfufo4yaxrcsbny532efwvvzna4obquumvlgpva6544",
+    "reward": "bafk2bzaceawp3lp6a2lx7e5ds5tzm24fdictmtzx4h64kdzh5sesmnskzc2og",
+    "storagemarket": "bafk2bzacecho7uf7dohot47fdgeukxbyaayzoiv2nedriyvkg5i2o5lfyifrs",
+    "storageminer": "bafk2bzaceb3blaaxw3capg4tjagykcj5wkmzsgvwxuu2avu5iu4an5ho6achu",
+    "storagepower": "bafk2bzacecdhpkrpenz6u3uierjkqfc2xtdbf227qoatwrcb53ak2z6xbnfzq",
+    "system": "bafk2bzacecgsmrvzbqimbtztfc7agezmldihakwtjmto2f6kin2jb7dxdzkl4",
+    "verifiedregistry": "bafk2bzaced7otomshc3qa37bsg4lmhq6cinszcxi3fy6qruig3kkix4yqflvq"
   }
 }
