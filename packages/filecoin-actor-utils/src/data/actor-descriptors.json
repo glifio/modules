@@ -128,6 +128,133 @@
       }
     }
   },
+  "eam": {
+    "State": null,
+    "Methods": {
+      "0": {
+        "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        }
+      },
+      "2": {
+        "Name": "Create",
+        "Param": {
+          "Type": "object",
+          "Name": "CreateParams",
+          "Children": {
+            "Initcode": {
+              "Type": "bytes",
+              "Name": ""
+            },
+            "Nonce": {
+              "Type": "number",
+              "Name": "uint64"
+            }
+          }
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "CreateReturn",
+          "Children": {
+            "ActorID": {
+              "Type": "number",
+              "Name": "uint64"
+            },
+            "RobustAddress": {
+              "Type": "string",
+              "Name": "Address"
+            },
+            "EthAddress": {
+              "Type": "bytes",
+              "Name": ""
+            }
+          }
+        }
+      },
+      "3": {
+        "Name": "Create2",
+        "Param": {
+          "Type": "object",
+          "Name": "Create2Params",
+          "Children": {
+            "Initcode": {
+              "Type": "bytes",
+              "Name": ""
+            },
+            "Salt": {
+              "Type": "bytes",
+              "Name": ""
+            }
+          }
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "Create2Return",
+          "Children": {
+            "ActorID": {
+              "Type": "number",
+              "Name": "uint64"
+            },
+            "RobustAddress": {
+              "Type": "string",
+              "Name": "Address"
+            },
+            "EthAddress": {
+              "Type": "bytes",
+              "Name": ""
+            }
+          }
+        }
+      }
+    }
+  },
+  "evm": {
+    "State": {
+      "Bytecode": {
+        "Type": "object",
+        "Name": "Cid",
+        "Children": {
+          "/": {
+            "Type": "string",
+            "Name": "CidString"
+          }
+        }
+      },
+      "ContractState": {
+        "Type": "object",
+        "Name": "Cid",
+        "Children": {
+          "/": {
+            "Type": "string",
+            "Name": "CidString"
+          }
+        }
+      }
+    },
+    "Methods": {
+      "0": {
+        "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        }
+      }
+    }
+  },
   "init": {
     "State": {
       "AddressMap": {
