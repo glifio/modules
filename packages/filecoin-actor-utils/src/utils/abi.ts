@@ -85,6 +85,6 @@ const getTypeFromAbiType = (type: string): Type => {
     case 'function':
       return Type.String
     default:
-      throw new Error(`Unhandled ABI base type: ${type}`)
+      throw new Error(`Unhandled ABI type: ${type}`)
   }
 }
