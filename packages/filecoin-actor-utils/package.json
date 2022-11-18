@@ -14,6 +14,7 @@
     "build-node": "babel ./src --out-dir ./dist --copy-files --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
     "build-types": "tsc --emitDeclarationOnly",
     "build": "npm run clean && npm run build-types && npm run build-node && npm run build-browser && npm run build-module",
+    "build:watch": "npm run build-browser -- --watch",
     "prepublishOnly": "npm run build",
     "lint": "eslint --ext .jsx,.js,.ts,.tsx ./src",
     "lint:fix": "eslint --ext .jsx,.js,.ts,.tsx ./src --fix",
