@@ -7,7 +7,7 @@
   "module": "./module/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "start": "npm run clean && npm run build-browser -- --watch",
+    "start": "npm run clean && npm run build:watch",
     "clean": "rimraf dist/ lib/ module/",
     "build-browser": "cross-env BABEL_ENV=browser babel ./src --out-dir ./lib --copy-files --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",
     "build-module": "cross-env BABEL_ENV=module babel ./src --out-dir ./module --copy-files --extensions \".ts,.tsx\" --source-maps --ignore '**/__tests__'",

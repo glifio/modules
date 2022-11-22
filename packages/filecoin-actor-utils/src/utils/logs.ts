@@ -3,37 +3,56 @@ import { DataType, Type } from '../types'
 import { ABI, abiParamsToDataType } from './abi'
 import { describeDataType } from './generic'
 
-export type RawFEVMLog = {
+export type FEVMLog = {
+  address: string,
+  data: string,
   topics: Array<string>
-  data: string
+  removed: boolean
+  logIndex: string
+  transactionIndex: string
+  transactionHash: string
+  blockHash: string
+  blockNumber: string
 }
 
+/**
+ * Returns a descriptor with values based on the provided FEVM logs and ABI
+ * @param logs the FEVM logs to describe
+ * @param abi the ABI of the contract that performed this transaction
+ * @returns the described FEVM logs
+ */
 export const describeFEVMLogs = (
-  logs: Array<RawFEVMLog>,
+  logs: Array<FEVMLog>,
   abi: ABI
-): DataType[] | null => {
-  if (!abi || !logs || logs.length === 0) return null
+): DataType | null => {
+  // Return null for empty logs
+  if (!logs?.length) return null
 
+  // Sort logs by logIndex
+  const sorted = logs.sort((a, b) => Number(a.logIndex) - Number(b.logIndex))
+
+  // Parse logs to array of decribed DataTypes
   const iface = new ethers.utils.Interface(abi)
-  // create an array of DataTypes representing each emitted event
-  const events = logs.map(({ topics, data }) => {
-    const log = iface.parseLog({ topics, data })
-    const { inputs } = log.eventFragment
-
-    // Return a simple DataType with the event log's name for empty ABI inputs
-    // although not sure you could actually emit an event with 0 inputs in solidity
-    if (!inputs.length) return { Type: Type.String, Name: log.name }
+  const parsed = sorted.map(({ data, topics, logIndex }) => {
+    const log = iface.parseLog({ data, topics })
 
     // Convert ABI inputs to descriptor
-    const dataType = abiParamsToDataType(log.name, inputs)
+    const name = `${Number(logIndex)}: ${log.name}`
+    const dataType = abiParamsToDataType(name, log.eventFragment.inputs)
 
-    // Supplement the descriptor with parameter values
+    // Supplement the descriptor with log data
     describeDataType(dataType, log.args)
 
-    // Return the described params
+    // Return the described log
     return dataType
   })
 
-  // TODO: return single Array data type?
-  return events
+  // Return the described logs as an Object DataType
+  return {
+    Type: Type.Object,
+    Name: 'Logs',
+    Children: Object.fromEntries(
+      parsed.map(entry => [entry.Name, entry])
+    )
+  }
 }
