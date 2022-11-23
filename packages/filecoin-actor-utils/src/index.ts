@@ -1,6 +1,7 @@
 export * from './types'
 export * from './utils/abi'
 export * from './utils/code'
+export * from './utils/logs'
 export * from './utils/method'
 export * from './utils/params'
 export * from './utils/return'
