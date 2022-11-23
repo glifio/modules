@@ -4,8 +4,8 @@ import { ABI, abiParamsToDataType } from './abi'
 import { describeDataType } from './generic'
 
 export type FEVMLog = {
-  address: string,
-  data: string,
+  address: string
+  data: string
   topics: Array<string>
   removed: boolean
   logIndex: string
@@ -51,8 +51,6 @@ export const describeFEVMLogs = (
   return {
     Type: Type.Object,
     Name: 'Logs',
-    Children: Object.fromEntries(
-      parsed.map(entry => [entry.Name, entry])
-    )
+    Children: Object.fromEntries(parsed.map(entry => [entry.Name, entry]))
   }
 }
