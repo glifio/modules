@@ -9,23 +9,23 @@ import {
 /**
  * Returns the actor code using networkActorCodeMap[networkName][actorName]
  */
-export const networkActorCodeMap =
-  networkActorCodeMapJSON as NetworkActorCodeMap
+export const networkActorCodeMap: NetworkActorCodeMap = networkActorCodeMapJSON
 
 /**
  * Returns the actor name using networkActorCodeMapInv[networkName][actorCode]
  */
-export const networkActorCodeMapInv = Object.fromEntries(
-  Object.entries(networkActorCodeMap).map(([networkName, actorCodeMap]) => [
-    networkName,
-    Object.fromEntries(
-      Object.entries(actorCodeMap).map(([actorName, actorCode]) => [
-        actorCode,
-        actorName
-      ])
-    )
-  ])
-) as NetworkActorCodeMapInv
+export const networkActorCodeMapInv: NetworkActorCodeMapInv =
+  Object.fromEntries(
+    Object.entries(networkActorCodeMap).map(([networkName, actorCodeMap]) => [
+      networkName,
+      Object.fromEntries(
+        Object.entries(actorCodeMap).map(([actorName, actorCode]) => [
+          actorCode,
+          actorName
+        ])
+      )
+    ])
+  )
 
 /**
  * Returns the actor descriptors with MethodNum converted to number from string.
