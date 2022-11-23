@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { CID } from 'multiformats/cid'
+import { create } from 'multiformats/hashes/digest'
 import { fromString, toString } from 'uint8arrays'
 import { validateAddressString } from '@glif/filecoin-address'
 
@@ -334,5 +335,17 @@ export const getEthHexFromCid = (cid: string): string => {
     return `0x${toString(digest, 'hex')}`
   } catch {
     throw new Error(`Failed to parse CID: ${cid}`)
+  }
+}
+
+export const getCidFromEthHex = (hex: string) => {
+  try {
+    const hexStr = hex.startsWith('0x') || hex.startsWith('0X') ? hex.slice(2) : hex
+    const bytes = fromString(hexStr, 'hex')
+    const hash = create(0xb220, bytes)
+    const cid = CID.createV1(0x71, hash)
+    return cid.toString()
+  } catch {
+    throw new Error(`Failed to create CID from eth hex: ${hex}`)
   }
 }
