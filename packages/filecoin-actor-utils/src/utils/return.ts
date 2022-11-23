@@ -47,6 +47,9 @@ export const describeFEVMTxReturn = (
   returnVal: string,
   abi: ABI
 ): DataType | null => {
+  // Throw error for missing ABI
+  if (!abi) throw new Error('Missing ABI')
+
   // Return null for falsy tx params or return
   if (!params || !returnVal) return null
 

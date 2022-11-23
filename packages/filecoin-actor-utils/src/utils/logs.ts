@@ -25,6 +25,9 @@ export const describeFEVMLogs = (
   logs: Array<FEVMLog>,
   abi: ABI
 ): DataType | null => {
+  // Throw error for missing ABI
+  if (!abi) throw new Error('Missing ABI')
+
   // Return null for empty logs
   if (!logs?.length) return null
 
