@@ -1,4 +1,6 @@
 import BigNumber from 'bignumber.js'
+import { CID } from 'multiformats/cid'
+import { fromString, toString } from 'uint8arrays'
 import { validateAddressString } from '@glif/filecoin-address'
 
 BigNumber.set({ ROUNDING_MODE: BigNumber.ROUND_HALF_DOWN })
@@ -323,4 +325,14 @@ const checkPositiveNumber = (value: any, name: string): void => {
 
 export default {
   Message
+}
+
+export const getEthHexFromCid = (cid: string): string => {
+  try {
+    const parsedCid = CID.parse(cid)
+    const { digest } = parsedCid.multihash
+    return `0x${toString(digest, 'hex')}`
+  } catch {
+    throw new Error(`Failed to parse CID: ${cid}`)
+  }
 }
