@@ -64,7 +64,7 @@ export type ActorMethodMap = {
 }
 
 export type ActorDescriptor = {
-  State: DataTypeMap
+  State: DataTypeMap | null
   Methods: ActorMethodMap
 }
 
