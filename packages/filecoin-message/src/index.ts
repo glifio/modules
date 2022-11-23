@@ -340,7 +340,8 @@ export const getEthHexFromCid = (cid: string): string => {
 
 export const getCidFromEthHex = (hex: string) => {
   try {
-    const hexStr = hex.startsWith('0x') || hex.startsWith('0X') ? hex.slice(2) : hex
+    const hexStr =
+      hex.startsWith('0x') || hex.startsWith('0X') ? hex.slice(2) : hex
     const bytes = fromString(hexStr, 'hex')
     const hash = create(0xb220, bytes)
     const cid = CID.createV1(0x71, hash)
