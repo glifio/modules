@@ -81,3 +81,88 @@ export type LotusActorState<T = Record<string, any> | null> = {
   Code: LotusCID
   State: T
 }
+
+/**
+ * DataType examples
+ * 
+
+const bool = {
+  Type: Type.Bool,
+  Name: 'bool',
+  Value: true             // When described
+}
+
+const number = {
+  Type: Type.Number,
+  Name: 'uint64',
+  Value: 256              // When described
+}
+
+const string = {
+  Type: Type.String,
+  Name: 'Address',
+  Value: 'f01'            // When described
+}
+
+{
+  Type: Type.Bytes,
+  Name: '',
+  Value: 'dGVzdA=='       // When described
+}
+
+Array
+{
+  Type: Type.Array,
+  Name: '',
+  Contains: {
+    Type: Type.String,
+    Name: 'Address'
+  }
+  Values: [               // When described
+    {
+      Type: Type.String,
+      Name: 'Address',
+      Value: 'f01'
+    },
+    {
+      Type: Type.String,
+      Name: 'Address',
+      Value: 'f02'
+    },
+    {
+      Type: Type.String,
+      Name: 'Address',
+      Value: 'f03'
+    }
+  ]
+}
+
+Object
+{
+  Type: Type.Object,
+  Name: 'ProposeParams',
+  Children: {
+    To: {
+      Type: Type.String,
+      Name: 'Address',
+      Value: 'f01'              // When described
+    },
+    Value: {
+      Type: Type.Number,
+      Name: 'FilecoinNumber',
+      Value: '1000'             // When described
+    },
+    Method: {
+      Type: Type.Number,
+      Name: 'MethodNum',
+      Value: 2                  // When described
+    },
+    Params: {
+      Type: Type.Bytes,
+      Name: '',
+      Value: 'dGVzdA=='         // When described
+    }
+  }
+}
+
+ */
