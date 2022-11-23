@@ -1,4 +1,4 @@
-const { Message } = require('../src')
+const { Message, getCidFromEthHex, getEthHexFromCid } = require('../src')
 const BigNumber = require('bignumber.js')
 
 const baseMessage = {
@@ -18,6 +18,21 @@ const customizedGasMessage = {
 }
 
 describe('message', () => {
+
+  describe('getCidFromEthHex', () => {
+    test('should create a cid string from an eth hex', () => {
+      expect(getCidFromEthHex('0xdeaba76628be8e01ba81cea29d7c7e1348f2d6934c5fa3e64ce1452642fdc4b0'))
+        .toBe(`bafy2bzacedpkxj3gfc7i4an2qhhkfhl4pyjur4wwsngf7i7gjtqukjsc7xcla`)
+    })
+  })
+
+  describe('getEthHexFromCid', () => {
+    test('should create an eth hex from a cid string', () => {
+      expect(getEthHexFromCid('bafy2bzacedpkxj3gfc7i4an2qhhkfhl4pyjur4wwsngf7i7gjtqukjsc7xcla'))
+        .toBe(`0xdeaba76628be8e01ba81cea29d7c7e1348f2d6934c5fa3e64ce1452642fdc4b0`)
+    })
+  })
+
   describe('constructor', () => {
     test('should not throw an error when addresses with different networks are passed', () => {
       expect(
