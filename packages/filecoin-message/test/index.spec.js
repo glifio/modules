@@ -1,4 +1,4 @@
-const { Message } = require('../src')
+const { Message, getCidFromEVMHex, getEVMHexFromCid } = require('../src')
 const BigNumber = require('bignumber.js')
 
 const baseMessage = {
@@ -18,14 +18,35 @@ const customizedGasMessage = {
 }
 
 describe('message', () => {
+  describe('getCidFromEVMHex', () => {
+    test('should create a cid string from an eth hex', () => {
+      expect(
+        getCidFromEVMHex(
+          '0xdeaba76628be8e01ba81cea29d7c7e1348f2d6934c5fa3e64ce1452642fdc4b0'
+        )
+      ).toBe(`bafy2bzacedpkxj3gfc7i4an2qhhkfhl4pyjur4wwsngf7i7gjtqukjsc7xcla`)
+    })
+  })
+
+  describe('getEVMHexFromCid', () => {
+    test('should create an eth hex from a cid string', () => {
+      expect(
+        getEVMHexFromCid(
+          'bafy2bzacedpkxj3gfc7i4an2qhhkfhl4pyjur4wwsngf7i7gjtqukjsc7xcla'
+        )
+      ).toBe(
+        `0xdeaba76628be8e01ba81cea29d7c7e1348f2d6934c5fa3e64ce1452642fdc4b0`
+      )
+    })
+  })
+
   describe('constructor', () => {
     test('should not throw an error when addresses with different networks are passed', () => {
       expect(
         () =>
           new Message({
             ...baseMessage,
-            to:
-              'f3kl67ybzbqjsu6fr7l4hzuyq5okkwnr2ncabxytl3xmcapupcyzeydbk23bub2dmg2hur4aawpe44w3wptsvq'
+            to: 'f3kl67ybzbqjsu6fr7l4hzuyq5okkwnr2ncabxytl3xmcapupcyzeydbk23bub2dmg2hur4aawpe44w3wptsvq'
           })
       ).not.toThrow()
     })
@@ -35,8 +56,7 @@ describe('message', () => {
         () =>
           new Message({
             ...baseMessage,
-            to:
-              't0kl67ybzbqjsu6fr7l4hzuyq5okkwnr2ncabxytl3xmcapupcyzeydbk23bub2dmg2hur4aawpe44w3wptsvq'
+            to: 't0kl67ybzbqjsu6fr7l4hzuyq5okkwnr2ncabxytl3xmcapupcyzeydbk23bub2dmg2hur4aawpe44w3wptsvq'
           })
       ).toThrow()
     })
@@ -46,8 +66,7 @@ describe('message', () => {
         () =>
           new Message({
             ...baseMessage,
-            from:
-              't0kl67ybzbqjsu6fr7l4hzuyq5okkwnr2ncabxytl3xmcapupcyzeydbk23bub2dmg2hur4aawpe44w3wptsvq'
+            from: 't0kl67ybzbqjsu6fr7l4hzuyq5okkwnr2ncabxytl3xmcapupcyzeydbk23bub2dmg2hur4aawpe44w3wptsvq'
           })
       ).toThrow()
     })
