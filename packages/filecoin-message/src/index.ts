@@ -328,7 +328,7 @@ export default {
   Message
 }
 
-export const getEVMHexFromCid = (cid: string): string => {
+export const getFEVMHexFromCid = (cid: string): string => {
   try {
     const parsedCid = CID.parse(cid)
     const { digest } = parsedCid.multihash
@@ -338,7 +338,7 @@ export const getEVMHexFromCid = (cid: string): string => {
   }
 }
 
-export const getCidFromEVMHex = (hex: string) => {
+export const getCidFromFEVMHex = (hex: string) => {
   try {
     const hexStr =
       hex.startsWith('0x') || hex.startsWith('0X') ? hex.slice(2) : hex
