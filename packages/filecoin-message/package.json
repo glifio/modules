@@ -21,7 +21,7 @@
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
     "@glif/filecoin-address": "^2.0.20",
-    "bignumber.js": "^9.0.0",
+    "bignumber.js": "^9.1.1",
     "multiformats": "^9.6.5",
     "uint8arrays": "^3.1.1"
   },
