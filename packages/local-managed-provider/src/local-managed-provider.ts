@@ -1,9 +1,8 @@
-import { WalletSubProvider, errors } from '@glif/filecoin-wallet-provider'
 import { LotusMessage, SignedLotusMessage } from '@glif/filecoin-message'
 import { CoinType } from '@glif/filecoin-address'
 import { KeyType, privateKeyContainer, SignFunc } from './private-key-container'
 
-export class SingleKeyProvider implements WalletSubProvider {
+export class SingleKeyProvider {
   readonly mainAddress: string
   readonly type: KeyType
   readonly _sign: SignFunc
@@ -11,9 +10,9 @@ export class SingleKeyProvider implements WalletSubProvider {
 
   constructor(privateKey: string) {
     if (!privateKey) {
-      throw new errors.InvalidParamsError({
-        message: 'Must pass private key string to single key provider instance'
-      })
+      throw new Error(
+        'Must pass private key string to single key provider instance'
+      )
     }
     const { address, keyType, sign } = privateKeyContainer(
       privateKey,
@@ -45,9 +44,7 @@ export class SingleKeyProvider implements WalletSubProvider {
     const addressWithoutCoinType = from.slice(1)
 
     if (!this.mainAddress.includes(addressWithoutCoinType)) {
-      throw new errors.InvalidParamsError({
-        message: 'Invalid from address for private key'
-      })
+      throw new Error('Invalid from address for private key')
     }
 
     return this._sign(message)
