@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash.clonedeep'
 import { Address } from '@glif/filecoin-address'
 import { BigNumber } from 'ethers'
 import { toString as BytesToString } from 'uint8arrays'
@@ -116,53 +117,38 @@ export const describeBytes = (
  * @param dataType the array descriptor to add the value to
  * @param value the value to add to the array descriptor
  */
-export const describeArray = (
-  dataType: DataType,
-  value: Array<boolean | string | number>
-) => {
+export const describeArray = (dataType: DataType, values: Array<any>) => {
   const { Name, Contains } = dataType
-  const valueType = typeof value
+  const valuesType = typeof values
 
   // Check malformed descriptor
   if (!Contains)
     throw new Error(
       getErrorMsg(
         dataType,
-        value,
+        values,
         `Expected Contains property in array DataType`
       )
     )
 
   // Check the value type
-  if (!Array.isArray(value))
+  if (!Array.isArray(values))
     throw new Error(
       getErrorMsg(
         dataType,
-        value,
-        `Expected array value for ${Name}, received ${valueType}`
+        values,
+        `Expected array value for ${Name}, received ${valuesType}`
       )
     )
 
-  // Check the value types for the array items
-  // The array should not contain complex types
-  switch (Contains.Type) {
-    case Type.Bool:
-    case Type.String:
-    case Type.Number:
-      value.forEach(v => checkValueType(Contains, v))
-      break
-    default:
-      throw new Error(
-        getErrorMsg(
-          dataType,
-          value,
-          `Unexpected array descriptor DataType: ${dataType.Type}`
-        )
-      )
+  // Create a described DataType from the Contains DataType
+  // for each value in the array and append to the Values array
+  dataType.Values = []
+  for (const value of values) {
+    const valueDT = cloneDeep<DataType>(Contains)
+    describeDataType(valueDT, value)
+    dataType.Values.push(valueDT)
   }
-
-  // Add the value to the descriptor
-  dataType.Value = value
 }
 
 /**
