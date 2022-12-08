@@ -117,10 +117,7 @@ export const describeBytes = (
  * @param dataType the array descriptor to add the value to
  * @param value the value to add to the array descriptor
  */
-export const describeArray = (
-  dataType: DataType,
-  values: Array<any>
-) => {
+export const describeArray = (dataType: DataType, values: Array<any>) => {
   const { Name, Contains } = dataType
   const valuesType = typeof values
 
