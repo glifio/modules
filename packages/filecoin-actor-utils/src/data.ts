@@ -31,7 +31,7 @@ export const networkActorCodeMapInv: NetworkActorCodeMapInv =
  * Returns the actor descriptors with MethodNum converted to number from string.
  * This conversion is necessary because JSON does not allow numerical object keys.
  */
-export const actorDescriptorMap = Object.fromEntries(
+export const actorDescriptorMap: ActorDescriptorMap = Object.fromEntries(
   Object.entries(actorDescriptorMapJSON).map(([actorName, actorDescriptor]) => [
     actorName,
     {
@@ -43,4 +43,4 @@ export const actorDescriptorMap = Object.fromEntries(
       )
     }
   ])
-) as ActorDescriptorMap
+)
