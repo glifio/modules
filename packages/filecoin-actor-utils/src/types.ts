@@ -104,14 +104,13 @@ const string = {
   Value: 'f01'            // When described
 }
 
-{
+const bytes = {
   Type: Type.Bytes,
   Name: '',
   Value: 'dGVzdA=='       // When described
 }
 
-Array
-{
+const array = {
   Type: Type.Array,
   Name: '',
   Contains: {
@@ -137,8 +136,7 @@ Array
   ]
 }
 
-Object
-{
+const object = {
   Type: Type.Object,
   Name: 'ProposeParams',
   Children: {
