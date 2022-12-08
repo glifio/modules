@@ -38,7 +38,8 @@ export type BaseValue = boolean | string | number
 export type DataType = {
   Type: Type
   Name: string
-  Value?: BaseValue | Array<BaseValue>
+  Value?: BaseValue // For described boolean, number or string types
+  Values?: DataType[] // For described array types
   Key?: DataType // For map type
   Contains?: DataType // For map / array / channel type
   Children?: DataTypeMap // For object type
