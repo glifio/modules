@@ -1,8 +1,9 @@
+import { WalletSubProvider } from '@glif/filecoin-wallet-provider'
 import { LotusMessage, SignedLotusMessage } from '@glif/filecoin-message'
 import { CoinType } from '@glif/filecoin-address'
 import { KeyType, privateKeyContainer, SignFunc } from './private-key-container'
 
-export class SingleKeyProvider {
+export class SingleKeyProvider implements WalletSubProvider {
   readonly mainAddress: string
   readonly type: KeyType
   readonly _sign: SignFunc
