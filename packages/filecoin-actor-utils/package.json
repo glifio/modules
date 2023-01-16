@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-actor-utils",
-  "version": "2.0.32",
+  "version": "2.0.33",
   "description": "Utilities for retrieving actor codes / names and inspecting actor state and methods",
   "main": "./dist/index.js",
   "browser": "./lib/index.js",
