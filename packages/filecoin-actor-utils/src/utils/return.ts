@@ -6,6 +6,23 @@ import { ABI, cborToHex, abiParamsToDataType, abiParamToDataType } from './abi'
 import { describeDataType } from './generic'
 
 /**
+ * Returns a descriptor without values for the provided actor name and method number
+ * @param actorName the name of the actor on which to call the method
+ * @param methodNum the number of the method to call on the actor
+ * @returns the descriptor for the actor's method
+ */
+export const getMessageReturnDescriptor = (
+  actorName: ActorName,
+  methodNum: MethodNum
+): DataType => {
+  const descriptor = actorDescriptorMap[actorName]?.Methods[methodNum]?.Return
+  if (descriptor) return descriptor
+  throw new Error(
+    `Missing message return descriptor for: ${actorName}, method: ${methodNum}`
+  )
+}
+
+/**
  * Returns a descriptor with values based on the provided actor name, method number and return value
  * @param actorName the name of the actor on which the method was called
  * @param methodNum the number of the method that was called on the actor
@@ -21,11 +38,7 @@ export const describeMessageReturn = (
   if (!msgReturn) return null
 
   // Retrieve the message return descriptor
-  const descriptor = actorDescriptorMap[actorName]?.Methods[methodNum]?.Return
-  if (!descriptor)
-    throw new Error(
-      `Missing message return descriptor for: ${actorName}, method: ${methodNum}`
-    )
+  const descriptor = getMessageReturnDescriptor(actorName, methodNum)
 
   // Supplement the descriptor with return values
   const dataType = cloneDeep<DataType>(descriptor)
