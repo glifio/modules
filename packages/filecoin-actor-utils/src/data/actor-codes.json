@@ -13,6 +13,24 @@
     "system": "bafk2bzaceaue3nzucbom3tcclgyaahy3iwvbqejsxrohiquakvvsjgbw3shac",
     "verifiedregistry": "bafk2bzacebh7dj6j7yi5vadh7lgqjtq42qi2uq4n6zy2g5vjeathacwn2tscu"
   },
+  "hyperspacenet": {
+    "account": "bafk2bzacecim7uybic2qprbkjhowg7qkniv4zywj5h5g4u4ss72urco2akzuo",
+    "cron": "bafk2bzaceahgq64awp4f7li3hdgimc4upqvdvltpmeywckvens33umcxt424a",
+    "datacap": "bafk2bzacebkxn52ttooaslkwncijk3bgd3tm2zw7vijdhwvg2cxnxbrzmmq5e",
+    "eam": "bafk2bzacedg5bnw3ic2ub4mb2agrvdowpqd7xyjv6v2ndlkugnrtjgzzfxqlw",
+    "ethaccount": "bafk2bzacealn5enbxyxbfs7gbsjbyma2zk3bcr7okvflxhpr753d4eh6ixooa",
+    "evm": "bafk2bzacedljkrmazyewawpnddrkzrt55556374dw2pm2hokgkompgzw4vx5y",
+    "init": "bafk2bzacec55gyyaqjrw7zughywocgwcjvv6k5fijjpjw4xgckuqz6pjtff5a",
+    "multisig": "bafk2bzaceblozbdzybdivvjdiid4jwm2jc6x5a66sunh2vvwsqba6wzqmr7i6",
+    "paymentchannel": "bafk2bzacealcyke5a6n24efs6qe4iikynpk2twqssyugy7jcyf6p6shgw2iwa",
+    "placeholder": "bafk2bzaceaamp2a35vpfml4skap4dffklzae2urcm34mtwwce2lvhaons3a5y",
+    "reward": "bafk2bzacebafzaqhwsm3nmsfwcd6ngvx6ev6zlcpyfljqh4kb77vok6opban6",
+    "storagemarket": "bafk2bzacecrjfg4p7fxznsdkoobs4po2ve3ywixrirrk6netgxh63qqaefamg",
+    "storageminer": "bafk2bzaceb3ctd4atxwhdkmlg4i63zxo5aopknlj7l5kaiqr22xpcmico6vg4",
+    "storagepower": "bafk2bzacecvcix3ugopvby2vah5wwiu5cqjedwzwkanmr34kdoc4f3o6p7nsq",
+    "system": "bafk2bzacedo2hfopt6gy52goj7fot5qwzhtnysmgo7h25crq4clpugkerjabk",
+    "verifiedregistry": "bafk2bzacea7rfkjrixaidksnmjehglmavyt56nyeu3sfxu2e3dcpf62oab6tw"
+  },
   "mainnet": {
     "account": "bafk2bzacect2p7urje3pylrrrjy3tngn6yaih4gtzauuatf2jllk3ksgfiw2y",
     "cron": "bafk2bzacebcec3lffmos3nawm5cvwehssxeqwxixoyyfvejy7viszzsxzyu26",
@@ -28,20 +46,21 @@
     "verifiedregistry": "bafk2bzacecf3yodlyudzukumehbuabgqljyhjt5ifiv4vetcfohnvsxzynwga"
   },
   "wallabynet": {
-    "account": "bafk2bzacebnirry7i3o3oz5gavmuphiqftcze2wfcr5nzpnp2t7c22nwh7vgg",
-    "cron": "bafk2bzaced4qkb3hsbqphcklcpyhoq2ghq4lwaps6qlhnf4j7yxhcfel2zapi",
-    "datacap": "bafk2bzaceafnyfaujekh4cpais3q2knd2mtpdgphnlsyadptswtzs57f2daic",
-    "eam": "bafk2bzacecbryegfr5unsfvmyrn54vm53jtfnzqc62zwroovyle2z3l67s4vs",
-    "embryo": "bafk2bzaceaw3z7opkwf2nqh4jodh2oowyi7wn4rx3iuzohn6puvnvmzx3rwoc",
-    "evm": "bafk2bzaceaun4l4pp74g2lvysmg5yzcjvlvcqw5j5z5364aymnk4e3cnlahsu",
-    "init": "bafk2bzacedcqb6vbqks3xmpxyolzi4idmv23feahljg6yab7gbhskvu2zcxna",
-    "multisig": "bafk2bzaceahihxewyov7a4fatz52zjxc3szlauc3mc22oyh6lwccnix7drnuo",
-    "paymentchannel": "bafk2bzacebc7eqd3kafdcyyfx6pddne7hiugsgi42jkvprfwdymkt4poahth4",
-    "reward": "bafk2bzaceccl47w6egbhwucjy2lq7two25c5as2p6idevqm3bkwvmqbpiogqy",
-    "storagemarket": "bafk2bzaceck3xrowc5lqbnjhphy5l4gjtmfzvb2lx547wfjp5tv3ojxcnie52",
-    "storageminer": "bafk2bzaced2ue3ihcxm4csmnw4uoxtnfwza4tlvxuxu4m7425l5cyatzlqulo",
-    "storagepower": "bafk2bzacedigtadxsz3stozhtf2terjxjbzehu7pl47htewpeiv2iwamctkza",
-    "system": "bafk2bzacecchukhqwjsyuipanig7wahkl6hnzt3rgor3paeix57e2vdpjg4ao",
-    "verifiedregistry": "bafk2bzacec2vnattt4rspseff2c76mchncathrcow2emlnvrnjklcoc6sibp4"
+    "account": "bafk2bzacec63ehicn6roe4hwtktiqjdpn7buw4vewix2fshvk7ruk6bg54bga",
+    "cron": "bafk2bzacedgz5736vxapicnbdrk5yrbgwbjizhr5hjglxwkb6sonqpoyaid4u",
+    "datacap": "bafk2bzacedmuhap3ephpwcvyqxry54irmw5zaz74abhmnjlwrf6ioihrzcqgu",
+    "eam": "bafk2bzaceammyagwzliynju7dzsn7zucxtwkstsmldcwyvbvbnhrftntfrwdi",
+    "embryo": "bafk2bzacecrloi3xb6bwxsiwtl2chxlgisv5742nkcksahcax3fkrso5wiqrk",
+    "ethaccount": "bafk2bzacedrk5se3gwabwxsxyogz4s3iqa3ujbxfrryvabwys2lrneouuakpg",
+    "evm": "bafk2bzacecuqugg64n2n5y3edusurstuzzpop4qoxezgoh6nt2ah5yyg2kfeq",
+    "init": "bafk2bzaceaaonvp6qwru3zhvffjrs72hzgzag7vlngmrz7rghdwsmdll4blsk",
+    "multisig": "bafk2bzacedw73tmdl7stykyycxmhsb3iom7notxmx24b2647g3vwmrg2brgqu",
+    "paymentchannel": "bafk2bzaced5frgcp6bszhis5kxtm6uko5jlgbuzyczqsj7uavovkayrbizg4s",
+    "reward": "bafk2bzaceddc5c45lnbo7i3uknk5zi3qbq6k4rocfoq3n7x3qerehyevjl7ja",
+    "storagemarket": "bafk2bzaceafqt55lykve6ex5bw65ueuec6bjcwfmq6vbhwbgjmpt4cztldzle",
+    "storageminer": "bafk2bzacebongyek6ijaqzup6fe2kplq24dr3dtvweu5fmfjl236rjhyqv3gs",
+    "storagepower": "bafk2bzaceapgnms6ldjpewmniaqawu5sflssycjbwydqvilja66y5wm4lulwq",
+    "system": "bafk2bzaceaki4yktxjcaxuj4be4q2ybrjiqcqq7orgzqgmidcavn3dzxyo7ds",
+    "verifiedregistry": "bafk2bzaceblfur6m2twrm4bujzco2fmvr4gwspthicebo4woy2k6f3yk42haw"
   }
 }
