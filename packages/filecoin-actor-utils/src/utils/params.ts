@@ -5,6 +5,12 @@ import { ActorName, DataType, MethodNum } from '../types'
 import { ABI, cborToHex, abiParamsToDataType } from './abi'
 import { describeDataType } from './generic'
 
+/**
+ * Returns a descriptor without values for the provided actor name and method number
+ * @param actorName the name of the actor on which to call the method
+ * @param methodNum the number of the method to call on the actor
+ * @returns the descriptor for the actor's method
+ */
 export const getMessageParamsDescriptor = (
   actorName: ActorName,
   methodNum: MethodNum
