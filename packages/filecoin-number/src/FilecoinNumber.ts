@@ -70,6 +70,57 @@ export class FilecoinNumber extends BigNumber {
   }
 
   /**
+   * Expresses this FilecoinNumber as a balance string
+   */
+  formatBalance(decimals = 3, addUnit = true): string {
+    if (decimals < 0) throw new Error('Decimals must be >= 0')
+    if (this.isNaN()) throw new Error('Value cannot be NaN')
+
+    const format: BigNumber.Format = {
+      decimalSeparator: '.',
+      groupSeparator: ' ',
+      groupSize: 3,
+      suffix: addUnit ? ' FIL' : ''
+    }
+
+    // Base value is zero
+    if (this.isZero()) return this.toFormat(format)
+
+    const isNegative = this.isNegative()
+    const dpValue = this.dp(decimals, BigNumber.ROUND_DOWN)
+    const dpUpValue = this.dp(decimals, BigNumber.ROUND_UP)
+
+    // Zero after stripping decimals
+    if (dpValue.isZero())
+      return decimals === 0
+        ? dpValue.toFormat({ ...format, prefix: isNegative ? '< ' : '> ' })
+        : dpUpValue.toFormat({ ...format, prefix: isNegative ? '> ' : '< ' })
+
+    // Stripped value is between -1000 and 1000
+    if (dpValue.isGreaterThan(-1000) && dpValue.isLessThan(1000))
+      return dpValue.toFormat(format)
+
+    // from thousands to trillions
+    let power = 0
+    const units = ['K', 'M', 'B', 'T']
+    for (const unit of units) {
+      const unitVal = dpValue.dividedBy(Math.pow(1000, ++power))
+      const unitDpVal = unitVal.dp(3, BigNumber.ROUND_DOWN)
+      if (
+        (unitDpVal.isGreaterThan(-1000) && unitDpVal.isLessThan(1000)) ||
+        unit === 'T'
+      )
+        return unitDpVal.toFormat({
+          ...format,
+          suffix: `${unit}${format.suffix}`
+        })
+    }
+
+    // Should never hit here
+    throw new Error('Failed to format balance')
+  }
+
+  /**
    * Returns a copy of this FilecoinNumber
    */
   clone(): FilecoinNumber {
