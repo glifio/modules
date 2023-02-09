@@ -14,6 +14,7 @@ interface AddressData {
   protocol: Protocol
   payload: Uint8Array
   coinType: CoinType
+  namespace?: number
 }
 
 const defaultCoinType = CoinType.MAIN
@@ -321,7 +322,7 @@ export function checkAddressString(address: string): AddressData {
 
       const namespaceBuf = new Int64(namespaceNumber).toBuffer()
       const payload = uint8arrays.concat([namespaceBuf, subAddrBytes])
-      return { protocol, payload, coinType }
+      return { protocol, payload, coinType, namespace: namespaceNumber }
     }
 
     case Protocol.SECP256K1:
