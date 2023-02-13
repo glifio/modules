@@ -10,7 +10,7 @@ import { CoinType } from './coinType'
 export * from './coinType'
 export * from './enums'
 
-interface AddressData {
+export interface AddressData {
   protocol: Protocol
   payload: Uint8Array
   coinType: CoinType
