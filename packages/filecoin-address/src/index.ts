@@ -43,6 +43,9 @@ const maxInt64StringLength = 19
 // The hash length used for calculating address checksums.
 const checksumHashLength = 4
 
+// The length of an Ethereum address in bytes
+const ethAddressLength = 20
+
 function addressHash(ingest: Uint8Array): Uint8Array {
   return blake2b(ingest, null, payloadHashLength)
 }
@@ -376,7 +379,7 @@ export function idFromAddress(address: Address): number {
 export function delegatedFromEthAddress(
   ethAddr: string,
   coinType: CoinType = CoinType.TEST
-) {
+): string {
   return newDelegatedEthAddress(ethAddr, coinType).toString()
 }
 
@@ -384,8 +387,22 @@ export function delegatedFromEthAddress(
  * ethAddressFromDelegated derives the ethereum address from an f410 address
  */
 
-export function ethAddressFromDelegated(delegated: string) {
+export function ethAddressFromDelegated(delegated: string): string {
   return utils.getAddress(`0x${decode(delegated).subAddrHex}`)
+}
+
+/**
+ * ethAddressFromID derives the ethereum address from an f0 address
+ */
+
+export function ethAddressFromID(idAddress: string): string {
+  const address = decode(idAddress)
+  const id = idFromAddress(address)
+  const buffer = new ArrayBuffer(ethAddressLength)
+  const dataview = new DataView(buffer)
+  dataview.setUint8(0, 256)
+  dataview.setBigUint64(12, BigInt(id), false)
+  return `0x${uint8arrays.toString(new Uint8Array(buffer), 'hex')}`
 }
 
 export default {
