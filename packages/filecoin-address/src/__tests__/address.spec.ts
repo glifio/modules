@@ -19,7 +19,8 @@ import {
   newBLSAddress,
   idFromAddress,
   delegatedFromEthAddress,
-  ethAddressFromDelegated
+  ethAddressFromDelegated,
+  ethAddressFromID
 } from '../index'
 
 describe('address', () => {
@@ -343,6 +344,18 @@ describe('address', () => {
 
   describe('ethAddressFromDelegated', () => {
     expect(ethAddressFromDelegated(del)).toBe(hex)
+  })
+
+  describe('ethAddressFromID', () => {
+    expect(ethAddressFromID('t01')).toBe(
+      '0xff00000000000000000000000000000000000001'
+    )
+    expect(ethAddressFromID('t0100')).toBe(
+      '0xff00000000000000000000000000000000000064'
+    )
+    expect(ethAddressFromID('t05088')).toBe(
+      '0xff000000000000000000000000000000000013e0'
+    )
   })
 
   test('it should validate correct filecoin addresses', () => {
