@@ -76,18 +76,14 @@ export class FilecoinNumber extends BigNumber {
   /**
    * Expresses this FilecoinNumber as a balance string
    */
-  formatBalance({
-    decimals: decimalsProp,
-    coinType: coinTypeProp,
-    addUnit: addUnitProp
-  }: {
+  formatBalance(options?: {
     decimals?: number
     coinType?: CoinType
     addUnit?: boolean
   }): string {
-    const decimals = decimalsProp ?? 3
-    const coinType = coinTypeProp ?? CoinType.MAIN
-    const addUnit = addUnitProp ?? true
+    const decimals = options?.decimals ?? 3
+    const coinType = options?.coinType ?? CoinType.MAIN
+    const addUnit = options?.addUnit ?? true
 
     if (decimals < 0) throw new Error('Decimals must be >= 0')
     if (this.isNaN()) throw new Error('Value cannot be NaN')
