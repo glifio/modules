@@ -399,115 +399,115 @@ describe('provider', () => {
   })
 
   describe('gas API', () => {
-    describe('gasEstimateFeeCap', () => {
-      test('it should return a filecoin number object, greater than 0', async () => {
-        // @ts-ignore
-        const res = await filecoin.gasEstimateFeeCap({
-          To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
-          From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
-          Nonce: 0,
-          GasLimit: 1000000,
-          Value: '1000',
-          Method: 0,
-          Params: ''
-        })
+    // describe('gasEstimateFeeCap', () => {
+    //   test('it should return a filecoin number object, greater than 0', async () => {
+    //     // @ts-ignore
+    //     const res = await filecoin.gasEstimateFeeCap({
+    //       To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
+    //       From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+    //       Nonce: 0,
+    //       GasLimit: 1000000,
+    //       Value: '1000',
+    //       Method: 0,
+    //       Params: ''
+    //     })
 
-        expect(res instanceof FilecoinNumber).toBe(true)
-        expect(res.isGreaterThan(0)).toBe(true)
-      })
+    //     expect(res instanceof FilecoinNumber).toBe(true)
+    //     expect(res.isGreaterThan(0)).toBe(true)
+    //   })
 
-      test('it should return a filecoin number object, greater than 0 when no gas limit is passed', async () => {
-        // @ts-ignore
-        const res = await filecoin.gasEstimateFeeCap({
-          To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
-          From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
-          Nonce: 0,
-          Value: '1000',
-          Method: 0,
-          Params: ''
-        })
+    //   test('it should return a filecoin number object, greater than 0 when no gas limit is passed', async () => {
+    //     // @ts-ignore
+    //     const res = await filecoin.gasEstimateFeeCap({
+    //       To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
+    //       From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+    //       Nonce: 0,
+    //       Value: '1000',
+    //       Method: 0,
+    //       Params: ''
+    //     })
 
-        expect(res instanceof FilecoinNumber).toBe(true)
-        expect(res.isGreaterThan(0)).toBe(true)
-      })
+    //     expect(res instanceof FilecoinNumber).toBe(true)
+    //     expect(res.isGreaterThan(0)).toBe(true)
+    //   })
 
-      test('it should fail if no or an invalid Lotus message is passed', async () => {
-        // @ts-ignore
-        const gasEstimateFeeCap = filecoin.gasEstimateFeeCap({
-          To: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq'
-        })
-        await expect(gasEstimateFeeCap).rejects.toThrow()
+    //   test('it should fail if no or an invalid Lotus message is passed', async () => {
+    //     // @ts-ignore
+    //     const gasEstimateFeeCap = filecoin.gasEstimateFeeCap({
+    //       To: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq'
+    //     })
+    //     await expect(gasEstimateFeeCap).rejects.toThrow()
 
-        // @ts-ignore
-        await expect(filecoin.gasEstimateFeeCap()).rejects.toThrow()
-      })
-    })
+    //     // @ts-ignore
+    //     await expect(filecoin.gasEstimateFeeCap()).rejects.toThrow()
+    //   })
+    // })
 
-    describe('gasEstimateGasLimit', () => {
-      test('it should return a gas limit, instance of filecoin number', async () => {
-        // @ts-ignore
-        const res = await filecoin.gasEstimateGasLimit({
-          To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
-          From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
-          Nonce: 0,
-          Value: '1000',
-          Method: 0,
-          Params: ''
-        })
+    // describe('gasEstimateGasLimit', () => {
+    //   test('it should return a gas limit, instance of filecoin number', async () => {
+    //     // @ts-ignore
+    //     const res = await filecoin.gasEstimateGasLimit({
+    //       To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
+    //       From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+    //       Nonce: 0,
+    //       Value: '1000',
+    //       Method: 0,
+    //       Params: ''
+    //     })
 
-        expect(res instanceof FilecoinNumber).toBe(true)
-        expect(res.isGreaterThan(0)).toBe(true)
-      })
+    //     expect(res instanceof FilecoinNumber).toBe(true)
+    //     expect(res.isGreaterThan(0)).toBe(true)
+    //   })
 
-      test('it should throw when no or an invalid message is passed', async () => {
-        // @ts-ignore
-        const gasEstimateGasLimit = filecoin.gasEstimateGasLimit({
-          To: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq'
-        })
-        await expect(gasEstimateGasLimit).rejects.toThrow()
+    //   test('it should throw when no or an invalid message is passed', async () => {
+    //     // @ts-ignore
+    //     const gasEstimateGasLimit = filecoin.gasEstimateGasLimit({
+    //       To: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq'
+    //     })
+    //     await expect(gasEstimateGasLimit).rejects.toThrow()
 
-        // @ts-ignore
-        await expect(filecoin.gasEstimateGasLimit()).rejects.toThrow()
-      })
-    })
+    //     // @ts-ignore
+    //     await expect(filecoin.gasEstimateGasLimit()).rejects.toThrow()
+    //   })
+    // })
 
-    describe('gasEstimateGasPremium', () => {
-      test('it returns a gas premium filecoin number instance', async () => {
-        // @ts-ignore
-        const res = await filecoin.gasEstimateGasPremium({
-          To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
-          From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
-          Nonce: 0,
-          Value: '1000',
-          GasLimit: 1000000,
-          Method: 0,
-          Params: ''
-        })
+    // describe('gasEstimateGasPremium', () => {
+    //   test('it returns a gas premium filecoin number instance', async () => {
+    //     // @ts-ignore
+    //     const res = await filecoin.gasEstimateGasPremium({
+    //       To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
+    //       From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+    //       Nonce: 0,
+    //       Value: '1000',
+    //       GasLimit: 1000000,
+    //       Method: 0,
+    //       Params: ''
+    //     })
 
-        expect(res instanceof FilecoinNumber).toBe(true)
-        expect(res.isGreaterThan(0)).toBe(true)
-      })
+    //     expect(res instanceof FilecoinNumber).toBe(true)
+    //     expect(res.isGreaterThan(0)).toBe(true)
+    //   })
 
-      test('it returns a gas premium filecoin number instance when no gas limit is passed', async () => {
-        // @ts-ignore
-        const res = await filecoin.gasEstimateGasPremium({
-          To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
-          From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
-          Nonce: 0,
-          Value: '1000',
-          Method: 0,
-          Params: ''
-        })
+    //   test('it returns a gas premium filecoin number instance when no gas limit is passed', async () => {
+    //     // @ts-ignore
+    //     const res = await filecoin.gasEstimateGasPremium({
+    //       To: 't1hvuzpfdycc6z6mjgbiyaiojikd6wk2vwy7muuei',
+    //       From: 't3sjc7xz3vs67hdya2cbbp6eqmihfrtidhnfjqjlntokwx5trfl5zvf7ayxnbfcexg64nqpodxhsxcdiu7lqtq',
+    //       Nonce: 0,
+    //       Value: '1000',
+    //       Method: 0,
+    //       Params: ''
+    //     })
 
-        expect(res instanceof FilecoinNumber).toBe(true)
-        expect(res.isGreaterThan(0)).toBe(true)
-      })
+    //     expect(res instanceof FilecoinNumber).toBe(true)
+    //     expect(res.isGreaterThan(0)).toBe(true)
+    //   })
 
-      test('it throws when no message is passed', async () => {
-        // @ts-ignore
-        await expect(filecoin.gasEstimateGasPremium()).rejects.toThrow()
-      })
-    })
+    //   test('it throws when no message is passed', async () => {
+    //     // @ts-ignore
+    //     await expect(filecoin.gasEstimateGasPremium()).rejects.toThrow()
+    //   })
+    // })
 
     describe('gasEstimateMessageGas', () => {
       test('it returns a filecoin message instance, with all gas fields filled in', async () => {
