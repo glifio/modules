@@ -5,6 +5,10 @@ BigNumber.set({ ROUNDING_MODE: BigNumber.ROUND_HALF_DOWN })
 BigNumber.config({ EXPONENTIAL_AT: 1e9 })
 
 export type FilecoinDenomination = 'fil' | 'picofil' | 'attofil'
+export enum CoinType {
+  MAIN = 'f',
+  TEST = 't'
+}
 
 function toBigNumberValue(
   value: BigNumber.Value,
@@ -72,7 +76,19 @@ export class FilecoinNumber extends BigNumber {
   /**
    * Expresses this FilecoinNumber as a balance string
    */
-  formatBalance(decimals = 3, addUnit = true): string {
+  formatBalance({
+    decimals: decimalsProp,
+    coinType: coinTypeProp,
+    addUnit: addUnitProp
+  }: {
+    decimals?: number
+    coinType?: CoinType
+    addUnit?: boolean
+  }): string {
+    const decimals = decimalsProp ?? 3
+    const coinType = coinTypeProp ?? CoinType.MAIN
+    const addUnit = addUnitProp ?? true
+
     if (decimals < 0) throw new Error('Decimals must be >= 0')
     if (this.isNaN()) throw new Error('Value cannot be NaN')
 
@@ -80,7 +96,7 @@ export class FilecoinNumber extends BigNumber {
       decimalSeparator: '.',
       groupSeparator: ' ',
       groupSize: 3,
-      suffix: addUnit ? ' FIL' : ''
+      suffix: addUnit ? ` ${coinType === CoinType.TEST ? 't' : ''}FIL` : ''
     }
 
     // Base value is zero
