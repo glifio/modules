@@ -77,10 +77,12 @@ export class FilecoinNumber extends BigNumber {
    * Expresses this FilecoinNumber as a balance string
    */
   formatBalance(options?: {
+    truncate?: boolean
     decimals?: number
     coinType?: CoinType
     addUnit?: boolean
   }): string {
+    const truncate = options?.truncate ?? true
     const decimals = options?.decimals ?? 3
     const coinType = options?.coinType ?? CoinType.MAIN
     const addUnit = options?.addUnit ?? true
@@ -99,8 +101,12 @@ export class FilecoinNumber extends BigNumber {
     if (this.isZero()) return this.toFormat(format)
 
     const isNegative = this.isNegative()
-    const dpValue = this.dp(decimals, BigNumber.ROUND_DOWN)
-    const dpUpValue = this.dp(decimals, BigNumber.ROUND_UP)
+    const dpValue = truncate
+      ? this.dp(decimals, BigNumber.ROUND_DOWN)
+      : this.clone()
+    const dpUpValue = truncate
+      ? this.dp(decimals, BigNumber.ROUND_UP)
+      : this.clone()
 
     // Zero after stripping decimals
     if (dpValue.isZero())
