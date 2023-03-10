@@ -78,6 +78,8 @@ const getTypeFromAbiType = (type: string): Type => {
   switch (type) {
     case 'bool':
       return Type.Bool
+    case 'bytes':
+      return Type.Bytes
     case 'string':
       return Type.String
     case 'address':
