@@ -31,7 +31,6 @@
     "uint8arrays": "3.0.0"
   },
   "devDependencies": {
-    "@types/node-int64": "^0.4.29",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "eslint": "^8.22.0",
