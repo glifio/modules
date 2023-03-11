@@ -1,4 +1,5 @@
 import { BigNumber } from 'bignumber.js'
+import BN from 'bn.js'
 
 // not sure how we want to configure rounding for this
 BigNumber.set({ ROUNDING_MODE: BigNumber.ROUND_HALF_DOWN })
@@ -71,6 +72,16 @@ export class FilecoinNumber extends BigNumber {
    */
   toAttoFil(): string {
     return this.shiftedBy(18).toFixed(0, BigNumber.ROUND_DOWN)
+  }
+
+  /**
+   * Expresses this FilecoinNumber as a CBOR Buffer
+   */
+  toCBOR(): Buffer {
+    if (this.isNaN() || this.isZero()) return Buffer.from([])
+    const bn = new BN(this.toAttoFil(), 10)
+    const buffer = bn.toArrayLike(Buffer, 'be', bn.byteLength())
+    return Buffer.concat([Buffer.from('00', 'hex'), buffer])
   }
 
   /**

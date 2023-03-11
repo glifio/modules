@@ -25,10 +25,12 @@
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
     "bent": "7.3.12",
-    "bignumber.js": "9.0.1"
+    "bignumber.js": "9.0.1",
+    "bn.js": "^5.2.1"
   },
   "devDependencies": {
     "@types/bent": "^7.3.2",
+    "@types/bn.js": "^5.1.1",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "eslint": "^8.22.0",
