@@ -1,5 +1,4 @@
 import * as leb from 'leb128'
-import Int64 from 'node-int64'
 import { blake2b } from 'blakejs'
 import * as uint8arrays from 'uint8arrays'
 import { utils } from 'ethers'
@@ -18,6 +17,11 @@ export interface AddressData {
   namespace?: number
 }
 
+function getLeb128Length(input: Uint8Array): number {
+  for (const [index, byte] of input.entries()) if (byte < 128) return index + 1
+  throw new Error('Failed to get Leb128 length')
+}
+
 const defaultCoinType = CoinType.MAIN
 const base32 = base32Function('abcdefghijklmnopqrstuvwxyz234567')
 
@@ -34,9 +38,6 @@ const blsPublicKeyBytes = 48
 
 // The maximum length of a delegated address's sub-address.
 const maxSubaddressLen = 54
-
-// The number of bytes that are reserved for namespace
-const namespaceByteLen = new Int64(0).toBuffer().length
 
 // The maximum length of `int64` as a string.
 const maxInt64StringLength = 19
@@ -82,16 +83,23 @@ export class Address {
     return this.bytes.slice(1)
   }
 
+  get namespaceLength(): number {
+    if (this.protocol() !== Protocol.DELEGATED)
+      throw new Error('Can only get namespace length for delegated addresses')
+    return getLeb128Length(this.payload())
+  }
+
   get namespace(): number {
     if (this.protocol() !== Protocol.DELEGATED)
       throw new Error('Can only get namespace for delegated addresses')
-    return new Int64(this.payload().slice(0, namespaceByteLen)).toNumber()
+    const namespaceBytes = this.payload().slice(0, this.namespaceLength)
+    return Number(leb.unsigned.decode(namespaceBytes))
   }
 
   get subAddr(): Uint8Array {
     if (this.protocol() !== Protocol.DELEGATED)
       throw new Error('Can only get subaddress for delegated addresses')
-    return this.payload().slice(namespaceByteLen)
+    return this.bytes.slice(this.namespaceLength + 1)
   }
 
   get subAddrHex(): string {
@@ -191,17 +199,13 @@ export function newDelegatedAddress(
   subAddr: Uint8Array,
   coinType?: CoinType
 ): Address {
-  if (namespace > Int64.MAX_INT)
-    throw new Error('Namespace must be less than 2^63')
-
   if (subAddr.length > maxSubaddressLen)
     throw new Error('Subaddress address length')
 
-  const namespaceBuf = new Int64(namespace).toBuffer()
-
+  const namespaceByte = leb.unsigned.encode(namespace)
   return newAddress(
     Protocol.DELEGATED,
-    uint8arrays.concat([namespaceBuf, subAddr]),
+    uint8arrays.concat([namespaceByte, subAddr]),
     coinType
   )
 }
