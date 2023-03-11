@@ -13,6 +13,7 @@ export * from './enums'
 export interface AddressData {
   protocol: Protocol
   payload: Uint8Array
+  bytes: Uint8Array
   coinType: CoinType
   namespace?: number
 }
@@ -282,6 +283,7 @@ export function checkAddressString(address: string): AddressData {
   if (!protocols.includes(protocol))
     throw Error(`Address protocol should be one of: ${protocols.join(', ')}`)
 
+  const protocolByte = leb.unsigned.encode(protocol)
   const raw = address.slice(2)
 
   switch (protocol) {
@@ -290,7 +292,8 @@ export function checkAddressString(address: string): AddressData {
         throw Error('Invalid ID address length')
       if (isNaN(Number(raw))) throw Error('Invalid ID address')
       const payload = leb.unsigned.encode(raw)
-      return { protocol, payload, coinType }
+      const bytes = uint8arrays.concat([protocolByte, payload])
+      return { protocol, payload, bytes, coinType }
     }
 
     case Protocol.DELEGATED: {
@@ -323,9 +326,8 @@ export function checkAddressString(address: string): AddressData {
       if (!validateChecksum(bytes, checksumBytes))
         throw Error('Invalid delegated address checksum')
 
-      const namespaceBuf = new Int64(namespaceNumber).toBuffer()
-      const payload = uint8arrays.concat([namespaceBuf, subAddrBytes])
-      return { protocol, payload, coinType, namespace: namespaceNumber }
+      const payload = uint8arrays.concat([namespaceByte, subAddrBytes])
+      return { protocol, payload, bytes, coinType, namespace: namespaceNumber }
     }
 
     case Protocol.SECP256K1:
@@ -346,12 +348,11 @@ export function checkAddressString(address: string): AddressData {
         if (payload.length !== blsPublicKeyBytes)
           throw Error('Invalid address length')
 
-      const protocolByte = leb.unsigned.encode(protocol)
       const bytes = uint8arrays.concat([protocolByte, payload])
       if (!validateChecksum(bytes, checksum))
         throw Error('Invalid address checksum')
 
-      return { protocol, payload, coinType }
+      return { protocol, payload, bytes, coinType }
     }
 
     default:
