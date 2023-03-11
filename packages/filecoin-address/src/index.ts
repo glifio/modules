@@ -314,19 +314,14 @@ export function checkAddressString(address: string): AddressData {
       if (subAddrBytes.length > maxSubaddressLen)
         throw Error('Invalid delegated address length')
 
-      const protocolByte = leb.unsigned.encode(protocol)
       const namespaceNumber = Number(namespaceStr)
       const namespaceByte = leb.unsigned.encode(namespaceNumber)
-      const bytes = uint8arrays.concat([
-        protocolByte,
-        namespaceByte,
-        subAddrBytes
-      ])
+      const payload = uint8arrays.concat([namespaceByte, subAddrBytes])
+      const bytes = uint8arrays.concat([protocolByte, payload])
 
       if (!validateChecksum(bytes, checksumBytes))
         throw Error('Invalid delegated address checksum')
 
-      const payload = uint8arrays.concat([namespaceByte, subAddrBytes])
       return { protocol, payload, bytes, coinType, namespace: namespaceNumber }
     }
 
