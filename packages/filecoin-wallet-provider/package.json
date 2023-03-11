@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-wallet-provider",
-  "version": "2.0.43",
+  "version": "2.0.44",
   "description": "a javascript package to send filecoin to addresses",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -24,7 +24,7 @@
   "dependencies": {
     "@chainsafe/filsnap-types": "^2.1.2",
     "@glif/filecoin-address": "^2.0.43",
-    "@glif/filecoin-message": "^2.0.43",
+    "@glif/filecoin-message": "^2.0.44",
     "@glif/filecoin-number": "^2.0.39",
     "@glif/filecoin-rpc-client": "^2.0.43",
     "@ledgerhq/hw-transport": "^6.27.8",

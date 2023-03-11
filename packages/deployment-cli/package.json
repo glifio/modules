@@ -1,6 +1,6 @@
 {
   "name": "@glif/deployment-cli",
-  "version": "2.0.43",
+  "version": "2.0.44",
   "description": "Handles deployment commands for use in GitHub actions",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

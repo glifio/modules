@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-message",
-  "version": "2.0.43",
+  "version": "2.0.44",
   "description": "The Filecoin message type, used to transfer tokens and make state changes.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
