@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-message-confirmer",
-  "version": "2.0.8",
+  "version": "2.0.43",
   "description": "A service for confirming a Filecoin message.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,7 +20,7 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "@glif/filecoin-rpc-client": "^2.0.8",
+    "@glif/filecoin-rpc-client": "^2.0.43",
     "axios": "^0.27.2"
   },
   "devDependencies": {

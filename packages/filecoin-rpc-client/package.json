@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-rpc-client",
-  "version": "2.0.8",
+  "version": "2.0.43",
   "description": "a convenience library for interacting with the Lotus jsonrpc",
   "main": "./dist/index.js",
   "browser": "./lib/index.js",
