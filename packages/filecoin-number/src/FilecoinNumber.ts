@@ -92,31 +92,23 @@ export class FilecoinNumber extends BigNumber {
     decimals?: number
     coinType?: CoinType
     addUnit?: boolean
-    isWFIL?: boolean
-    isStFIL?: boolean
+    unit?: string
   }): string {
     const truncate = options?.truncate ?? true
     const decimals = options?.decimals ?? 3
     const coinType = options?.coinType ?? CoinType.MAIN
     const addUnit = options?.addUnit ?? true
-    const isWFIL = options?.isWFIL ?? false
-    const isStFIL = options?.isStFIL ?? false
+    const unit = options?.unit
 
     if (decimals < 0) throw new Error('Decimals must be >= 0')
     if (this.isNaN()) throw new Error('Value cannot be NaN')
 
-    const unitPrefix = isWFIL
-      ? 'W'
-      : isStFIL
-      ? 'st'
-      : coinType === CoinType.TEST
-      ? 't'
-      : ''
+    const coinTypePrefix = coinType === CoinType.TEST ? 't' : ''
     const format: BigNumber.Format = {
       decimalSeparator: '.',
       groupSeparator: ' ',
       groupSize: 3,
-      suffix: addUnit ? ` ${unitPrefix}FIL` : ''
+      suffix: addUnit ? (unit ? ` ${unit}` : ` ${coinTypePrefix}FIL`) : ''
     }
 
     // Base value is zero
