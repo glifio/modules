@@ -37,11 +37,12 @@ function toBigNumberValue(
  * @param unit a custom unit to display with formatBalance, defaults to (t)FIL
  */
 export class FilecoinNumber extends BigNumber {
-  public static readonly Zero = new FilecoinNumber(0, 'fil')
-  public readonly unit: string
+  public static readonly Zero = new FilecoinNumber(0, 'fil', CoinType.MAIN)
+  public static readonly TZero = new FilecoinNumber(0, 'fil', CoinType.TEST)
 
   private readonly _ct?: CoinType
   private readonly _unit?: string
+  public readonly unit: string
 
   constructor(
     value: BigNumber.Value,
@@ -66,6 +67,20 @@ export class FilecoinNumber extends BigNumber {
       'toAttoFil' in value &&
       'toPicoFil' in value
     )
+  }
+
+  /**
+   * Return zero fil instance for CoinType
+   */
+  static zero(coinType: CoinType): FilecoinNumber {
+    switch (coinType) {
+      case CoinType.MAIN:
+        return FilecoinNumber.Zero
+      case CoinType.TEST:
+        return FilecoinNumber.TZero
+      default:
+        throw new Error(`Unsupported CoinType: ${coinType}`)
+    }
   }
 
   /**
