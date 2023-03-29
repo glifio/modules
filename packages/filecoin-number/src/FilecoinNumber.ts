@@ -38,15 +38,16 @@ function toBigNumberValue(
  */
 export class FilecoinNumber extends BigNumber {
   public static readonly Zero = new FilecoinNumber(0, 'fil')
-  private readonly unit: string | null
+  public readonly unit: string
 
   constructor(
     value: BigNumber.Value,
     denom: FilecoinDenomination,
+    coinType?: CoinType,
     unit?: string
   ) {
     super(toBigNumberValue(value, denom))
-    this.unit = unit ?? null
+    this.unit = unit ?? `${coinType === CoinType.TEST ? 't' : ''}FIL`
   }
 
   /**
@@ -95,27 +96,27 @@ export class FilecoinNumber extends BigNumber {
 
   /**
    * Expresses this FilecoinNumber as a balance string
+   * @param options.truncate Whether to truncate the address, defaults to `true`
+   * @param options.decimals How many decimals to display, defaults to `3`
+   * @param options.addUnit Whether to display the unit, defaults to `true`
    */
   formatBalance(options?: {
     truncate?: boolean
     decimals?: number
-    coinType?: CoinType
     addUnit?: boolean
   }): string {
     const truncate = options?.truncate ?? true
     const decimals = options?.decimals ?? 3
-    const coinType = options?.coinType ?? CoinType.MAIN
     const addUnit = options?.addUnit ?? true
 
     if (decimals < 0) throw new Error('Decimals must be >= 0')
     if (this.isNaN()) throw new Error('Value cannot be NaN')
 
-    const unitPrefix = coinType === CoinType.TEST ? 't' : ''
     const format: BigNumber.Format = {
       decimalSeparator: '.',
       groupSeparator: ' ',
       groupSize: 3,
-      suffix: addUnit ? (this.unit ? ` ${this.unit}` : ` ${unitPrefix}FIL`) : ''
+      suffix: addUnit ? ` ${this.unit}` : ''
     }
 
     // Base value is zero
