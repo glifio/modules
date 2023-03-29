@@ -34,10 +34,18 @@ function toBigNumberValue(
  * stores Filecoin values in denominations of Fil.
  * @param value The value to store as FIL
  * @param denom The denomination of value (fil, picofil or attofil)
+ * @param unit a custom unit to display with formatBalance, defaults to (t)FIL
  */
 export class FilecoinNumber extends BigNumber {
-  constructor(value: BigNumber.Value, denom: FilecoinDenomination) {
+  private readonly unit: string | null
+
+  constructor(
+    value: BigNumber.Value,
+    denom: FilecoinDenomination,
+    unit?: string
+  ) {
     super(toBigNumberValue(value, denom))
+    this.unit = unit ?? null
   }
 
   /**
@@ -92,23 +100,21 @@ export class FilecoinNumber extends BigNumber {
     decimals?: number
     coinType?: CoinType
     addUnit?: boolean
-    unit?: string
   }): string {
     const truncate = options?.truncate ?? true
     const decimals = options?.decimals ?? 3
     const coinType = options?.coinType ?? CoinType.MAIN
     const addUnit = options?.addUnit ?? true
-    const unit = options?.unit
 
     if (decimals < 0) throw new Error('Decimals must be >= 0')
     if (this.isNaN()) throw new Error('Value cannot be NaN')
 
-    const coinTypePrefix = coinType === CoinType.TEST ? 't' : ''
+    const unitPrefix = coinType === CoinType.TEST ? 't' : ''
     const format: BigNumber.Format = {
       decimalSeparator: '.',
       groupSeparator: ' ',
       groupSize: 3,
-      suffix: addUnit ? (unit ? ` ${unit}` : ` ${coinTypePrefix}FIL`) : ''
+      suffix: addUnit ? (this.unit ? ` ${this.unit}` : ` ${unitPrefix}FIL`) : ''
     }
 
     // Base value is zero
