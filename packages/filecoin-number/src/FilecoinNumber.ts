@@ -37,6 +37,7 @@ function toBigNumberValue(
  * @param unit a custom unit to display with formatBalance, defaults to (t)FIL
  */
 export class FilecoinNumber extends BigNumber {
+  public static readonly Zero = new FilecoinNumber(0, 'fil')
   private readonly unit: string | null
 
   constructor(
