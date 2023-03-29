@@ -40,6 +40,9 @@ export class FilecoinNumber extends BigNumber {
   public static readonly Zero = new FilecoinNumber(0, 'fil')
   public readonly unit: string
 
+  private readonly _ct?: CoinType
+  private readonly _unit?: string
+
   constructor(
     value: BigNumber.Value,
     denom: FilecoinDenomination,
@@ -47,6 +50,8 @@ export class FilecoinNumber extends BigNumber {
     unit?: string
   ) {
     super(toBigNumberValue(value, denom))
+    this._ct = coinType
+    this._unit = unit
     this.unit = unit ?? `${coinType === CoinType.TEST ? 't' : ''}FIL`
   }
 
@@ -164,14 +169,14 @@ export class FilecoinNumber extends BigNumber {
    * Returns a copy of this FilecoinNumber
    */
   clone(): FilecoinNumber {
-    return new FilecoinNumber(this, 'fil')
+    return new FilecoinNumber(this, 'fil', this._ct, this._unit)
   }
 
   /**
    * Returns an absolute value copy of this FilecoinNumber
    */
   abs(): FilecoinNumber {
-    return new FilecoinNumber(super.abs(), 'fil')
+    return new FilecoinNumber(super.abs(), 'fil', this._ct, this._unit)
   }
 
   /**
@@ -185,14 +190,14 @@ export class FilecoinNumber extends BigNumber {
    * Returns a negated copy of this FilecoinNumber (multiplied by -1)
    */
   negated(): FilecoinNumber {
-    return new FilecoinNumber(super.negated(), 'fil')
+    return new FilecoinNumber(super.negated(), 'fil', this._ct, this._unit)
   }
 
   /**
    * Returns a copy of this FilecoinNumber divided by the supplied value n
    */
   div(n: BigNumber.Value): FilecoinNumber {
-    return new FilecoinNumber(super.div(n), 'fil')
+    return new FilecoinNumber(super.div(n), 'fil', this._ct, this._unit)
   }
 
   /**
@@ -206,7 +211,7 @@ export class FilecoinNumber extends BigNumber {
    * Returns a copy of this FilecoinNumber multiplied by the supplied value n
    */
   times(n: BigNumber.Value): FilecoinNumber {
-    return new FilecoinNumber(super.times(n), 'fil')
+    return new FilecoinNumber(super.times(n), 'fil', this._ct, this._unit)
   }
 
   /**
@@ -224,7 +229,7 @@ export class FilecoinNumber extends BigNumber {
     if (!FilecoinNumber.isFilecoinNumber(n))
       // tslint:disable-next-line:no-console
       console.warn('FilecoinNumber.plus(n) should be passed a FilecoinNumber')
-    return new FilecoinNumber(super.plus(n), 'fil')
+    return new FilecoinNumber(super.plus(n), 'fil', this._ct, this._unit)
   }
 
   /**
@@ -235,6 +240,6 @@ export class FilecoinNumber extends BigNumber {
     if (!FilecoinNumber.isFilecoinNumber(n))
       // tslint:disable-next-line:no-console
       console.warn('FilecoinNumber.minus(n) should be passed a FilecoinNumber')
-    return new FilecoinNumber(super.minus(n), 'fil')
+    return new FilecoinNumber(super.minus(n), 'fil', this._ct, this._unit)
   }
 }
