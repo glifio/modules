@@ -37,12 +37,24 @@ function toBigNumberValue(
  * @param unit a custom unit to display with formatBalance, defaults to (t)FIL
  */
 export class FilecoinNumber extends BigNumber {
-  public static readonly Zero = new FilecoinNumber(0, 'fil', CoinType.MAIN)
-  public static readonly TZero = new FilecoinNumber(0, 'fil', CoinType.TEST)
+  // Stores static FilecoinNumber(0, 'fil') instances per CoinType
+  private static zeroCtMap: Record<CoinType, FilecoinNumber> = {
+    [CoinType.MAIN]: new FilecoinNumber(0, 'fil', CoinType.MAIN),
+    [CoinType.TEST]: new FilecoinNumber(0, 'fil', CoinType.TEST)
+  }
 
+  // Stores static FilecoinNumber(0, 'fil') instances per CoinType and unit
+  private static zeroCtUnitMap: Record<
+    CoinType,
+    Record<string, FilecoinNumber>
+  > = {
+    [CoinType.MAIN]: {},
+    [CoinType.TEST]: {}
+  }
+
+  // Constructor params
   private readonly _ct?: CoinType
   private readonly _unit?: string
-  public readonly unit: string
 
   constructor(
     value: BigNumber.Value,
@@ -53,7 +65,6 @@ export class FilecoinNumber extends BigNumber {
     super(toBigNumberValue(value, denom))
     this._ct = coinType
     this._unit = unit
-    this.unit = unit ?? `${coinType === CoinType.TEST ? 't' : ''}FIL`
   }
 
   /**
@@ -70,17 +81,29 @@ export class FilecoinNumber extends BigNumber {
   }
 
   /**
-   * Return zero fil instance for CoinType
+   * Returns a static zero fil instance for the CoinType and unit
    */
-  static zero(coinType: CoinType): FilecoinNumber {
-    switch (coinType) {
-      case CoinType.MAIN:
-        return FilecoinNumber.Zero
-      case CoinType.TEST:
-        return FilecoinNumber.TZero
-      default:
-        throw new Error(`Unsupported CoinType: ${coinType}`)
-    }
+  static zero(coinType?: CoinType, unit?: string): FilecoinNumber {
+    const ct = coinType ?? CoinType.MAIN
+    if (unit === undefined) return this.zeroCtMap[ct]
+    if (this.zeroCtUnitMap[ct][unit] === undefined)
+      this.zeroCtUnitMap[ct][unit] = new FilecoinNumber(0, 'fil', ct, unit)
+    return this.zeroCtUnitMap[ct][unit]
+  }
+
+  /**
+   * Returns the unit derived from constructor params
+   */
+  get unit(): string {
+    return this._unit ?? `${this._ct === CoinType.TEST ? 't' : ''}FIL`
+  }
+
+  /**
+   * Returns the denominator specific unit (omits 't' if adding other prefix)
+   */
+  getDenomUnit(denom: FilecoinDenomination): string {
+    const unitDenom = denom.replace(/fil$/, '')
+    return unitDenom ? `${unitDenom}${this._unit ?? 'FIL'}` : this.unit
   }
 
   /**
