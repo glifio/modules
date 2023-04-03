@@ -228,6 +228,10 @@
           }
         }
       },
+      "BytecodeHash": {
+        "Type": "bytes",
+        "Name": ""
+      },
       "ContractState": {
         "Type": "object",
         "Name": "Cid",
@@ -235,6 +239,24 @@
           "/": {
             "Type": "string",
             "Name": "CidString"
+          }
+        }
+      },
+      "Nonce": {
+        "Type": "number",
+        "Name": "uint64"
+      },
+      "Tombstone": {
+        "Type": "object",
+        "Name": "Tombstone",
+        "Children": {
+          "Origin": {
+            "Type": "number",
+            "Name": "ActorID"
+          },
+          "Nonce": {
+            "Type": "number",
+            "Name": "uint64"
           }
         }
       }
@@ -274,16 +296,6 @@
       "NetworkName": {
         "Type": "string",
         "Name": "string"
-      },
-      "InstalledActors": {
-        "Type": "object",
-        "Name": "Cid",
-        "Children": {
-          "/": {
-            "Type": "string",
-            "Name": "CidString"
-          }
-        }
       }
     },
     "Methods": {
@@ -1105,6 +1117,16 @@
       "TotalClientStorageFee": {
         "Type": "string",
         "Name": "FilecoinNumber"
+      },
+      "PendingDealAllocationIds": {
+        "Type": "object",
+        "Name": "Cid",
+        "Children": {
+          "/": {
+            "Type": "string",
+            "Name": "CidString"
+          }
+        }
       }
     },
     "Methods": {
@@ -2888,7 +2910,7 @@
           }
         }
       },
-      "VerifiedClients": {
+      "RemoveDataCapProposalIDs": {
         "Type": "object",
         "Name": "Cid",
         "Children": {
@@ -2898,7 +2920,21 @@
           }
         }
       },
-      "RemoveDataCapProposalIDs": {
+      "Allocations": {
+        "Type": "object",
+        "Name": "Cid",
+        "Children": {
+          "/": {
+            "Type": "string",
+            "Name": "CidString"
+          }
+        }
+      },
+      "NextAllocationId": {
+        "Type": "number",
+        "Name": "AllocationId"
+      },
+      "Claims": {
         "Type": "object",
         "Name": "Cid",
         "Children": {
