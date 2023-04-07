@@ -37,7 +37,7 @@ function toBigNumberValue(
  * @param unit a custom unit to display with formatBalance, defaults to (t)FIL
  */
 export class FilecoinNumber extends BigNumber {
-  // Static FilecoinNumber(0, 'fil') instances
+  // Static FilecoinNumber(0, 'fil') instances for each CoinType and unit
   private static zeroMap: Record<CoinType, Record<string, FilecoinNumber>> = {
     [CoinType.MAIN]: {},
     [CoinType.TEST]: {}
