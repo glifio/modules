@@ -37,33 +37,24 @@ function toBigNumberValue(
  * @param unit a custom unit to display with formatBalance, defaults to (t)FIL
  */
 export class FilecoinNumber extends BigNumber {
-  // Stores static FilecoinNumber(0, 'fil') instances per CoinType
-  private static zeroCtMap: Record<CoinType, FilecoinNumber> = {
-    [CoinType.MAIN]: new FilecoinNumber(0, 'fil', CoinType.MAIN),
-    [CoinType.TEST]: new FilecoinNumber(0, 'fil', CoinType.TEST)
-  }
-
-  // Stores static FilecoinNumber(0, 'fil') instances per CoinType and unit
-  private static zeroCtUnitMap: Record<
-    CoinType,
-    Record<string, FilecoinNumber>
-  > = {
+  // Static FilecoinNumber(0, 'fil') instances
+  private static zeroMap: Record<CoinType, Record<string, FilecoinNumber>> = {
     [CoinType.MAIN]: {},
     [CoinType.TEST]: {}
   }
 
   // Constructor params
-  private readonly _ct?: CoinType
-  private readonly _unit?: string
+  private readonly _coinType: CoinType
+  private readonly _unit: string
 
   constructor(
     value: BigNumber.Value,
     denom: FilecoinDenomination,
-    coinType?: CoinType,
-    unit?: string
+    coinType = CoinType.MAIN,
+    unit = 'FIL'
   ) {
     super(toBigNumberValue(value, denom))
-    this._ct = coinType
+    this._coinType = coinType
     this._unit = unit
   }
 
@@ -83,19 +74,22 @@ export class FilecoinNumber extends BigNumber {
   /**
    * Returns a static zero fil instance for the CoinType and unit
    */
-  static zero(coinType?: CoinType, unit?: string): FilecoinNumber {
-    const ct = coinType ?? CoinType.MAIN
-    if (unit === undefined) return this.zeroCtMap[ct]
-    if (this.zeroCtUnitMap[ct][unit] === undefined)
-      this.zeroCtUnitMap[ct][unit] = new FilecoinNumber(0, 'fil', ct, unit)
-    return this.zeroCtUnitMap[ct][unit]
+  static zero(coinType = CoinType.MAIN, unit = 'FIL'): FilecoinNumber {
+    if (this.zeroMap[coinType][unit] === undefined)
+      this.zeroMap[coinType][unit] = new FilecoinNumber(
+        0,
+        'fil',
+        coinType,
+        unit
+      )
+    return this.zeroMap[coinType][unit]
   }
 
   /**
    * Returns the unit derived from constructor params
    */
   get unit(): string {
-    return this._unit ?? `${this._ct === CoinType.TEST ? 't' : ''}FIL`
+    return this._unit ?? `${this._coinType === CoinType.TEST ? 't' : ''}FIL`
   }
 
   /**
@@ -207,14 +201,14 @@ export class FilecoinNumber extends BigNumber {
    * Returns a copy of this FilecoinNumber
    */
   clone(): FilecoinNumber {
-    return new FilecoinNumber(this, 'fil', this._ct, this._unit)
+    return new FilecoinNumber(this, 'fil', this._coinType, this._unit)
   }
 
   /**
    * Returns an absolute value copy of this FilecoinNumber
    */
   abs(): FilecoinNumber {
-    return new FilecoinNumber(super.abs(), 'fil', this._ct, this._unit)
+    return new FilecoinNumber(super.abs(), 'fil', this._coinType, this._unit)
   }
 
   /**
@@ -228,14 +222,19 @@ export class FilecoinNumber extends BigNumber {
    * Returns a negated copy of this FilecoinNumber (multiplied by -1)
    */
   negated(): FilecoinNumber {
-    return new FilecoinNumber(super.negated(), 'fil', this._ct, this._unit)
+    return new FilecoinNumber(
+      super.negated(),
+      'fil',
+      this._coinType,
+      this._unit
+    )
   }
 
   /**
    * Returns a copy of this FilecoinNumber divided by the supplied value n
    */
   div(n: BigNumber.Value): FilecoinNumber {
-    return new FilecoinNumber(super.div(n), 'fil', this._ct, this._unit)
+    return new FilecoinNumber(super.div(n), 'fil', this._coinType, this._unit)
   }
 
   /**
@@ -249,7 +248,7 @@ export class FilecoinNumber extends BigNumber {
    * Returns a copy of this FilecoinNumber multiplied by the supplied value n
    */
   times(n: BigNumber.Value): FilecoinNumber {
-    return new FilecoinNumber(super.times(n), 'fil', this._ct, this._unit)
+    return new FilecoinNumber(super.times(n), 'fil', this._coinType, this._unit)
   }
 
   /**
@@ -267,7 +266,7 @@ export class FilecoinNumber extends BigNumber {
     if (!FilecoinNumber.isFilecoinNumber(n))
       // tslint:disable-next-line:no-console
       console.warn('FilecoinNumber.plus(n) should be passed a FilecoinNumber')
-    return new FilecoinNumber(super.plus(n), 'fil', this._ct, this._unit)
+    return new FilecoinNumber(super.plus(n), 'fil', this._coinType, this._unit)
   }
 
   /**
@@ -278,6 +277,6 @@ export class FilecoinNumber extends BigNumber {
     if (!FilecoinNumber.isFilecoinNumber(n))
       // tslint:disable-next-line:no-console
       console.warn('FilecoinNumber.minus(n) should be passed a FilecoinNumber')
-    return new FilecoinNumber(super.minus(n), 'fil', this._ct, this._unit)
+    return new FilecoinNumber(super.minus(n), 'fil', this._coinType, this._unit)
   }
 }
