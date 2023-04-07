@@ -89,7 +89,8 @@ export class FilecoinNumber extends BigNumber {
    * Returns the unit derived from constructor params
    */
   get unit(): string {
-    return this._unit ?? `${this._coinType === CoinType.TEST ? 't' : ''}FIL`
+    const addT = this._coinType === CoinType.TEST && this._unit === 'FIL'
+    return `${addT ? 't' : ''}${this._unit}`
   }
 
   /**
@@ -97,7 +98,7 @@ export class FilecoinNumber extends BigNumber {
    */
   getDenomUnit(denom: FilecoinDenomination): string {
     const unitDenom = denom.replace(/fil$/, '')
-    return unitDenom ? `${unitDenom}${this._unit ?? 'FIL'}` : this.unit
+    return unitDenom ? `${unitDenom}${this._unit}` : this.unit
   }
 
   /**
