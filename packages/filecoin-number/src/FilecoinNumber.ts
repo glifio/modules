@@ -144,6 +144,7 @@ export class FilecoinNumber extends BigNumber {
     addUnit?: boolean
   }): string {
     const truncate = options?.truncate ?? true
+    const round = options?.decimals !== null
     const decimals = options?.decimals ?? 3
     const addUnit = options?.addUnit ?? true
 
