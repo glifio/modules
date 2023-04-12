@@ -159,29 +159,36 @@ export class FilecoinNumber extends BigNumber {
     // Don't round or truncate when value is `0`
     if (this.isZero()) return this.toFormat(format)
 
-    const isNegative = this.isNegative()
-    const dpValue = round
-      ? this.dp(decimals, BigNumber.ROUND_DOWN)
-      : this.clone()
-    const dpUpValue = round
-      ? this.dp(decimals, BigNumber.ROUND_UP)
-      : this.clone()
+    // Round down by default to avoid showing higher balance
+    const { ROUND_DOWN, ROUND_UP } = BigNumber
+    const rounded = round ? this.dp(decimals, ROUND_DOWN) : this.clone()
 
-    // Zero after stripping decimals
-    if (dpValue.isZero())
-      return decimals === 0
-        ? dpValue.toFormat({ ...format, prefix: isNegative ? '< ' : '> ' })
-        : dpUpValue.toFormat({ ...format, prefix: isNegative ? '> ' : '< ' })
+    // If zero after rounding
+    if (rounded.isZero()) {
+      const isNegative = this.isNegative()
+      if (decimals === 0) {
+        // We rounded to 0 decimals, so we show
+        // "< 0" for negative and "> 0" for positive values
+        const prefix = isNegative ? '< ' : '> '
+        return rounded.toFormat({ ...format, prefix })
+      } else {
+        // We rounded to 1+ decimals, so we show
+        // "> -0.01" for negative and "< 0.01" for positive values
+        const prefix = isNegative ? '> ' : '< '
+        const roundedUp = round ? this.dp(decimals, ROUND_UP) : this.clone()
+        return roundedUp.toFormat({ ...format, prefix })
+      }
+    }
 
     // Stripped value is between -1000 and 1000
-    if (dpValue.isGreaterThan(-1000) && dpValue.isLessThan(1000))
-      return dpValue.toFormat(format)
+    if (rounded.isGreaterThan(-1000) && rounded.isLessThan(1000))
+      return rounded.toFormat(format)
 
     // from thousands to trillions
     let power = 0
     const units = ['K', 'M', 'B', 'T']
     for (const unit of units) {
-      const unitVal = dpValue.dividedBy(Math.pow(1000, ++power))
+      const unitVal = rounded.dividedBy(Math.pow(1000, ++power))
       const unitDpVal = unitVal.dp(3, BigNumber.ROUND_DOWN)
       if (
         (unitDpVal.isGreaterThan(-1000) && unitDpVal.isLessThan(1000)) ||
