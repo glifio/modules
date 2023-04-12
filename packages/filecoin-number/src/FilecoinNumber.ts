@@ -189,7 +189,7 @@ export class FilecoinNumber extends BigNumber {
     const units = ['K', 'M', 'B', 'T']
     for (const unit of units) {
       const unitVal = rounded.dividedBy(Math.pow(1000, ++power))
-      const unitDpVal = unitVal.dp(3, BigNumber.ROUND_DOWN)
+      const unitDpVal = unitVal.dp(1, BigNumber.ROUND_DOWN)
       if (
         (unitDpVal.isGreaterThan(-1000) && unitDpVal.isLessThan(1000)) ||
         unit === 'T'
