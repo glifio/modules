@@ -135,18 +135,17 @@ export class FilecoinNumber extends BigNumber {
   /**
    * Expresses this FilecoinNumber as a balance string
    * @param options.truncate Whether to truncate the address with K, M and B units, defaults to `true`
-   * @param options.decimals How many decimals to display, `-1` disables rounding, defaults to `3`
+   * @param options.decimals How many decimals to display, `null` disables rounding, defaults to `3`
    * @param options.addUnit Whether to display the unit, defaults to `true`
    */
   formatBalance(options?: {
     truncate?: boolean
-    decimals?: number
+    decimals?: number | null
     addUnit?: boolean
   }): string {
     const truncate = options?.truncate ?? true
     const decimals = options?.decimals ?? 3
     const addUnit = options?.addUnit ?? true
-    const round = decimals >= 0
 
     // Create format configuration
     const format: BigNumber.Format = {
