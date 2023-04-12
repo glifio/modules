@@ -164,7 +164,7 @@ export class FilecoinNumber extends BigNumber {
     const { ROUND_DOWN, ROUND_UP } = BigNumber
     const rounded = round ? this.dp(decimals, ROUND_DOWN) : this.clone()
 
-    // If zero after rounding
+    // Value is zero after rounding
     if (rounded.isZero()) {
       const isNegative = this.isNegative()
       if (decimals === 0) {
