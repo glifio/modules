@@ -134,64 +134,67 @@ export class FilecoinNumber extends BigNumber {
 
   /**
    * Expresses this FilecoinNumber as a balance string
-   * @param options.truncate Whether to truncate the address, defaults to `true`
-   * @param options.decimals How many decimals to display, defaults to `3`
+   * @param options.truncate Whether to truncate the address with K, M, B and T units, defaults to `true`. Disabled when `options.decimals` is `null`
+   * @param options.decimals How many decimals to display, `null` disables rounding, defaults to `3`
    * @param options.addUnit Whether to display the unit, defaults to `true`
    */
   formatBalance(options?: {
     truncate?: boolean
-    decimals?: number
+    decimals?: number | null
     addUnit?: boolean
   }): string {
     const truncate = options?.truncate ?? true
+    const round = options?.decimals !== null
     const decimals = options?.decimals ?? 3
     const addUnit = options?.addUnit ?? true
 
-    if (decimals < 0) throw new Error('Decimals must be >= 0')
-    if (this.isNaN()) throw new Error('Value cannot be NaN')
-
+    // Create format configuration
     const format: BigNumber.Format = {
       decimalSeparator: '.',
-      groupSeparator: ' ',
+      groupSeparator: ',',
       groupSize: 3,
       suffix: addUnit ? ` ${this.unit}` : ''
     }
 
-    // Base value is zero
-    if (this.isZero()) return this.toFormat(format)
+    // When not rounding, it doesn't make sense to truncate either.
+    // Return the original value when it's zero or when not rounding.
+    if (this.isZero() || !round) return this.toFormat(format)
 
-    const isNegative = this.isNegative()
-    const dpValue = truncate
-      ? this.dp(decimals, BigNumber.ROUND_DOWN)
-      : this.clone()
-    const dpUpValue = truncate
-      ? this.dp(decimals, BigNumber.ROUND_UP)
-      : this.clone()
+    // Round down by default to avoid showing higher balance
+    const rounded = this.dp(decimals, BigNumber.ROUND_DOWN)
 
-    // Zero after stripping decimals
-    if (dpValue.isZero())
-      return decimals === 0
-        ? dpValue.toFormat({ ...format, prefix: isNegative ? '< ' : '> ' })
-        : dpUpValue.toFormat({ ...format, prefix: isNegative ? '> ' : '< ' })
+    // Value is zero after rounding
+    if (rounded.isZero()) {
+      const isNegative = this.isNegative()
+      if (decimals === 0) {
+        // We rounded to 0 decimals, so we show
+        // "< 0" for negative and "> 0" for positive values
+        const prefix = isNegative ? '< ' : '> '
+        return rounded.toFormat({ ...format, prefix })
+      } else {
+        // We rounded to 1+ decimals, so we show
+        // "> -0.01" for negative and "< 0.01" for positive values
+        const prefix = isNegative ? '> ' : '< '
+        const roundedUp = this.dp(decimals, BigNumber.ROUND_UP)
+        return roundedUp.toFormat({ ...format, prefix })
+      }
+    }
 
-    // Stripped value is between -1000 and 1000
-    if (dpValue.isGreaterThan(-1000) && dpValue.isLessThan(1000))
-      return dpValue.toFormat(format)
+    // Return rounded value between -1000 and 1000 or when not truncating
+    const isLt1K = rounded.isGreaterThan(-1000) && rounded.isLessThan(1000)
+    if (isLt1K || !truncate) return rounded.toFormat(format)
 
-    // from thousands to trillions
+    // Truncate values below -1000 or above 1000
     let power = 0
     const units = ['K', 'M', 'B', 'T']
     for (const unit of units) {
-      const unitVal = dpValue.dividedBy(Math.pow(1000, ++power))
-      const unitDpVal = unitVal.dp(3, BigNumber.ROUND_DOWN)
-      if (
-        (unitDpVal.isGreaterThan(-1000) && unitDpVal.isLessThan(1000)) ||
-        unit === 'T'
-      )
-        return unitDpVal.toFormat({
-          ...format,
-          suffix: `${unit}${format.suffix}`
-        })
+      const unitRaw = rounded.dividedBy(Math.pow(1000, ++power))
+      const unitVal = unitRaw.dp(1, BigNumber.ROUND_DOWN)
+      const isLt1K = unitVal.isGreaterThan(-1000) && unitVal.isLessThan(1000)
+      if (isLt1K || unit === 'T') {
+        const suffix = `${unit}${format.suffix}`
+        return unitVal.toFormat({ ...format, suffix })
+      }
     }
 
     // Should never hit here
