@@ -180,20 +180,19 @@ export class FilecoinNumber extends BigNumber {
       }
     }
 
-    // Return rounded value when not truncating or when it's between -1000 and 1000
-    if (!truncate || (rounded.isGreaterThan(-1000) && rounded.isLessThan(1000)))
+    // Return rounded value between -1000 and 1000 or when not truncating
+    const isLt1K = rounded.isGreaterThan(-1000) && rounded.isLessThan(1000)
+    if (isLt1K || !truncate)
       return rounded.toFormat(format)
 
-    // from thousands to trillions
+    // Truncate values below -1000 or above 1000
     let power = 0
     const units = ['K', 'M', 'B', 'T']
     for (const unit of units) {
       const unitVal = rounded.dividedBy(Math.pow(1000, ++power))
       const unitDpVal = unitVal.dp(1, BigNumber.ROUND_DOWN)
-      if (
-        (unitDpVal.isGreaterThan(-1000) && unitDpVal.isLessThan(1000)) ||
-        unit === 'T'
-      )
+      const isLt1K = unitDpVal.isGreaterThan(-1000) && unitDpVal.isLessThan(1000)
+      if (isLt1K || unit === 'T')
         return unitDpVal.toFormat({
           ...format,
           suffix: `${unit}${format.suffix}`
