@@ -181,8 +181,8 @@ export class FilecoinNumber extends BigNumber {
       }
     }
 
-    // Stripped value is between -1000 and 1000
-    if (rounded.isGreaterThan(-1000) && rounded.isLessThan(1000))
+    // Return rounded value when not truncating or when it's between -1000 and 1000
+    if (!truncate || (rounded.isGreaterThan(-1000) && rounded.isLessThan(1000)))
       return rounded.toFormat(format)
 
     // from thousands to trillions
