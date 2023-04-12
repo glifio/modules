@@ -161,8 +161,7 @@ export class FilecoinNumber extends BigNumber {
     if (this.isZero() || !round) return this.toFormat(format)
 
     // Round down by default to avoid showing higher balance
-    const { ROUND_DOWN, ROUND_UP } = BigNumber
-    const rounded = round ? this.dp(decimals, ROUND_DOWN) : this.clone()
+    const rounded = this.dp(decimals, BigNumber.ROUND_DOWN)
 
     // Value is zero after rounding
     if (rounded.isZero()) {
@@ -176,7 +175,7 @@ export class FilecoinNumber extends BigNumber {
         // We rounded to 1+ decimals, so we show
         // "> -0.01" for negative and "< 0.01" for positive values
         const prefix = isNegative ? '> ' : '< '
-        const roundedUp = round ? this.dp(decimals, ROUND_UP) : this.clone()
+        const roundedUp = this.dp(decimals, BigNumber.ROUND_UP)
         return roundedUp.toFormat({ ...format, prefix })
       }
     }
