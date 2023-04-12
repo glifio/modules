@@ -155,7 +155,7 @@ export class FilecoinNumber extends BigNumber {
       suffix: addUnit ? ` ${this.unit}` : ''
     }
 
-    // Base value is zero
+    // Don't round or truncate when value is `0`
     if (this.isZero()) return this.toFormat(format)
 
     const isNegative = this.isNegative()
