@@ -134,7 +134,7 @@ export class FilecoinNumber extends BigNumber {
 
   /**
    * Expresses this FilecoinNumber as a balance string
-   * @param options.truncate Whether to truncate the address, defaults to `true`
+   * @param options.truncate Whether to truncate the address with K, M and B units, defaults to `true`
    * @param options.decimals How many decimals to display, `-1` disables rounding, defaults to `3`
    * @param options.addUnit Whether to display the unit, defaults to `true`
    */
