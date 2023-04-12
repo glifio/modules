@@ -135,7 +135,7 @@ export class FilecoinNumber extends BigNumber {
   /**
    * Expresses this FilecoinNumber as a balance string
    * @param options.truncate Whether to truncate the address, defaults to `true`
-   * @param options.decimals How many decimals to display, defaults to `3`
+   * @param options.decimals How many decimals to display, `-1` disables rounding, defaults to `3`
    * @param options.addUnit Whether to display the unit, defaults to `true`
    */
   formatBalance(options?: {
@@ -146,9 +146,6 @@ export class FilecoinNumber extends BigNumber {
     const truncate = options?.truncate ?? true
     const decimals = options?.decimals ?? 3
     const addUnit = options?.addUnit ?? true
-
-    // Prevent invalid decimal amounts
-    if (decimals < 0) throw new Error('Decimals must be >= 0')
 
     // Create format configuration
     const format: BigNumber.Format = {
@@ -162,10 +159,10 @@ export class FilecoinNumber extends BigNumber {
     if (this.isZero()) return this.toFormat(format)
 
     const isNegative = this.isNegative()
-    const dpValue = truncate
+    const dpValue = decimals >= 0
       ? this.dp(decimals, BigNumber.ROUND_DOWN)
       : this.clone()
-    const dpUpValue = truncate
+    const dpUpValue = decimals >= 0
       ? this.dp(decimals, BigNumber.ROUND_UP)
       : this.clone()
 
