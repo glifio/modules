@@ -151,7 +151,7 @@ export class FilecoinNumber extends BigNumber {
     // Create format configuration
     const format: BigNumber.Format = {
       decimalSeparator: '.',
-      groupSeparator: ' ',
+      groupSeparator: ',',
       groupSize: 3,
       suffix: addUnit ? ` ${this.unit}` : ''
     }
