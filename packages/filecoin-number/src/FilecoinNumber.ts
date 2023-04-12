@@ -150,6 +150,7 @@ export class FilecoinNumber extends BigNumber {
     // Prevent invalid decimal amounts
     if (decimals < 0) throw new Error('Decimals must be >= 0')
 
+    // Create format configuration
     const format: BigNumber.Format = {
       decimalSeparator: '.',
       groupSeparator: ' ',
