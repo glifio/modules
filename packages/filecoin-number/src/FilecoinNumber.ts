@@ -146,6 +146,7 @@ export class FilecoinNumber extends BigNumber {
     const truncate = options?.truncate ?? true
     const decimals = options?.decimals ?? 3
     const addUnit = options?.addUnit ?? true
+    const round = decimals >= 0
 
     // Create format configuration
     const format: BigNumber.Format = {
@@ -159,10 +160,10 @@ export class FilecoinNumber extends BigNumber {
     if (this.isZero()) return this.toFormat(format)
 
     const isNegative = this.isNegative()
-    const dpValue = decimals >= 0
+    const dpValue = round
       ? this.dp(decimals, BigNumber.ROUND_DOWN)
       : this.clone()
-    const dpUpValue = decimals >= 0
+    const dpUpValue = round
       ? this.dp(decimals, BigNumber.ROUND_UP)
       : this.clone()
 
