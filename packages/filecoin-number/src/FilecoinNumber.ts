@@ -147,8 +147,8 @@ export class FilecoinNumber extends BigNumber {
     const decimals = options?.decimals ?? 3
     const addUnit = options?.addUnit ?? true
 
+    // Prevent invalid decimal amounts
     if (decimals < 0) throw new Error('Decimals must be >= 0')
-    if (this.isNaN()) throw new Error('Value cannot be NaN')
 
     const format: BigNumber.Format = {
       decimalSeparator: '.',
