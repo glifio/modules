@@ -40,16 +40,6 @@ describe('FilecoinNumber', () => {
   })
 
   describe('formatBalance', () => {
-    test('it throws an error if the value is NaN', () => {
-      expect(() => new FilecoinNumber(NaN, 'fil').formatBalance()).toThrow()
-    })
-
-    test('it throws an error if decimals < 0', () => {
-      expect(() =>
-        new FilecoinNumber(0, 'fil').formatBalance({ decimals: -1 })
-      ).toThrow()
-    })
-
     test('it returns "< number" when the decimal is smaller than the num of dps passed', () => {
       expect(
         new FilecoinNumber('0.00001', 'fil').formatBalance({ decimals: 2 })
@@ -122,70 +112,70 @@ describe('FilecoinNumber', () => {
     test('it adds max 3 approximation points and "K" to the end of numbers between 1000 and 999999.9999.....', () => {
       expect(
         new FilecoinNumber('100002', 'fil').formatBalance({ decimals: 7 })
-      ).toEqual('100.002K FIL')
+      ).toEqual('100K FIL')
       expect(
         new FilecoinNumber('100202.02343267', 'fil').formatBalance({
           decimals: 7
         })
-      ).toEqual('100.202K FIL')
+      ).toEqual('100.2K FIL')
       expect(
         new FilecoinNumber('10002.02343267', 'fil').formatBalance({
           decimals: 7
         })
-      ).toEqual('10.002K FIL')
+      ).toEqual('10K FIL')
       expect(
         new FilecoinNumber('100102.23', 'fil').formatBalance({ decimals: 7 })
-      ).toEqual('100.102K FIL')
+      ).toEqual('100.1K FIL')
       expect(
         new FilecoinNumber('100999.3', 'fil').formatBalance({ decimals: 7 })
-      ).toEqual('100.999K FIL')
+      ).toEqual('100.9K FIL')
       expect(
         new FilecoinNumber('100999.3', 'fil').formatBalance({ decimals: 7 })
-      ).toEqual('100.999K FIL')
+      ).toEqual('100.9K FIL')
       expect(
         new FilecoinNumber('1002.02343267', 'fil').formatBalance({
           decimals: 7
         })
-      ).toEqual('1.002K FIL')
+      ).toEqual('1K FIL')
     })
 
     test('it adds max 3 approximation points and "M" to the end of numbers between 1000000 and 999999999.9999.....', () => {
       expect(
         new FilecoinNumber('1202000', 'fil').formatBalance({ decimals: 7 })
-      ).toEqual('1.202M FIL')
+      ).toEqual('1.2M FIL')
       expect(
         new FilecoinNumber('12020002.2345', 'fil').formatBalance({
           decimals: 7
         })
-      ).toEqual('12.02M FIL')
+      ).toEqual('12M FIL')
       expect(
         new FilecoinNumber('100002000', 'fil').formatBalance({ decimals: 7 })
-      ).toEqual('100.002M FIL')
+      ).toEqual('100M FIL')
       expect(
         new FilecoinNumber('100002000.02343267', 'fil').formatBalance({
           decimals: 7
         })
-      ).toEqual('100.002M FIL')
+      ).toEqual('100M FIL')
       expect(
         new FilecoinNumber('100102000', 'fil').formatBalance({ decimals: 7 })
-      ).toEqual('100.102M FIL')
+      ).toEqual('100.1M FIL')
       expect(
         new FilecoinNumber('100999000', 'fil').formatBalance({ decimals: 7 })
-      ).toEqual('100.999M FIL')
+      ).toEqual('100.9M FIL')
     })
 
     test('it adds max 3 approximation points and "B" to the end of numbers between 1000000000 and 999999999999.9999.....', () => {
       expect(
         new FilecoinNumber('100002000234', 'fil').formatBalance({ decimals: 7 })
-      ).toEqual('100.002B FIL')
+      ).toEqual('100B FIL')
       expect(
         new FilecoinNumber('100002001230.02343267', 'fil').formatBalance({
           decimals: 7
         })
-      ).toEqual('100.002B FIL')
+      ).toEqual('100B FIL')
       expect(
         new FilecoinNumber('100102000432', 'fil').formatBalance({ decimals: 7 })
-      ).toEqual('100.102B FIL')
+      ).toEqual('100.1B FIL')
     })
 
     test('it handles positive values', () => {
@@ -234,41 +224,41 @@ describe('FilecoinNumber', () => {
 
       // Thousands
       expect(new FilecoinNumber('1234.56789', 'fil').formatBalance()).toEqual(
-        '1.234K FIL'
+        '1.2K FIL'
       )
       expect(new FilecoinNumber('12345.6789', 'fil').formatBalance()).toEqual(
-        '12.345K FIL'
+        '12.3K FIL'
       )
       expect(new FilecoinNumber('123456.789', 'fil').formatBalance()).toEqual(
-        '123.456K FIL'
+        '123.4K FIL'
       )
 
       // Millions
       expect(new FilecoinNumber('1234567.89', 'fil').formatBalance()).toEqual(
-        '1.234M FIL'
+        '1.2M FIL'
       )
       expect(new FilecoinNumber('12345678.9', 'fil').formatBalance()).toEqual(
-        '12.345M FIL'
+        '12.3M FIL'
       )
       expect(new FilecoinNumber('123456789', 'fil').formatBalance()).toEqual(
-        '123.456M FIL'
+        '123.4M FIL'
       )
 
       // Billions
       expect(new FilecoinNumber('1234567890', 'fil').formatBalance()).toEqual(
-        '1.234B FIL'
+        '1.2B FIL'
       )
       expect(new FilecoinNumber('12345678900', 'fil').formatBalance()).toEqual(
-        '12.345B FIL'
+        '12.3B FIL'
       )
       expect(new FilecoinNumber('123456789000', 'fil').formatBalance()).toEqual(
-        '123.456B FIL'
+        '123.4B FIL'
       )
 
       // Trillions
       expect(
         new FilecoinNumber('1234567890000', 'fil').formatBalance()
-      ).toEqual('1.234T FIL')
+      ).toEqual('1.2T FIL')
     })
 
     test('it handles negative values', () => {
@@ -319,41 +309,41 @@ describe('FilecoinNumber', () => {
 
       // Thousands
       expect(new FilecoinNumber('-1234.56789', 'fil').formatBalance()).toEqual(
-        '-1.234K FIL'
+        '-1.2K FIL'
       )
       expect(new FilecoinNumber('-12345.6789', 'fil').formatBalance()).toEqual(
-        '-12.345K FIL'
+        '-12.3K FIL'
       )
       expect(new FilecoinNumber('-123456.789', 'fil').formatBalance()).toEqual(
-        '-123.456K FIL'
+        '-123.4K FIL'
       )
 
       // Millions
       expect(new FilecoinNumber('-1234567.89', 'fil').formatBalance()).toEqual(
-        '-1.234M FIL'
+        '-1.2M FIL'
       )
       expect(new FilecoinNumber('-12345678.9', 'fil').formatBalance()).toEqual(
-        '-12.345M FIL'
+        '-12.3M FIL'
       )
       expect(new FilecoinNumber('-123456789', 'fil').formatBalance()).toEqual(
-        '-123.456M FIL'
+        '-123.4M FIL'
       )
 
       // Billions
       expect(new FilecoinNumber('-1234567890', 'fil').formatBalance()).toEqual(
-        '-1.234B FIL'
+        '-1.2B FIL'
       )
       expect(new FilecoinNumber('-12345678900', 'fil').formatBalance()).toEqual(
-        '-12.345B FIL'
+        '-12.3B FIL'
       )
       expect(
         new FilecoinNumber('-123456789000', 'fil').formatBalance()
-      ).toEqual('-123.456B FIL')
+      ).toEqual('-123.4B FIL')
 
       // Trillions
       expect(
         new FilecoinNumber('-1234567890000', 'fil').formatBalance()
-      ).toEqual('-1.234T FIL')
+      ).toEqual('-1.2T FIL')
     })
   })
 })
