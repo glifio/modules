@@ -156,8 +156,9 @@ export class FilecoinNumber extends BigNumber {
       suffix: addUnit ? ` ${this.unit}` : ''
     }
 
-    // Don't round or truncate when value is `0`
-    if (this.isZero()) return this.toFormat(format)
+    // When not rounding, it doesn't make sense to truncate either.
+    // Return the original value when it's zero or when not rounding.
+    if (this.isZero() || !round) return this.toFormat(format)
 
     // Round down by default to avoid showing higher balance
     const { ROUND_DOWN, ROUND_UP } = BigNumber
