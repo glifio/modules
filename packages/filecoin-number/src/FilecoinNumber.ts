@@ -182,21 +182,19 @@ export class FilecoinNumber extends BigNumber {
 
     // Return rounded value between -1000 and 1000 or when not truncating
     const isLt1K = rounded.isGreaterThan(-1000) && rounded.isLessThan(1000)
-    if (isLt1K || !truncate)
-      return rounded.toFormat(format)
+    if (isLt1K || !truncate) return rounded.toFormat(format)
 
     // Truncate values below -1000 or above 1000
     let power = 0
     const units = ['K', 'M', 'B', 'T']
     for (const unit of units) {
-      const unitVal = rounded.dividedBy(Math.pow(1000, ++power))
-      const unitDpVal = unitVal.dp(1, BigNumber.ROUND_DOWN)
-      const isLt1K = unitDpVal.isGreaterThan(-1000) && unitDpVal.isLessThan(1000)
-      if (isLt1K || unit === 'T')
-        return unitDpVal.toFormat({
-          ...format,
-          suffix: `${unit}${format.suffix}`
-        })
+      const unitRaw = rounded.dividedBy(Math.pow(1000, ++power))
+      const unitVal = unitRaw.dp(1, BigNumber.ROUND_DOWN)
+      const isLt1K = unitVal.isGreaterThan(-1000) && unitVal.isLessThan(1000)
+      if (isLt1K || unit === 'T') {
+        const suffix = `${unit}${format.suffix}`
+        return unitVal.toFormat({ ...format, suffix })
+      }
     }
 
     // Should never hit here
