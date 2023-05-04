@@ -62,7 +62,7 @@ export class FilecoinNumber extends BigNumber {
    * A static method that checks whether the
    * supplied value is an instance of FilecoinNumber
    */
-  static isFilecoinNumber(value: any): boolean {
+  static isFilecoinNumber(value: any): value is FilecoinNumber {
     return (
       BigNumber.isBigNumber(value) &&
       'toFil' in value &&
