@@ -387,15 +387,15 @@ export function delegatedFromEthAddress(
  * ethAddressFromDelegated derives the ethereum address from an f410 address
  */
 
-export function ethAddressFromDelegated(delegated: string): string {
-  return utils.getAddress(`0x${decode(delegated).subAddrHex}`)
+export function ethAddressFromDelegated(delegated: string): `0x${string}` {
+  return utils.getAddress(`0x${decode(delegated).subAddrHex}`) as `0x${string}`
 }
 
 /**
  * ethAddressFromID derives the ethereum address from an f0 address
  */
 
-export function ethAddressFromID(idAddress: string): string {
+export function ethAddressFromID(idAddress: string): `0x${string}` {
   const address = decode(idAddress)
   const id = idFromAddress(address)
   const buffer = new ArrayBuffer(ethAddressLength)
