@@ -150,17 +150,25 @@ export class FilecoinNumber extends BigNumber {
    * Expresses this FilecoinNumber as a balance string
    * @param options.truncate Whether to truncate the address with K, M, B and T units, defaults to `true`. Disabled when `options.decimals` is `null`
    * @param options.decimals How many decimals to display, `null` disables rounding, defaults to `3`
+   * @param options.padZeros Whether add trailing zeros to the end of the string, defaults to `false`
    * @param options.addUnit Whether to display the unit, defaults to `true`
    */
   formatBalance(options?: {
     truncate?: boolean
     decimals?: number | null
+    padZeros?: boolean
     addUnit?: boolean
   }): string {
     const truncate = options?.truncate ?? true
     const round = options?.decimals !== null
     const decimals = options?.decimals ?? 3
+    const padZeros = options?.padZeros ?? false
     const addUnit = options?.addUnit ?? true
+
+    const toFormat = (value: BigNumber, format: BigNumber.Format): string =>
+      padZeros
+        ? value.toFormat(decimals, BigNumber.ROUND_DOWN, format)
+        : value.toFormat(format)
 
     // Create format configuration
     const format: BigNumber.Format = {
@@ -172,7 +180,7 @@ export class FilecoinNumber extends BigNumber {
 
     // When not rounding, it doesn't make sense to truncate either.
     // Return the original value when it's zero or when not rounding.
-    if (this.isZero() || !round) return this.toFormat(format)
+    if (this.isZero() || !round) return toFormat(this, format)
 
     // Round down by default to avoid showing higher balance
     const rounded = this.dp(decimals, BigNumber.ROUND_DOWN)
@@ -184,19 +192,19 @@ export class FilecoinNumber extends BigNumber {
         // We rounded to 0 decimals, so we show
         // "< 0" for negative and "> 0" for positive values
         const prefix = isNegative ? '< ' : '> '
-        return rounded.toFormat({ ...format, prefix })
+        return toFormat(rounded, { ...format, prefix })
       } else {
         // We rounded to 1+ decimals, so we show
         // "> -0.01" for negative and "< 0.01" for positive values
         const prefix = isNegative ? '> ' : '< '
         const roundedUp = this.dp(decimals, BigNumber.ROUND_UP)
-        return roundedUp.toFormat({ ...format, prefix })
+        return toFormat(roundedUp, { ...format, prefix })
       }
     }
 
     // Return rounded value between -1000 and 1000 or when not truncating
     const isLt1K = rounded.isGreaterThan(-1000) && rounded.isLessThan(1000)
-    if (isLt1K || !truncate) return rounded.toFormat(format)
+    if (isLt1K || !truncate) return toFormat(rounded, format)
 
     // Truncate values below -1000 or above 1000
     let power = 0
@@ -207,7 +215,7 @@ export class FilecoinNumber extends BigNumber {
       const isLt1K = unitVal.isGreaterThan(-1000) && unitVal.isLessThan(1000)
       if (isLt1K || unit === 'T') {
         const suffix = `${unit}${format.suffix}`
-        return unitVal.toFormat({ ...format, suffix })
+        return toFormat(unitVal, { ...format, suffix })
       }
     }
 
