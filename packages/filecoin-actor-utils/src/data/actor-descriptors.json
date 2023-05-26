@@ -128,11 +128,450 @@
       }
     }
   },
+  "datacap": {
+    "State": {
+      "Governor": {
+        "Type": "string",
+        "Name": "Address"
+      },
+      "Token": {
+        "Type": "object",
+        "Name": "TokenState",
+        "Children": {
+          "Supply": {
+            "Type": "string",
+            "Name": "FilecoinNumber"
+          },
+          "Balances": {
+            "Type": "object",
+            "Name": "Cid",
+            "Children": {
+              "/": {
+                "Type": "string",
+                "Name": "CidString"
+              }
+            }
+          },
+          "Allowances": {
+            "Type": "object",
+            "Name": "Cid",
+            "Children": {
+              "/": {
+                "Type": "string",
+                "Name": "CidString"
+              }
+            }
+          },
+          "HamtBitWidth": {
+            "Type": "number",
+            "Name": "uint64"
+          }
+        }
+      }
+    },
+    "Methods": {
+      "0": {
+        "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        }
+      },
+      "1": {
+        "Name": "Constructor",
+        "Param": {
+          "Type": "string",
+          "Name": "Address"
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        }
+      },
+      "114981429": {
+        "Name": "TotalSupply",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        },
+        "Return": {
+          "Type": "string",
+          "Name": "FilecoinNumber"
+        }
+      },
+      "116935346": {
+        "Name": "Mint",
+        "Param": {
+          "Type": "object",
+          "Name": "MintParams",
+          "Children": {
+            "To": {
+              "Type": "string",
+              "Name": "Address"
+            },
+            "Amount": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            },
+            "Operators": {
+              "Type": "array",
+              "Name": "",
+              "Contains": {
+                "Type": "string",
+                "Name": "Address"
+              }
+            }
+          }
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "MintReturn",
+          "Children": {
+            "Balance": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            },
+            "Supply": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            },
+            "RecipientData": {
+              "Type": "bytes",
+              "Name": ""
+            }
+          }
+        }
+      },
+      "1434719642": {
+        "Name": "Burn",
+        "Param": {
+          "Type": "object",
+          "Name": "BurnParams",
+          "Children": {
+            "Amount": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            }
+          }
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "BurnReturn",
+          "Children": {
+            "Balance": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            }
+          }
+        }
+      },
+      "1529376545": {
+        "Name": "DecreaseAllowance",
+        "Param": {
+          "Type": "object",
+          "Name": "DecreaseAllowanceParams",
+          "Children": {
+            "Operator": {
+              "Type": "string",
+              "Name": "Address"
+            },
+            "Decrease": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            }
+          }
+        },
+        "Return": {
+          "Type": "string",
+          "Name": "FilecoinNumber"
+        }
+      },
+      "1777121560": {
+        "Name": "IncreaseAllowance",
+        "Param": {
+          "Type": "object",
+          "Name": "IncreaseAllowanceParams",
+          "Children": {
+            "Operator": {
+              "Type": "string",
+              "Name": "Address"
+            },
+            "Increase": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            }
+          }
+        },
+        "Return": {
+          "Type": "string",
+          "Name": "FilecoinNumber"
+        }
+      },
+      "2061153854": {
+        "Name": "Symbol",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        },
+        "Return": {
+          "Type": "string",
+          "Name": "CborString"
+        }
+      },
+      "2624896501": {
+        "Name": "Destroy",
+        "Param": {
+          "Type": "object",
+          "Name": "DestroyParams",
+          "Children": {
+            "Owner": {
+              "Type": "string",
+              "Name": "Address"
+            },
+            "Amount": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            }
+          }
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "BurnReturn",
+          "Children": {
+            "Balance": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            }
+          }
+        }
+      },
+      "2765635761": {
+        "Name": "RevokeAllowance",
+        "Param": {
+          "Type": "object",
+          "Name": "RevokeAllowanceParams",
+          "Children": {
+            "Operator": {
+              "Type": "string",
+              "Name": "Address"
+            }
+          }
+        },
+        "Return": {
+          "Type": "string",
+          "Name": "FilecoinNumber"
+        }
+      },
+      "2979674018": {
+        "Name": "BurnFrom",
+        "Param": {
+          "Type": "object",
+          "Name": "BurnFromParams",
+          "Children": {
+            "Owner": {
+              "Type": "string",
+              "Name": "Address"
+            },
+            "Amount": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            }
+          }
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "BurnFromReturn",
+          "Children": {
+            "Balance": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            },
+            "Allowance": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            }
+          }
+        }
+      },
+      "3261979605": {
+        "Name": "Balance",
+        "Param": {
+          "Type": "string",
+          "Name": "Address"
+        },
+        "Return": {
+          "Type": "string",
+          "Name": "FilecoinNumber"
+        }
+      },
+      "3621052141": {
+        "Name": "TransferFrom",
+        "Param": {
+          "Type": "object",
+          "Name": "TransferFromParams",
+          "Children": {
+            "From": {
+              "Type": "string",
+              "Name": "Address"
+            },
+            "To": {
+              "Type": "string",
+              "Name": "Address"
+            },
+            "Amount": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            },
+            "OperatorData": {
+              "Type": "bytes",
+              "Name": ""
+            }
+          }
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "TransferFromReturn",
+          "Children": {
+            "FromBalance": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            },
+            "ToBalance": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            },
+            "Allowance": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            },
+            "RecipientData": {
+              "Type": "bytes",
+              "Name": ""
+            }
+          }
+        }
+      },
+      "3936767397": {
+        "Name": "Granularity",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        },
+        "Return": {
+          "Type": "number",
+          "Name": "CborInt"
+        }
+      },
+      "4205072950": {
+        "Name": "Allowance",
+        "Param": {
+          "Type": "object",
+          "Name": "GetAllowanceParams",
+          "Children": {
+            "Owner": {
+              "Type": "string",
+              "Name": "Address"
+            },
+            "Operator": {
+              "Type": "string",
+              "Name": "Address"
+            }
+          }
+        },
+        "Return": {
+          "Type": "string",
+          "Name": "FilecoinNumber"
+        }
+      },
+      "48890204": {
+        "Name": "Name",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        },
+        "Return": {
+          "Type": "string",
+          "Name": "CborString"
+        }
+      },
+      "80475954": {
+        "Name": "Transfer",
+        "Param": {
+          "Type": "object",
+          "Name": "TransferFromParams",
+          "Children": {
+            "From": {
+              "Type": "string",
+              "Name": "Address"
+            },
+            "To": {
+              "Type": "string",
+              "Name": "Address"
+            },
+            "Amount": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            },
+            "OperatorData": {
+              "Type": "bytes",
+              "Name": ""
+            }
+          }
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "TransferFromReturn",
+          "Children": {
+            "FromBalance": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            },
+            "ToBalance": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            },
+            "Allowance": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            },
+            "RecipientData": {
+              "Type": "bytes",
+              "Name": ""
+            }
+          }
+        }
+      }
+    }
+  },
   "eam": {
     "State": null,
     "Methods": {
       "0": {
         "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        }
+      },
+      "1": {
+        "Name": "Constructor",
         "Param": {
           "Type": "object",
           "Name": "EmptyValue",
@@ -213,6 +652,62 @@
             }
           }
         }
+      },
+      "4": {
+        "Name": "CreateExternal",
+        "Param": {
+          "Type": "bytes",
+          "Name": "CborBytes"
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "CreateExternalReturn",
+          "Children": {
+            "ActorID": {
+              "Type": "number",
+              "Name": "uint64"
+            },
+            "RobustAddress": {
+              "Type": "string",
+              "Name": "Address"
+            },
+            "EthAddress": {
+              "Type": "bytes",
+              "Name": ""
+            }
+          }
+        }
+      }
+    }
+  },
+  "ethaccount": {
+    "State": null,
+    "Methods": {
+      "0": {
+        "Name": "Send",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        }
+      },
+      "1": {
+        "Name": "Constructor",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        }
       }
     }
   },
@@ -273,6 +768,149 @@
           "Type": "object",
           "Name": "EmptyValue",
           "Children": {}
+        }
+      },
+      "1": {
+        "Name": "Constructor",
+        "Param": {
+          "Type": "object",
+          "Name": "ConstructorParams",
+          "Children": {
+            "Creator": {
+              "Type": "bytes",
+              "Name": ""
+            },
+            "Initcode": {
+              "Type": "bytes",
+              "Name": ""
+            }
+          }
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        }
+      },
+      "2": {
+        "Name": "Resurrect",
+        "Param": {
+          "Type": "object",
+          "Name": "ConstructorParams",
+          "Children": {
+            "Creator": {
+              "Type": "bytes",
+              "Name": ""
+            },
+            "Initcode": {
+              "Type": "bytes",
+              "Name": ""
+            }
+          }
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        }
+      },
+      "3": {
+        "Name": "GetBytecode",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        },
+        "Return": {
+          "Type": "object",
+          "Name": "GetBytecodeReturn",
+          "Children": {
+            "Cid": {
+              "Type": "object",
+              "Name": "Cid",
+              "Children": {
+                "/": {
+                  "Type": "string",
+                  "Name": "CidString"
+                }
+              }
+            }
+          }
+        }
+      },
+      "3844450837": {
+        "Name": "InvokeEVM",
+        "Param": {
+          "Type": "bytes",
+          "Name": "CborBytes"
+        },
+        "Return": {
+          "Type": "bytes",
+          "Name": "CborBytes"
+        }
+      },
+      "4": {
+        "Name": "GetBytecodeHash",
+        "Param": {
+          "Type": "object",
+          "Name": "EmptyValue",
+          "Children": {}
+        },
+        "Return": {
+          "Type": "bytes",
+          "Name": "CborBytes"
+        }
+      },
+      "5": {
+        "Name": "GetStorageAt",
+        "Param": {
+          "Type": "object",
+          "Name": "GetStorageAtParams",
+          "Children": {
+            "StorageKey": {
+              "Type": "bytes",
+              "Name": ""
+            }
+          }
+        },
+        "Return": {
+          "Type": "bytes",
+          "Name": "CborBytes"
+        }
+      },
+      "6": {
+        "Name": "InvokeContractDelegate",
+        "Param": {
+          "Type": "object",
+          "Name": "DelegateCallParams",
+          "Children": {
+            "Code": {
+              "Type": "object",
+              "Name": "Cid",
+              "Children": {
+                "/": {
+                  "Type": "string",
+                  "Name": "CidString"
+                }
+              }
+            },
+            "Input": {
+              "Type": "bytes",
+              "Name": ""
+            },
+            "Caller": {
+              "Type": "bytes",
+              "Name": ""
+            },
+            "Value": {
+              "Type": "string",
+              "Name": "FilecoinNumber"
+            }
+          }
+        },
+        "Return": {
+          "Type": "bytes",
+          "Name": "CborBytes"
         }
       }
     }
