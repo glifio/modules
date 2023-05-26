@@ -101,6 +101,13 @@ export class FilecoinNumber extends BigNumber {
   }
 
   /**
+   * Checks whether the unit is the default unit
+   */
+  get isDefaultUnit(): boolean {
+    return this._unit === FilecoinNumber.DefaultUnit
+  }
+
+  /**
    * Returns the denominator specific unit (omits 't' if adding other prefix)
    */
   getDenomUnit(denom: FilecoinDenomination): string {
