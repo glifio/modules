@@ -37,6 +37,8 @@ function toBigNumberValue(
  * @param unit a custom unit to display with formatBalance, defaults to (t)FIL
  */
 export class FilecoinNumber extends BigNumber {
+  public static readonly DefaultUnit: string = 'FIL'
+
   // Static FilecoinNumber(0, 'fil') instances for each CoinType and unit
   private static zeroMap: Record<CoinType, Record<string, FilecoinNumber>> = {
     [CoinType.MAIN]: {},
@@ -51,7 +53,7 @@ export class FilecoinNumber extends BigNumber {
     value: BigNumber.Value,
     denom: FilecoinDenomination,
     coinType = CoinType.MAIN,
-    unit = 'FIL'
+    unit = FilecoinNumber.DefaultUnit
   ) {
     super(toBigNumberValue(value, denom))
     this._coinType = coinType
@@ -74,7 +76,10 @@ export class FilecoinNumber extends BigNumber {
   /**
    * Returns a static zero fil instance for the CoinType and unit
    */
-  static zero(coinType = CoinType.MAIN, unit = 'FIL'): FilecoinNumber {
+  static zero(
+    coinType = CoinType.MAIN,
+    unit = FilecoinNumber.DefaultUnit
+  ): FilecoinNumber {
     if (this.zeroMap[coinType][unit] === undefined)
       this.zeroMap[coinType][unit] = new FilecoinNumber(
         0,
@@ -89,7 +94,9 @@ export class FilecoinNumber extends BigNumber {
    * Returns the unit derived from constructor params
    */
   get unit(): string {
-    const addT = this._coinType === CoinType.TEST && this._unit === 'FIL'
+    const addT =
+      this._coinType === CoinType.TEST &&
+      this._unit === FilecoinNumber.DefaultUnit
     return `${addT ? 't' : ''}${this._unit}`
   }
 
