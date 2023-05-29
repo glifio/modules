@@ -11,6 +11,13 @@ export enum CoinType {
   TEST = 't'
 }
 
+export interface FilecoinFormatOptions {
+  truncate?: boolean
+  decimals?: number | null
+  padZeros?: boolean
+  addUnit?: boolean
+}
+
 function toBigNumberValue(
   value: BigNumber.Value,
   denom: FilecoinDenomination
@@ -153,12 +160,7 @@ export class FilecoinNumber extends BigNumber {
    * @param options.padZeros Whether add trailing zeros to the end of the string, defaults to `false`
    * @param options.addUnit Whether to display the unit, defaults to `true`
    */
-  formatBalance(options?: {
-    truncate?: boolean
-    decimals?: number | null
-    padZeros?: boolean
-    addUnit?: boolean
-  }): string {
+  formatBalance(options?: FilecoinFormatOptions): string {
     const truncate = options?.truncate ?? true
     const round = options?.decimals !== null
     const decimals = options?.decimals ?? 3
