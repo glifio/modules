@@ -304,81 +304,81 @@ export class FilecoinNumber extends BigNumber {
 
   /**
    * Returns `true` if the value of this BigNumber is equal to the value of `n`, otherwise returns `false`.
-   * @param n Must be a FilecoinNumber to prevent denomination errors
+   * @param n Must be a FilecoinNumber or 0 to prevent denomination errors
    */
-  eq(n: FilecoinNumber): boolean {
+  eq(n: FilecoinNumber | 0): boolean {
     return super.eq(n)
   }
 
   /**
    * Returns `true` if the value of this BigNumber is greater than the value of `n`, otherwise returns `false`.
-   * @param n Must be a FilecoinNumber to prevent denomination errors
+   * @param n Must be a FilecoinNumber or 0 to prevent denomination errors
    */
-  gt(n: FilecoinNumber): boolean {
+  gt(n: FilecoinNumber | 0): boolean {
     return super.gt(n)
   }
 
   /**
    * Returns `true` if the value of this BigNumber is greater than or equal to the value of `n`, otherwise returns `false`.
-   * @param n Must be a FilecoinNumber to prevent denomination errors
+   * @param n Must be a FilecoinNumber or 0 to prevent denomination errors
    */
-  gte(n: FilecoinNumber): boolean {
+  gte(n: FilecoinNumber | 0): boolean {
     return super.gte(n)
   }
 
   /**
    * Returns `true` if the value of this BigNumber is less than the value of `n`, otherwise returns `false`.
-   * @param n Must be a FilecoinNumber to prevent denomination errors
+   * @param n Must be a FilecoinNumber or 0 to prevent denomination errors
    */
-  lt(n: FilecoinNumber): boolean {
+  lt(n: FilecoinNumber | 0): boolean {
     return super.lt(n)
   }
 
   /**
    * Returns `true` if the value of this BigNumber is less than or equal to the value of `n`, otherwise returns `false`.
-   * @param n Must be a FilecoinNumber to prevent denomination errors
+   * @param n Must be a FilecoinNumber or 0 to prevent denomination errors
    */
-  lte(n: FilecoinNumber): boolean {
+  lte(n: FilecoinNumber | 0): boolean {
     return super.lte(n)
   }
 
   /**
    * Returns `true` if the value of this BigNumber is equal to the value of `n`, otherwise returns `false`.
-   * @param n Must be a FilecoinNumber to prevent denomination errors
+   * @param n Must be a FilecoinNumber or 0 to prevent denomination errors
    */
-  isEqualTo(n: FilecoinNumber): boolean {
+  isEqualTo(n: FilecoinNumber | 0): boolean {
     return super.isEqualTo(n)
   }
 
   /**
    * Returns `true` if the value of this BigNumber is greater than the value of `n`, otherwise returns `false`.
-   * @param n Must be a FilecoinNumber to prevent denomination errors
+   * @param n Must be a FilecoinNumber or 0 to prevent denomination errors
    */
-  isGreaterThan(n: FilecoinNumber): boolean {
+  isGreaterThan(n: FilecoinNumber | 0): boolean {
     return super.isGreaterThan(n)
   }
 
   /**
    * Returns `true` if the value of this BigNumber is greater than or equal to the value of `n`, otherwise returns `false`.
-   * @param n Must be a FilecoinNumber to prevent denomination errors
+   * @param n Must be a FilecoinNumber or 0 to prevent denomination errors
    */
-  isGreaterThanOrEqualTo(n: FilecoinNumber): boolean {
+  isGreaterThanOrEqualTo(n: FilecoinNumber | 0): boolean {
     return super.isGreaterThanOrEqualTo(n)
   }
 
   /**
    * Returns `true` if the value of this BigNumber is less than the value of `n`, otherwise returns `false`.
-   * @param n Must be a FilecoinNumber to prevent denomination errors
+   * @param n Must be a FilecoinNumber or 0 to prevent denomination errors
    */
-  isLessThan(n: FilecoinNumber): boolean {
+  isLessThan(n: FilecoinNumber | 0): boolean {
     return super.isLessThan(n)
   }
 
   /**
    * Returns `true` if the value of this BigNumber is less than or equal to the value of `n`, otherwise returns `false`.
-   * @param n Must be a FilecoinNumber to prevent denomination errors
+   * @param n Must be a FilecoinNumber or 0 to prevent denomination errors
    */
-  isLessThanOrEqualTo(n: FilecoinNumber): boolean {
+  isLessThanOrEqualTo(n: FilecoinNumber | 0): boolean {
     return super.isLessThanOrEqualTo(n)
   }
 }
