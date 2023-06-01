@@ -301,4 +301,84 @@ export class FilecoinNumber extends BigNumber {
   minus(n: FilecoinNumber): FilecoinNumber {
     return new FilecoinNumber(super.minus(n), 'fil', this._coinType, this._unit)
   }
+
+  /**
+   * Returns `true` if the value of this BigNumber is equal to the value of `n`, otherwise returns `false`.
+   * @param n Must be a FilecoinNumber to prevent denomination errors
+   */
+  eq(n: FilecoinNumber): boolean {
+    return super.eq(n)
+  }
+
+  /**
+   * Returns `true` if the value of this BigNumber is greater than the value of `n`, otherwise returns `false`.
+   * @param n Must be a FilecoinNumber to prevent denomination errors
+   */
+  gt(n: FilecoinNumber): boolean {
+    return super.gt(n)
+  }
+
+  /**
+   * Returns `true` if the value of this BigNumber is greater than or equal to the value of `n`, otherwise returns `false`.
+   * @param n Must be a FilecoinNumber to prevent denomination errors
+   */
+  gte(n: FilecoinNumber): boolean {
+    return super.gte(n)
+  }
+
+  /**
+   * Returns `true` if the value of this BigNumber is less than the value of `n`, otherwise returns `false`.
+   * @param n Must be a FilecoinNumber to prevent denomination errors
+   */
+  lt(n: FilecoinNumber): boolean {
+    return super.lt(n)
+  }
+
+  /**
+   * Returns `true` if the value of this BigNumber is less than or equal to the value of `n`, otherwise returns `false`.
+   * @param n Must be a FilecoinNumber to prevent denomination errors
+   */
+  lte(n: FilecoinNumber): boolean {
+    return super.lte(n)
+  }
+
+  /**
+   * Returns `true` if the value of this BigNumber is equal to the value of `n`, otherwise returns `false`.
+   * @param n Must be a FilecoinNumber to prevent denomination errors
+   */
+  isEqualTo(n: FilecoinNumber): boolean {
+    return super.isEqualTo(n)
+  }
+
+  /**
+   * Returns `true` if the value of this BigNumber is greater than the value of `n`, otherwise returns `false`.
+   * @param n Must be a FilecoinNumber to prevent denomination errors
+   */
+  isGreaterThan(n: FilecoinNumber): boolean {
+    return super.isGreaterThan(n)
+  }
+
+  /**
+   * Returns `true` if the value of this BigNumber is greater than or equal to the value of `n`, otherwise returns `false`.
+   * @param n Must be a FilecoinNumber to prevent denomination errors
+   */
+  isGreaterThanOrEqualTo(n: FilecoinNumber): boolean {
+    return super.isGreaterThanOrEqualTo(n)
+  }
+
+  /**
+   * Returns `true` if the value of this BigNumber is less than the value of `n`, otherwise returns `false`.
+   * @param n Must be a FilecoinNumber to prevent denomination errors
+   */
+  isLessThan(n: FilecoinNumber): boolean {
+    return super.isLessThan(n)
+  }
+
+  /**
+   * Returns `true` if the value of this BigNumber is less than or equal to the value of `n`, otherwise returns `false`.
+   * @param n Must be a FilecoinNumber to prevent denomination errors
+   */
+  isLessThanOrEqualTo(n: FilecoinNumber): boolean {
+    return super.isLessThanOrEqualTo(n)
+  }
 }
