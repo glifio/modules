@@ -288,23 +288,17 @@ export class FilecoinNumber extends BigNumber {
 
   /**
    * Returns a copy of this FilecoinNumber increased by the supplied value n
-   * @param n Should be a FilecoinNumber to prevent denomination errors
+   * @param n Must be a FilecoinNumber to prevent denomination errors
    */
-  plus(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
-    if (!FilecoinNumber.isFilecoinNumber(n))
-      // tslint:disable-next-line:no-console
-      console.warn('FilecoinNumber.plus(n) should be passed a FilecoinNumber')
+  plus(n: FilecoinNumber): FilecoinNumber {
     return new FilecoinNumber(super.plus(n), 'fil', this._coinType, this._unit)
   }
 
   /**
    * Returns a copy of this FilecoinNumber decreased by the supplied value n
-   * @param n Should be a FilecoinNumber to prevent denomination errors
+   * @param n Must be a FilecoinNumber to prevent denomination errors
    */
-  minus(n: BigNumber.Value | FilecoinNumber): FilecoinNumber {
-    if (!FilecoinNumber.isFilecoinNumber(n))
-      // tslint:disable-next-line:no-console
-      console.warn('FilecoinNumber.minus(n) should be passed a FilecoinNumber')
+  minus(n: FilecoinNumber): FilecoinNumber {
     return new FilecoinNumber(super.minus(n), 'fil', this._coinType, this._unit)
   }
 }
