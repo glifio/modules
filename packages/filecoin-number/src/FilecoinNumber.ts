@@ -233,6 +233,22 @@ export class FilecoinNumber extends BigNumber {
   }
 
   /**
+   * Returns an copy of this FilecoinNumber that is rounded up
+   */
+  roundUp(decimalPlaces = 0): FilecoinNumber {
+    const bigNr = super.dp(decimalPlaces, BigNumber.ROUND_UP)
+    return new FilecoinNumber(bigNr, 'fil', this._coinType, this._unit)
+  }
+
+  /**
+   * Returns an copy of this FilecoinNumber that is rounded down
+   */
+  roundDown(decimalPlaces = 0): FilecoinNumber {
+    const bigNr = super.dp(decimalPlaces, BigNumber.ROUND_DOWN)
+    return new FilecoinNumber(bigNr, 'fil', this._coinType, this._unit)
+  }
+
+  /**
    * Returns an absolute value copy of this FilecoinNumber
    */
   abs(): FilecoinNumber {
