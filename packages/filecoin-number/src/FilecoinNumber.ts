@@ -41,7 +41,7 @@ function toBigNumberValue(
  * stores Filecoin values in denominations of Fil.
  * @param value The value to store as FIL
  * @param denom The denomination of value (fil, picofil or attofil)
- * @param unit a custom unit to display with formatBalance, defaults to (t)FIL
+ * @param unit a custom unit to display with formatBalance, defaults to FIL
  */
 export class FilecoinNumber extends BigNumber {
   public static readonly DefaultUnit: string = 'FIL'
@@ -53,8 +53,8 @@ export class FilecoinNumber extends BigNumber {
   }
 
   // Constructor params
-  private readonly _coinType: CoinType
-  private readonly _unit: string
+  public readonly coinType: CoinType
+  public readonly unit: string
 
   constructor(
     value: BigNumber.Value,
@@ -63,8 +63,8 @@ export class FilecoinNumber extends BigNumber {
     unit = FilecoinNumber.DefaultUnit
   ) {
     super(toBigNumberValue(value, denom))
-    this._coinType = coinType
-    this._unit = unit
+    this.coinType = coinType
+    this.unit = unit
   }
 
   /**
@@ -98,20 +98,20 @@ export class FilecoinNumber extends BigNumber {
   }
 
   /**
-   * Returns the unit derived from constructor params
+   * Returns the unit with a 't' prefix for testnets
    */
-  get unit(): string {
+  get displayUnit(): string {
     const addT =
-      this._coinType === CoinType.TEST &&
-      this._unit === FilecoinNumber.DefaultUnit
-    return `${addT ? 't' : ''}${this._unit}`
+      this.coinType === CoinType.TEST &&
+      this.unit === FilecoinNumber.DefaultUnit
+    return `${addT ? 't' : ''}${this.unit}`
   }
 
   /**
    * Checks whether the unit is the default unit
    */
   get isDefaultUnit(): boolean {
-    return this._unit === FilecoinNumber.DefaultUnit
+    return this.unit === FilecoinNumber.DefaultUnit
   }
 
   /**
@@ -119,7 +119,7 @@ export class FilecoinNumber extends BigNumber {
    */
   getDenomUnit(denom: FilecoinDenomination): string {
     const unitDenom = denom.replace(/fil$/, '')
-    return unitDenom ? `${unitDenom}${this._unit}` : this.unit
+    return unitDenom ? `${unitDenom}${this.unit}` : this.displayUnit
   }
 
   /**
@@ -177,7 +177,7 @@ export class FilecoinNumber extends BigNumber {
       decimalSeparator: '.',
       groupSeparator: ',',
       groupSize: 3,
-      suffix: addUnit ? ` ${this.unit}` : ''
+      suffix: addUnit ? ` ${this.displayUnit}` : ''
     }
 
     // When not rounding, it doesn't make sense to truncate either.
@@ -229,7 +229,7 @@ export class FilecoinNumber extends BigNumber {
    * Returns a copy of this FilecoinNumber
    */
   clone(): FilecoinNumber {
-    return new FilecoinNumber(this, 'fil', this._coinType, this._unit)
+    return new FilecoinNumber(this, 'fil', this.coinType, this.unit)
   }
 
   /**
@@ -237,7 +237,7 @@ export class FilecoinNumber extends BigNumber {
    */
   roundUp(decimalPlaces = 0): FilecoinNumber {
     const bigNr = super.dp(decimalPlaces, BigNumber.ROUND_UP)
-    return new FilecoinNumber(bigNr, 'fil', this._coinType, this._unit)
+    return new FilecoinNumber(bigNr, 'fil', this.coinType, this.unit)
   }
 
   /**
@@ -245,14 +245,14 @@ export class FilecoinNumber extends BigNumber {
    */
   roundDown(decimalPlaces = 0): FilecoinNumber {
     const bigNr = super.dp(decimalPlaces, BigNumber.ROUND_DOWN)
-    return new FilecoinNumber(bigNr, 'fil', this._coinType, this._unit)
+    return new FilecoinNumber(bigNr, 'fil', this.coinType, this.unit)
   }
 
   /**
    * Returns an absolute value copy of this FilecoinNumber
    */
   abs(): FilecoinNumber {
-    return new FilecoinNumber(super.abs(), 'fil', this._coinType, this._unit)
+    return new FilecoinNumber(super.abs(), 'fil', this.coinType, this.unit)
   }
 
   /**
@@ -266,19 +266,14 @@ export class FilecoinNumber extends BigNumber {
    * Returns a negated copy of this FilecoinNumber (multiplied by -1)
    */
   negated(): FilecoinNumber {
-    return new FilecoinNumber(
-      super.negated(),
-      'fil',
-      this._coinType,
-      this._unit
-    )
+    return new FilecoinNumber(super.negated(), 'fil', this.coinType, this.unit)
   }
 
   /**
    * Returns a copy of this FilecoinNumber divided by the supplied value n
    */
   div(n: BigNumber.Value): FilecoinNumber {
-    return new FilecoinNumber(super.div(n), 'fil', this._coinType, this._unit)
+    return new FilecoinNumber(super.div(n), 'fil', this.coinType, this.unit)
   }
 
   /**
@@ -292,7 +287,7 @@ export class FilecoinNumber extends BigNumber {
    * Returns a copy of this FilecoinNumber multiplied by the supplied value n
    */
   times(n: BigNumber.Value): FilecoinNumber {
-    return new FilecoinNumber(super.times(n), 'fil', this._coinType, this._unit)
+    return new FilecoinNumber(super.times(n), 'fil', this.coinType, this.unit)
   }
 
   /**
@@ -307,7 +302,7 @@ export class FilecoinNumber extends BigNumber {
    * @param n Must be a FilecoinNumber to prevent denomination errors
    */
   plus(n: FilecoinNumber): FilecoinNumber {
-    return new FilecoinNumber(super.plus(n), 'fil', this._coinType, this._unit)
+    return new FilecoinNumber(super.plus(n), 'fil', this.coinType, this.unit)
   }
 
   /**
@@ -315,7 +310,7 @@ export class FilecoinNumber extends BigNumber {
    * @param n Must be a FilecoinNumber to prevent denomination errors
    */
   minus(n: FilecoinNumber): FilecoinNumber {
-    return new FilecoinNumber(super.minus(n), 'fil', this._coinType, this._unit)
+    return new FilecoinNumber(super.minus(n), 'fil', this.coinType, this.unit)
   }
 
   /**
