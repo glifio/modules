@@ -16,6 +16,7 @@ export interface FilecoinFormatOptions {
   decimals?: number | null
   padZeros?: boolean
   addUnit?: boolean
+  prefix?: string
 }
 
 function toBigNumberValue(
@@ -166,6 +167,7 @@ export class FilecoinNumber extends BigNumber {
     const decimals = options?.decimals ?? 3
     const padZeros = options?.padZeros ?? false
     const addUnit = options?.addUnit ?? true
+    const prefix = options?.prefix
 
     const toFormat = (value: BigNumber, format: BigNumber.Format): string =>
       padZeros
@@ -177,7 +179,8 @@ export class FilecoinNumber extends BigNumber {
       decimalSeparator: '.',
       groupSeparator: ',',
       groupSize: 3,
-      suffix: addUnit ? ` ${this.displayUnit}` : ''
+      suffix: addUnit ? ` ${this.displayUnit}` : '',
+      prefix
     }
 
     // When not rounding, it doesn't make sense to truncate either.
