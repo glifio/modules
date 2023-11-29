@@ -105,6 +105,32 @@ export class FilecoinNumber extends BigNumber {
     return this.zeroMap[coinType][unit]
   }
 
+  static min(...n: FilecoinNumber[]): FilecoinNumber {
+    return new FilecoinNumber(
+      super.min.apply(null, n),
+      'fil',
+      n[0].coinType,
+      n[0].unit
+    )
+  }
+
+  static max(...n: FilecoinNumber[]): FilecoinNumber {
+    return new FilecoinNumber(
+      super.max.apply(null, n),
+      'fil',
+      n[0].coinType,
+      n[0].unit
+    )
+  }
+
+  static minimum(...n: FilecoinNumber[]): FilecoinNumber {
+    return this.min.apply(null, n)
+  }
+
+  static maximum(...n: FilecoinNumber[]): FilecoinNumber {
+    return this.max.apply(null, n)
+  }
+
   /**
    * Returns the unit with a 't' prefix for testnets
    */
