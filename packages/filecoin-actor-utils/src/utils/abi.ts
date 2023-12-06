@@ -62,9 +62,9 @@ export const abiParamToDataType = (param: ParamType): DataType => {
   }
 }
 
-const abiIntRegex = /^u?int\d{0,3}$/g
-const abiFixedRegex = /^u?fixed(\d{1,3}x\d{1,2})?$/g
-const abiBytesRegex = /^bytes\d{0,2}$/g
+const abiIntRegex = /^u?int\d{0,3}$/
+const abiFixedRegex = /^u?fixed(\d{1,3}x\d{1,2})?$/
+const abiBytesRegex = /^bytes\d{0,2}$/
 
 /**
  * Converts an ABI type string to a DataType Type

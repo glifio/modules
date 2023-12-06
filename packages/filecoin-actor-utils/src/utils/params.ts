@@ -74,7 +74,7 @@ export const describeFEVMTxParams = (
   if (!inputs.length) return null
 
   // Convert ABI inputs to descriptor
-  const dataType = abiParamsToDataType('Inputs', tx.functionFragment.inputs)
+  const dataType = abiParamsToDataType('Inputs', inputs)
 
   // Supplement the descriptor with parameter values
   describeDataType(dataType, tx.args)
