@@ -1,39 +1,7 @@
 import cloneDeep from 'lodash.clonedeep'
 import { actorDescriptorMap } from '../data'
-import {
-  ActorName,
-  DataTypeMap,
-  LotusActorState,
-  NetworkName,
-  Type
-} from '../types'
-import { getActorName } from './code'
+import { ActorName, DataTypeMap, Type } from '../types'
 import { describeObject } from './generic'
-
-/**
- * Returns a descriptor with values for the provided Lotus actor state and network name
- * @param lotusActorState the Lotus actor state as returned from StateReadState
- * @param networkName the network in which to search for the actor name
- * @returns the described actor state or null when the state is null
- */
-export const describeLotusActorState = (
-  lotusActorState: LotusActorState,
-  networkName: NetworkName
-): DataTypeMap | null => {
-  // Return null for falsy actor state
-  if (!lotusActorState?.State) return null
-
-  // Retrieve the actor name from the code
-  const actorCode = lotusActorState.Code['/']
-  const actorName = getActorName(actorCode, networkName)
-  if (!actorName)
-    throw new Error(
-      `Failed to resolve actor name for code: ${actorCode}, in network: ${networkName}`
-    )
-
-  // Return the described actor state
-  return describeActorState(actorName, lotusActorState.State)
-}
 
 /**
  * Returns a descriptor with values based on the provided actor name and state
