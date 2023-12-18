@@ -1,54 +1,11 @@
 import { describeFEVMTxParams } from '../src/utils/params'
 import { describeFEVMTxReturn } from '../src/utils/return'
 import { getFEVMMethodName } from '../src/utils/method'
-import { networkActorCodeMap } from '../src/data'
-import { getActorName, getActorCode } from '../src/utils/code'
 import { abi } from './erc20ABI'
 import { Type } from '../src/types'
 import { cborToHex } from '../src/utils/abi'
 
 describe('utils', () => {
-  describe('getActorName', () => {
-    test('should find the actor name when given a code and network', () => {
-      const code = networkActorCodeMap['mainnet']['multisig']
-      expect(getActorName(code, 'mainnet')).toBe('multisig')
-    })
-
-    test('should not find the actor name when given the wrong network', () => {
-      const code = networkActorCodeMap['mainnet']['multisig']
-      expect(getActorName(code, 'calibrationnet')).toBe(null)
-    })
-
-    test('should not find the actor name when the code does not exist', () => {
-      expect(getActorName('abc123', 'mainnet')).toBe(null)
-    })
-
-    test('it decodes v7 actors', () => {
-      expect(
-        getActorName('bafkqadtgnfwc6njpnv2wy5djonuwo', 'calibrationnet')
-      ).toBe('multisig')
-    })
-  })
-
-  describe('getActorCode', () => {
-    test('should find the multisig actor code on calibrationnet', () => {
-      const code = networkActorCodeMap['calibrationnet']['multisig']
-      expect(getActorCode('multisig', 'calibrationnet')).toBe(code)
-    })
-
-    test('should find the multisig actor code on mainnet', () => {
-      const code = networkActorCodeMap['mainnet']['multisig']
-      expect(getActorCode('multisig', 'mainnet')).toBe(code)
-    })
-
-    test('should not find the actor code when the actor name does not exist', () => {
-      expect(getActorCode('test', 'mainnet')).toBe(null)
-    })
-
-    test('should not find the actor code when the network name does not exist', () => {
-      expect(getActorCode('multisig', 'test')).toBe(null)
-    })
-  })
   describe('FEVM', () => {
     describe('describeFEVMMessageParams', () => {
       test('it decodes an ERC20 transfer', () => {
