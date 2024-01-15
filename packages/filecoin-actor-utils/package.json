@@ -27,13 +27,13 @@
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
     "@glif/filecoin-address": "^2.0.43",
-    "@ipld/dag-cbor": "^7.0.3",
-    "ethers": "^5.7.2",
+    "@ipld/dag-cbor": "^9.0.8",
+    "ethers": "^6.10.0",
     "lodash.clonedeep": "^4.5.0",
-    "uint8arrays": "^3.1.0"
+    "uint8arrays": "^5.0.1"
   },
   "devDependencies": {
-    "@types/lodash.clonedeep": "^4.5.7",
+    "@types/lodash.clonedeep": "^4.5.9",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "eslint": "^8.22.0",
