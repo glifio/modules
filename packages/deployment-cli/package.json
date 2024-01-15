@@ -1,6 +1,6 @@
 {
   "name": "@glif/deployment-cli",
-  "version": "2.0.44",
+  "version": "3.0.0",
   "description": "Handles deployment commands for use in GitHub actions",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@actions/core": "^1.6.0",
     "@babel/runtime": "^7.17.0",
-    "@glif/logger": "^2.0.43",
+    "@glif/logger": "^3.0.0",
     "commander": "^9.0.0",
     "web3.storage": "^3.5.4"
   },
