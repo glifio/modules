@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash.clonedeep'
-import { ethers } from 'ethers'
+import { Interface } from 'ethers'
 import { actorDescriptorMap } from '../data'
 import { ActorName, DataType, MethodNum } from '../types'
 import { ABI, cborToHex, abiParamsToDataType } from './abi'
@@ -65,12 +65,13 @@ export const describeFEVMTxParams = (
   if (!params) return null
 
   // Parse transaction from params
-  const iface = new ethers.utils.Interface(abi)
+  const iface = new Interface(abi)
   const data = cborToHex(params)
   const tx = iface.parseTransaction({ data })
-  const { inputs } = tx.functionFragment
+  if (!tx) throw new Error('Failed to parse transaction')
 
   // Return null for empty ABI inputs
+  const { inputs } = tx.fragment
   if (!inputs.length) return null
 
   // Convert ABI inputs to descriptor

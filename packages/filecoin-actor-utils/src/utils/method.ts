@@ -1,4 +1,4 @@
-import { ethers } from 'ethers'
+import { Interface } from 'ethers'
 import { actorDescriptorMap } from '../data'
 import { ABI, cborToHex } from './abi'
 
@@ -23,9 +23,11 @@ export const getMethodName = (
 export const getFEVMMethodName = (params: string, abi: ABI): string | null => {
   if (!params || !abi) return null
   try {
-    const iface = new ethers.utils.Interface(abi)
+    const iface = new Interface(abi)
     const data = cborToHex(params)
-    return iface.parseTransaction({ data }).name
+    const tx = iface.parseTransaction({ data })
+    if (!tx) throw new Error('Failed to parse transaction')
+    return tx.name
   } catch {
     return null
   }

@@ -1,4 +1,4 @@
-import { ethers } from 'ethers'
+import { Interface } from 'ethers'
 import { DataType, Type } from '../types'
 import { ABI, abiParamsToDataType } from './abi'
 import { describeDataType } from './generic'
@@ -34,14 +34,15 @@ export const describeFEVMLogs = (
   // Sort logs by logIndex
   const sorted = logs.sort((a, b) => Number(a.logIndex) - Number(b.logIndex))
 
-  // Parse logs to array of decribed DataTypes
-  const iface = new ethers.utils.Interface(abi)
+  // Parse logs to array of described DataTypes
+  const iface = new Interface(abi)
   const parsed = sorted.map(({ data, topics, logIndex }) => {
     const log = iface.parseLog({ data, topics })
+    if (!log) throw new Error('Failed to parse log')
 
     // Convert ABI inputs to descriptor
     const name = `${Number(logIndex)}: ${log.name}`
-    const dataType = abiParamsToDataType(name, log.eventFragment.inputs)
+    const dataType = abiParamsToDataType(name, log.fragment.inputs)
 
     // Supplement the descriptor with log data
     describeDataType(dataType, log.args)
