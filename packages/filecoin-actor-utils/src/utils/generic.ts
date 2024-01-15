@@ -1,6 +1,5 @@
 import cloneDeep from 'lodash.clonedeep'
 import { Address } from '@glif/filecoin-address'
-import { BigNumber } from 'ethers'
 import { toString as BytesToString } from 'uint8arrays'
 import { DataType, Type } from '../types'
 
@@ -26,8 +25,8 @@ export const describeDataType = (dataType: DataType, value: any) => {
       return
 
     case Type.Number:
-      BigNumber.isBigNumber(value)
-        ? describeBigNumber(dataType, value)
+      typeof value === 'bigint'
+        ? describeBigInt(dataType, value)
         : describeBaseValue(dataType, value)
       return
 
@@ -68,11 +67,11 @@ export const describeBaseValue = (
 }
 
 /**
- * Adds a BigNumber value to a descriptor as a string
+ * Adds a BigInt value to a descriptor as a string
  * @param dataType the descriptor to add the value to
  * @param value the value to add to the descriptor
  */
-export const describeBigNumber = (dataType: DataType, value: BigNumber) => {
+export const describeBigInt = (dataType: DataType, value: bigint) => {
   dataType.Value = value.toString()
 }
 

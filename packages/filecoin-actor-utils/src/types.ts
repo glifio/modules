@@ -1,24 +1,7 @@
 export type ActorName = string
-export type ActorCode = string
 export type MethodNum = number
 export type NetworkName = string
 export type PropName = string
-
-export type ActorCodeMap = {
-  [actorName: ActorName]: ActorCode
-}
-
-export type ActorCodeMapInv = {
-  [actorCode: ActorCode]: ActorName
-}
-
-export type NetworkActorCodeMap = {
-  [networkName: NetworkName]: ActorCodeMap
-}
-
-export type NetworkActorCodeMapInv = {
-  [networkName: NetworkName]: ActorCodeMapInv
-}
 
 export enum Type {
   Bool = 'boolean',

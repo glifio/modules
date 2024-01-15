@@ -1,4 +1,4 @@
-import { Fragment, JsonFragment, ParamType } from '@ethersproject/abi'
+import { Fragment, JsonFragment, ParamType } from 'ethers'
 import { fromString, toString } from 'uint8arrays'
 import { decode } from '@ipld/dag-cbor'
 import { DataType, Type } from '../types'
@@ -24,7 +24,7 @@ export const cborToHex = (base64: string): string => {
  */
 export const abiParamsToDataType = (
   name: string,
-  params: ParamType[]
+  params: ReadonlyArray<ParamType>
 ): DataType => ({
   Type: Type.Object,
   Name: name,
@@ -41,12 +41,16 @@ export const abiParamsToDataType = (
 export const abiParamToDataType = (param: ParamType): DataType => {
   switch (param.baseType) {
     case 'array':
+      if (!param.arrayChildren)
+        throw new Error('ParamType array is missing arrayChildren')
       return {
         Type: Type.Array,
         Name: param.type,
         Contains: abiParamToDataType(param.arrayChildren)
       }
     case 'tuple':
+      if (!param.components)
+        throw new Error('ParamType tuple is missing components')
       return {
         Type: Type.Object,
         Name: param.type,
