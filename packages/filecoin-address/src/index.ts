@@ -407,6 +407,18 @@ export function isEthIdMaskAddress(ethAddr: string): boolean {
 }
 
 /**
+ * idFromEthAddress derives the f0 address from an ethereum hex address
+ */
+
+export function idFromEthAddress(
+  ethAddr: string,
+  coinType: CoinType = CoinType.TEST
+): string {
+  if (!isEthIdMaskAddress(ethAddr))
+    throw new Error('Cannot convert non-ID mask address to id')
+}
+
+/**
  * ethAddressFromID derives the ethereum address from an f0 address
  */
 
