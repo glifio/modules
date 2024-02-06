@@ -6,5 +6,4 @@ module.exports = {
   moduleNameMapper: {
     "^@zondax/filecoin-signing-tools$": "@zondax/filecoin-signing-tools/nodejs"
   },
-  testTimeout: 50000,
 }
