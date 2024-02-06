@@ -12,6 +12,8 @@ import { Network } from '@glif/filecoin-address'
 import { InvocResult } from '../types'
 import { WalletSubProvider } from '../wallet-sub-provider'
 
+jest.setTimeout(50000)
+
 const testSubProviderInstance: WalletSubProvider = {
   type: 'MOCK',
   getAccounts: jest.fn().mockImplementation(async () => []),

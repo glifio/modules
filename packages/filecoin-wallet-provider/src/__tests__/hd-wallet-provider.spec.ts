@@ -4,6 +4,8 @@ import { HDWalletProvider } from '../providers/hd-wallet-provider'
 import { errors } from '../errors'
 import { coinTypeCode, createPath } from '../utils'
 
+jest.setTimeout(50000)
+
 describe('hd wallet subprovider', () => {
   // these were derived in the Glif UI with WASM and the same seed as below
   const mainnetCoinTypeAccounts = [

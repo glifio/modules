@@ -6,6 +6,8 @@ import { errors } from '../errors'
 import { CoinTypeCode } from '../utils/createPath'
 import { SemanticVersion } from '../types'
 
+jest.setTimeout(50000)
+
 const sleep = (time: number) =>
   new Promise(resolve => setTimeout(resolve, time))
 

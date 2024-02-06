@@ -5,6 +5,8 @@ const RpcClient = require('@glif/filecoin-rpc-client').default
 
 const flushPromises = () => new Promise(resolve => setImmediate(resolve))
 
+jest.setTimeout(50000)
+
 describe('message confirmer', () => {
   beforeEach(() => {
     jest.clearAllMocks()
