@@ -1,7 +1,7 @@
+import ethers from 'ethers'
 import * as leb from 'leb128'
 import { blake2b } from 'blakejs'
 import * as uint8arrays from 'uint8arrays'
-import { utils } from 'ethers'
 import { base32 as base32Function } from './base32'
 import { DelegatedNamespace, Protocol } from './enums'
 import { CoinType } from './coinType'
@@ -217,11 +217,11 @@ export function newDelegatedEthAddress(
   ethAddr: string,
   coinType?: CoinType
 ): Address {
-  if (!utils.isAddress(ethAddr)) throw new Error('Invalid Ethereum address')
+  if (!ethers.isAddress(ethAddr)) throw new Error('Invalid Ethereum address')
 
   return newDelegatedAddress(
     DelegatedNamespace.EVM,
-    utils.arrayify(ethAddr),
+    ethers.getBytes(ethAddr),
     coinType
   )
 }
@@ -388,7 +388,7 @@ export function delegatedFromEthAddress(
  */
 
 export function ethAddressFromDelegated(delegated: string): string {
-  return utils.getAddress(`0x${decode(delegated).subAddrHex}`)
+  return ethers.getAddress(`0x${decode(delegated).subAddrHex}`)
 }
 
 /**
