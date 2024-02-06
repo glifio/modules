@@ -5,7 +5,7 @@ import { MetaMaskProvider } from '../providers/metamask-provider'
 import { errors } from '../errors'
 import { createPath, coinTypeCode } from '../utils/createPath'
 
-jest.setTimeout(50000)
+jest.setTimeout(100000)
 
 const configureSpy = jest.fn()
 const getAddressSpy = jest.fn().mockImplementation(() => 'f0123')

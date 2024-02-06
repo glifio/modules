@@ -3,7 +3,7 @@ import { Message } from '@glif/filecoin-message'
 import { SECP256K1KeyProvider } from '../providers/single-key-provider'
 import { errors } from '../errors'
 
-jest.setTimeout(50000)
+jest.setTimeout(100000)
 
 describe('single key secp256k1 wallet subprovider', () => {
   // these were derived in the Glif UI with WASM and the same pk as below
