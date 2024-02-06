@@ -218,7 +218,7 @@ export function newDelegatedAddress(
  * newDelegatedEthAddress returns an address for eth using the Delegated protocol.
  */
 export function newDelegatedEthAddress(
-  ethAddr: string,
+  ethAddr: EthAddress,
   coinType?: CoinType
 ): Address {
   if (!ethers.isAddress(ethAddr)) throw new Error('Invalid Ethereum address')
@@ -381,7 +381,7 @@ export function idFromAddress(address: Address): number {
  */
 
 export function delegatedFromEthAddress(
-  ethAddr: string,
+  ethAddr: EthAddress,
   coinType: CoinType = CoinType.TEST
 ): string {
   if (isEthIdMaskAddress(ethAddr))
@@ -410,7 +410,7 @@ export function isEthAddress(address: string): address is EthAddress {
  * isEthIdMaskAddress determines whether the input is an Ethereum ID mask address
  */
 
-export function isEthIdMaskAddress(ethAddr: string): boolean {
+export function isEthIdMaskAddress(ethAddr: EthAddress): boolean {
   const bytes = ethers.getBytes(ethAddr)
   const prefix = bytes.slice(0, ethIdMaskPrefixLength)
   return uint8arrays.equals(prefix, ethIdMaskPrefix)
@@ -421,7 +421,7 @@ export function isEthIdMaskAddress(ethAddr: string): boolean {
  */
 
 export function idFromEthAddress(
-  ethAddr: string,
+  ethAddr: EthAddress,
   coinType: CoinType = CoinType.TEST
 ): string {
   if (!isEthIdMaskAddress(ethAddr))
