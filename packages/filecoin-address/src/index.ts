@@ -17,7 +17,7 @@ export interface AddressData {
   namespace?: number
 }
 
-type EthAddress = `0x${string}`
+export type EthAddress = `0x${string}`
 
 function getLeb128Length(input: Uint8Array): number {
   for (const [index, byte] of input.entries()) if (byte < 128) return index + 1
