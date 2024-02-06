@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-actor-utils",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Utilities for retrieving actor codes / names and inspecting actor state and methods",
   "main": "./dist/index.js",
   "browser": "./lib/index.js",
@@ -26,7 +26,7 @@
   "author": "Infinite Scroll <squad@infinitescroll.org> (https://infinitescroll.org)",
   "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
-    "@glif/filecoin-address": "^3.0.1",
+    "@glif/filecoin-address": "^3.0.2",
     "@ipld/dag-cbor": "^7.0.3",
     "ethers": "^6.10.0",
     "lodash.clonedeep": "^4.5.0",
