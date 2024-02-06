@@ -388,7 +388,8 @@ export function delegatedFromEthAddress(
  */
 
 export function ethAddressFromDelegated(delegated: string): string {
-  return ethers.getAddress(`0x${decode(delegated).subAddrHex}`)
+  const ethAddress = `0x${decode(delegated).subAddrHex}`
+  return ethers.getAddress(ethAddress) // Adds checksum
 }
 
 /**
@@ -402,7 +403,8 @@ export function ethAddressFromID(idAddress: string): string {
   const dataview = new DataView(buffer)
   dataview.setUint8(0, 255)
   dataview.setBigUint64(12, BigInt(id), false)
-  return `0x${uint8arrays.toString(new Uint8Array(buffer), 'hex')}`
+  const ethAddress = `0x${uint8arrays.toString(new Uint8Array(buffer), 'hex')}`
+  return ethers.getAddress(ethAddress) // Adds checksum
 }
 
 export default {
