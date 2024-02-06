@@ -48,6 +48,7 @@ const checksumHashLength = 4
 // Ethereum address properties
 const ethAddressLength = 20
 const ethIdMaskPrefixLength = 12
+const ethIdMaskPrefix = new Uint8Array(ethIdMaskPrefixLength).fill(255, 0, 1)
 
 function addressHash(ingest: Uint8Array): Uint8Array {
   return blake2b(ingest, null, payloadHashLength)
@@ -391,6 +392,16 @@ export function delegatedFromEthAddress(
 export function ethAddressFromDelegated(delegated: string): string {
   const ethAddress = `0x${decode(delegated).subAddrHex}`
   return ethers.getAddress(ethAddress) // Adds checksum
+}
+
+/**
+ * isEthIdMaskAddress determines whether the input is an Ethereum ID mask address
+ */
+
+export function isEthIdMaskAddress(ethAddr: string): boolean {
+  const bytes = ethers.getBytes(ethAddr)
+  const prefix = bytes.slice(0, ethIdMaskPrefixLength)
+  return uint8arrays.equals(prefix, ethIdMaskPrefix)
 }
 
 /**
