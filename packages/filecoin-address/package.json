@@ -26,9 +26,9 @@
   "dependencies": {
     "blakejs": "1.1.0",
     "borc": "3.0.0",
-    "ethers": "^5.7.2",
+    "ethers": "6.10.0",
     "leb128": "0.0.5",
-    "uint8arrays": "3.0.0"
+    "uint8arrays": "3.1.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.35.1",
