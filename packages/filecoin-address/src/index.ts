@@ -1,7 +1,7 @@
 import * as leb from 'leb128'
-import { blake2b } from 'blakejs'
 import * as uint8arrays from 'uint8arrays'
-import { utils } from 'ethers'
+import { blake2b } from 'blakejs'
+import { ethers } from 'ethers'
 import { base32 as base32Function } from './base32'
 import { DelegatedNamespace, Protocol } from './enums'
 import { CoinType } from './coinType'
@@ -45,8 +45,10 @@ const maxInt64StringLength = 19
 // The hash length used for calculating address checksums.
 const checksumHashLength = 4
 
-// The length of an Ethereum address in bytes
+// Ethereum address properties
 const ethAddressLength = 20
+const ethIdMaskPrefixLength = 12
+const ethIdMaskPrefix = new Uint8Array(ethIdMaskPrefixLength).fill(255, 0, 1)
 
 function addressHash(ingest: Uint8Array): Uint8Array {
   return blake2b(ingest, null, payloadHashLength)
@@ -217,11 +219,11 @@ export function newDelegatedEthAddress(
   ethAddr: string,
   coinType?: CoinType
 ): Address {
-  if (!utils.isAddress(ethAddr)) throw new Error('Invalid Ethereum address')
+  if (!ethers.isAddress(ethAddr)) throw new Error('Invalid Ethereum address')
 
   return newDelegatedAddress(
     DelegatedNamespace.EVM,
-    utils.arrayify(ethAddr),
+    ethers.getBytes(ethAddr),
     coinType
   )
 }
@@ -355,7 +357,7 @@ export function checkAddressString(address: string): AddressData {
     }
 
     default:
-      throw Error(`Invalid address protocall: ${protocol}`)
+      throw Error(`Invalid address protocol: ${protocol}`)
   }
 }
 
@@ -380,6 +382,8 @@ export function delegatedFromEthAddress(
   ethAddr: string,
   coinType: CoinType = CoinType.TEST
 ): string {
+  if (isEthIdMaskAddress(ethAddr))
+    throw new Error('Cannot convert ID mask address to delegated')
   return newDelegatedEthAddress(ethAddr, coinType).toString()
 }
 
@@ -388,7 +392,34 @@ export function delegatedFromEthAddress(
  */
 
 export function ethAddressFromDelegated(delegated: string): string {
-  return utils.getAddress(`0x${decode(delegated).subAddrHex}`)
+  const ethAddress = `0x${decode(delegated).subAddrHex}`
+  return ethers.getAddress(ethAddress) // Adds checksum
+}
+
+/**
+ * isEthIdMaskAddress determines whether the input is an Ethereum ID mask address
+ */
+
+export function isEthIdMaskAddress(ethAddr: string): boolean {
+  const bytes = ethers.getBytes(ethAddr)
+  const prefix = bytes.slice(0, ethIdMaskPrefixLength)
+  return uint8arrays.equals(prefix, ethIdMaskPrefix)
+}
+
+/**
+ * idFromEthAddress derives the f0 address from an ethereum hex address
+ */
+
+export function idFromEthAddress(
+  ethAddr: string,
+  coinType: CoinType = CoinType.TEST
+): string {
+  if (!isEthIdMaskAddress(ethAddr))
+    throw new Error('Cannot convert non-ID mask address to id')
+  const bytes = ethers.getBytes(ethAddr)
+  const dataview = new DataView(bytes.buffer)
+  const idBigInt = dataview.getBigUint64(ethIdMaskPrefixLength, false)
+  return newIDAddress(Number(idBigInt), coinType).toString()
 }
 
 /**
@@ -401,8 +432,9 @@ export function ethAddressFromID(idAddress: string): string {
   const buffer = new ArrayBuffer(ethAddressLength)
   const dataview = new DataView(buffer)
   dataview.setUint8(0, 255)
-  dataview.setBigUint64(12, BigInt(id), false)
-  return `0x${uint8arrays.toString(new Uint8Array(buffer), 'hex')}`
+  dataview.setBigUint64(ethIdMaskPrefixLength, BigInt(id), false)
+  const ethAddress = `0x${uint8arrays.toString(new Uint8Array(buffer), 'hex')}`
+  return ethers.getAddress(ethAddress) // Adds checksum
 }
 
 export default {
