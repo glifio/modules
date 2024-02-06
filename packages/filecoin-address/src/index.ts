@@ -399,6 +399,14 @@ export function ethAddressFromDelegated(delegated: string): EthAddress {
 }
 
 /**
+ * isEthAddress determines whether the input is an Ethereum address
+ */
+
+export function isEthAddress(address: string): address is EthAddress {
+  return ethers.isAddress(address)
+}
+
+/**
  * isEthIdMaskAddress determines whether the input is an Ethereum ID mask address
  */
 
