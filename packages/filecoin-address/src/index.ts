@@ -355,7 +355,7 @@ export function checkAddressString(address: string): AddressData {
     }
 
     default:
-      throw Error(`Invalid address protocall: ${protocol}`)
+      throw Error(`Invalid address protocol: ${protocol}`)
   }
 }
 
