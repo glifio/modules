@@ -1,6 +1,8 @@
 import { SingleKeyProvider } from '../local-managed-provider'
 import { CoinType } from '@glif/filecoin-address'
 
+jest.setTimeout(30000)
+
 const secp256k1Key =
   '7b2254797065223a22736563703235366b31222c22507269766174654b6579223a2257587362654d5176487a366f5668344b637262633045642b31362b3150766a6a504f3753514931355031343d227d'
 

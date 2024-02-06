@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`bls #sign 1`] = `
-Object {
-  "Message": Object {
+{
+  "Message": {
     "From": "t3vbrwhphivdxyvs3pxpp54w73664bgxmb7ed4du4ohhu3dc6f5y264cs72yluw7mjbwnlrtzq543ys57plzka",
     "GasFeeCap": "1",
     "GasLimit": 1000,
@@ -13,7 +13,7 @@ Object {
     "To": "t3vbrwhphivdxyvs3pxpp54w73664bgxmb7ed4du4ohhu3dc6f5y264cs72yluw7mjbwnlrtzq543ys57plzka",
     "Value": "0",
   },
-  "Signature": Object {
+  "Signature": {
     "Data": "gTjLEAanvWII9SOrRpdgEIV3BNZvEmP1/QocIlJA3eo9WmUT28LLkMq4gYBI8aggEzYw0XhRKCFKY191V2EM16amLiwkmcs+qAJJcXAAoO+Am2enYxFHhUWcGyRILHYc",
     "Type": 2,
   },
@@ -21,8 +21,8 @@ Object {
 `;
 
 exports[`secp256k1 #sign 1`] = `
-Object {
-  "Message": Object {
+{
+  "Message": {
     "From": "t17lxg2i2otnl7mmpw2ocd6o4e3b4un3272vny6ka",
     "GasFeeCap": "1",
     "GasLimit": 1000,
@@ -33,7 +33,7 @@ Object {
     "To": "t17lxg2i2otnl7mmpw2ocd6o4e3b4un3272vny6ka",
     "Value": "0",
   },
-  "Signature": Object {
+  "Signature": {
     "Data": "l3WF6gkTMr1ZD8YUT186/0I7Z+ftoUWs7/2J/vt86qMD5u582Oh+gEcBUq+OaZCNfYdsvq/MTJn8aU07PquT/wE=",
     "Type": 1,
   },

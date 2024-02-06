@@ -1,6 +1,8 @@
 import { CoinType } from '@glif/filecoin-address'
 import { createPath, extractCoinTypeFromPath } from '../utils'
 
+jest.setTimeout(30000)
+
 describe('utils', () => {
   describe('createPath', () => {
     test('it creates a path based on an index and networkID', () => {

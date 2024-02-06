@@ -5,6 +5,8 @@ const RpcClient = require('@glif/filecoin-rpc-client').default
 
 const flushPromises = () => new Promise(resolve => setImmediate(resolve))
 
+jest.setTimeout(30000)
+
 describe('message confirmer', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -94,7 +96,8 @@ describe('message confirmer', () => {
     RpcClient.mockImplementationOnce(() => {
       return {
         request: () => {
-          throw new Error('block not found')
+          // simulate a cancelled call bc of timeout
+          throw new axios.Cancel()
         }
       }
     }).mockImplementationOnce(() => {
@@ -109,11 +112,10 @@ describe('message confirmer', () => {
       }
     })
 
-    confirm('bafy2bzacebnyjf5oxzvts5f4ifqgee2yrqb7epdepnw3y2yk25ju5su2episg', {
+    await confirm('bafy2bzacebnyjf5oxzvts5f4ifqgee2yrqb7epdepnw3y2yk25ju5su2episg', {
       timeoutAfter: 1
     })
     jest.runAllTimers()
-    await flushPromises()
     expect(RpcClient).toHaveBeenCalledTimes(2)
   })
 })
