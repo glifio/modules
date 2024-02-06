@@ -382,6 +382,8 @@ export function delegatedFromEthAddress(
   ethAddr: string,
   coinType: CoinType = CoinType.TEST
 ): string {
+  if (isEthIdMaskAddress(ethAddr))
+    throw new Error('Cannot convert ID mask address to delegated')
   return newDelegatedEthAddress(ethAddr, coinType).toString()
 }
 
