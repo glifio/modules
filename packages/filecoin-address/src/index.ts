@@ -45,8 +45,9 @@ const maxInt64StringLength = 19
 // The hash length used for calculating address checksums.
 const checksumHashLength = 4
 
-// The length of an Ethereum address in bytes
+// Ethereum address properties
 const ethAddressLength = 20
+const ethIdMaskPrefixLength = 12
 
 function addressHash(ingest: Uint8Array): Uint8Array {
   return blake2b(ingest, null, payloadHashLength)
@@ -402,7 +403,7 @@ export function ethAddressFromID(idAddress: string): string {
   const buffer = new ArrayBuffer(ethAddressLength)
   const dataview = new DataView(buffer)
   dataview.setUint8(0, 255)
-  dataview.setBigUint64(12, BigInt(id), false)
+  dataview.setBigUint64(ethIdMaskPrefixLength, BigInt(id), false)
   const ethAddress = `0x${uint8arrays.toString(new Uint8Array(buffer), 'hex')}`
   return ethers.getAddress(ethAddress) // Adds checksum
 }
