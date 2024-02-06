@@ -416,6 +416,10 @@ export function idFromEthAddress(
 ): string {
   if (!isEthIdMaskAddress(ethAddr))
     throw new Error('Cannot convert non-ID mask address to id')
+  const bytes = ethers.getBytes(ethAddr)
+  const dataview = new DataView(bytes.buffer)
+  const idBigInt = dataview.getBigUint64(ethIdMaskPrefixLength, false)
+  return newIDAddress(Number(idBigInt), coinType).toString()
 }
 
 /**
