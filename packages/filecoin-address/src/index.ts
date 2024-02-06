@@ -17,6 +17,8 @@ export interface AddressData {
   namespace?: number
 }
 
+export type EthAddress = `0x${string}`
+
 function getLeb128Length(input: Uint8Array): number {
   for (const [index, byte] of input.entries()) if (byte < 128) return index + 1
   throw new Error('Failed to get Leb128 length')
@@ -391,9 +393,9 @@ export function delegatedFromEthAddress(
  * ethAddressFromDelegated derives the ethereum address from an f410 address
  */
 
-export function ethAddressFromDelegated(delegated: string): string {
+export function ethAddressFromDelegated(delegated: string): EthAddress {
   const ethAddress = `0x${decode(delegated).subAddrHex}`
-  return ethers.getAddress(ethAddress) // Adds checksum
+  return ethers.getAddress(ethAddress) as EthAddress // Adds checksum
 }
 
 /**
@@ -426,7 +428,7 @@ export function idFromEthAddress(
  * ethAddressFromID derives the ethereum address from an f0 address
  */
 
-export function ethAddressFromID(idAddress: string): string {
+export function ethAddressFromID(idAddress: string): EthAddress {
   const address = decode(idAddress)
   const id = idFromAddress(address)
   const buffer = new ArrayBuffer(ethAddressLength)
@@ -434,7 +436,7 @@ export function ethAddressFromID(idAddress: string): string {
   dataview.setUint8(0, 255)
   dataview.setBigUint64(ethIdMaskPrefixLength, BigInt(id), false)
   const ethAddress = `0x${uint8arrays.toString(new Uint8Array(buffer), 'hex')}`
-  return ethers.getAddress(ethAddress) // Adds checksum
+  return ethers.getAddress(ethAddress) as EthAddress // Adds checksum
 }
 
 export default {
