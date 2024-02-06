@@ -1,7 +1,7 @@
 import { CoinType } from '@glif/filecoin-address'
 import { createPath, extractCoinTypeFromPath } from '../utils'
 
-jest.setTimeout(100000)
+jest.setTimeout(30000)
 
 describe('utils', () => {
   describe('createPath', () => {

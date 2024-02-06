@@ -5,7 +5,7 @@ const RpcClient = require('@glif/filecoin-rpc-client').default
 
 const flushPromises = () => new Promise(resolve => setImmediate(resolve))
 
-jest.setTimeout(100000)
+jest.setTimeout(30000)
 
 describe('message confirmer', () => {
   beforeEach(() => {

@@ -21,7 +21,7 @@ const errorResponse = {
   }
 }
 
-jest.setTimeout(100000)
+jest.setTimeout(30000)
 
 describe('removeEmptyHeaders', () => {
   test('it should return an object without keys that are set to falsey values', () => {
