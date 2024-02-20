@@ -2,7 +2,7 @@
 
 ![tests](https://github.com/glifio/modules/workflows/tests/badge.svg)
 
-This is a learna repo that holds our npm modules. They can all be found in the `/packages` directory.
+This is a lerna repo that holds our npm modules. They can all be found in the `/packages` directory.
 
 ## Testing
 
