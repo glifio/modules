@@ -225,12 +225,12 @@ export class FilecoinNumber extends BigNumber {
       if (decimals === 0) {
         // We rounded to 0 decimals, so we show
         // "< 0" for negative and "> 0" for positive values
-        const prefix = isNegative ? '< ' : '> '
+        const prefix = `${isNegative ? '<' : '>'} ${format.prefix}`
         return toFormat(rounded, { ...format, prefix })
       } else {
         // We rounded to 1+ decimals, so we show
         // "> -0.01" for negative and "< 0.01" for positive values
-        const prefix = isNegative ? '> ' : '< '
+        const prefix = `${isNegative ? '>' : '<'} ${format.prefix}`
         const roundedUp = this.dp(decimals, BigNumber.ROUND_UP)
         return toFormat(roundedUp, { ...format, prefix })
       }
