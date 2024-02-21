@@ -188,6 +188,21 @@ export class FilecoinNumber extends BigNumber {
   }
 
   /**
+   * Expresses this FilecoinNumber as a formatted AttoFIL string
+   */
+  formatAttoFil(
+    options?: Pick<FilecoinFormatOptions, 'addUnit' | 'prefix'>
+  ): string {
+    const addUnit = options?.addUnit ?? true
+    return this.shiftedBy(18).toFormat(0, BigNumber.ROUND_DOWN, {
+      groupSeparator: ',',
+      groupSize: 3,
+      suffix: addUnit ? ` ${this.getDenomUnit('attofil')}` : '',
+      prefix: options?.prefix
+    })
+  }
+
+  /**
    * Expresses this FilecoinNumber as a balance string
    */
   formatBalance(options?: FilecoinFormatOptions): string {
