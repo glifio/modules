@@ -188,6 +188,21 @@ export class FilecoinNumber extends BigNumber {
   }
 
   /**
+   * Expresses this FilecoinNumber as a formatted AttoFIL string
+   */
+  formatAttoFil(
+    options?: Pick<FilecoinFormatOptions, 'addUnit' | 'prefix'>
+  ): string {
+    const addUnit = options?.addUnit ?? true
+    return this.shiftedBy(18).toFormat(0, BigNumber.ROUND_DOWN, {
+      groupSeparator: ',',
+      groupSize: 3,
+      suffix: addUnit ? ` ${this.getDenomUnit('attofil')}` : '',
+      prefix: options?.prefix ?? ''
+    })
+  }
+
+  /**
    * Expresses this FilecoinNumber as a balance string
    */
   formatBalance(options?: FilecoinFormatOptions): string {
@@ -196,7 +211,6 @@ export class FilecoinNumber extends BigNumber {
     const decimals = options?.decimals ?? 3
     const padZeros = options?.padZeros ?? false
     const addUnit = options?.addUnit ?? true
-    const prefix = options?.prefix
 
     const toFormat = (value: BigNumber, format: BigNumber.Format): string =>
       padZeros
@@ -209,7 +223,7 @@ export class FilecoinNumber extends BigNumber {
       groupSeparator: ',',
       groupSize: 3,
       suffix: addUnit ? ` ${this.displayUnit}` : '',
-      prefix
+      prefix: options?.prefix ?? ''
     }
 
     // When not rounding, it doesn't make sense to truncate either.
@@ -225,12 +239,12 @@ export class FilecoinNumber extends BigNumber {
       if (decimals === 0) {
         // We rounded to 0 decimals, so we show
         // "< 0" for negative and "> 0" for positive values
-        const prefix = isNegative ? '< ' : '> '
+        const prefix = `${isNegative ? '<' : '>'} ${format.prefix}`
         return toFormat(rounded, { ...format, prefix })
       } else {
         // We rounded to 1+ decimals, so we show
         // "> -0.01" for negative and "< 0.01" for positive values
-        const prefix = isNegative ? '> ' : '< '
+        const prefix = `${isNegative ? '>' : '<'} ${format.prefix}`
         const roundedUp = this.dp(decimals, BigNumber.ROUND_UP)
         return toFormat(roundedUp, { ...format, prefix })
       }
