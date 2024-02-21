@@ -198,7 +198,7 @@ export class FilecoinNumber extends BigNumber {
       groupSeparator: ',',
       groupSize: 3,
       suffix: addUnit ? ` ${this.getDenomUnit('attofil')}` : '',
-      prefix: options?.prefix
+      prefix: options?.prefix ?? ''
     })
   }
 
@@ -211,7 +211,6 @@ export class FilecoinNumber extends BigNumber {
     const decimals = options?.decimals ?? 3
     const padZeros = options?.padZeros ?? false
     const addUnit = options?.addUnit ?? true
-    const prefix = options?.prefix
 
     const toFormat = (value: BigNumber, format: BigNumber.Format): string =>
       padZeros
@@ -224,7 +223,7 @@ export class FilecoinNumber extends BigNumber {
       groupSeparator: ',',
       groupSize: 3,
       suffix: addUnit ? ` ${this.displayUnit}` : '',
-      prefix
+      prefix: options?.prefix ?? ''
     }
 
     // When not rounding, it doesn't make sense to truncate either.
