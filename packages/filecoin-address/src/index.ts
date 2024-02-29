@@ -364,16 +364,19 @@ export function checkAddressString(address: string): AddressData {
 }
 
 /**
- * idFromAddress extracts the ID from an ID address.
+ * idFromAddress extracts the numerical ID from an ID address.
  */
 export function idFromAddress(address: Address): number {
   if (address.protocol() !== Protocol.ID)
     throw new Error('Cannot get ID from non ID address')
-  // An unsigned varint should be less than 2^63 which is < Number.MAX_VALUE.
-  // So this number SHOULD be representable in JS and safe to parseInt.
-  // https://github.com/multiformats/unsigned-varint
-  // TODO: does leb128 enforce the max value?
-  return parseInt(leb.unsigned.decode(address.payload()), 10)
+  return idFromPayload(address.payload())
+}
+
+/**
+ * idFromPayload extracts the numerical ID from an ID address payload.
+ */
+export function idFromPayload(payload: Uint8Array): number {
+  return Number(leb.unsigned.decode(payload))
 }
 
 /**
@@ -463,6 +466,7 @@ export default {
   validateAddressString,
   checkAddressString,
   idFromAddress,
+  idFromPayload,
   delegatedFromEthAddress,
   ethAddressFromDelegated,
   CoinType,
