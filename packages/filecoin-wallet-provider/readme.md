@@ -1,6 +1,15 @@
 # Filecoin wallet provider
 
-:warning: Active development. Unstable. Breaking Changes. You get the point.
+## :warning: UNMAINTAINED PACKAGE :warning:
+
+This package is no longer maintained. We highly recommend looking for alternative solutions, such as:
+
+- [iso-filecoin](https://www.npmjs.com/package/iso-filecoin) for general Filecoin wallet / address support
+- [filsnap-adapter](https://www.npmjs.com/package/filsnap-adapter) for Metamask Filsnap support
+- [@zondax/ledger-filecoin](https://www.npmjs.com/package/@zondax/ledger-filecoin) for Ledger support
+- [Wagmi](https://wagmi.sh) for Ethereum wallet support
+
+--- 
 
 This wallet provider module is inspired as a combination between [MetaMask's keyring controller](https://github.com/MetaMask/KeyringController) and [web3.js](https://github.com/ethereum/web3.js/). It's experimental so it's likely that it will change, drastically. Below is a description of our design decisions, how it's working, and development plan over the coming weeks/months.
 
