@@ -1,6 +1,6 @@
 {
   "name": "@glif/filecoin-address",
-  "version": "3.0.12",
+  "version": "4.0.0",
   "description": "The Filecoin address type",
   "main": "./dist/index.js",
   "browser": "./lib/index.js",
