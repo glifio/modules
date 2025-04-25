@@ -1,6 +1,15 @@
 # Local managed provider
 
-:warning: Active development. Unstable. Breaking Changes. You get the point.
+## :warning: UNMAINTAINED PACKAGE :warning:
+
+This package is no longer maintained. We highly recommend looking for alternative solutions, such as:
+
+- [iso-filecoin](https://www.npmjs.com/package/iso-filecoin) for general Filecoin wallet / address support
+- [filsnap-adapter](https://www.npmjs.com/package/filsnap-adapter) for Metamask Filsnap support
+- [@zondax/ledger-filecoin](https://www.npmjs.com/package/@zondax/ledger-filecoin) for Ledger support
+- [Wagmi](https://wagmi.sh) for Ethereum wallet support
+
+--- 
 
 This wallet subprovider handles signing by a managed raw private key. Supports secp256k1 and BLS keys.
 
