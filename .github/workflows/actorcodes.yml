@@ -11,30 +11,30 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: glifio/filecoin-descriptors
           submodules: recursive
 
       - name: Set up Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v5
         with:
           go-version: 1.18
       - run: |
           go get ./...
           go run *.go
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: actor-info
           path: output/
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - run: rm -rf packages/filecoin-actor-utils/src/data
       - run: mkdir -p packages/filecoin-actor-utils/src/data
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: actor-info
           path: packages/filecoin-actor-utils/src/data
